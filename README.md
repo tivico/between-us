@@ -2,13 +2,13 @@
 
 給各種性向與性別認同的兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-本機目前為 **0.5.0 題庫試讀版**，新增 57 題性別中性措辭的單人試讀；公開網站仍為 **0.4.0 三題雲端試玩版**：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)。Cloudflare Workers 提供網頁與 API，D1 保存雙人回合。原始碼位於公開的 [tivico/between-us](https://github.com/tivico/between-us)，0.4 的 GitHub CI 與雙人流程已驗證；0.5 尚未推送／部署。正式量表與契合度尚未定稿。
+目前已公開部署 **0.5.0 題庫試讀版**：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)、[直接試讀 57 題](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。新增 57 題性別中性措辭的單人試讀，保留三題雙人流程。Cloudflare Workers 提供網頁與 API，D1 保存雙人回合；57 題試讀答案只在當頁。原始碼與 v0.5.0 位於 [tivico/between-us](https://github.com/tivico/between-us)，[0.5 GitHub CI](https://github.com/tivico/between-us/actions/runs/37752512199)、公開試讀操作與雙人 API 已驗證。正式量表與契合度尚未定稿。
 
 ## 現在可以做什麼
 
 - 瀏覽 5 個主題、切換篩選、查看主題介紹與研究來源。
 - 體驗三觀主題的 3 題自編示例：選答、上一題、下一題、查看自己的答案、返回修改。
-- 本機 `#/trial/core-values`：57 題中性措辭試讀，六段單選、上一題／下一題／跳過、想再讀標記與本人選項整理。可隨時查看整理，不提供分數；答案只在本頁，離開或重新整理會清除。
+- 本機與公開網站的 `#/trial/core-values`：57 題中性措辭試讀，六段單選、上一題／下一題／跳過、想再讀標記與本人選項整理。可隨時查看整理，不提供分數；答案只在本頁，離開或重新整理會清除。
 - 建立雙人測試回合、同意分享、填答自動保存、確認提交後鎖定答案。
 - A 提交後產生 B 的邀請；B 獨立回答，雙方完成才解鎖彼此選項與討論提示。
 - 每位參與者有私人返回連結；此瀏覽器保存最近 20 個入口。
@@ -46,11 +46,11 @@ npm run preview
 
 ## 文件入口
 
-雲端部署採 **Cloudflare Workers（執行 API 並提供網頁）＋D1（持久 SQL 資料庫）**，GitHub 保存程式碼；不需要另外購買網域，也不需要再部署 GitHub Pages。`npm run cloudflare:dev` 可在獨立的本機 D1 測試庫驗證；首次登入、建立資料庫、發布與除錯步驟見 [Cloudflare 維護手冊](docs/runbook.md#cloudflare-workersd1-04)。既有本機 SQLite 不會自動搬到雲端。
+雲端部署採 **Cloudflare Workers（執行 API 並提供網頁）＋D1（持久 SQL 資料庫）**，GitHub 保存程式碼；不需要另外購買網域，也不需要再部署 GitHub Pages。`npm run cloudflare:dev` 可在獨立的本機 D1 測試庫驗證；首次登入、建立資料庫、發布與除錯步驟見 [Cloudflare 維護手冊](docs/runbook.md)。既有本機 SQLite 不會自動搬到雲端。
 
 - [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
-- [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已提供本機單人試讀。
+- [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已提供公開單人試讀。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
 - [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
 - [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。
@@ -62,7 +62,7 @@ npm run preview
 
 網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。網站本機 `0.5.0`，三題草案 `0.1.0`，57 題中性候選 `0.2.0`；本次只是接入試讀，題幹未改。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
-GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保存雙人答案與控制解鎖。`.github/workflows/ci.yml` 自動檢查；`pages.yml` 從 main 手動發布。Pages 發布前會檢查已上線 API 與跨來源設定；沒有後端就停止發布。`origin` 已設定為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main；本專案的 GitHub 帳號選擇為 tivico，不改全域設定。未設定後端 `API_BASE_URL`，尚未執行 Pages 發布。[實際設定步驟](docs/runbook.md#github-與雲端部署)、[架構與分工](docs/architecture.md#github-部署準備03-已實作尚未上線)。
+GitHub repository 保存程式，push 會觸發 `.github/workflows/ci.yml` 檢查，但不會自動發布網站。現行發布執行 `npm run cloudflare:deploy`，依序檢查、建置、上傳 Worker 與網頁資產；沿用既有 D1。`origin` 為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main，不使用 force push。`pages.yml` 保留為另行配置外部 API 的替代方案，現行 Cloudflare 網站不使用它。[部署與除錯步驟](docs/runbook.md)。
 
 ## 重要檔案
 

@@ -2,7 +2,7 @@
 
 ## 現況：前端、雙人 API 與單人題庫試讀
 
-React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.4 三題雙人流程已公開部署；0.5 的 57 題中性措辭試讀目前在本機，沒有會員。單人試讀不建立回合或保存答案。
+React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.5 已公開部署三題雙人流程與 57 題中性措辭試讀，沒有會員。單人試讀不建立回合或保存答案。
 
 ```text
 index.html

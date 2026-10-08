@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用；0.4 公開網址已有三題雙人邀請，0.5 的 57 題試讀目前仍在本機。
+終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用；0.5 公開網址已有三題雙人邀請與 57 題單人試讀。
 
 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
@@ -43,7 +43,7 @@ npm run dev
 
 ### 57 題內容試讀（0.5）
 
-本機由主題介紹按「試讀 57 題核心價值」，或開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機版為 0.5.0，公開網站仍為 0.4.0，未推送／部署。
+由主題介紹按「試讀 57 題核心價值」，或開 [公開試讀入口](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。本機可開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機與公開版均為 0.5.0，main／v0.5.0 已推送。
 
 重要位置：
 
@@ -57,9 +57,9 @@ npm run dev
 
 排查順序：
 
-1. **只有 3 題**：確認網址是 `#/trial/core-values`；`#/demo`／`#/start` 仍使用三題示例。公開網址尚未有此入口。
+1. **只有 3 題**：確認網址是 `#/trial/core-values`；`#/demo`／`#/start` 仍使用三題示例。若公開畫面仍舊，重新整理；不要清除雙人私人返回連結或回合資料。
 2. **空白或「試讀資料不完整」**：先 `npm run check`；看轉換器的第一個錯誤與候選 `prompt`、題序、六段選項。不要回退到原文男女版或把候選標成 `ready`。
-3. **改 JSON 後沒有更新**：開發模式有熱更新；4173 建置預覽需重跑 `npm run build`，再重新整理。重新整理前提醒試讀者選擇會清除。
+3. **改 JSON 後沒有更新**：開發模式有熱更新；4173 建置預覽需重跑 `npm run build`。公開版需 `npm run cloudflare:deploy`，push 不會發布。重新整理前提醒試讀者選擇會清除。
 4. **整理不對**：依序查 `answers[questionId]`、合法 `optionId`、`flagged` 與 `summarizeTrial()`；跳過應顯示「未作答」，不補成某個程度。
 5. **意外有雲端回合或最近紀錄**：確認新增功能沒有把試讀 ID 加入共用 `quizzes`，且 `ContentTrial` 沒有呼叫 `api.ts`／`history.ts`。試讀 ID 為 `core-values-pvqrr-trial`，後端不支援此 ID。
 
@@ -74,7 +74,7 @@ npm run dev
 - 檢查正常視窗與 390×844 手機模擬，六個原選項、清楚文字與原生表單皆可操作，手機沒有橫向溢出；頁面 Console 未見 error／warn。恢復暫時尺寸設定，試讀頁保留供使用者操作。
 - 截圖 `.local/pvqrr-trial-preview.png` 僅為本機畫面證據，不提交。程式碼檢查確認試讀不引用 API／歷史保存模組；沒有新增資料表、migration 或實際回合。
 
-尚未驗證：真實手機、完整無障礙稽核、真實參與者試讀、此改寫的測量等同性、正式結果比較與公開 0.5 部署。上面的工程／虛擬操作不當成學術試讀資料。
+尚未驗證：真實手機、完整無障礙稽核、研究用認知訪談、此改寫的測量等同性與正式結果比較。使用者已驗收介面；上面的工程／虛擬操作與介面驗收不當成學術驗證。公開部署結果見本文件最後的 0.5 發布紀錄。
 
 | 想修改 | 位置與注意事項 |
 | --- | --- |
@@ -254,7 +254,7 @@ git log -5 --oneline
 git status --short
 ```
 
-Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；tag 並不代表網站已部署。目前已推送 v0.1.0～v0.3.0 到使用者指定的 tivico/between-us；日後只推送當次明確要交付的 tag，不把 `git push --tags` 當一般存檔操作。
+Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；tag 並不代表網站已部署。目前已推送 v0.1.0～v0.5.0 到使用者指定的 tivico/between-us；日後只推送當次明確要交付的 tag，不把 `git push --tags` 當一般存檔操作。
 
 ### 壞掉時怎麼定位與回復
 
@@ -427,3 +427,17 @@ npm run cloudflare:deploy
 遠端 D1 建於 APAC，0001_rounds.sql 已套用，migrations list 顯示無待套用項目。Worker 版本 `37c5a2b7-0acb-4091-b03c-a9c7f5475762` 已發布（100% 流量）。新網址初次發生 TLS／QUIC 連線失敗，稍後正常連線，沒有關閉 TLS 驗證。公開 /api/health 回 200 與 cloudflare-test；check-cloudflare.mjs 以虛構 A/B 驗證建立、保存、邀請、陌生憑證 401、雙方完成前 423、提交後 409 與共同真實選項。公開首頁在瀏覽器正常顯示。雲端留有一輪虛構 QA 資料；本機既有答案沒有上傳。
 
 尚未驗證：兩部實體裝置、長期運作／流量、正式題庫與分數。後續一般修改只需 `npm run cloudflare:deploy`，不重跑 create；資料庫結構有新增 migration 才套用 remote migration。推送 GitHub 目前只做 CI，不會自動發布網站。
+
+### 0.5 發布紀錄（2026-10-08）
+
+使用者驗收後，普通 push 將 main 與 v0.5.0 推至指定 repository；功能 commit 為 `d047d7e818a8ff8fdc2a481cff0b7b2ae0ce05a3`。[GitHub CI run 37752512199](https://github.com/tivico/between-us/actions/runs/37752512199) 對此 commit 回報 completed/success。發布狀態文件另用 docs commit 保存，網站與題庫版號不因文件更新再升版。
+
+一般建置與 `npm run cloudflare:deploy` 通過；發布指令執行型別檢查、9 檔／50 項測試、Cloudflare 建置，再上傳 Worker／dist。Wrangler 回報新 Worker 版本 `b3b952ee-2cd6-4302-8624-6a8f3a773c7c`，網址仍為 https://between-us.forest-between-us.workers.dev/ 。本次沒有 schema 變更，沒有套用 migration 或重建 D1。
+
+公開瀏覽器驗證 `#/trial/core-values` 的 57 題入口、六選項、標記與本人摘要：虛構第一題選「像我」並標記，摘要為已答 1／未答 56／想再讀 1，且顯示實際選項。重新整理回介紹；重新進入為已答 0，頁面 Console 無 error／warn。截圖 `.local/pvqrr-trial-live.png` 是線上畫面證據，不提交到 Git。`node scripts/check-cloudflare.mjs https://between-us.forest-between-us.workers.dev/` 回 `CLOUDFLARE_FLOW_OK`，實際驗證健康、三題回合建立／保存／邀請、401／423／409 保護及共同選項；雲端另留一輪虛構 QA 回合，沒有讀取既有私人答案。
+
+發布資料流：GitHub main／tag 保存來源 → CI 驗證 → 本機 `cloudflare:deploy` 產生 dist 並上傳 → Worker 的 ASSETS 提供網頁 → 試讀元件在當頁記憶體整理答案；既有 `/api/*` 由 Worker 讀寫 D1。公開試讀可以分享網址，每個人獨立作答；此入口尚不建立 57 題雙人回合。
+
+維護範例：改試讀版面後先 check／build，再提交與 push，最後執行 cloudflare:deploy；只 push 會看到 GitHub 更新、網站仍是舊版。若部署後顯示三題，先核對 trial 路徑再重新整理；若 API 異常先查 `/api/health`、DB binding 與 Wrangler tail。故障時可從先前已驗證 commit 重建再發布；本次 D1 schema 未變更，仍需保留原資料，不以刪除 D1 止血。
+
+已驗證：公開 0.5 試讀、既有雙人 API、CI 與發布。尚未驗證／完成：兩部實體裝置、研究用認知訪談、改寫測量等同性、正式計分、57 題雙人流程與人生方向區塊；介面驗收不代表這些項目已完成。
