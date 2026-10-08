@@ -1,0 +1,790 @@
+{
+  "id": "core-values-pvqrr-candidate",
+  "version": "0.1.0",
+  "status": "candidate",
+  "reviewedAt": "2026-10-08",
+  "instrument": "PVQ-RR",
+  "language": "zh-Hant",
+  "sourceVersion": "Chinese MF traditional revised",
+  "evidenceStatus": "instrument-evidence-found; local-version-review-pending",
+  "sourceArticle": "https://doi.org/10.1177/1073191121998760",
+  "sourceRepository": "https://osf.io/w9as3/",
+  "sourceFiles": [
+    {
+      "name": "PVQ-RR Chinese MF traditional revised.docx",
+      "osfFileId": "5f436f84f579150165eaa494",
+      "modifiedAt": "2020-08-24T07:43:00.630644",
+      "sha256": "1e63beeea49aad0f5ef95aae4e779cdab556389f940bc6d279528274aec7d16b"
+    },
+    {
+      "name": "PVQ-RR Eng M&F.docx",
+      "osfFileId": "5f436f92f579150161ea889c",
+      "modifiedAt": "2020-08-24T07:43:14.069475",
+      "sha256": "12cc29890d4576dcae7b1b963988b9af0018d5fae4c9964feb2685f910680235"
+    },
+    {
+      "name": "Scoring & analysis instructions Ind PVQ-RR.docx",
+      "osfFileId": "5fd646cef0df54027f2ee9d6",
+      "modifiedAt": "2020-12-13T16:52:31.04977",
+      "sha256": "a488638abe8cdd21b71f54c018803a69507f69461bd27946ef5c6be1a54bcdc0"
+    }
+  ],
+  "repositoryLicense": {
+    "name": "CC0 1.0 Universal",
+    "url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "osfLicenseId": "563c1cf88c5e4a3877f9e96c",
+    "checkedAt": "2026-10-08",
+    "scopeNote": "OSF 節點授權中繼資料；三份原檔未找到另列的授權限制。不是 GVSU 介紹文章的 CC BY-NC-ND 授權，也不是所有中文譯本的共同授權。"
+  },
+  "sourceInstructions": "下面是我們對一些不同的人的簡要描述。請閱讀每一個描述，並想想這個人在多大程度上像、或者不像你。在右邊的格子裡打X，來表示所描述的人在多大程度上像你。",
+  "responseHeading": "這個人有多像您？",
+  "responseOptions": [
+    {
+      "id": "not-like-at-all",
+      "label": "完全不像我",
+      "value": 1
+    },
+    {
+      "id": "not-like",
+      "label": "不像我",
+      "value": 2
+    },
+    {
+      "id": "slightly-like",
+      "label": "僅有一點點像我",
+      "value": 3
+    },
+    {
+      "id": "moderately-like",
+      "label": "有點像我",
+      "value": 4
+    },
+    {
+      "id": "like",
+      "label": "像我",
+      "value": 5
+    },
+    {
+      "id": "very-like",
+      "label": "非常像我",
+      "value": 6
+    }
+  ],
+  "values": [
+    {
+      "id": "self-direction-thought",
+      "editorialLabel": "自主思考",
+      "itemNumbers": [
+        1,
+        23,
+        39
+      ]
+    },
+    {
+      "id": "self-direction-action",
+      "editorialLabel": "自主行動",
+      "itemNumbers": [
+        16,
+        30,
+        56
+      ]
+    },
+    {
+      "id": "stimulation",
+      "editorialLabel": "探索與刺激",
+      "itemNumbers": [
+        10,
+        28,
+        43
+      ]
+    },
+    {
+      "id": "hedonism",
+      "editorialLabel": "享受",
+      "itemNumbers": [
+        3,
+        36,
+        46
+      ]
+    },
+    {
+      "id": "achievement",
+      "editorialLabel": "成就",
+      "itemNumbers": [
+        17,
+        32,
+        48
+      ]
+    },
+    {
+      "id": "power-dominance",
+      "editorialLabel": "支配影響力",
+      "itemNumbers": [
+        6,
+        29,
+        41
+      ]
+    },
+    {
+      "id": "power-resources",
+      "editorialLabel": "資源權力",
+      "itemNumbers": [
+        12,
+        20,
+        44
+      ]
+    },
+    {
+      "id": "face",
+      "editorialLabel": "公眾形象與避免羞辱",
+      "itemNumbers": [
+        9,
+        24,
+        49
+      ]
+    },
+    {
+      "id": "security-personal",
+      "editorialLabel": "個人安全",
+      "itemNumbers": [
+        13,
+        26,
+        53
+      ]
+    },
+    {
+      "id": "security-societal",
+      "editorialLabel": "社會安全",
+      "itemNumbers": [
+        2,
+        35,
+        50
+      ]
+    },
+    {
+      "id": "tradition",
+      "editorialLabel": "傳統",
+      "itemNumbers": [
+        18,
+        33,
+        40
+      ]
+    },
+    {
+      "id": "conformity-rules",
+      "editorialLabel": "遵守規範",
+      "itemNumbers": [
+        15,
+        31,
+        42
+      ]
+    },
+    {
+      "id": "conformity-interpersonal",
+      "editorialLabel": "避免使他人不悅",
+      "itemNumbers": [
+        4,
+        22,
+        51
+      ]
+    },
+    {
+      "id": "humility",
+      "editorialLabel": "謙遜",
+      "itemNumbers": [
+        7,
+        38,
+        54
+      ]
+    },
+    {
+      "id": "universalism-nature",
+      "editorialLabel": "自然環境",
+      "itemNumbers": [
+        8,
+        21,
+        45
+      ]
+    },
+    {
+      "id": "universalism-concern",
+      "editorialLabel": "廣泛公平與關懷",
+      "itemNumbers": [
+        5,
+        37,
+        52
+      ]
+    },
+    {
+      "id": "universalism-tolerance",
+      "editorialLabel": "包容差異",
+      "itemNumbers": [
+        14,
+        34,
+        57
+      ]
+    },
+    {
+      "id": "benevolence-caring",
+      "editorialLabel": "關懷親近的人",
+      "itemNumbers": [
+        11,
+        25,
+        47
+      ]
+    },
+    {
+      "id": "benevolence-dependability",
+      "editorialLabel": "值得親近者信賴",
+      "itemNumbers": [
+        19,
+        27,
+        55
+      ]
+    }
+  ],
+  "items": [
+    {
+      "id": "pvqrr-01",
+      "sourceItemNumber": 1,
+      "valueId": "self-direction-thought",
+      "portraits": {
+        "he": "他重視可獨立地建立自己的看法。",
+        "she": "她重視可獨立地建立自己的看法。"
+      }
+    },
+    {
+      "id": "pvqrr-02",
+      "sourceItemNumber": 2,
+      "valueId": "security-societal",
+      "portraits": {
+        "he": "他重視國家的安全穩定。",
+        "she": "她重視國家的安全穩定。"
+      }
+    },
+    {
+      "id": "pvqrr-03",
+      "sourceItemNumber": 3,
+      "valueId": "hedonism",
+      "portraits": {
+        "he": "有一段愉悅的時光對他來說是重要的。",
+        "she": "有一段愉悅的時光對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-04",
+      "sourceItemNumber": 4,
+      "valueId": "conformity-interpersonal",
+      "portraits": {
+        "he": "他重視不使別人不悅。",
+        "she": "她重視不使別人不悅。"
+      }
+    },
+    {
+      "id": "pvqrr-05",
+      "sourceItemNumber": 5,
+      "valueId": "universalism-concern",
+      "portraits": {
+        "he": "社會中的弱勢群體得到保護，對他來說是重要的。",
+        "she": "社會中的弱勢群體得到保護，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-06",
+      "sourceItemNumber": 6,
+      "valueId": "power-dominance",
+      "portraits": {
+        "he": "他重視別人按他說的去做。",
+        "she": "她重視別人按她說的去做。"
+      }
+    },
+    {
+      "id": "pvqrr-07",
+      "sourceItemNumber": 7,
+      "valueId": "humility",
+      "portraits": {
+        "he": "他絕不認為他該比別人得到更多。",
+        "she": "她絕不認為她該比別人得到更多。"
+      }
+    },
+    {
+      "id": "pvqrr-08",
+      "sourceItemNumber": 8,
+      "valueId": "universalism-nature",
+      "portraits": {
+        "he": "他重視關懷愛護大自然。",
+        "she": "她重視關懷愛護大自然。"
+      }
+    },
+    {
+      "id": "pvqrr-09",
+      "sourceItemNumber": 9,
+      "valueId": "face",
+      "portraits": {
+        "he": "他重視不被任何人羞辱。",
+        "she": "她重視不被任何人羞辱。"
+      }
+    },
+    {
+      "id": "pvqrr-10",
+      "sourceItemNumber": 10,
+      "valueId": "stimulation",
+      "portraits": {
+        "he": "常常找些不同的事情來做，對他來說是重要的。",
+        "she": "常常找些不同的事情來做，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-11",
+      "sourceItemNumber": 11,
+      "valueId": "benevolence-caring",
+      "portraits": {
+        "he": "他重視可照顧身邊的人。",
+        "she": "她重視可照顧身邊的人。"
+      }
+    },
+    {
+      "id": "pvqrr-12",
+      "sourceItemNumber": 12,
+      "valueId": "power-resources",
+      "portraits": {
+        "he": "他重視可擁有金錢所能帶來的權力。",
+        "she": "她重視可擁有金錢所能帶來的權力。"
+      }
+    },
+    {
+      "id": "pvqrr-13",
+      "sourceItemNumber": 13,
+      "valueId": "security-personal",
+      "portraits": {
+        "he": "避免生病、保持健康，對他來說是非常重要的。",
+        "she": "避免生病、保持健康，對她來說是非常重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-14",
+      "sourceItemNumber": 14,
+      "valueId": "universalism-tolerance",
+      "portraits": {
+        "he": "他重視包容所有不同類的人和群體。",
+        "she": "她重視包容所有不同類的人和群體。"
+      }
+    },
+    {
+      "id": "pvqrr-15",
+      "sourceItemNumber": 15,
+      "valueId": "conformity-rules",
+      "portraits": {
+        "he": "從不違反規章制度，對他來說是重要的。",
+        "she": "從不違反規章制度，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-16",
+      "sourceItemNumber": 16,
+      "valueId": "self-direction-action",
+      "portraits": {
+        "he": "獨立做出自己人生的決定，對他來說是重要的。",
+        "she": "獨立做出自己人生的決定，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-17",
+      "sourceItemNumber": 17,
+      "valueId": "achievement",
+      "portraits": {
+        "he": "在生活中擁有雄心壯志，對他來說是重要的。",
+        "she": "在生活中擁有雄心壯志，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-18",
+      "sourceItemNumber": 18,
+      "valueId": "tradition",
+      "portraits": {
+        "he": "他重視保持傳統價值觀和思維方式。",
+        "she": "她重視保持傳統價值觀和思維方式。"
+      }
+    },
+    {
+      "id": "pvqrr-19",
+      "sourceItemNumber": 19,
+      "valueId": "benevolence-dependability",
+      "portraits": {
+        "he": "他重視得到認識的人之完全信任。",
+        "she": "她重視得到認識的人之完全信任。"
+      }
+    },
+    {
+      "id": "pvqrr-20",
+      "sourceItemNumber": 20,
+      "valueId": "power-resources",
+      "portraits": {
+        "he": "財富對他來說是重要的。",
+        "she": "財富對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-21",
+      "sourceItemNumber": 21,
+      "valueId": "universalism-nature",
+      "portraits": {
+        "he": "他重視參與保護自然的活動。",
+        "she": "她重視參與保護自然的活動。"
+      }
+    },
+    {
+      "id": "pvqrr-22",
+      "sourceItemNumber": 22,
+      "valueId": "conformity-interpersonal",
+      "portraits": {
+        "he": "他重視從不去惹惱任何人。",
+        "she": "她重視從不去惹惱任何人。"
+      }
+    },
+    {
+      "id": "pvqrr-23",
+      "sourceItemNumber": 23,
+      "valueId": "self-direction-thought",
+      "portraits": {
+        "he": "自己的觀點自己來建立，對他來說是重要的。",
+        "she": "自己的觀點自己來建立，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-24",
+      "sourceItemNumber": 24,
+      "valueId": "face",
+      "portraits": {
+        "he": "保護自身的公眾形象，對他來說是重要的。",
+        "she": "保護自身的公眾形象，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-25",
+      "sourceItemNumber": 25,
+      "valueId": "benevolence-caring",
+      "portraits": {
+        "he": "幫助親愛的人對他來說是很重要的。",
+        "she": "幫助親愛的人對她來說是很重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-26",
+      "sourceItemNumber": 26,
+      "valueId": "security-personal",
+      "portraits": {
+        "he": "他重視個人的安全和保障。",
+        "she": "她重視個人的安全和保障。"
+      }
+    },
+    {
+      "id": "pvqrr-27",
+      "sourceItemNumber": 27,
+      "valueId": "benevolence-dependability",
+      "portraits": {
+        "he": "成為一個別人可依靠、可信任的朋友，對他來說是重要的。",
+        "she": "成為一個別人可依靠、可信任的朋友，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-28",
+      "sourceItemNumber": 28,
+      "valueId": "stimulation",
+      "portraits": {
+        "he": "為使生活精彩而冒的險，對他來說是重要的。",
+        "she": "為使生活精彩而冒的險，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-29",
+      "sourceItemNumber": 29,
+      "valueId": "power-dominance",
+      "portraits": {
+        "he": "他重視可使別人按自己的意願做事的權力。",
+        "she": "她重視可使別人按自己的意願做事的權力。"
+      }
+    },
+    {
+      "id": "pvqrr-30",
+      "sourceItemNumber": 30,
+      "valueId": "self-direction-action",
+      "portraits": {
+        "he": "可獨立地計劃自己的活動，對他來說是重要的。",
+        "she": "可獨立地計劃自己的活動，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-31",
+      "sourceItemNumber": 31,
+      "valueId": "conformity-rules",
+      "portraits": {
+        "he": "即使沒人監管仍遵守規則，對他來說是重要的。",
+        "she": "即使沒人監管仍遵守規則，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-32",
+      "sourceItemNumber": 32,
+      "valueId": "achievement",
+      "portraits": {
+        "he": "人生非常成功，對他來說是重要的。",
+        "she": "人生非常成功，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-33",
+      "sourceItemNumber": 33,
+      "valueId": "tradition",
+      "portraits": {
+        "he": "他重視遵從家庭的習俗或宗教的傳統。",
+        "she": "她重視遵從家庭的習俗或宗教的傳統。"
+      }
+    },
+    {
+      "id": "pvqrr-34",
+      "sourceItemNumber": 34,
+      "valueId": "universalism-tolerance",
+      "portraits": {
+        "he": "他重視聆聽和理解那些和他不同的人。",
+        "she": "她重視聆聽和理解那些和她不同的人。"
+      }
+    },
+    {
+      "id": "pvqrr-35",
+      "sourceItemNumber": 35,
+      "valueId": "security-societal",
+      "portraits": {
+        "he": "政府強有力並能保護它的公民，對他來說是重要的。",
+        "she": "政府強有力並能保護它的公民，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-36",
+      "sourceItemNumber": 36,
+      "valueId": "hedonism",
+      "portraits": {
+        "he": "他重視享受生活的樂事。",
+        "she": "她重視享受生活的樂事。"
+      }
+    },
+    {
+      "id": "pvqrr-37",
+      "sourceItemNumber": 37,
+      "valueId": "universalism-concern",
+      "portraits": {
+        "he": "世界上每一個人在生活中擁有同等的機會，對他來說是重要的。",
+        "she": "世界上每一個人在生活中擁有同等的機會，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-38",
+      "sourceItemNumber": 38,
+      "valueId": "humility",
+      "portraits": {
+        "he": "他重視謙虛。",
+        "she": "她重視謙虛。"
+      }
+    },
+    {
+      "id": "pvqrr-39",
+      "sourceItemNumber": 39,
+      "valueId": "self-direction-thought",
+      "portraits": {
+        "he": "他重視靠自己去理解問題。",
+        "she": "她重視靠自己去理解問題。"
+      }
+    },
+    {
+      "id": "pvqrr-40",
+      "sourceItemNumber": 40,
+      "valueId": "tradition",
+      "portraits": {
+        "he": "尊崇文化中的傳統做法，對他來說是重要的。",
+        "she": "尊崇文化中的傳統做法，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-41",
+      "sourceItemNumber": 41,
+      "valueId": "power-dominance",
+      "portraits": {
+        "he": "擔當別人的領導或指揮，對他來說是重要的。",
+        "she": "擔當別人的領導或指揮，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-42",
+      "sourceItemNumber": 42,
+      "valueId": "conformity-rules",
+      "portraits": {
+        "he": "他重視遵守所有法律。",
+        "she": "她重視遵守所有法律。"
+      }
+    },
+    {
+      "id": "pvqrr-43",
+      "sourceItemNumber": 43,
+      "valueId": "stimulation",
+      "portraits": {
+        "he": "有各種不同的新鮮經歷，對他來說是重要的。",
+        "she": "有各種不同的新鮮經歷，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-44",
+      "sourceItemNumber": 44,
+      "valueId": "power-resources",
+      "portraits": {
+        "he": "擁有能顯示財富的昂貴物品，對他來說很重要。",
+        "she": "擁有能顯示財富的昂貴物品，對她來說很重要。"
+      }
+    },
+    {
+      "id": "pvqrr-45",
+      "sourceItemNumber": 45,
+      "valueId": "universalism-nature",
+      "portraits": {
+        "he": "保護大自然免遭破壞或污染，對他來說是重要的。",
+        "she": "保護大自然免遭破壞或污染，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-46",
+      "sourceItemNumber": 46,
+      "valueId": "hedonism",
+      "portraits": {
+        "he": "他重視每一個開心的機會。",
+        "she": "她重視每一個開心的機會。"
+      }
+    },
+    {
+      "id": "pvqrr-47",
+      "sourceItemNumber": 47,
+      "valueId": "benevolence-caring",
+      "portraits": {
+        "he": "他重視用心關懷親朋好友的每一個需要。",
+        "she": "她重視用心關懷親朋好友的每一個需要。"
+      }
+    },
+    {
+      "id": "pvqrr-48",
+      "sourceItemNumber": 48,
+      "valueId": "achievement",
+      "portraits": {
+        "he": "他重視別人對他的成就之賞識。",
+        "she": "她重視別人對她的成就之賞識。"
+      }
+    },
+    {
+      "id": "pvqrr-49",
+      "sourceItemNumber": 49,
+      "valueId": "face",
+      "portraits": {
+        "he": "永不被別人指出錯誤，對他來說是重要的。",
+        "she": "永不被別人指出錯誤，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-50",
+      "sourceItemNumber": 50,
+      "valueId": "security-societal",
+      "portraits": {
+        "he": "國家能夠抵禦外面一切威脅，對他來說是重要的。",
+        "she": "國家能夠抵禦外面一切威脅，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-51",
+      "sourceItemNumber": 51,
+      "valueId": "conformity-interpersonal",
+      "portraits": {
+        "he": "他重視從不使其他人生氣。",
+        "she": "她重視從不使其他人生氣。"
+      }
+    },
+    {
+      "id": "pvqrr-52",
+      "sourceItemNumber": 52,
+      "valueId": "universalism-concern",
+      "portraits": {
+        "he": "全人類都能受到公正地對待，對他來說是重要的。",
+        "she": "全人類都能受到公正地對待，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-53",
+      "sourceItemNumber": 53,
+      "valueId": "security-personal",
+      "portraits": {
+        "he": "避開一切危險的事，對他來說是重要的。",
+        "she": "避開一切危險的事，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-54",
+      "sourceItemNumber": 54,
+      "valueId": "humility",
+      "portraits": {
+        "he": "滿足於已經得到的而不要求更多，對他來說是重要的。",
+        "she": "滿足於已經得到的而不要求更多，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-55",
+      "sourceItemNumber": 55,
+      "valueId": "benevolence-dependability",
+      "portraits": {
+        "he": "能獲所有的朋友和家人完全依靠，對他來說是重要的。",
+        "she": "能獲所有的朋友和家人完全依靠，對她來說是重要的。"
+      }
+    },
+    {
+      "id": "pvqrr-56",
+      "sourceItemNumber": 56,
+      "valueId": "self-direction-action",
+      "portraits": {
+        "he": "他重視選擇的自由。",
+        "she": "她重視選擇的自由。"
+      }
+    },
+    {
+      "id": "pvqrr-57",
+      "sourceItemNumber": 57,
+      "valueId": "universalism-tolerance",
+      "portraits": {
+        "he": "他重視接納別人（包括持異議者）。",
+        "she": "她重視接納別人（包括持異議者）。"
+      }
+    }
+  ],
+  "reviewFlags": [
+    {
+      "itemNumbers": [
+        49
+      ],
+      "reason": "繁體原檔的「永不被別人指出錯誤」與英文原檔 never to be humiliated 可能產生理解差異；保留原文，待核對 Taiwan 版或請相關專業人員審查。"
+    },
+    {
+      "itemNumbers": [
+        7,
+        19,
+        28,
+        48,
+        55
+      ],
+      "reason": "優先試讀絕對用語或較不自然的繁體句法，記錄理解；目前沒有自行改寫。"
+    },
+    {
+      "itemNumbers": [
+        2,
+        35,
+        50
+      ],
+      "reason": "保留社會安全原題；國家／政府用字需確認台灣目標族群如何理解，不能因不像感情題就刪除。"
+    }
+  ],
+  "scoringStatus": "19-value item mapping transcribed; scoring not implemented",
+  "missingAnswerPolicy": "pending original-rule review; do not invent values or impute skipped items",
+  "releaseStatus": "not imported by the app; not a ready quiz"
+}

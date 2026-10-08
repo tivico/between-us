@@ -4,7 +4,19 @@
 
 正式題庫尚未完成。三觀的 3 題是自編介面示例；可以幫忙討論題型，但不是 PVQ 原題、已驗證中文版、正式三觀量表或關係預測工具。遠距主題只有研究方向；其餘主題尚待研究。
 
-第一份三觀的範圍已確認為核心價值＋人生方向，詳見 [內容藍圖](quizzes/core-values.md)。人生目標的候選來源為 [Grouzet 等人，2005](https://pubmed.ncbi.nlm.nih.gov/16351369/)，尚未選定工具或中文版本，不把它與價值量表混成一個分數。
+第一份三觀的範圍已確認為核心價值＋人生方向，詳見 [內容藍圖](quizzes/core-values.md)。使用者已選擇優先完整既有量表、接受較多題目。本次建立 [PVQ-RR 57 題候選稿](quizzes/core-values-pvqrr.md) 與 [候選資料](quizzes/core-values-pvqrr.json)，尚未導入網站；不是新的已驗證伴侶工具。人生目標的候選來源為 [Grouzet 等人，2005](https://pubmed.ncbi.nlm.nih.gov/16351369/)，尚未選定工具或中文版本，不把它與價值量表混成一個分數。
+
+### 2026-10-08 正式題庫第一輪查核
+
+| 來源 | 查閱位置／材料 | 結論與未完成部分 |
+| --- | --- | --- |
+| [Schwartz & Cieciuch, 2022](https://doi.org/10.1177/1073191121998760) | Measurement Instrument、Table 2、Discussion；2021 年先行公開 | PVQ-RR 為 57 題、19 類、六段自我相似程度。研究不提供本網站的伴侶成功率，也不能直接宣稱 Taiwan 翻譯已驗證 |
+| 論文提供的 [OSF PVQ-RR](https://osf.io/w9as3/) | 使用者同意後唯讀取得繁體修訂版、英文版、計分文件及授權中繼資料 | 他／她各 57 題與 19 類題號已轉錄，節點標示 CC0；來源檔名／日期／指紋見候選稿。第 49 題翻譯差異待審；不是另外列出的 Taiwan 版 |
+| [Schwartz, 2021](https://scholarworks.gvsu.edu/orpc/vol2/iss2/9/)；[作者上傳的介紹全文](https://www.researchgate.net/publication/354384463_A_Repository_of_Schwartz_Value_Scales_with_Instructions_and_an_Introduction) | 工具列表、比較表、翻譯流程；GVSU 附件下載本次回應 403 | 確認不同工具／譯本需分別核對；介紹文章的 CC BY-NC-ND 與 OSF 節點 CC0 分開紀錄，不把一種授權套到所有材料 |
+| [Grouzet et al., 2005 全文](https://selfdeterminationtheory.org/wp-content/uploads/2014/04/2005_Grouzetetal_StructureofGoalContents.pdf) | Table 1、Samples、Measure: The Aspiration Index | 此研究使用 57 題／11 類的重要程度版；不是目前 CSDT 完整包，也不是伴侶適配工具 |
+| [CSDT AI 說明](https://selfdeterminationtheory.org/aspirations-index/)、[條款第 1 節](https://selfdeterminationtheory.org/terms-and-conditions/) | 公開介紹與使用條款，沒有接受下載協議 | 官方完整包與 2005 研究版本不同；線上發布另有條件。工具版本、繁體翻譯與本產品公開使用仍待確認 |
+
+本輪完成的是來源整理與原題資料完整性查核。逐字轉錄不等於翻譯效度審查；原量表的研究證據不等於本產品的結果比較或討論提示已驗證。缺答、代名詞施測方式、最新計分文件與人生方向工具仍待處理。
 
 ## 每題的依據紀錄
 
