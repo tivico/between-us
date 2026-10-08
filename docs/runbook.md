@@ -120,6 +120,17 @@ npm run build
 
 ## 提交與版本規則
 
+### Windows 帳號與 repository 擁有權
+
+本專案初始化與提交曾由不同 Windows 執行帳號操作，若 Git 顯示 `detected dubious ownership`，先確認正在操作的是你自己的這個專案。可對單一命令指定此目錄為可信，無須新增全域或萬用字元例外：
+
+```powershell
+git -c safe.directory=C:/Users/lydai/Desktop/forest status --short
+git -c safe.directory=C:/Users/lydai/Desktop/forest log -5 --oneline
+```
+
+必要時同樣把 `-c safe.directory=...` 放在 `git add`、`git commit` 等指令的子命令前。它只對該次執行生效；搬移專案後先核對實際路徑，不直接信任陌生 checkout。本次使用限定目錄的命令成功提交，未更動全域 Git 設定。
+
 ### Commit 是存檔點，版號是交付里程碑
 
 使用者希望完成大功能後有清楚的 commit 與版號。採用以下簡單規則：
