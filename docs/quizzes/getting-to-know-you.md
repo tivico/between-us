@@ -1,6 +1,6 @@
 # 更認識你：32 題雙人問答候選稿
 
-更新日期：2026-10-08。候選版本：`0.2.0`（確立雙人問答定位，新增結果整理與建議設計；32 題題幹、選項與提示仍為原 `0.1.0` 內容）。結果規則候選版本：`0.1.0`。入口分開與結果方向已獲使用者同意；逐題規則尚未驗收、接入程式或發布。
+更新日期：2026-10-08。候選版本：`0.3.0`（新增第一輪逐題審閱、來源查核與自願試答執行稿；32 題題幹、選項及提示保持原稿）。結果規則候選版本仍為 `0.1.0`。使用者認為目前題目已夠白話，故本輪只記修訂提案，不直接改寫題目。內容尚未核定、接入程式或發布，舊候選稿保留在 Git 歷史。
 
 ## 定位與範圍
 
@@ -430,11 +430,76 @@
 | 來源 | 已讀範圍與支持內容 | 本稿的限制 |
 | --- | --- | --- |
 | [Aron et al., 1997, The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003) | 出版社公開摘要：45 分鐘、逐步深入的自我揭露與關係建立任務；Study 1 比閒聊有較高的互動後親近感 | 八面向、四至八題、單選、非同步揭曉與猜題都不是該研究驗證的程序；不宣稱本稿提升親近或讓人相愛 |
-| [Pagani et al., 2019, Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping](https://doi.org/10.3389/fpsyg.2019.00401) | 沿用 docs/research.md 既有公開摘要／概念段查核：55 對已婚伴侶的日記資料，明確壓力表達與感受到的回應性有關，滿意度的直接關聯未獲支持。本次全文開啟失敗，不增加全文查核結論 | 只提供 thinking／care／vulnerability 的後續研究方向；不是本稿選項、建議順序或交往前效果的證據 |
+| [Pagani et al., 2019, Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping](https://doi.org/10.3389/fpsyg.2019.00401) | 本輪成功讀到摘要、Participants／Procedure、Results：55 對義大利異性夫妻、兩週日記；明確壓力表達與感受到的回應性相關，控制回應性後滿意度的直接關聯未獲支持。先前全文開啟失敗的限制已部分補足 | 概念背景，不是四選項、先聽／先建議順序或交往前效果的證據；不是因果實驗，不按研究中的性別分流施測 |
 
-daily 的生活偏好、repair 的修復選項、boundaries 的界線、life 的分工與 us 的關係期待，先保留為自編討論內容。逐題研究、使用條件與支持範圍待查核，不能把一般研究掛在所有題目上當作效度。
+各題仍是自編討論內容。本輪增加以下原始研究與逐題對應；概念背景、本站情境延伸、直接測量證據分開。沒有找到直接對應的選項證據就如實保留，不把一般研究掛在所有題目上當作效度。
 
-全題證據狀態為「自編候選、未驗證」。八面向是否完整、選項理解、敏感性與完成負擔尚無試答資料；不推論人格、依附型態、成熟程度、信任或愛的程度、是否適合交往。選項字母與位置只是顯示順序，沒有數值或優劣。
+全題證據狀態為「自編候選、未驗證」。八面向是否完整、選項涵蓋、敏感性與完成負擔尚無完整試答資料；一位自願者的有限回饋見本輪紀錄。不推論人格、依附型態、成熟程度、信任或愛的程度、是否適合交往。選項字母與位置只是顯示順序，沒有數值或優劣。
+
+### 第一輪原始研究查核紀錄
+
+查核日期為 2026-10-08。這是針對產品問題的文獻查找，不是系統性回顧。以下九篇是原始研究；只作概念背景，不轉錄量表或沿用其分數，也沒有取得新量表的使用／翻譯許可。未讀完的部分仍待查核。
+
+| 來源 ID／作者、期刊與完整標題 | 已讀範圍、方法與支持內容 | 不支持的推論 |
+| --- | --- | --- |
+| `aron-1997`：Arthur Aron、Edward Melinat、Elaine N. Aron、Robert Darrin Vallone、Renee J. Bator（1997）。Personality and Social Psychology Bulletin, 23(4), 363–377。[The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003)。DOI：10.1177/0146167297234003 | 出版社摘要；45 分鐘逐步深入任務，Study 1 比閒聊有較高互動後親近感。作整體流程背景，不掛在所有題目 | 四至八題、單選、非同步及猜題的效果；不承諾讓人相愛 |
+| `laurenceau-1998`：Jean-Philippe Laurenceau、Lisa Feldman Barrett、Paula R. Pietromonaco（1998）。Journal of Personality and Social Psychology, 74(5), 1238–1251。[Intimacy as an interpersonal process: the importance of self-disclosure, partner disclosure, and perceived partner responsiveness in interpersonal exchanges](https://pubmed.ncbi.nlm.nih.gov/9599440/)。DOI：10.1037/0022-3514.74.5.1238 | PubMed 摘要；兩項一／兩週事件日記研究，揭露與感受到的回應性和互動親近相關。未完成全文樣本／族群核對 | 本站單題能測回應性、揭露愈多愈好、四種欣賞方式已驗證 |
+| `pagani-2019`：Ariela F. Pagani et al.（2019）。Frontiers in Psychology, 10:401。[Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.00401/full)。DOI：10.3389/fpsyg.2019.00401 | 摘要、Participants／Procedure、Results；55 對義大利異性夫妻、兩週日記，明確壓力表達與感受到的回應性相關。控制回應性後滿意度的直接關聯未獲支持 | 先聽或先建議何者最好、因果效果、全性向或所有關係階段的測量等同性 |
+| `patrick-2007`：Heather Patrick、C. Raymond Knee、Amy Canevello、Cynthia Lonsbary（2007）。Journal of Personality and Social Psychology, 92(3), 434–457。[The role of need fulfillment in relationship functioning and well-being: a self-determination theory perspective](https://pubmed.ncbi.nlm.nih.gov/17352602/)。DOI：10.1037/0022-3514.92.3.434 | PubMed 搜尋可讀摘要；直接開啟本輪未正常回傳。三項研究包含日記，自主、能力、連結需求滿足與關係運作相關；全文樣本待核對 | 最佳獨處時間、朋友聯絡規則或相處頻率；不以需求概念推人格 |
+| `debrot-2013`：Anik Debrot、Dominik Schoebi、Meinrad Perrez、Andrea B. Horn（2013）。Personality and Social Psychology Bulletin, 39(10), 1373–1385。[Touch as an interpersonal emotion regulation process in couples' daily lives: the mediating role of psychological intimacy](https://pubmed.ncbi.nlm.nih.gov/23885034/)。DOI：10.1177/0146167213497592 | PubMed 搜尋可讀摘要；直接開啟本輪未正常回傳。102 對約會伴侶、一週日記，觸碰與情感／親密相關；全文族群細節待核對 | 每個人都喜歡觸碰、必須接觸、本站四選項是愛的語言分類 |
+| `overall-2009`：Nickola C. Overall、Garth J. O. Fletcher、Jeffry A. Simpson、Chris G. Sibley（2009）。Journal of Personality and Social Psychology, 96(3), 620–639。[Regulating partners in intimate relationships: the costs and benefits of different communication strategies](https://pubmed.ncbi.nlm.nih.gov/19254108/)。DOI：10.1037/a0012961 | PubMed 搜尋可讀摘要；直接開啟本輪未正常回傳。61 對伴侶、討論錄影及後續一年追蹤；當下感到成功與後續改變並非相同。2017 回顧作查找入口，不代替原研究 | 單題直接性等於成熟、能診斷衝突或指定冷靜時間 |
+| `lewicki-2016`：Roy J. Lewicki、Beth Polin、Robert B. Lount（2016）。Negotiation and Conflict Management Research, 9(2), 177–196。[An Exploration of the Structure of Effective Apologies](https://ncmr.lps.library.cmu.edu/article/id/264/)。期刊現行 DOI：10.34891/9awp-8644 | 期刊摘要及 [PDF](https://ncmr.lps.library.cmu.edu/article/264/galley/267/view/) Study 1／2 方法（期刊頁 183–187）；兩項會計求職者失誤／誠信情境研究，評估道歉組成 | 不是伴侶道歉實驗、本站 15 題不是原量表；不能說單一組成足夠或要求原諒。原句不轉錄 |
+| `dragiewicz-2026`：Molly Dragiewicz、Jeffrey Ackerman、Marianne Haaland（2026）。New Media & Society, OnlineFirst。[Smartphone sharing with intimate partners in Australia: Characteristics and implications for cybersecurity](https://journals.sagepub.com/doi/10.1177/14614448251414006)。DOI：10.1177/14614448251414006 | 出版社摘要及 Introduction；967 位澳洲智慧手機使用成年人、曾有親密關係的問卷，描述裝置分享與隱私情境。未完成所有方法審查 | 交換密碼等於信任、台灣或全性向的最佳界線；不把知道密碼當所有內容的授權 |
+| `daminger-2019`：Allison Daminger（2019）。American Sociological Review, 84(4), 609–633。[The Cognitive Dimension of Household Labor](https://journals.sagepub.com/doi/10.1177/0003122419859007)。DOI：10.1177/0003122419859007 | 出版社摘要，全文受限；35 對的 70 次訪談，區分預見需求、找選擇、決定、追蹤等認知工作，支持提示不要只看動手的家務 | 哪種分工最好、男女應分配何種家務、本站分工偏好的測量效度 |
+
+### 第一輪 32 題編輯審閱
+
+下表是編輯判斷，並非受訪者回饋或內容核定。`E` 表示原創情境，本輪沒有找到可直接支持這組選項的測量工具證據；其他來源 ID 也只支持概念背景，不能驗證本站選項。保留題目仍可接受回饋，修訂提案尚未套用。
+
+| 題號／ID | 類型及依據範圍 | 發現與處理提案 | 試答優先確認 |
+| --- | --- | --- | --- |
+| 01 `know-daily-free-day` | 假設偏好；E | 保留；兩週是想像背景，不是實際休假行為 | 在家做興趣時 A／D 能否選最優先？ |
+| 02 `know-daily-plan` | 出遊期待；E | 提案：原 D「備案」可與其他項同時成立，改問行程事先安排到多細，固定交通／費用情境 | 備案是否只是 A／B／C 的附加做法？ |
+| 03 `know-daily-tired` | 近期行為；E | 保留兩週與無事件出口，不推人格 | 話少與表面正常是否同時符合？時窗好回想嗎？ |
+| 04 `know-daily-social` | 假設期待；E | 保留，不設最佳安排 | C 是否因較像好人而被選？各選項能否自然表達？ |
+| 05 `know-thinking-decision` | 習慣做法；E | 保留第一步與依情境出口 | 不同類型的決定會不會令選答失去意義？ |
+| 06 `know-thinking-pressure` | 近期行為；pagani-2019 概念 | 提案：提示移除「看起來像拖延」的預設，改問先停下來時希望怎麼被確認需求 | 是否把實際做法與理想做法混用？ |
+| 07 `know-thinking-advice` | 支持期待；pagani-2019 概念 | 保留待試答；先問／聽完／釐清可能同時需要，必要時拆題 | A／B／D 是否能選有意義的先後？ |
+| 08 `know-thinking-change` | 假設反應；E | 保留；原因與重要性可能改變回答 | 情境不足時依情境出口是否足夠？ |
+| 09 `know-care-support` | 支持期待；pagani-2019 概念 | 保留；已啟動自願選答，不推本人提供支持方式 | 「先」如何理解？是否漏了實際代辦協助？ |
+| 10 `know-care-appreciation` | 欣賞期待；laurenceau-1998 間接背景 | 保留；研究沒驗證四種欣賞類型 | 努力／能力能否分？選優先是否容易？ |
+| 11 `know-care-affection` | 親近偏好；debrot-2013 概念 | 提案：D 可改「各做各的、待在同一空間」，減少與 C 一起做事重疊；保留雙方同意前提 | C／D 是否重疊？是否有不想親近的出口？ |
+| 12 `know-care-surprise` | 活動期待；E | 保留；不喜歡特別安排也是偏好 | A／C 是否難分？是否需先固定時間與費用？ |
+| 13 `know-repair-expression` | 近期行為；overall-2009 概念 | 保留；D 不標為迴避人格 | 想到不同「親近的人」會不會答案不同？ |
+| 14 `know-repair-pause` | 暫停期待；overall-2009 間接背景 | 提案：原時間與媒介混用，可改問先確認時間／聯絡／地點／媒介哪一項 | D 是否能與 A／B／C 同時成立？ |
+| 15 `know-repair-apology` | 道歉期待；lewicki-2016 跨情境背景 | 提案：D 可改道歉內容如「真誠說出歉意」，讓各項都問先聽到什麼；不要求原諒 | 是否更想先說自己的感受？真誠是否只能看後續行動？ |
+| 16 `know-repair-feedback` | 溝通期待；overall-2009 概念 | 提案：原混合時間、文字、同意，可改成「先怎麼開口」的一組內容 | 最重要的是時機、媒介還是開場內容？ |
+| 17 `know-boundaries-alone` | 聯絡期待；patrick-2007 概念 | 提案：B／D 都涉及約時間，D 可改為只有緊急／必要事才聯絡 | 能否分 B／D？必要聯絡需另定義嗎？ |
+| 18 `know-boundaries-phone` | 隱私期待；dragiewicz-2026 概念 | 保留；密碼與查看授權分開 | 是否把知道密碼誤認所有內容都能看？ |
+| 19 `know-boundaries-updates` | 告知期待；E | 提案：D 是協商流程，其餘是行為時點；可改問何時告知、D 改當天結束後分享 | D 是否其實可搭配任何選項？ |
+| 20 `know-boundaries-friends` | 人際期待；patrick-2007 間接背景 | 提案：題幹「如果開始交往」改為兼容已交往的「交往時」 | 告知、討論與取得同意是否分清？ |
+| 21 `know-vulnerability-hard-topic` | 揭露難處；laurenceau-1998 概念 | 保留主動選題組，不問事件本身 | 能否只談回應？有沒有分享壓力？ |
+| 22 `know-vulnerability-recognition` | 肯定期待；laurenceau-1998 間接背景 | 保留；不測自尊或心理健康 | 努力／學習／能力是否重疊？ |
+| 23 `know-vulnerability-tears` | 支持期待；E | 保留；沒有直接支持哭泣四選項的研究，接觸需詢問 | A／B 能否選先後？未經歷仍能答假設期待嗎？ |
+| 24 `know-vulnerability-disclosure` | 揭露條件；laurenceau-1998 概念 | 保留；沒選的條件也不等於放棄隱私或停止權 | 是否誤解未選某條件就不保有它？ |
+| 25 `know-life-spending` | 費用期待；E | 保留；不作財務建議／公平分數 | 平分與各付能否分？共同費用是否清楚？ |
+| 26 `know-life-housework` | 分工期待；daminger-2019 概念 | 提案：D 移除「避免長期一人承擔」的褒貶，只描述輪替方式；提示保留安排／提醒工作 | 固定分工與依擅長可否共存？不想同住能否略過？ |
+| 27 `know-life-family` | 分享界線；E | 保留；手機研究不能直接支持家人分享規則，保留安全求助說明 | 沒有能談的家人是否有出口？會否誤以為求助需批准？ |
+| 28 `know-life-location` | 假設釐清；E | 保留；不推人生目標或承諾 | 資訊不足是否能選不確定？最先能否有意義地選？ |
+| 29 `know-us-enjoy` | 近期感受；laurenceau-1998 間接背景 | 保留一個月，不作滿意度分數 | 相處不到一個月是否知道可以按已有經驗回答？ |
+| 30 `know-us-pace` | 關係期待；E | 提案：原混合相處頻率與談承諾，可改問未來兩週相處頻率；見面與聊天可能需再拆 | C 是否同時能與 A／B／D 成立？ |
+| 31 `know-us-discuss-next` | 優先議題；E | 保留共同待談事項，不作承諾量表 | 「繼續發展」對已交往者是否自然？ |
+| 32 `know-us-understand` | 了解期待；E | 提案：改問本人希望對方多了解自己哪一面，區別 31 的共同待談議題 | 是否與 31 太重複？是否有漏掉面向？ |
+
+12 題修訂提案為 02、06、11、14、15、16、17、19、20、26、30、32；其他 20 題保留試答。這些疑點是編輯推論，不是已觀察到的受訪者誤解。本輪尊重使用者「已夠白話」回饋，沒有套用提案。單選問目前最優先，不是互斥人格；若反覆無法選，就拆題或改題，不用要求只能選一項掩蓋問題。
+
+### 自願試答、回饋與核定狀態
+
+執行稿及空白模板見 [試答與理解回饋](getting-to-know-you-feedback.md)。已取得一位自願者的第 09 題選答，以及「現有題目已夠白話」的整體可讀性回饋；不公開本人選項、不虛構伴侶答案。這是有限的內容回饋，尚無逐題改述、選項涵蓋與完成負擔資料，不稱正式認知訪談完成。
+
+目前流程：原清單歸納／本稿已完成 → 第一輪編輯審閱與來源部分查核已完成 → 自願試答已啟動、完整回饋待取得 → 內容版本核定待使用者決定 → 核定後另行接入與驗證。
+
+題幹／選項、分享政策、結果規則分別核對，不因接受題目而默認全部配對建議。問答內容可以按明示限制核定為探索用途；內容核定不是量表驗證，不要求使用者做正式研究才能試玩，也不能把一般試玩寫成正式研究。
 
 ## 預計流程與工程邊界
 
@@ -448,7 +513,7 @@ daily 的生活偏好、repair 的修復選項、boundaries 的界線、life 的
 4. **雙人建議**：提供一個小範圍、雙方自願的安排，包含確認情境與是否接受，不宣稱一定有效。身體接觸、隱私與獨處等界線不要求折衷、交出資訊或證明信任。
 5. **資料不足**：任一方尚未想清楚、未經歷、不適用或暫不分享，不生成共同點／差異或針對該人的推論；可提供通用的可選聊天提示。未分享者不被追問理由。「其他／依情境」只列答案與詢問提示，不套具體選項配對建議。
 
-建議屬本站自編應用，沒有被下方研究直接驗證。未來每則需有規則 ID、題目 ID、選項語意 ID、觸發條件、解讀邊界、版本及來源狀態；不依 A/B/C/D 的順序計分，不只憑兩個答案由生成式模型臨時判定人格。測驗的多題面向結果則依其獨立規則辦理。
+建議屬本站自編應用，沒有被上述研究直接驗證。未來每則需有規則 ID、題目 ID、選項語意 ID、觸發條件、解讀邊界、版本及來源狀態；不依 A/B/C/D 的順序計分，不只憑兩個答案由生成式模型臨時判定人格。測驗的多題面向結果則依其獨立規則辦理。
 
 以下為可審閱的結果樣稿，不是完整 32 題配對規則：
 
@@ -498,5 +563,7 @@ daily 的生活偏好、repair 的修復選項、boundaries 的界線、life 的
 2026-10-08 已機械檢查：八個題組、32 題連續題號、32 個唯一 ID、每題一個題幹、A–D 四選項（共 128 個）及一則討論提示（共 32 則）；README、產品、研究與本稿共 27 個相對檔案連結的目標均存在。`git diff --check` 通過。這些檢查確認完整性，不評估選項是否足以涵蓋所有人。本次只改文件，沒有執行程式測試、建置或新功能畫面驗證。
 
 同日候選 `0.2.0` 更新：確認 32 題題幹、選項與提示相較前一份已提交稿完全未變；四則結果條件樣稿與產品分類已補齊，三份修改文件的 15 個相對檔案連結目標存在。針對本次文件的 `git diff --check` 通過。結果規則尚未執行、沒有新增畫面或 API；這是設計文件驗證，不是功能或效果驗證。
+
+同日候選 `0.3.0` 更新：32 題原文與前版逐段比對完全一致；32 筆審閱均對應有效題目 ID，九個來源 ID 唯一、逐題參照存在。12 項修訂提案與 20 題保留試答逐筆核對；六項內容核定欄位皆未勾選。五份文件的 33 個相對檔案連結目標存在，`git diff --check` 通過，私有筆記位置經 `git check-ignore` 確認會被忽略。未保存任何私人選項至 repo。本次僅改內容文件，沒有執行程式 check／build、功能畫面或 API 驗證。
 
 研究方向與自編應用已分開。未完成：逐題使用者驗收、各主題完整來源查核、完整結果規則與建議驗收、認知訪談、測量或產品效果驗證、兩種導覽入口、選題組／暫不分享 API、猜題與發布。寫成候選稿或機械檢查通過，不代表量表驗證。
