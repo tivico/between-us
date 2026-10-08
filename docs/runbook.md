@@ -9,9 +9,9 @@ npm ci
 npm run dev
 ```
 
-終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用，目前沒有真實跨裝置邀請功能。
+終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用；0.4 公開網址已有三題雙人邀請，0.5 的 57 題試讀目前仍在本機。
 
-0.2 的 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`，單人預覽不保存，雙人回合會保存。正式手機／遠距連線須等部署。
+`npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
 ## 新增一個主題
 
@@ -40,6 +40,41 @@ npm run dev
 有草題時設定 `draft`，每題要有獨立 ID、合法面向、至少兩個有 ID 的選項，以及 `sourceIds` 與 `note`。來源記在同一主題的 `sources`；不是放一個網址就完成研究驗證。新增非單選題時，必須一起修改 `Question`、內容驗證、`Demo` 與測試，不能用單選欄位硬塞多選資料。
 
 ## 常見修改位置
+
+### 57 題內容試讀（0.5）
+
+本機由主題介紹按「試讀 57 題核心價值」，或開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機版為 0.5.0，公開網站仍為 0.4.0，未推送／部署。
+
+重要位置：
+
+- `docs/quizzes/core-values-pvqrr.json`：候選題幹 `prompt`、引導、六段選項與版本；原文 `portraits` 只用於追溯。
+- `src/content/core-values-trial.ts`：`createCoreValuesTrial()` 檢查題庫，建立不含計分值／原文分支的試讀定義。
+- `src/components/ContentTrial.tsx`：介紹、57 題單選、跳過、想再讀、整理／篩選與返回修改。
+- `src/domain/trial.ts`：`summarizeTrial()` 只整理有效本人選項、未答與標記，不計分。
+- `src/lib/routes.ts`／`src/App.tsx`：`trial` 路由與主題介紹入口；CSS 以 `trial-` 前綴整理。
+
+資料只在頁面元件記憶體；不向 API 提交、不寫 localStorage、SQLite 或 D1。離開、關閉、重新整理會清除；同一頁返回修改仍保留。標記不自動傳給專案持有人，回饋時可只提供題號與難懂原因。未答包含跳過及尚未讀到的題目，不當成最低程度或零分。
+
+排查順序：
+
+1. **只有 3 題**：確認網址是 `#/trial/core-values`；`#/demo`／`#/start` 仍使用三題示例。公開網址尚未有此入口。
+2. **空白或「試讀資料不完整」**：先 `npm run check`；看轉換器的第一個錯誤與候選 `prompt`、題序、六段選項。不要回退到原文男女版或把候選標成 `ready`。
+3. **改 JSON 後沒有更新**：開發模式有熱更新；4173 建置預覽需重跑 `npm run build`，再重新整理。重新整理前提醒試讀者選擇會清除。
+4. **整理不對**：依序查 `answers[questionId]`、合法 `optionId`、`flagged` 與 `summarizeTrial()`；跳過應顯示「未作答」，不補成某個程度。
+5. **意外有雲端回合或最近紀錄**：確認新增功能沒有把試讀 ID 加入共用 `quizzes`，且 `ContentTrial` 沒有呼叫 `api.ts`／`history.ts`。試讀 ID 為 `core-values-pvqrr-trial`，後端不支援此 ID。
+
+修改範例：要改作答引導，修改候選 JSON 的 `instructions`，同步內容閱讀稿與改寫／版本紀錄；不要改 `sourceInstructions` 冒充原文。變更試讀版面只需調整 `ContentTrial.tsx`／CSS，候選題庫版本不必跟著網站升版。相關驗證為 `npm run check`、`npm run build` 與手機版實際操作；工程通過不等於完成受試者訪談或測量驗證。
+
+### 0.5 驗證紀錄（2026-10-08）
+
+- `npm run check`：型別及 9 檔／50 項測試通過，包含候選題幹、原序、六選項、資料錯誤防護、跳過／無效選項、既有 Node 與 D1 雙人流程。
+- `npm run build` 與 `npm run build:cloudflare`：通過。驗證後重建一般模式供本機 4173 預覽。
+- 瀏覽器使用虛擬試答驗證：下一題、上一題、跳過、標記／取消標記、提前查看整理、篩選、跳回第 1／57 題、最後一題回整理、鍵盤方向鍵單選。
+- 本人兩個選項／一個標記的整理顯示已答 2、未答 55、想再讀 1；返回修改保留選項與標記。重新整理回試讀介紹且清除試答；離開再進入也重建空白試讀。
+- 檢查正常視窗與 390×844 手機模擬，六個原選項、清楚文字與原生表單皆可操作，手機沒有橫向溢出；頁面 Console 未見 error／warn。恢復暫時尺寸設定，試讀頁保留供使用者操作。
+- 截圖 `.local/pvqrr-trial-preview.png` 僅為本機畫面證據，不提交。程式碼檢查確認試讀不引用 API／歷史保存模組；沒有新增資料表、migration 或實際回合。
+
+尚未驗證：真實手機、完整無障礙稽核、真實參與者試讀、此改寫的測量等同性、正式結果比較與公開 0.5 部署。上面的工程／虛擬操作不當成學術試讀資料。
 
 | 想修改 | 位置與注意事項 |
 | --- | --- |

@@ -1,8 +1,8 @@
 # 架構與資料流程
 
-## 現況：本機前端＋雙人 API
+## 現況：前端、雙人 API 與單人題庫試讀
 
-React + TypeScript + Vite 前端，以及 Node 原生 HTTP＋SQLite 後端，仍在同一個專案。0.3 增加獨立 API 與 GitHub 部署流程；目前仍在本機使用，沒有會員或對外部署。
+React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.4 三題雙人流程已公開部署；0.5 的 57 題中性措辭試讀目前在本機，沒有會員。單人試讀不建立回合或保存答案。
 
 ```text
 index.html
@@ -23,6 +23,7 @@ index.html
 | `#/` | `Catalog`：主題列表與篩選 |
 | `#/topics/core-values` | `Topic`：主題介紹、面向、研究來源 |
 | `#/demo/core-values` | `Demo`：示例作答與個人答案 |
+| `#/trial/core-values` | `ContentTrial`：57 題候選試讀、跳過、標記與本人選項整理 |
 | `#/start/core-values` | `StartRound`：分享說明、暱稱、建立回合 |
 | `#/rounds/<id>/<privateToken>` | `RoundPage`：暫存／確認／等待／結果 |
 | `#/invite/<invitationToken>` | `JoinRound`：邀請預覽與 B 加入 |
@@ -42,6 +43,24 @@ index.html
 ```
 
 答案只在 `Demo` 的 React state（元件記憶體）中。無 `localStorage`、cookie、網路提交與持久化；重新整理或離開該元件即清除。返回修改仍在同一個元件中，選擇會保留。沒有任何另一人的示例答案或計分。
+
+### 57 題內容試讀（0.5）
+
+```text
+docs/quizzes/core-values-pvqrr.json（候選 0.2.0）
+  → src/content/core-values-trial.ts / createCoreValuesTrial()
+  → src/lib/routes.ts 的 trial 路由
+  → src/App.tsx / Page → ContentTrial.tsx
+  → answers、flagged、index、phase（本頁記憶體）
+  → src/domain/trial.ts / summarizeTrial()
+  → 本人選項、未答與想再讀清單
+```
+
+轉換器只將中性 `prompt` 與六段選項 ID／文字帶入畫面，不選取原文男女分支、不提供計分值或逐題面向。載入時核對 57 題原序、中性題幹與六段選項完整性；錯誤直接報出，防止靜默回退到帶性別的原文。此檢查屬內容完整性，不是量表效度。
+
+試讀 ID 為 `core-values-pvqrr-trial`，不在共用 `quizzes` 陣列，不能建立雙人回合；既有 `core-values` 仍為三題示例及原版本。試讀只在 React state 保存答案與題號標記，沒有 API、localStorage 或檔案寫入。跳過保留為未答，整理函式也將無效選項視為未答，沒有補值或分數。未作答題數可能包含尚未閱讀的題目，不表示試讀者拒答。
+
+主題介紹與首頁卡片提供清楚的 57 題試讀／3 題雙人試玩入口。作答與整理頁都不顯示面向分類、逐題計分或針對第 49 題的預期意思，避免提前查看整理後影響後續試讀。整理頁可跳回任一題、取消標記或只看未答／標記題；不生成另一人的答案。
 
 ### 建置流程
 

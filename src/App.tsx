@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { quizzes, getQuiz } from './content/quizzes';
 import { Motif } from './components/Motif';
 import { HistoryPage, JoinRound, RoundPage, StartRound } from './components/RoundFlow';
+import { ContentTrial } from './components/ContentTrial';
+import { coreValuesTrial } from './content/core-values-trial';
 import type { QuizDefinition, TopicStatus } from './domain/quiz';
 import { parseRoute, type Route } from './lib/routes';
 import { invitationNote, storageNote } from './lib/deployment';
@@ -44,7 +46,7 @@ function Catalog() {
       <div className="topic-grid">
         {visible.map((quiz) => <a className={`topic-card theme-${quiz.theme}`} href={`#/topics/${quiz.id}`} key={quiz.id}>
           <div className="card-art"><span className={`status-pill status-${quiz.status}`}>{statusLabels[quiz.status]}</span><Motif kind={quiz.motif} /></div>
-          <div className="card-body"><p className="card-audience">{quiz.audience}</p><h3>{quiz.title}</h3><p className="card-subtitle">{quiz.subtitle}</p><div className="card-footer"><span>{quiz.questions.length > 0 ? `${quiz.questions.length} 題介面示例` : '查看主題方向'}</span><span className="circle-arrow"><Arrow /></span></div></div>
+          <div className="card-body"><p className="card-audience">{quiz.audience}</p><h3>{quiz.title}</h3><p className="card-subtitle">{quiz.subtitle}</p><div className="card-footer"><span>{quiz.id === 'core-values' ? '57 題內容試讀・3 題流程試玩' : quiz.questions.length > 0 ? `${quiz.questions.length} 題介面示例` : '查看主題方向'}</span><span className="circle-arrow"><Arrow /></span></div></div>
         </a>)}
       </div>
     </section>
@@ -61,7 +63,7 @@ function Catalog() {
     <section className="approach" aria-labelledby="approach-heading">
       <div><p className="eyebrow">OUR APPROACH</p><h2 id="approach-heading">理解，比一個分數更重要。</h2><p>差異是認識彼此的起點。<br />我們希望把答案變成對話，讓重要的想法有機會被聽見。</p></div>
       <div className="faq">
-        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。目前三觀題目是研究方向下的自編示例，尚未驗證；其他主題仍在籌備。</p></details>
+        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。核心價值提供依 PVQ-RR 改寫的 57 題中性措辭試讀，尚在審查；雙人流程另外使用三題自編示例。其他主題仍在籌備。</p></details>
         <details><summary>可以看到對方選了什麼嗎？<span aria-hidden="true">＋</span></summary><p>雙人測試回合會先取得分享同意，各自填答，完成後才解鎖彼此選項。單人介面預覽只有你自己的選擇。{invitationNote}</p></details>
         <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>{storageNote}，私人返回連結可找回。單人介面預覽仍不保存。保存期限與刪除規則尚未定案，目前請使用測試答案。</p></details>
       </div>
@@ -70,7 +72,7 @@ function Catalog() {
 }
 
 function Sources({ quiz }: { quiz: QuizDefinition }) {
-  return <section className="sources" aria-labelledby="sources-heading"><p className="eyebrow">RESEARCH & TRANSPARENCY</p><h2 id="sources-heading">這個主題的依據</h2><p>{quiz.evidenceSummary}</p>
+  return <section className="sources" aria-labelledby="sources-heading"><p className="eyebrow">RESEARCH & TRANSPARENCY</p><h2 id="sources-heading">{quiz.id === 'core-values' ? '三題流程示例的依據' : '這個主題的依據'}</h2>{quiz.id === 'core-values' && <p>57 題候選的研究來源與改寫限制，請見 <a href="#/trial/core-values">內容試讀介紹</a>。以下說明雙人流程目前使用的三題示例。</p>}<p>{quiz.evidenceSummary}</p>
     {quiz.sources.length > 0 && <ul className="source-list">{quiz.sources.map((source) => <li key={source.id}><a href={source.url} target="_blank" rel="noreferrer">{source.title} <Arrow /></a><p className="source-author">{source.authors} · {source.year}</p><p>{source.scope}</p></li>)}</ul>}
   </section>;
 }
@@ -80,11 +82,12 @@ function Topic({ quiz }: { quiz: QuizDefinition }) {
     <a className="back-link" href="#/">← 回到主題館</a>
     <section className={`topic-intro theme-${quiz.theme}`}>
       <div><span className={`status-pill status-${quiz.status}`}>{statusLabels[quiz.status]}</span><p className="eyebrow intro-eyebrow">A CONVERSATION STARTER</p><h1 id="page-heading" tabIndex={-1}>{quiz.title}</h1><p className="intro-subtitle">{quiz.subtitle}</p><p className="intro-description">{quiz.description}</p><p className="intro-audience">適合：{quiz.audience}</p>
-        {quiz.questions.length > 0 ? <div className="topic-actions"><a className="button primary" href={`#/start/${quiz.id}`}>開始雙人流程測試 <Arrow /></a><a className="back-link" href={`#/demo/${quiz.id}`}>先看單人介面預覽</a></div> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
+        {quiz.id === 'core-values' && <div className="topic-actions trial-entry"><a className="button primary" href="#/trial/core-values">試讀 57 題核心價值 <Arrow /></a><p>性別中性措辭・單人試讀・尚在審查</p></div>}
+        {quiz.questions.length > 0 ? <div className="topic-actions"><a className={`button ${quiz.id === 'core-values' ? 'secondary' : 'primary'}`} href={`#/start/${quiz.id}`}>{quiz.id === 'core-values' ? '3 題雙人流程試玩' : '開始雙人流程測試'} <Arrow /></a><a className="back-link" href={`#/demo/${quiz.id}`}>先看單人介面預覽</a></div> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
       </div><div className="intro-art"><Motif kind={quiz.motif} /></div>
     </section>
-    <div className="detail-columns"><section><p className="eyebrow">WHAT WE WILL EXPLORE</p><h2>我們會聊到</h2><ul className="dimension-list">{quiz.dimensions.map((dimension, index) => <li key={dimension}><span>0{index + 1}</span>{dimension}</li>)}</ul></section>
-      <aside className="preview-notice"><h2>{quiz.questions.length ? '先試試看，慢慢調整' : '為重要的話題，好好準備'}</h2><p>{quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
+    <div className="detail-columns"><section><p className="eyebrow">WHAT WE WILL EXPLORE</p><h2>{quiz.id === 'core-values' ? '三題示例的探索方向' : '我們會聊到'}</h2><ul className="dimension-list">{quiz.dimensions.map((dimension, index) => <li key={dimension}><span>0{index + 1}</span>{dimension}</li>)}</ul></section>
+      <aside className="preview-notice"><h2>{quiz.questions.length ? '先試試看，慢慢調整' : '為重要的話題，好好準備'}</h2><p>{quiz.id === 'core-values' ? '57 題內容試讀整理個人選項與想再讀的題目，不保存或分享，也不提供分數。3 題雙人試玩會保存答案，兩人完成後可看彼此的選項。正式題庫與結果仍待核定。' : quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
     </div>
     <Sources quiz={quiz} />
   </div>;
@@ -131,6 +134,7 @@ function Page({ route }: { route: Route }) {
   if (route.page === 'history') return <HistoryPage />;
   if (route.page === 'invite') return <JoinRound key={route.token} token={route.token} />;
   if (route.page === 'round') return <RoundPage key={`${route.id}:${route.token}`} id={route.id} token={route.token} />;
+  if (route.page === 'trial') return route.id === 'core-values' ? <ContentTrial key={coreValuesTrial.version} trial={coreValuesTrial} /> : <NotFound />;
   const quiz = getQuiz(route.id);
   if (!quiz) return <NotFound />;
   if (route.page === 'start') return quiz.questions.length ? <StartRound key={quiz.id} quiz={quiz} /> : <NotFound />;
@@ -147,13 +151,13 @@ export function App() {
   }, []);
   useEffect(() => {
     const quiz = 'id' in route ? getQuiz(route.id) : undefined;
-    document.title = quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
+    document.title = route.page === 'trial' ? '核心價值題庫試讀｜之間 Between Us' : quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
     window.scrollTo(0, 0);
     document.getElementById('page-heading')?.focus();
   }, [route]);
   return <>
     <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); document.getElementById('main-content')?.focus(); }}>跳到主要內容</a>
-    <div className="preview-banner">雙人流程試玩 <span aria-hidden="true">·</span> 正式題庫準備中</div>
+    <div className="preview-banner">{route.page === 'trial' ? '核心價值題庫試讀' : '雙人流程試玩'} <span aria-hidden="true">·</span> {route.page === 'trial' ? '中性措辭審閱中' : '正式題庫準備中'}</div>
     <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/">測驗主題館</a><a href="#/history">最近紀錄</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
     <main id="main-content" tabIndex={-1}><Page route={route} /></main>
     <footer className="site-footer"><a className="footer-brand" href="#/">之間 <span>BETWEEN US</span></a><p>留一點好奇，給最靠近的人。</p><span className="footer-note">理解彼此的對話起點</span></footer>

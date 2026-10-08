@@ -847,7 +847,7 @@
   ],
   "scoringStatus": "19-value item mapping transcribed; scoring not implemented",
   "missingAnswerPolicy": "pending original-rule review; do not invent values or impute skipped items",
-  "releaseStatus": "not imported by the app; not a ready quiz",
+  "releaseStatus": "frontend-only content trial available locally; not in shared round registry; not a ready quiz",
   "wording": "gender-neutral-third-person",
   "adaptation": {
     "id": "zh-hant-gender-neutral-v1",

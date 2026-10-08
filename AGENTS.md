@@ -27,3 +27,4 @@
 - 0.4 已選用 Cloudflare Workers＋D1，同一網址提供網頁/API。部署入口 wrangler.jsonc；雲端 store 在 cloudflare/store.mjs，schema 用 cloudflare/migrations。不要將 node:sqlite 帶進 Worker。
 - 0.4 已上線 https://between-us.forest-between-us.workers.dev/ ，已設定真正 account_id / database_id，公開健康與完整雙人 API 已驗證。不要重建 D1；GitHub push 目前只做 CI，發布需 cloudflare:deploy。OAuth 由 Wrangler 管理，不提交到 repo。
 - 本機 Node 與雲端 D1 是獨立資料庫；不自動搬移既有答案。改 API／提交規則時同步兩種 store，D1 必須使用交易／條件更新處理非同步競爭。
+- 0.5 新增本機 `#/trial/core-values` 的 57 題中性候選試讀，來源 docs/quizzes/core-values-pvqrr.json，轉換在 src/content/core-values-trial.ts；不加入共用 quizzes 陣列或後端回合。答案／標記只在 React state，跳過保持未答，不提供分數。公開網站仍為 0.4，候選內容 0.2.0；不把工程試答當作實際訪談或測量驗證。
