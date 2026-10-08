@@ -15,4 +15,14 @@ describe('直接連結與路由', () => {
       expect(parseRoute(path)).toEqual({ page: 'not-found' });
     }
   });
+  it('私人返回與邀請連結各自解析，不接受短憑證或額外路徑', () => {
+    const token = 'a'.repeat(64);
+    const id = '00000000-0000-4000-8000-000000000000';
+    expect(parseRoute('#/history')).toEqual({ page: 'history' });
+    expect(parseRoute('#/start/core-values')).toEqual({ page: 'start', id: 'core-values' });
+    expect(parseRoute(`#/rounds/${id}/${token}`)).toEqual({ page: 'round', id, token });
+    expect(parseRoute(`#/invite/${token}`)).toEqual({ page: 'invite', token });
+    expect(parseRoute(`#/rounds/${id}/short`)).toEqual({ page: 'not-found' });
+    expect(parseRoute(`#/invite/${token}/extra`)).toEqual({ page: 'not-found' });
+  });
 });

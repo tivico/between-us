@@ -1,8 +1,8 @@
 # 架構與資料流程
 
-## 現況：只有本機前端
+## 現況：本機前端＋雙人 API
 
-目前 React + TypeScript + Vite 單一專案。沒有 API、資料庫、服務端金鑰、會員或對外部署。
+0.2 為 React + TypeScript + Vite 前端，以及 Node 原生 HTTP＋SQLite 的本機後端，仍在同一個專案。沒有會員、雲端帳號、服務端管理金鑰或對外部署。
 
 ```text
 index.html
@@ -23,9 +23,13 @@ index.html
 | `#/` | `Catalog`：主題列表與篩選 |
 | `#/topics/core-values` | `Topic`：主題介紹、面向、研究來源 |
 | `#/demo/core-values` | `Demo`：示例作答與個人答案 |
+| `#/start/core-values` | `StartRound`：分享說明、暱稱、建立回合 |
+| `#/rounds/<id>/<privateToken>` | `RoundPage`：暫存／確認／等待／結果 |
+| `#/invite/<invitationToken>` | `JoinRound`：邀請預覽與 B 加入 |
+| `#/history` | `HistoryPage`：此瀏覽器的最近入口 |
 | 不存在的主題或不支援的路徑 | `NotFound`：提供返回入口 |
 
-目前用 hash 路由，路徑切換不向後端索取頁面；因此本機與靜態主機不用另外設定子頁回寫。這不是未來私人 token 的最終傳遞設計。
+目前用 hash 路由，路徑切換不向後端索取頁面。私人／邀請 token 放在網址 `#` 片段，不隨一般 HTTP URL 傳到網頁服務；需要操作資料時明確透過 JSON 或 Authorization 傳給 API。不是可以公開轉傳的憑證。
 
 ### 預覽作答資料
 
@@ -52,7 +56,7 @@ index.html
 - 前端骨架不先選資料庫供應商；雙人流程需要真正後端，不能以同機暫存冒充跨裝置分享。
 - 首頁的研究資料是公開內容；個人答案未來絕不可包進前端靜態題庫或 build 資產。
 
-## 免會員保存與找回（方向已確認，尚未實作）
+## 免會員保存與找回（0.2 本機已實作）
 
 採後端保存＋每位參與者每輪的私人返回連結，瀏覽器另外保留此裝置最近紀錄入口。裝置入口被清除不等於後端資料被刪除；換裝置可使用保留的私人連結。尚未定義全部歷史的跨裝置找回或遺失憑證恢復，不假定無會員可保證恢復。
 
@@ -62,7 +66,27 @@ index.html
   → 再次開啟 → 後端重新驗證 → 繼續填答／等待／查看已解鎖結果
 ```
 
-私人返回與邀請憑證分離。最近紀錄的儲存方式與匿名裝置身分待選；它只是索引，不是能讀取所有答案的權限。前端與後端若跨網域，需實測瀏覽器憑證／cookie 限制，再定傳遞方法，不能只看本機正常就認定 GitHub Pages 上可用。
+私人返回與邀請憑證分離。每輪每人有 32 隨機位元組的私人 token，由瀏覽器 `crypto.getRandomValues` 產生；後端只存 SHA-256 雜湊。API 以 `Authorization: Bearer` 驗證，初次建立／加入以 JSON 傳送本人 token。A 提交後的邀請以不同用途的 HMAC 衍生並只存雜湊，重啟後仍能由 A 的憑證產出相同邀請。
+
+`src/lib/history.ts` 將最近 20 個回合的 ID、本人 token、主題、暱稱與日期保存到 localStorage；不保存答案。這些入口本身含存取權，因此共用此瀏覽器的人也能開啟。localStorage 儲存失敗時，畫面要求另存私人連結。移除索引不刪除後端答案，再次開啟私人連結會重新加入。
+
+目前不使用 cookie，也沒有帳號層的完整歷史找回。`5173` 開發與 `4173` 建置預覽使用同一 SQLite，但瀏覽器索引因不同 origin 分開；將私人連結改到正在使用的本機服務入口即可讀取同一後端紀錄。未來 GitHub Pages 跨來源 API 與憑證傳遞仍要另行實測。
+
+### 真正的雙人請求流程
+
+```text
+RoundFlow.tsx（選答／提交／加入）
+  → src/lib/api.ts（JSON／Bearer）
+  → Vite 的 /api 代理 → 127.0.0.1:8787
+  → server/http.mjs（來源、方法、大小、格式）
+  → server/store.mjs（授權、快照、完整性、交易）
+  → .local/data/between-us.sqlite
+  → 只回本人資料／完成狀態；兩人完成後 results 才回雙方答案
+```
+
+作答畫面先更新本地選擇，以序列佇列逐次保存完整草稿與 revision（修改序號），不讓較慢請求覆蓋較新答案。保存未成功時會提示並阻止提交。不同分頁的過時修改回 `STALE_REVISION`，使用者可明確重新載入最新資料；不靜默覆蓋。
+
+等待頁每 10 秒在可見狀態查詢，也可手動更新或在回到視窗時更新。結果從後端讀取真實兩人答案，沒有第二人的假資料或契合分數。
 
 ## 科普內容與結果的連結（基本分工已確認，技術設計尚未實作）
 
@@ -79,20 +103,20 @@ index.html
 
 科普來源修訂時，影響結果解讀的內容應隨結果版本固定，既有紀錄需能核對當時說明；一般完整文章可更新並顯示修訂日期。實際快照粒度於結果功能開發時定義。
 
-## 後續後端契約（設計，尚未實作）
+## 本機雙人後端（0.2 已實作）
 
-以下是必要邊界，不是要求建立多個服務。單一小型 API 搭配託管資料庫即可。
+目前採單一 Node 程序與 SQLite 連線；`scripts/dev.mjs` 一次啟動網頁與 API。只監聽本機 `127.0.0.1`，不是公開部署服務。正式託管平台仍待選。
 
 ### 資料生命週期
 
 | 資料 | 角色 |
 | --- | --- |
-| `quiz_revisions` | 不可變的題目與結果規則版本／快照；回合不可依賴可被直接覆寫的題庫 |
-| `sessions` | 回合 ID、題目版本、進度、建立／到期時間 |
-| `participants` | A/B 席位、暱稱、分享同意、提交時間、私人 token 的雜湊 |
-| `answers` | 每位參與者每題的選項，唯一鍵為參與者＋題目 |
-| `invitations` | 邀請 token 雜湊、綁定回合、使用狀態與到期時間 |
-| 討論收藏 | 後續若實作，需定義屬於個人還是共享，不先假定 |
+| `rounds` | 回合 ID、主題 ID、完整題庫 JSON 快照、建立時間、邀請雜湊 |
+| `participants` | 回合＋A/B 席位、私人雜湊、暱稱、同意／提交時間、答案 JSON、revision |
+
+選用兩張表與小型 JSON 草稿，避免目前規模預先分出多個服務／題目／答案表。每輪固定完整快照，修改公開題庫不改舊回合。A/B 的複合唯一鍵與 slot 限制保證最多兩席；token 雜湊全域唯一。未來需要查詢、內容管理或更細粒度更新時再評估拆表。
+
+SQLite `user_version = 1`；啟動時遇到更高版本會停止，不覆寫。資料沒有自動期限／刪除；目前僅供測試答案。將來正式推出前仍需核定到期、撤銷、刪除與找回行為並提供 migration。
 
 「雜湊」是把憑證轉成不可直接還原的驗證值；資料庫不要保存原始私人 token。私人連結持有人即有該參與者的存取權，不能當一般邀請連結轉傳。
 
@@ -100,16 +124,17 @@ index.html
 
 | 操作 | 驗證與回傳原則 |
 | --- | --- |
-| `POST /api/sessions` | 僅接受已開放主題／版本，建立 A 與回合；需要重試識別，避免重複建立 |
-| `PUT /api/sessions/:id/answers` | 只能寫本人未提交答案；檢查題目、選項屬於回合固定版本 |
-| `POST /api/sessions/:id/submit` | 完整性／分享同意檢查，提交與鎖定必須在同一交易完成 |
-| `POST /api/sessions/:id/invitations` | A 已提交才可建立邀請；回傳給 B 的邀請，不回傳 A 私人 token |
-| `POST /api/invitations/claim` | 原子占用 B 席位，拒絕第三人；同一已驗證 B 的重試不產生新席位 |
-| `GET /api/sessions/:id/status` | 回傳必要的本人資料與完成狀態，不附對方未解鎖答案 |
-| `GET /api/sessions/:id/results` | 驗證參與者身分、雙方提交與同意後，才回傳可分享的雙人答案／結果 |
+| `GET /api/health` | 本機服務狀態，不提供任何答案 |
+| `POST /api/rounds` | 建立 A、同意與題庫快照；此版本接受有題目的 draft／ready，planned 拒絕；相同 A 憑證重試不新增 |
+| `PUT /api/rounds/:id/answers` | Bearer 驗證本人未提交草稿；核對快照內題目／選項及 revision |
+| `POST /api/rounds/:id/submit` | 必須完整作答；交易內提交鎖定，A 同時產生邀請雜湊；重試不改完成時間 |
+| `GET /api/invitations/preview` | 邀請 Bearer 只讀主題、邀請者暱稱、題數與是否已加入；沒有 A 答案 |
+| `POST /api/invitations/claim` | JSON 邀請、B 私人憑證及分享同意；原子占用 B 席位，拒絕第三人，相同 B 可重試 |
+| `GET /api/rounds/:id/status` | 本人答案與雙方完成狀態，peer 永遠不附答案；A 提交後才附邀請 |
+| `GET /api/rounds/:id/results` | 驗證此回合的 A／B，雙方提交後才回雙方答案，否則回 423 |
 | 刪除／到期 | 待確認分享回合的刪除權、保存期限；確認後一併定義 API 與畫面 |
 
-交易（transaction）是讓一組資料更新一起成功或一起失敗，避免兩人同時加入、多次提交造成不一致。後端應回傳可讓畫面辨識的錯誤碼，例如 `INVITATION_EXPIRED`、`ALREADY_CLAIMED`、`SESSION_LOCKED`；不要讓使用者只看到泛用錯誤。
+交易（transaction）讓一組更新一起成功或一起失敗。此版本使用 `BEGIN IMMEDIATE`，搭配同步 SQLite 操作避免加入／提交的中間狀態。預期錯誤使用 `INVITATION_CLAIMED`、`ROUND_LOCKED`、`STALE_REVISION`、`RESULTS_LOCKED` 等代碼；JSON 最大 32 KiB，拒絕非允許來源，不開放廣泛 CORS。
 
 ### 解鎖原則
 
@@ -119,7 +144,7 @@ A 同意並提交 + B 同意並提交
   → 結果可讀
 ```
 
-狀態可表達為 `a_answering → awaiting_partner → b_answering → unlocked`，另有 `expired/deleted`。服務端是權威，前端狀態只用來顯示；隱藏按鈕無法阻止提前讀取資料。每一次結果讀取都要重新驗證資格。
+目前每位參與者的畫面狀態由資料推導為 `answering → waiting → unlocked`；提交時間與兩席是服務端權威，結果每次讀取都重新驗證。`expired/deleted` 尚未實作。隱藏按鈕無法代替資料授權。
 
 結果原則上依固定版本的答案與計分規則確定性生成，不需要 AI API。名目選項不做數值距離；量表計分依核定方法。尚未分享或未答不能視為一致。
 
@@ -133,6 +158,9 @@ A 同意並提交 + B 同意並提交
 - 資料庫限制每個回合兩個席位；存取規則應測試 A、B、陌生人與提交前後。
 - `.env` 不入 Git。任何 `VITE_` 變數會打包到瀏覽器，不能放管理金鑰。
 - 保存期限與刪除機制是正式版本交付前必須定義的產品行為。
+- `.local` 被 Git 忽略，Vite 的 `server.fs.deny` 也拒絕直接下載資料庫／WAL；正式建置只含前端，不包含 SQLite。
+
+技術參考：[Node 24 SQLite](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html)、[Vite 代理設定](https://vite.dev/config/server-options.html#server-proxy)。本機流程已驗證，正式上線仍需 HTTPS、允許來源、頻率限制、備份、撤銷與保存規則。
 
 ## GitHub 部署方向（規劃）
 

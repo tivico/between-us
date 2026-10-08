@@ -11,6 +11,8 @@ npm run dev
 
 終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用，目前沒有真實跨裝置邀請功能。
 
+0.2 的 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`，單人預覽不保存，雙人回合會保存。正式手機／遠距連線須等部署。
+
 ## 新增一個主題
 
 先在 `src/content/quizzes.ts` 的 `quizzes` 陣列增加資料，不必複製畫面。例如新增尚未有題庫的「共同休閒」：
@@ -47,16 +49,20 @@ npm run dev
 | 主題配色 | `.theme-sage` 等 CSS 變數；新增 theme 要同步 TypeScript `Theme` |
 | 插圖 | `src/components/Motif.tsx`；新增 motif 要同步 `QuizDefinition` |
 | 新頁面 | `src/lib/routes.ts` 加路由，`src/App.tsx` 的 `Page` 加呈現，再補路由測試 |
-| 後端 | 依 `docs/architecture.md` 契約另行接入，現在沒有資料庫可操作 |
+| 後端 | `server/store.mjs` 的資料與授權、`server/http.mjs` 的 API 邊界，對照架構文件 |
 
 例如想把主色改成更深的綠：先調整 `.primary` 的背景，再確認白字對比、hover、鍵盤外框與手機畫面，不只改首頁按鈕。
+
+0.2 已有後端與 SQLite：實際邏輯在 `server/store.mjs`／`server/http.mjs`，畫面在 `RoundFlow.tsx`。例如新增一個有示例題的主題後，前端會熱更新，但 Node 題庫只在啟動時讀取；需停止並重開 `npm run dev`，新回合才會用新題庫，舊回合仍用原快照。修改後端也要重啟，不能只重新整理網頁。
+
+Node 原生讀取的共用 `.ts` 檔需保留完整 import 副檔名，使用可抹除的 TypeScript 型別；不要直接加入需額外轉換的 enum 等語法。UI 的一般 `.tsx` 仍由 Vite 處理。
 
 ## 排查順序
 
 ### 服務無法啟動／連不上
 
 1. 確認在專案根目錄，有 `package.json`。
-2. `node --version`；至少 22.12。
+2. `node --version`；至少 24.13（本次驗證 24.19.0）。
 3. `npm ci` 安裝 lockfile 對應依賴，留意第一個錯誤。
 4. `npm run dev`，以終端機實際顯示 URL 為準。
 5. 若出現 5173 被占用，先看哪個程式持有，不要直接殺掉陌生服務：
@@ -65,10 +71,11 @@ npm run dev
 Get-NetTCPConnection -LocalPort 5173 -State Listen | Select-Object LocalAddress,LocalPort,OwningProcess
 ```
 
-可改用 `npm run dev -- --port 5174`。檢查 HTTP 的安全指令：
+本機整合啟動器使用固定 5173／8787，若占用需先確認是否為本專案先前的服務；不要終止陌生程序。調整連接埠需同步 `vite.config.ts` 的網頁／proxy、`scripts/dev.mjs` 的 API 與 `server/http.mjs` 允許來源，不能只改瀏覽器網址。檢查 HTTP 的安全指令：
 
 ```powershell
 (Invoke-WebRequest -Uri 'http://127.0.0.1:5173' -UseBasicParsing).StatusCode
+(Invoke-WebRequest -Uri 'http://127.0.0.1:5173/api/health' -UseBasicParsing).Content
 ```
 
 ### 畫面空白／新增題目後壞掉
@@ -79,14 +86,43 @@ Get-NetTCPConnection -LocalPort 5173 -State Listen | Select-Object LocalAddress,
 4. 若 URL 不對，試 `http://127.0.0.1:5173/#/`；未知頁面應出現返回入口。
 5. 在 `App.tsx` 的 `Page`、`getQuiz()` 或 `Demo` 的 `onChange` 加斷點，查看主題 ID、題目 ID 與選項 ID。
 
-現在沒有後端 log 或資料表；不要追不存在的 API。未來接入後端再更新此章與診斷指令。
+0.2 的 API 已實作。若型別與題庫沒有錯，繼續查看下方「本機雙人後端排查」，不要只在前端改顯示數字。
 
 ### 答案「不見了」／下一題不能按
 
 - 沒有選 radio 時，下一題刻意停用。
 - 上一題與返回修改會保留當次選擇。
-- 重新整理或離開預覽會清除記憶體中的答案，這是目前已說明的限制。
-- 正式跨裝置暫存尚未實作，請勿用目前預覽蒐集朋友的正式答案。
+- 單人介面預覽重新整理仍會清除答案。
+- 雙人回合保存成功後可重新整理恢復；畫面有儲存失敗時，請先重試，不要直接關頁。私人返回連結可找回，最近入口只是此瀏覽器的索引。
+- 尚未對外部署，請使用測試答案；本機網址無法讓遠方朋友開啟。
+
+## 本機雙人後端排查
+
+1. **重現與辨認頁面**：`#/demo/...` 是不保存的單人預覽；`#/rounds/...` 才是雙人回合。先確認是否選錯入口。
+2. **服務**：網頁能開、保存卻失敗，先查 `/api/health`，再看 `npm run dev` 終端機是否有啟動失敗、8787 占用或 `API_INTERNAL_ERROR`。API 不印 request／token／答案，避免 log 洩漏。
+3. **請求**：瀏覽器 Network 核對 `/api/rounds/.../answers`、`status`、`submit`、`results` 的方法、HTTP 狀態與錯誤碼。不要把帶 Authorization 或私人網址的完整截圖轉傳。
+4. **授權**：401 表示私人憑證與回合不符；邀請連結不能當私人返回連結。邀請已加入會回 409 `INVITATION_CLAIMED`。
+5. **暫存**：`STALE_REVISION` 表示另一分頁已更新，畫面提供重新載入最新資料（會取代未保存選擇）。網路失敗則用重試儲存；等待「已儲存」再提交／離開。
+6. **鎖定**：409 `ROUND_LOCKED` 是已提交的保護，不是存檔失敗。不能修改已提交答案；重測另開回合。423 `RESULTS_LOCKED` 表示兩人尚未完成。
+7. **資料**：`rounds.snapshot` 固定題庫；`participants.answers` 是各自選項、`revision` 是修改序號、`submitted_at` 是鎖定與解鎖觀測點。先查這些欄位與 slot，再看呈現。
+
+安全的唯讀計數指令（只輸出回合／參與者數，沒有答案與憑證）：
+
+```powershell
+node --input-type=module -e "import { DatabaseSync } from 'node:sqlite'; const db = new DatabaseSync('.local/data/between-us.sqlite', { readOnly: true }); console.log(db.prepare('SELECT count(*) AS rounds FROM rounds').get()); console.log(db.prepare('SELECT count(*) AS participants FROM participants').get()); db.close();"
+```
+
+資料庫沒有建立時此指令會失敗，先確認服務曾成功建立回合。`user_version` 高於 1 時程式會停止，先使用對應新版本或規劃 migration，不能把版號寫回 1。
+
+本機資料不自動刪除，也沒有重設／刪除 API。移除此裝置入口只改 localStorage，私人連結重新開啟會把入口加回。遺失所有入口與私人連結的自助找回尚未實作，不能保證從暱稱恢復。
+
+## 保存與回復資料
+
+`.local` 不入 Git，因此 commit／tag 只能保存程式，不能當作資料備份。修改資料庫結構前先正常停止服務（Ctrl+C），備份 `.local/data/` 到另一個不會覆寫原檔的位置；異常停止時若仍有 `-wal`／`-shm`，一併保留，不要只取走主資料檔。
+
+回復時也先停止服務與保留現有資料，再恢復完整資料組，啟動相容程式；不在服務運行時直接覆寫 SQLite。不知道哪份正確時先保留兩份，勿遞迴刪除 `.local` 來「清乾淨」。本次瀏覽器流程留有虛構的測試身份與答案，不是朋友的真實測驗。
+
+SQLite 目前只供單一 API 程序，不能把磁碟資料直接放進 Pages 或換成無持久磁碟的主機就認為會保存。部署平台、正式期限／刪除／撤銷規則另行定案。
 
 ### 中文字體或版面不同
 
@@ -116,7 +152,7 @@ npm run build
 
 可用 `git status --short` 查看變更、`git diff` 審查已追蹤文件、`git diff --cached` 審查已放入提交清單的內容。未追蹤的新檔案不會出現在一般 `git diff` 中；先逐檔查看再提交。
 
-修正失敗先回復自己剛改的內容，勿使用整個專案的遞迴刪除或無差別 reset。`node_modules/` 和 `dist/` 是可再生成的產物，不把它們當原始碼修改。沒有部署服務、Git remote 或真實使用資料需要回復。
+修正失敗先回復自己剛改的內容，勿使用整個專案的遞迴刪除或無差別 reset。`node_modules/` 和 `dist/` 是可再生成的產物；`.local/data/` 是需另保存的測試回合，不能當建置產物刪除。目前沒有部署服務或 Git remote。
 
 ## 提交與版本規則
 
@@ -210,3 +246,17 @@ Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；本機 
 - 基礎建設交付當下 Git 已初始化，尚無 commit 或 remote。之後依使用者要求整理提交與版本規則，建立 `0.1.0` 本機基準，詳見 `CHANGELOG.md` 與 Git 歷史。驗證用本機服務在檢查完成後停止，重新查看請執行 `npm run dev`。
 
 尚未驗證／尚未實作：真實手機裝置、完整無障礙稽核、正式學術工具效度、雙裝置邀請、後端授權／資料庫／部署。現有測試不能替代這些工作。
+
+## 0.2 雙人流程驗證紀錄
+
+2026-10-08，Node 24.19.0：
+
+- `npm run check` 通過型別檢查與 5 檔／31 項測試；新增後端存取、資料持久化、題庫快照、提交鎖定、單一邀請與最近入口測試。
+- `npm run build` 成功。停止開發服務後，`npm run preview` 以 4173＋8787 啟動建置版並讀到原來 SQLite 的共同結果。
+- 兩個瀏覽器分頁使用不同私人憑證與虛構身份，完成 A 建立、第一題暫存／重新整理恢復、提交、邀請、B 加入與完成、雙方解鎖及逐題比較。這是兩個身份的本機驗證，不是真實兩部裝置／遠距測試。
+- A 的等待頁在 B 完成後自動更新；B 完成前頁面沒有 A 選項，測試確認 API 提前讀結果回 423，邀請不能當本人 token。
+- 瀏覽器確認最近入口可讀，移除入口後私人返回仍能找回；再次開啟會重新加入列表。
+- 桌面結果截圖與 390px 手機模擬排版均已檢視，手機答案區為一欄，頁面沒有橫向溢出；未記錄瀏覽器程式 error／warn。
+- 開發 HTTP 直接下載 `.local/data/between-us.sqlite` 與 WAL 皆回 403；Git 忽略 `.local`。
+
+尚待：真實手機／跨裝置、雲端授權與部署、正式保留／刪除／撤銷／找回規則、正式題庫、科普與契合度公式。工程測試通過不代表心理測量效度已驗證。

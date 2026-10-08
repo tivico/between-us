@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { quizzes, getQuiz } from './content/quizzes';
 import { Motif } from './components/Motif';
+import { HistoryPage, JoinRound, RoundPage, StartRound } from './components/RoundFlow';
 import type { QuizDefinition, TopicStatus } from './domain/quiz';
 import { parseRoute, type Route } from './lib/routes';
 
@@ -48,7 +49,7 @@ function Catalog() {
     </section>
 
     <section className="how-section" id="how" aria-labelledby="how-heading">
-      <div className="how-title"><p className="eyebrow">A MOMENT FOR TWO</p><h2 id="how-heading">留一點時間，<br />給彼此。</h2><p>正式測驗開放後，<br />你們會這樣一起探索。</p></div>
+      <div className="how-title"><p className="eyebrow">A MOMENT FOR TWO</p><h2 id="how-heading">留一點時間，<br />給彼此。</h2><p>先用三題示例，<br />體驗你們的雙人流程。</p></div>
       <ol className="how-steps">
         <li><span className="step-number">01</span><h3>先聽見自己</h3><p>選一個主題，各自回答。<br />不用猜對方想聽什麼。</p></li>
         <li><span className="step-number">02</span><h3>邀請另一個人</h3><p>分享連結，讓對方<br />在自己的時間裡慢慢填答。</p></li>
@@ -60,8 +61,8 @@ function Catalog() {
       <div><p className="eyebrow">OUR APPROACH</p><h2 id="approach-heading">理解，比一個分數更重要。</h2><p>差異是認識彼此的起點。<br />我們希望把答案變成對話，讓重要的想法有機會被聽見。</p></div>
       <div className="faq">
         <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。目前三觀題目是研究方向下的自編示例，尚未驗證；其他主題仍在籌備。</p></details>
-        <details><summary>可以看到對方選了什麼嗎？<span aria-hidden="true">＋</span></summary><p>這是正式版的核心功能：雙方先同意分享，獨立填答，完成後才解鎖彼此的選項與共同結果。現在的介面預覽只有你自己的選擇。</p></details>
-        <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>目前不保存、不傳送，也不分享答案。重新整理或離開預覽會清除選擇。正式版的暫存與私人返回連結尚未開放。</p></details>
+        <details><summary>可以看到對方選了什麼嗎？<span aria-hidden="true">＋</span></summary><p>雙人測試回合會先取得分享同意，各自填答，完成後才解鎖彼此選項。單人介面預覽只有你自己的選擇。目前邀請供同一電腦的不同瀏覽器測試，遠距使用還需要部署。</p></details>
+        <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>雙人回合會保存到此電腦的本機服務，私人返回連結可找回。單人介面預覽仍不保存。保存期限與刪除規則尚未定案，目前請使用測試答案。</p></details>
       </div>
     </section>
   </>;
@@ -78,11 +79,11 @@ function Topic({ quiz }: { quiz: QuizDefinition }) {
     <a className="back-link" href="#/">← 回到主題館</a>
     <section className={`topic-intro theme-${quiz.theme}`}>
       <div><span className={`status-pill status-${quiz.status}`}>{statusLabels[quiz.status]}</span><p className="eyebrow intro-eyebrow">A CONVERSATION STARTER</p><h1 id="page-heading" tabIndex={-1}>{quiz.title}</h1><p className="intro-subtitle">{quiz.subtitle}</p><p className="intro-description">{quiz.description}</p><p className="intro-audience">適合：{quiz.audience}</p>
-        {quiz.questions.length > 0 ? <a className="button primary" href={`#/demo/${quiz.id}`}>體驗作答介面 <Arrow /></a> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
+        {quiz.questions.length > 0 ? <div className="topic-actions"><a className="button primary" href={`#/start/${quiz.id}`}>開始雙人流程測試 <Arrow /></a><a className="back-link" href={`#/demo/${quiz.id}`}>先看單人介面預覽</a></div> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
       </div><div className="intro-art"><Motif kind={quiz.motif} /></div>
     </section>
     <div className="detail-columns"><section><p className="eyebrow">WHAT WE WILL EXPLORE</p><h2>我們會聊到</h2><ul className="dimension-list">{quiz.dimensions.map((dimension, index) => <li key={dimension}><span>0{index + 1}</span>{dimension}</li>)}</ul></section>
-      <aside className="preview-notice"><h2>{quiz.questions.length ? '先試試看，慢慢調整' : '為重要的話題，好好準備'}</h2><p>{quiz.questions.length ? '這是 3 題的介面示例，不是正式心理量表。你可以體驗選題與查看答案；不會產生分數，也不會保存或分享答案。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
+      <aside className="preview-notice"><h2>{quiz.questions.length ? '先試試看，慢慢調整' : '為重要的話題，好好準備'}</h2><p>{quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會在本機保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
     </div>
     <Sources quiz={quiz} />
   </div>;
@@ -126,8 +127,12 @@ function NotFound() {
 function Page({ route }: { route: Route }) {
   if (route.page === 'catalog') return <Catalog />;
   if (route.page === 'not-found') return <NotFound />;
+  if (route.page === 'history') return <HistoryPage />;
+  if (route.page === 'invite') return <JoinRound key={route.token} token={route.token} />;
+  if (route.page === 'round') return <RoundPage key={`${route.id}:${route.token}`} id={route.id} token={route.token} />;
   const quiz = getQuiz(route.id);
   if (!quiz) return <NotFound />;
+  if (route.page === 'start') return quiz.questions.length ? <StartRound key={quiz.id} quiz={quiz} /> : <NotFound />;
   if (route.page === 'demo') return quiz.questions.length ? <Demo key={`${quiz.id}@${quiz.version}`} quiz={quiz} /> : <NotFound />;
   return <Topic quiz={quiz} />;
 }
@@ -147,8 +152,8 @@ export function App() {
   }, [route]);
   return <>
     <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); document.getElementById('main-content')?.focus(); }}>跳到主要內容</a>
-    <div className="preview-banner">設計預覽 <span aria-hidden="true">·</span> 正式雙人測驗準備中</div>
-    <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/">測驗主題館</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
+    <div className="preview-banner">本機雙人流程測試 <span aria-hidden="true">·</span> 正式題庫準備中</div>
+    <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/">測驗主題館</a><a href="#/history">最近紀錄</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
     <main id="main-content" tabIndex={-1}><Page route={route} /></main>
     <footer className="site-footer"><a className="footer-brand" href="#/">之間 <span>BETWEEN US</span></a><p>留一點好奇，給最靠近的人。</p><span className="footer-note">理解彼此的對話起點</span></footer>
   </>;

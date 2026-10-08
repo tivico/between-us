@@ -1,4 +1,4 @@
-import { validateQuiz, type QuizDefinition, type ResearchSource } from '../domain/quiz';
+import { validateQuiz, type QuizDefinition, type ResearchSource } from '../domain/quiz.ts';
 
 const valuesSource: ResearchSource = {
   id: 'schwartz-2012',
