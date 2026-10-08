@@ -40,6 +40,14 @@ export interface QuizDefinition {
   sources: ResearchSource[];
   evidenceSummary: string;
   instructions?: string;
+  analysis?: {
+    kind: 'long-distance-paired';
+    version: '1.0.0';
+    excludedOptionIds: string[];
+    comparisons: { questionId: string; title: string; commonAdvice: string; differentAdvice: string; optionAdvice?: Record<string, string> }[];
+    pairs: { id: string; title: string; kind: 'cross-partner' | 'within-person'; wantedQuestionId: string; providedQuestionId: string; commonAdvice: string; differentAdvice: string; optionAdvice?: Record<string, string> }[];
+    discussionPrompts: Record<string, string>;
+  };
   scoring?: {
     kind: 'pvqrr-centered-distance';
     version: '1.0.0';
@@ -86,6 +94,22 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     for (const question of quiz.questions) {
       if (question.options.length !== 6 || question.options.some((option, index) => scoring.optionValues[option.id] !== index + 1)) errors.push(`量表選項數值不完整：${question.id}`);
     }
+  }
+  if (quiz.analysis) {
+    const rule = quiz.analysis;
+    if (rule.kind !== 'long-distance-paired' || rule.version !== '1.0.0' || quiz.scoring) errors.push('不支援的雙人分析版本');
+    const allOptions = new Set(quiz.questions.flatMap((q) => q.options.map((o) => o.id)));
+    if (new Set(rule.excludedOptionIds).size !== rule.excludedOptionIds.length || rule.excludedOptionIds.some((id) => !allOptions.has(id)) || !rule.excludedOptionIds.includes('prefer-not-share')) errors.push('雙人分析排除選項不完整');
+    if (new Set(rule.comparisons.map((item) => item.questionId)).size !== rule.comparisons.length || new Set(rule.pairs.map((item) => item.id)).size !== rule.pairs.length) errors.push('雙人分析規則 ID 重複');
+    for (const item of [...rule.comparisons, ...rule.pairs]) {
+      if (!item.title.trim() || !item.commonAdvice.trim() || !item.differentAdvice.trim()) errors.push('雙人分析缺少建議內容');
+      const ids = 'questionId' in item ? [item.questionId] : [item.wantedQuestionId, item.providedQuestionId];
+      if (ids.some((id) => !questionIds.has(id)) || new Set(ids).size !== ids.length) errors.push('雙人分析找不到題目或配對題目重複');
+      if ('kind' in item && !['cross-partner', 'within-person'].includes(item.kind)) errors.push('雙人分析配對方向不正確');
+      const wanted = quiz.questions.find((q) => q.id === ids[0]);
+      if (item.optionAdvice && Object.entries(item.optionAdvice).some(([id, text]) => !wanted?.options.some((o) => o.id === id) || rule.excludedOptionIds.includes(id) || !text.trim())) errors.push('雙人分析選項建議不正確');
+    }
+    if (quiz.questions.some((q) => !rule.discussionPrompts[q.id]?.trim()) || Object.keys(rule.discussionPrompts).some((id) => !questionIds.has(id))) errors.push('雙人分析討論提示不完整');
   }
   for (const source of quiz.sources) {
     try {

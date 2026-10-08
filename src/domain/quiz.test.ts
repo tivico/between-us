@@ -9,7 +9,8 @@ describe('測驗內容的完整性', () => {
   it('每個主題皆符合內容契約，並區分開放功能與測量驗證', () => {
     for (const quiz of quizzes) {
       expect(validateQuiz(quiz), quiz.id).toEqual([]);
-      if (quiz.status === 'ready') expect(quiz.questions.length).toBe(57);
+      if (quiz.scoring) expect(quiz.questions.length).toBe(57);
+      if (quiz.status === 'ready') expect(quiz.questions.length).toBeGreaterThan(0);
       expect(quiz.questions.every((question) => question.evidence.status === 'research-informed')).toBe(true);
     }
     expect(new Set(quizzes.map((quiz) => quiz.id)).size).toBe(quizzes.length);

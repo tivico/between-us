@@ -1,5 +1,6 @@
 import type { QuizDefinition } from './quiz';
 import type { ValueComparison } from './compatibility';
+import type { DistanceAnalysis } from './long-distance';
 
 export interface RoundStatus {
   id: string;
@@ -15,5 +16,6 @@ export interface RoundResults {
   createdAt: string;
   participants: { slot: 'A' | 'B'; nickname: string; answers: Record<string, string>; submittedAt: string }[];
   comparison?: ValueComparison;
+  pairAnalysis?: DistanceAnalysis;
 }
-export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean }
+export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; hasPairAnalysis?: boolean }

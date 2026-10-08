@@ -1,0 +1,36 @@
+.distance-results { margin: 28px 0 40px; }
+.distance-intro { padding: 30px; border-radius: 14px; background: #f0e6dc; }
+.distance-intro h2 { font-size: 27px; margin: 10px 0 15px; }
+.distance-intro p { font-size: 13px; line-height: 1.9; }
+.distance-intro .distance-limits { font-size: 12px; color: var(--muted); }
+.distance-summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin: 28px 0 42px; }
+.distance-findings { padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: #fcfbf7; min-width: 0; }
+.distance-findings h2, .distance-suggestions h2 { font-size: 25px; margin: 0 0 14px; }
+.distance-findings article { padding: 20px 0; border-top: 1px solid var(--line); }
+.distance-findings h3, .distance-advice-card h3, .distance-context h3 { font-size: 19px; line-height: 1.65; overflow-wrap: anywhere; }
+.distance-findings p, .distance-context p, .distance-suggestions > p { font-size: 12px; line-height: 1.9; color: var(--muted); }
+.distance-evidence { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 17px 0; }
+.distance-evidence > div { padding: 14px; background: #edf0e6; border-radius: 7px; min-width: 0; }
+.distance-evidence > div:last-child { background: #f0e6dc; }
+.distance-evidence dt { font-size: 11px; color: var(--muted); overflow-wrap: anywhere; }
+.distance-evidence dd { font-size: 13px; line-height: 1.8; margin: 8px 0 0; overflow-wrap: anywhere; }
+.distance-advice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 22px 0; }
+.distance-advice-card { padding: 25px; border: 1px solid var(--line); border-radius: 12px; background: #fcfbf7; min-width: 0; }
+.distance-tag { font-size: 11px; color: #7b5b46; }
+.distance-advice-card h3 { margin: 13px 0; }
+.distance-action { font-size: 14px; line-height: 1.95; }
+.distance-conditions > h2 { font-size: 25px; margin: 0 0 14px; }
+.distance-conditions > p, .distance-conditions article > p:not(.distance-action) { font-size: 12px; line-height: 1.9; color: var(--muted); }
+.distance-conditions { margin-bottom: 38px; }
+.distance-advice-card details, .distance-more { font-size: 12px; line-height: 1.9; margin-top: 18px; color: var(--muted); }
+.distance-advice-card details ul { padding-left: 20px; }
+.distance-results summary { cursor: pointer; padding: 10px 0; }
+.distance-results summary:focus-visible { outline: 2px solid #805946; outline-offset: 4px; }
+.distance-context { padding: 22px; border: 1px solid var(--line); border-radius: 10px; font-size: 13px; }
+.distance-context article { border-top: 1px solid var(--line); padding: 18px 0; }
+.distance-empty { padding: 18px; background: #f5f1e9; border-radius: 8px; }
+@media(max-width: 720px) {
+ .distance-summary-grid, .distance-advice-grid { grid-template-columns: 1fr; }
+ .distance-intro, .distance-findings, .distance-advice-card { padding: 22px; }
+}
+@media(max-width: 400px) { .distance-evidence { grid-template-columns: 1fr; } }

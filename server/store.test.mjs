@@ -24,7 +24,7 @@ function submitA() {
 describe('私人回合與保存', () => {
   it('建立需同意分享，未準備的主題不能建立；重試不新增回合', () => {
     expect(() => store.create({ quizId: 'core-values-example', nickname: '人', consent: false, privateToken: token() })).toThrow('同意');
-    expect(() => store.create({ quizId: 'long-distance', nickname: '人', consent: true, privateToken: token() })).toThrow('還沒有');
+    expect(() => store.create({ quizId: 'communication', nickname: '人', consent: true, privateToken: token() })).toThrow('還沒有');
     expect(store.create({ quizId: 'core-values-example', nickname: '測試 A', consent: true, privateToken: a }).id).toBe(id);
     expect(store.db.prepare('SELECT count(*) AS n FROM rounds').get().n).toBe(1);
   });

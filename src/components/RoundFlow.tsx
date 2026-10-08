@@ -1,4 +1,5 @@
 import { ValueResults } from './ValueResults';
+import { LongDistanceResults } from './LongDistanceResults';
 import { ResultLearningCards } from './ResultLearningCards';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
@@ -25,6 +26,7 @@ function LinkCard({ title, note, path }: { title: string; note: string; path: st
 
 function EntryForm({ title, invitation, invitationToken, quiz }: { title: string; invitation?: InvitationPreview; invitationToken?: string; quiz?: QuizDefinition }) {
   const valueQuiz = Boolean(quiz?.scoring || invitation?.hasValueScore);
+  const distanceQuiz = Boolean(quiz?.analysis || invitation?.hasPairAnalysis);
   const [nickname, setNickname] = useState('');
   const [consent, setConsent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -40,11 +42,11 @@ function EntryForm({ title, invitation, invitationToken, quiz }: { title: string
       location.hash = roundPath(result.id, token).slice(1);
     } catch (failure) { setError(messageOf(failure)); setBusy(false); }
   }
-  return <div className="flow-page"><a className="back-link" href="#/">← 回到主題館</a><p className="eyebrow">A CONVERSATION FOR TWO</p><h1 id="page-heading" tabIndex={-1}>{invitation ? `${invitation.hostName} 想更認識你。` : '先從你自己開始。'}</h1><p className="flow-intro">{title} · {invitation?.questionCount ?? quiz?.questions.length} 題{!valueQuiz && '示例'}</p>
-    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>你們各自填答，彼此完成後，才會公開本輪所有選項。提交後答案鎖定；想重新回答時，另開一輪。</p><p>{valueQuiz ? '完整 57 題，請回答你自己。雙方完成後可查看彼此選項與核心價值相近度；它是探索性比較，不是關係成功率。' : '目前使用三題自編示例，不提供契合分數。'}{storageNote}，請保留私人返回連結；資料刪除與保存期限仍待定案。</p></div>
+  return <div className="flow-page"><a className="back-link" href="#/">← 回到主題館</a><p className="eyebrow">A CONVERSATION FOR TWO</p><h1 id="page-heading" tabIndex={-1}>{invitation ? `${invitation.hostName} 想更認識你。` : '先從你自己開始。'}</h1><p className="flow-intro">{title} · {invitation?.questionCount ?? quiz?.questions.length} 題{!valueQuiz && !distanceQuiz && '示例'}</p>
+    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>你們各自填答，彼此完成後，才會公開本輪所有選項。提交後答案鎖定；想重新回答時，另開一輪。</p><p>{valueQuiz ? '完整 57 題，請回答你自己。雙方完成後可查看彼此選項與核心價值相近度；它是探索性比較，不是關係成功率。' : distanceQuiz ? '24 題遠距探索，雙方完成後查看共同點、差異與依本輪答案提供的討論建議。每題可選暫不分享，對方會看到這個選項；未答仍需完成才可提交。題庫與建議尚未驗證，不提供契合分數。' : '目前使用三題自編示例，不提供契合分數。'}{storageNote}，請保留私人返回連結；資料刪除與保存期限仍待定案。</p></div>
     {invitation?.claimed ? <ErrorNotice message="這個邀請已有人加入。請使用自己的私人返回連結，或從最近紀錄返回。" /> : <form className="entry-form" onSubmit={enter}>
       <label className="field-label" htmlFor="nickname">你希望對方怎麼稱呼你？</label><input className="name-input" id="nickname" value={nickname} maxLength={24} required autoComplete="off" placeholder="你的暱稱" onChange={(event) => setNickname(event.target.value)} disabled={busy} />
-      <label className="consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} disabled={busy} /><span>我同意雙方完成後，彼此查看本輪所有答案{valueQuiz && '與價值比較結果'}。</span></label>
+      <label className="consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} disabled={busy} /><span>我同意雙方完成後，彼此查看本輪所有答案{valueQuiz && '與價值比較結果'}{distanceQuiz && '與遠距分析及討論建議'}。</span></label>
       {error && <ErrorNotice message={error} />}
       <button className="button primary" disabled={busy || !consent || !nickname.trim()}>{busy ? '正在準備…' : invitation ? '接受邀請，開始填答' : '建立這一輪，開始填答'} <span aria-hidden="true">→</span></button>
     </form>}
@@ -83,10 +85,10 @@ function SharedResults({ results }: { results: RoundResults }) {
   const same = results.quiz.questions.filter((question) => a.answers[question.id] === b.answers[question.id]).length;
   return <section className="shared-results"><p className="eyebrow">TWO ANSWERS, ONE CONVERSATION</p><h1 id="page-heading" tabIndex={-1}>一起看見，你們的選擇。</h1><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     {results.quiz.scoring && (results.comparison ? <ValueResults comparison={results.comparison} names={[a.nickname, b.nickname]} /> : <ErrorNotice message="價值比較暫時無法讀取，請重新整理。" />)}
-    <div className="result-overview"><div><strong>{same}</strong><span>題選項相同</span></div><div><strong>{results.quiz.questions.length - same}</strong><span>題選項不同</span></div><p>這裡比較逐題選項；相同選項也可能有不同理由，差異則是再問一句的起點。</p></div>
+    {results.quiz.analysis ? (results.pairAnalysis ? <LongDistanceResults analysis={results.pairAnalysis} quiz={results.quiz} names={{ A: a.nickname, B: b.nickname }} /> : <ErrorNotice message="遠距分析暫時無法讀取，請重新整理。" />) : <div className="result-overview"><div><strong>{same}</strong><span>題選項相同</span></div><div><strong>{results.quiz.questions.length - same}</strong><span>題選項不同</span></div><p>這裡比較逐題選項；相同選項也可能有不同理由，差異則是再問一句的起點。</p></div>}
     {!results.quiz.scoring && <ResultLearningCards />}
-    <div className="comparison-list">{results.quiz.questions.map((question, index) => <article key={question.id} className="comparison-card"><p className="eyebrow">{String(index + 1).padStart(2, '0')} / {question.dimension}</p><h2>{question.prompt}</h2><div className="answer-pair">{[a, b].map((person) => <div className={`person-answer person-${person.slot.toLowerCase()}`} key={person.slot}><span>{person.nickname}</span><p>{question.options.find((option) => option.id === person.answers[question.id])?.label}</p></div>)}</div><p className="conversation-prompt">一起聊聊：你選這個答案時，想到的是什麼經驗或考量？</p><details className="question-evidence"><summary>這題的依據與限制</summary><p>{question.evidence.note}</p>{results.quiz.sources.filter((source) => question.evidence.sourceIds.includes(source.id)).map((source) => <p key={source.id}><a href={source.url} target="_blank" rel="noreferrer">{source.authors}（{source.year}） ↗</a></p>)}</details></article>)}</div>
-    <div className="preview-notice"><h2>理解，從再問一句開始。</h2><p>{results.quiz.scoring ? '選一題你們相同或不同的答案，說說背後的經驗。此結果涵蓋核心價值，人生方向與其他主題會另外探索。' : '本輪為三題示例，只比較實際選項，不提供契合分數。'}</p></div>
+    <div className="comparison-list">{results.quiz.questions.map((question, index) => <article key={question.id} className="comparison-card"><p className="eyebrow">{String(index + 1).padStart(2, '0')} / {question.dimension}</p><h2>{question.prompt}</h2><div className="answer-pair">{[a, b].map((person) => <div className={`person-answer person-${person.slot.toLowerCase()}`} key={person.slot}><span>{person.nickname}</span><p>{question.options.find((option) => option.id === person.answers[question.id])?.label}</p></div>)}</div><p className="conversation-prompt">一起聊聊：{results.quiz.analysis ? (['prefer-not-share', 'not-applicable', 'no-opportunity', 'undecided', 'unclear', 'other'].some((id) => [a.answers[question.id], b.answers[question.id]].includes(id)) ? '這題先保留各自的回答，不需要補充原因。' : results.quiz.analysis.discussionPrompts[question.id]) : '你選這個答案時，想到的是什麼經驗或考量？'}</p><details className="question-evidence"><summary>這題的依據與限制</summary><p>{question.evidence.note}</p>{results.quiz.sources.filter((source) => question.evidence.sourceIds.includes(source.id)).map((source) => <p key={source.id}><a href={source.url} target="_blank" rel="noreferrer">{source.authors}（{source.year}） ↗</a></p>)}</details></article>)}</div>
+    <div className="preview-notice"><h2>理解，從再問一句開始。</h2><p>{results.quiz.scoring ? '選一題你們相同或不同的答案，說說背後的經驗。此結果涵蓋核心價值，人生方向與其他主題會另外探索。' : results.quiz.analysis ? '選一個雙方都願意試的安排，之後再確認是否適合。暫不分享、不適用與尚未確定的選項可以保留。' : '本輪為三題示例，只比較實際選項，不提供契合分數。'}</p></div>
     <div className="demo-actions"><a className="button secondary" href="#/history">查看最近紀錄</a><a className="button primary" href={`#/start/${results.quiz.id}`}>另開一輪 →</a></div>
   </section>;
 }
@@ -178,7 +180,7 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
   const privateLink = <LinkCard title="你的私人返回連結" note="保留給自己，關掉頁面後可繼續或看結果。持有連結的人能開啟你的紀錄，請勿轉傳。" path={roundPath(id, token)} />;
   return <div className="flow-page round-page">
     <div className="flow-top"><a className="back-link" href="#/history">← 最近紀錄</a><span>{round.own.nickname} · {round.quiz.title}</span></div>
-    <p className="demo-disclaimer">{round.quiz.scoring ? '核心價值探索・各自回答，完成後一起看' : '三題自編示例・不提供契合分數'}</p>
+    <p className="demo-disclaimer">{round.quiz.scoring ? '核心價值探索・各自回答，完成後一起看' : round.quiz.analysis ? '遠距探索・各自回答，完成後一起看' : '三題自編示例・不提供契合分數'}</p>
     {!historySaved && <ErrorNotice message="此瀏覽器未能保存最近紀錄入口，請另外保留私人返回連結。" />}
     {error && <ErrorNotice message={error} retry={() => void load(!round.own.submittedAt)} />}
     {results ? <SharedResults results={results} /> : round.own.submittedAt ? <section className="waiting-panel"><p className="eyebrow">A LITTLE PATIENCE, A SHARED MOMENT</p><h1 id="page-heading" tabIndex={-1}>你的答案，先好好保留。</h1><p className="flow-intro">{round.peer ? `${round.peer.nickname} 已加入，等待對方完成。` : '分享邀請，讓另一個人在自己的時間裡回答。'}</p><div className="participant-progress"><div><span className="done-dot">✓</span><strong>{round.own.nickname}</strong><span>已完成</span></div><div><span className="waiting-dot">○</span><strong>{round.peer?.nickname ?? '另一個人'}</strong><span>{round.peer ? '填答中' : '尚未加入'}</span></div></div><p className="waiting-note">雙方完成後才會解鎖答案。這個頁面會定期更新，也可以手動確認。</p><button className="button secondary" onClick={() => void load()}>更新完成狀態</button>{round.invitationToken && <LinkCard title="給另一個人的邀請連結" note="只邀請一人加入。這個連結不包含你的私人返回憑證。" path={`#/invite/${round.invitationToken}`} />}</section> : <>

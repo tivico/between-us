@@ -1,5 +1,25 @@
 # 架構與資料流程
 
+## 0.8 遠距雙人分析（分支，未公開部署）
+
+`src/content/long-distance.ts` 將研究原稿 24 題及分析設定變成共用 QuizDefinition；`quizzes.ts` 在前端、Node、D1 載入同一份內容。新增的是描述性 analysis，與核心價值 scoring 分開；analysis 只允許已知 kind／version，驗證題號、特殊選項和提案參照。候選原題 0.1.0、回合工具 0.2.0、規則 1.0.0、網站 0.8.0 分別管理。
+
+```text
+POST rounds → rounds.snapshot（含 analysis 與提案模板）
+PUT answers → 本人保存／revision
+POST submit → 完整合法選項／提交鎖定
+A 邀請 → B 獨立提交
+GET results → authenticate → 雙方 submitted_at → analyzeDistanceV1(snapshot)
+           → pairAnalysis → SharedResults → LongDistanceResults
+```
+
+Node／D1 的 results 在原授權與提交保護後呼叫同一個純函式；status／InvitationPreview 不含 pairAnalysis 或對方答案。InvitationPreview 的 hasPairAnalysis 只表明將分享的結果種類。無新增資料表、migration、會員、外部生成服務或額外答案傳輸。
+
+規則 1.0.0：14 題偏好各做 A/B 相同／不同選項；忙碌與支持各做 A 期待對 B 自述做法、B 期待對 A 自述做法；見面做同一人的期待對可行條件，獨立放 conditions。近期經驗、討論狀態、特殊及彈性選項保留 context，不產生分數或心理判定。suggestions 最多六項，引用 finding.evidence（slot、題號、題幹、實際選項）及來源 ID；排序是編輯安排，所有模板取快照。
+
+畫面保留共同點／差異展開、條件區塊、建議的觸發說明與概念來源、完整 24 題並排。暫不分享表示有效選項但無可比較偏好，對方可見「暫不分享」選項；未答仍不能提交。沒有分析規則的舊快照不追套新 registry；未來算法新增版本與分支，保留 V1。具體維護與已驗證範圍見 [0.8 Runbook](runbook.md#08-遠距雙人探索與個別建議)。
+
+
 ## 0.7 了解關係與科普短卡
 
 公開閱讀流程：網址 #/learn 或 #/learn/:id → parseRoute → App.Page → relationshipArticles / getRelationshipArticle → RelationshipLibrary / RelationshipArticlePage。文章在建置時打包，不發 API，不讀寫 D1、SQLite、localStorage 或私人答案；不要求測驗或登入。目錄捲動到段落標題並移動鍵盤焦點，不改 hash，避免破壞路由。

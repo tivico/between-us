@@ -48,7 +48,7 @@ function Catalog() {
       <div className="topic-grid">
         {visible.map((quiz) => <a className={`topic-card theme-${quiz.theme}`} href={`#/topics/${quiz.id}`} key={quiz.id}>
           <div className="card-art"><span className={`status-pill status-${quiz.status}`}>{statusLabels[quiz.status]}</span><Motif kind={quiz.motif} /></div>
-          <div className="card-body"><p className="card-audience">{quiz.audience}</p><h3>{quiz.title}</h3><p className="card-subtitle">{quiz.subtitle}</p><div className="card-footer"><span>{quiz.id === 'core-values' ? '57 題・雙人核心價值探索' : quiz.questions.length > 0 ? `${quiz.questions.length} 題介面示例` : '查看主題方向'}</span><span className="circle-arrow"><Arrow /></span></div></div>
+          <div className="card-body"><p className="card-audience">{quiz.audience}</p><h3>{quiz.title}</h3><p className="card-subtitle">{quiz.subtitle}</p><div className="card-footer"><span>{quiz.id === 'core-values' ? '57 題・雙人核心價值探索' : quiz.analysis ? '24 題・雙人遠距探索' : quiz.questions.length > 0 ? `${quiz.questions.length} 題介面示例` : '查看主題方向'}</span><span className="circle-arrow"><Arrow /></span></div></div>
         </a>)}
       </div>
     </section>
@@ -65,7 +65,7 @@ function Catalog() {
     <section className="approach" aria-labelledby="approach-heading">
       <div><p className="eyebrow">OUR APPROACH</p><h2 id="approach-heading">理解，比一個分數更重要。</h2><p>差異是認識彼此的起點。<br />我們希望把答案變成對話，讓重要的想法有機會被聽見。</p></div>
       <div className="faq">
-        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。核心價值提供依 PVQ-RR 改寫的 57 題性別中性人物描述，本改寫尚未完成測量驗證；雙人探索使用完整 57 題；原三題示例另外保留。其他主題仍在籌備。</p></details>
+        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。核心價值有依 PVQ-RR 改寫的 57 題，遠距有依研究方向自編的 24 題；兩者都使用不限定性別的稱呼。遠距共同點、差異與討論建議依本輪實際答案產生，題庫與建議效果尚未驗證。原三題示例另外保留，其他主題仍在籌備。</p></details>
         <details><summary>可以看到對方選了什麼嗎？<span aria-hidden="true">＋</span></summary><p>雙人回合會先取得分享同意，各自填答，完成後才解鎖彼此選項。單人探索只有你自己的選擇。{invitationNote}</p></details>
         <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>{storageNote}，私人返回連結可找回。單人探索不保存。保存期限與刪除規則尚未定案，請保留私人返回連結。</p></details>
       </div>
@@ -85,11 +85,11 @@ function Topic({ quiz }: { quiz: QuizDefinition }) {
     <section className={`topic-intro theme-${quiz.theme}`}>
       <div><span className={`status-pill status-${quiz.status}`}>{statusLabels[quiz.status]}</span><p className="eyebrow intro-eyebrow">A CONVERSATION STARTER</p><h1 id="page-heading" tabIndex={-1}>{quiz.title}</h1><p className="intro-subtitle">{quiz.subtitle}</p><p className="intro-description">{quiz.description}</p><p className="intro-audience">適合：{quiz.audience}</p>
 
-        {quiz.questions.length > 0 ? <div className="topic-actions"><a className="button primary" href={`#/start/${quiz.id}`}>{quiz.scoring ? '開始 57 題雙人探索' : '開始雙人體驗'} <Arrow /></a><a className="back-link" href={quiz.scoring ? "#/trial/core-values" : `#/demo/${quiz.id}`}>{quiz.scoring ? '先自己探索（不保存）' : '先看單人介面預覽'}</a></div> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
+        {quiz.questions.length > 0 ? <div className="topic-actions"><a className="button primary" href={`#/start/${quiz.id}`}>{quiz.scoring ? '開始 57 題雙人探索' : quiz.analysis ? '開始 24 題雙人探索' : '開始雙人體驗'} <Arrow /></a><a className="back-link" href={quiz.scoring ? "#/trial/core-values" : `#/demo/${quiz.id}`}>{quiz.scoring ? '先自己探索（不保存）' : '先看單人介面預覽'}</a></div> : <p className="coming-soon">這個主題正在準備，尚未開放作答。</p>}
       </div><div className="intro-art"><Motif kind={quiz.motif} /></div>
     </section>
     <div className="detail-columns"><section><p className="eyebrow">WHAT WE WILL EXPLORE</p><h2>{quiz.scoring ? '19 個價值方向' : '我們會聊到'}</h2><ul className="dimension-list">{quiz.dimensions.map((dimension, index) => <li key={dimension}><span>{String(index + 1).padStart(2, '0')}</span>{dimension}</li>)}</ul></section>
-      <aside className="preview-notice"><h2>{quiz.questions.length ? '給自己，也給彼此' : '為重要的話題，好好準備'}</h2><p>{quiz.id === 'core-values' ? '57 題雙人探索會自動保存；你完成後邀請對方，兩人完整提交才解鎖彼此選項、19 類價值比較與核心價值相近度。相近度是探索性指標，不是關係成功率。' : quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
+      <aside className="preview-notice"><h2>{quiz.questions.length ? '給自己，也給彼此' : '為重要的話題，好好準備'}</h2><p>{quiz.id === 'core-values' ? '57 題雙人探索會自動保存；你完成後邀請對方，兩人完整提交才解鎖彼此選項、19 類價值比較與核心價值相近度。相近度是探索性指標，不是關係成功率。' : quiz.analysis ? '24 題會自動保存，雙方完整提交後查看彼此選項、共同點、差異與討論建議。可以選暫不分享；三段是內容分類，題庫與建議尚未驗證，不提供契合分數。' : quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
     </div>
     <Sources quiz={quiz} />
   </div>;
@@ -107,7 +107,7 @@ function Demo({ quiz }: { quiz: QuizDefinition }) {
   return <div className="demo-page">
     <a className="back-link" href={`#/topics/${quiz.id}`}>← 回到主題介紹（離開會清除選擇）</a>
     <div className="demo-top"><span>作答介面預覽</span><span>{quiz.title}</span></div>
-    <p className="demo-disclaimer">自編示例・尚未驗證・答案不保存或分享</p>
+    <p className="demo-disclaimer">{quiz.analysis ? '遠距探索預覽・自編未驗證・答案不保存或分享' : '自編示例・尚未驗證・答案不保存或分享'}</p>
     {finished ? <section className="demo-summary">
       <p className="eyebrow">YOUR ANSWERS</p><h1 id="page-heading" ref={heading} tabIndex={-1}>先看見自己的選擇。</h1><p className="summary-intro">這裡只有你剛才選的答案。正式版會在雙方完成後，再呈現兩人的比較與討論提示。</p>
       <ol className="answer-list">{quiz.questions.map((item) => <li key={item.id}><span className="answer-dimension">{item.dimension}</span><h2>{item.prompt}</h2><p>{item.options.find((option) => option.id === answers[item.id])?.label}</p></li>)}</ol>

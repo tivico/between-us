@@ -1,6 +1,7 @@
 import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { roundQuizzes } from '../src/content/quizzes.ts';
 import { compareValues } from '../src/domain/compatibility.ts';
+import { analyzeDistance } from '../src/domain/long-distance.ts';
 
 export class RoundError extends Error {
   constructor(code, message, status = 400) { super(message); this.code = code; this.status = status; }
@@ -110,7 +111,7 @@ export class D1RoundStore {
     const a = await this.one("SELECT nickname FROM participants WHERE round_id=? AND slot='A'", round.id);
     const b = await this.one("SELECT 1 FROM participants WHERE round_id=? AND slot='B'", round.id);
     const quiz = JSON.parse(round.snapshot);
-    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), claimed: Boolean(b) };
+    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), hasPairAnalysis: Boolean(quiz.analysis), claimed: Boolean(b) };
   }
   async claim({ invitationToken, nickname, consent, privateToken }) {
     requireToken(privateToken); const name = nicknameFor(nickname);
@@ -130,6 +131,7 @@ export class D1RoundStore {
     const round = await this.one('SELECT snapshot,created_at FROM rounds WHERE id=?', id);
     const quiz = JSON.parse(round.snapshot);
     const comparison = compareValues(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
-    return { quiz, ...(comparison ? { comparison } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
+    const pairAnalysis = analyzeDistance(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
+    return { quiz, ...(comparison ? { comparison } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
   }
 }

@@ -13,6 +13,54 @@ npm run dev
 
 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
+## 0.8 遠距雙人探索與個別建議
+
+狀態：`codex/long-distance-analysis` 分支、本機已驗證；未合併 main、未推送／公開部署。本次使用獨立 worktree，避免與其他聊天同時修改主 checkout。先在該 worktree 執行指令；原本 forest/main 仍可繼續其他工作。網站版 0.8.0、遠距回合工具版 0.2.0、原題候選 0.1.0、描述性規則 1.0.0。
+
+**修改與原因**：遠距原本只有研究稿及 planned 卡片；現在可建立完整 24 題雙人回合、自動保存與恢復、A 提交邀請 B、雙方提交後解鎖。結果顯示共同偏好／相符回應、不同需要、各自的見面期待與可行條件，以及至多六項依答案產生的討論提案；卡片展開可查觸發題幹／答案／概念來源。先呈現雙方實際選項，使每項解讀可核對。本人條件不列為兩人的共同點；近期經驗、未確定、未提供固定安排及暫不分享不推論為一致或衝突。題庫與建議效果未驗證、不提供契合分數。
+
+**檔案與實際流程**：
+
+1. `docs/quizzes/long-distance-candidate.json` 保留研究原稿及逐題證據；`src/content/long-distance.ts` 將 24 題轉成共用 QuizDefinition，宣告 analysis.comparisons（14 題偏好）、pairs（忙碌／支持雙向、見面本人條件）、排除選項、optionAdvice 與逐題討論提示。工具候選的 PRI 等三個來源不作產品題目來源；產品只列實際引用的五篇概念研究。
+2. `quizzes.ts` 匯入 longDistanceQuiz，仍維持五個主題；`validateQuiz` 檢查題號、建議、選項參照、版本與完整提示。ready 是功能開放，research-informed 是證據狀態。
+3. StartRound → POST /api/rounds；Node／D1 保存整份 quiz 到 rounds.snapshot。PUT answers 暫存，POST submit 驗證 24 題都有合法選項；稍後回答仍未答，選暫不分享則已答，但不提供可比較內容。原本的 revision、提交鎖定與授權規則不變。
+4. A 完成後以邀請讓 B 加入；InvitationPreview 只新增 hasPairAnalysis 表明分享範圍，不含分析／對方答案。status 仍只回本人答案與對方完成狀態；quiz.analysis 是公開規則模板，不是結果。
+5. GET /api/rounds/:id/results：Node `server/store.mjs`、D1 `cloudflare/store.mjs` 都先授權且確認兩人提交，之後呼叫 `analyzeDistance(snapshot, A, B)`。缺答／非法答案／破損或未知規則拒絕分析，不補值。
+6. `src/domain/long-distance.ts` 的 V1 產生 common、differences、conditions、context、suggestions；忙碌／支持是 A 希望對 B 自述、B 希望對 A 自述兩個方向，見面是本人希望對本人可行條件。排序是編輯安排，不是心理風險排名。模板與 optionAdvice 讀 snapshot，不查最新題庫、不呼叫外部 AI／生成服務、不傳送額外答案。
+7. SharedResults → `LongDistanceResults.tsx`／其獨立 CSS：共同點／差異預設各三組，可展開其他；條件獨立呈現；建議卡可查為何出現；context 保留原選項。原 24 題並排也保留逐題提示；不適用等答案不要求補原因。原核心價值算法與科普卡仍保留。
+
+**壞掉時照這個順序查**：
+
+- 仍顯示籌備中／三題示例：先確認是不是 main、公開舊版或另一個 Node 程序。確認 worktree 的 package.json 為 0.8.0，執行下方題庫診斷應回 0.2.0／24／1.0.0。修改共用題庫後需重啟自己啟動的 Node API；Vite 更新畫面不會自動重載 Node 模組。
+- 保存／提交失敗：Network 看 answers、submit；INCOMPLETE 是仍有未答，暫不分享是合法選項，不能補零。409 看 revision／鎖定狀態；重新載入本人紀錄，不刪資料。
+- 分析沒顯示：先確認雙方提交，results 423 是保護；401 是私人憑證錯誤。等待畫面不能用前端繞過。沒有 analysis 的舊快照仍只看原答案。
+- results 500／畫面提示分析無法讀取：查看公開規則快照是否有 analysis.kind／version、合法 comparison／pairs 題號與排除選項；確認前後端為同一發布版本。Node 只記 API_INTERNAL_ERROR，勿輸出原始憑證或私人答案。先重啟自己的 API，再跑 check；不要靠清空 SQLite 或 D1 止血。
+- 期待對錯人：看該 finding.evidence 的 slot／questionId／role；A 的 wanted 要連 B 的 provided，再反向。見面兩項必須同 slot，且只進 conditions。
+- 暫不分享被列共同點、未知做法被判差異：先看 snapshot.analysis.excludedOptionIds，檢查 special 選項是不是被重命名。context 的 advice 必須為 null，suggestions 不得含它。純粹未答仍不可提交。
+- 手機卡片擠出：看 LongDistanceResults.css 的 min-width、overflow-wrap 和 720／400px 斷點；不要刪除原答案來縮短。開發中變更結果契約後先重新載入新頁並重啟測試 API，避免舊 React state／舊後端混合。
+
+安全診斷（只輸出公開題庫資訊）：
+
+```powershell
+node --input-type=module -e "import { getQuiz } from './src/content/quizzes.ts'; const q=getQuiz('long-distance'); console.log(q.version,q.questions.length,q.analysis.version);"
+npm run check
+npm run build
+npm run build:cloudflare
+```
+
+**教到能自行修改**：
+
+「快照」就是建立這輪時存下來的一份題目與規則副本。之後更新題庫只影響新回合；結果不能回頭讀最新模板，否則同一輪會無故改變。
+
+例子：要改「先傾聽」的建議，在 long-distance.ts 的 pairs 找 support → optionAdvice.listen，保留選項 ID。這是新提案，升遠距工具版、同步研究文件；舊回合的那句提案仍由原 snapshot 保留。若改配對演算法，另加分析版本與分支、保留 analyzeDistanceV1，不直接改 V1。新增選項先同步原稿與對應的期待／實際題、更新映射；若新增題目數，連同 importer 的完整題序檢查、入口題數與必要測試一起改，不把 ID 當數值。
+
+驗證需確認雙向 slot、特殊選項不推論、缺答不能提交、舊快照不追套，以及 Node／D1 一致。即使工程測試通過，仍不能把 evidence 改為 validated 或宣稱建議已有效。
+
+**已驗證與限制**：12 檔／69 項測試，包含 7 項語意／來源／排除／快照測試及 4 項 Node／D1 共同契約；一般與 Cloudflare 建置、Worker dry-run 成功。dry-run 只打包，不上傳或部署；隔離 checkout 的 bundler 讀目錄與 Wrangler log 寫入原被沙箱阻擋，使用一次已授權的執行完成。隔離 5190／5191 服務只用虛構 QA 資料與記憶體 SQLite，完成 A/B 各 24 題 UI、缺答按鈕、草稿重新整理、邀請分享說明、結果解鎖及一致性、建議原因／來源展開、全暫不分享與 390px 模擬。最後全新頁面無 console error／warn，手機無橫向溢出。截圖放該 worktree 的 .local/distance-desktop.png 與 distance-mobile.png，不提交 Git。沒有讀寫使用者原 SQLite，沒有雲端答案或 schema 變更。
+
+尚未完成：合併／公開部署、實體雙手機、認知訪談、本題庫心理測量、建議效果。回復程式時使用已驗證 commit；資料庫無 migration，保留所有原答案，不為回復重建 D1。對外發布另依現有 Cloudflare 步驟，使用固定且已驗證的分支提交，避免把其他聊天的修改一起部署。
+
+
 ## 0.7「了解關係」與結果科普短卡
 
 使用者指定獨立完整文章與可查核來源，並追加結果科普短卡；不加六選項說明。文章入口為 #/learn，全文為 #/learn/:id。第一批為核心價值、感受到的回應、遠距日常，每篇 1.0.0。估計閱讀時間不是實測。來源查核於 2026-10-08，依原始論文工具／摘要／模型／方法段落，不宣稱系統性回顧；研究段落就近附 DOI，篇末附方法、閱讀範圍及全文入口。本站生活例子／聊天提案另外標示，不是已驗證介入。
@@ -69,7 +117,9 @@ npm run dev
 
 ## 常見修改位置
 
-### 遠距戀愛候選內容（2026-10-08）
+### 遠距戀愛初次研究交付紀錄（2026-10-08）
+
+以下是接入前的歷史記錄；目前分支功能與維護見本文件上方 0.8 章節。
 
 研究與完整 24 題見 [遠距候選稿](quizzes/long-distance.md)，結構化原稿為 `docs/quizzes/long-distance-candidate.json`。每題記錄穩定 ID、來源、原創改寫邊界與結果討論提案；三段只是閱讀分類，不是三個量表分數。流程為期刊／作者材料 → 來源查核記錄 → 候選 JSON → 審閱稿 → 後續內容審查；目前沒有 HTTP 請求、答案保存或前端匯入。
 
