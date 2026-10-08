@@ -1,0 +1,76 @@
+# 之間 Between Us
+
+給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
+
+目前為 **0.1 專案基礎與介面預覽**，不是可用的正式雙人測驗服務。暫定名稱「之間」可再調整。
+
+## 現在可以做什麼
+
+- 瀏覽 5 個主題、切換篩選、查看主題介紹與研究來源。
+- 體驗三觀主題的 3 題自編示例：選答、上一題、下一題、查看自己的答案、返回修改。
+- 使用手機或桌面瀏覽；支援鍵盤選答與減少動態效果偏好。
+- 不保存或分享答案。重新整理／離開作答預覽會清除選擇。
+
+尚未實作：正式量表、計分、建立回合、邀請、跨裝置暫存、私人返回連結、雙人解鎖、逐題雙人比較、討論收藏、部署。畫面上的正式流程介紹是產品規劃，不是已完成服務。
+
+## 本機啟動
+
+需要 Node.js 22.12 以上；本次使用 24.19.0。依賴版本固定於 `package.json`，實際依賴樹由 `package-lock.json` 鎖定。
+
+```powershell
+cd C:\Users\lydai\Desktop\forest
+npm ci
+npm run dev
+```
+
+開啟終端機顯示的 `http://127.0.0.1:5173`。停止服務時在終端機按 `Ctrl+C`。
+
+```powershell
+npm run check
+npm run build
+npm run preview
+```
+
+- `check`：TypeScript 型別檢查與內容／路由測試。
+- `build`：型別檢查及產出 `dist/`。
+- `preview`：在 `http://127.0.0.1:4173` 檢查建置結果；不是正式後端服務。
+- `.npmrc` 把快取放在專案內的 `.npm-cache/`，避免依賴個人帳號的全域快取權限。
+- 沒有必要的環境變數或雲端帳號；`.env.example` 說明未來金鑰處理原則。
+
+## 文件入口
+
+- [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
+- [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
+- [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
+- [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。
+- [版本紀錄](CHANGELOG.md)：每個交付版本的變更與限制。
+
+## 提交、版本與未來部署
+
+每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。現在為 `0.1.0`；新功能交付可升為 `0.2.0`，小修正交付可升為 `0.1.1`，純文件整理通常維持原版號。
+
+網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
+
+未來使用使用者指定的 GitHub repository 保存程式。若網站前端部署於 GitHub Pages，仍需另外的後端保存雙人答案與控制解鎖。目前沒有 remote、push、Actions 工作流程或實際部署。部署流程與限制見 [架構文件](docs/architecture.md#github-部署方向規劃)。
+
+## 重要檔案
+
+| 檔案 | 角色 |
+| --- | --- |
+| `src/App.tsx` | 主題館、介紹、作答預覽與個人答案頁 |
+| `src/content/quizzes.ts` | 主題、草題、選項與研究來源 |
+| `src/domain/quiz.ts` | TypeScript 內容契約及驗證函式 |
+| `src/lib/routes.ts` | `#/topics/...` 與 `#/demo/...` 路由解析 |
+| `src/styles.css` | 色彩、字體、排版與手機版樣式 |
+| `src/components/Motif.tsx` | 自製 SVG 主題插圖，沒有額外圖庫依賴 |
+| `vite.config.ts` | 本機服務與建置設定 |
+
+## 技術選擇
+
+使用 React + TypeScript + Vite 的單一前端專案。React 負責畫面，TypeScript 幫忙偵測資料與程式型別錯誤，Vite 負責本機開發與建置。Hash 路由是網址 `#` 後面的頁面識別，讓靜態主機也能直接開啟子頁；目前不用路由套件、全域狀態套件或設計元件庫。
+
+後端尚未選定與接入。先把必要的存取規則寫清楚，再選小型託管服務；不用為少量朋友使用預先加入會員、好友、管理後台或多個服務。
+
+字體可從 Google Fonts 載入，失敗時使用系統中文字體。字體載入不包含答案；如需完全不依賴外部資源，可移除 `src/styles.css` 首行的字體匯入。
+
+官方技術參考：[Vite 入門](https://vite.dev/guide/)、[React 與 TypeScript](https://react.dev/learn/typescript)。學術參考與其支持範圍列於研究文件與各主題。
