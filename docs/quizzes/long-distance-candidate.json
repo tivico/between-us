@@ -1,0 +1,1496 @@
+{
+  "id": "long-distance-candidate",
+  "targetQuizId": "long-distance",
+  "version": "0.1.0",
+  "status": "candidate",
+  "language": "zh-Hant",
+  "reviewedAt": "2026-10-08",
+  "evidenceStatus": "research-informed-original; cognitive-interviews-and-measurement-validation-pending",
+  "title": "遠距，也靠近",
+  "subtitle": "讓看不見的日常，被理解。",
+  "purpose": "整理目前聯絡、期待與可行條件，讓雙方能具體討論遠距安排。",
+  "audience": "正在遠距或準備開始遠距的兩人；不限性向、性別認同、婚姻或同居狀態。",
+  "dimensions": [
+    "日常分享",
+    "回應與支持",
+    "見面與未來"
+  ],
+  "sectionMeaning": "三段只供閱讀與導航；不是經驗證的三個心理分量表。",
+  "instructions": "請回答自己目前的想法。最近 7／14 天題目回答實際經驗；尚未開始遠距請選不適用，不猜未來。期待題回答目前希望，條件題回答目前做得到的事。單選最接近的一項，無合適選項可暫不分享。你選的選項（包括暫不分享）將在雙方完成後讓對方看到；不需寫私人事件細節。",
+  "responsePolicy": {
+    "type": "single-choice",
+    "skip": "尚未選任何選項就是未答；不補值。",
+    "preferNotShare": "有選暫不分享表示此題已答，但沒有可比較的偏好；不能推論秘密或低投入。",
+    "notApplicable": "不適用／沒有遇到／沒有這類互動是不同情境選項；結果忠實顯示，不納入偏好差異。",
+    "undecided": "尚未想清楚或不確定是有效回答，不當作中間分數。",
+    "optionIdsAreScores": false
+  },
+  "scoring": null,
+  "resultPlan": {
+    "status": "proposal-not-implemented",
+    "rulesVersion": "candidate-0.1.0",
+    "format": "分段並排實際選項＋中性描述＋可略過的自編討論提示。",
+    "excluded": [
+      "契合百分比",
+      "最佳頻率門檻",
+      "愛的程度",
+      "依附類型",
+      "關係成敗預測",
+      "總分與分量表分數"
+    ],
+    "crossPairGroups": [
+      "busy-response",
+      "support"
+    ],
+    "exclusionOptionIds": [
+      "prefer-not-share",
+      "not-applicable",
+      "no-opportunity",
+      "undecided",
+      "unclear"
+    ],
+    "contextOnlyOptionIds": [
+      "none",
+      "flexible",
+      "variable",
+      "not-feasible",
+      "no-plan",
+      "not-discussed",
+      "no-shared-plan"
+    ],
+    "exclusionNote": "上述排除選項仍可忠實並排顯示；不計成衝突或一致，也不產生比例。情境選項需依題意解讀，不以 ID 自動作全題共通推論。"
+  },
+  "permissionNote": "全部題幹、選項及討論提示由本站原創，概念來源逐題列出；沒有複製／翻譯 PRI、RMBM 或 LDR Index 題本，沒有取得其網站使用許可，也不借用其計分或效度。",
+  "sources": [
+    {
+      "id": "jiang-hancock-2013",
+      "authors": "L. Crystal Jiang & Jeffrey T. Hancock",
+      "year": 2013,
+      "title": "Absence Makes the Communication Grow Fonder: Geographic Separation, Interpersonal Media, and Intimacy in Dating Relationships",
+      "journal": "Journal of Communication",
+      "volumeIssuePages": "63(3), 556–577",
+      "doi": "10.1111/jcom.12029",
+      "url": "https://doi.org/10.1111/jcom.12029",
+      "readUrl": "https://socialmedialab.sites.stanford.edu/sites/g/files/sbiybj22976/files/media/file/jiang-jc-absence.pdf",
+      "readScope": "作者機構託管全文；Methods／Participants（期刊頁 562–563）、Discussion。",
+      "method": "一週雙人互動日記；分析樣本 63 對異性約會伴侶，其中 30 對遠距，主要為美國大學生。",
+      "scope": "自我揭露、感受到的伴侶回應與親密，以及媒介差異的研究背景。",
+      "limitations": "觀察研究；不是本站題庫驗證，不能推定所有性向、性別認同或台灣伴侶適用，也不能從單題判定理想化或欺騙。",
+      "checkedAt": "2026-10-08",
+      "role": "question-concept"
+    },
+    {
+      "id": "holtzman-2021",
+      "authors": "Susan Holtzman, Kostadin Kushlev, Alisha Wozny & Rebecca Godard",
+      "year": 2021,
+      "title": "Long-distance texting: Text messaging is linked with higher relationship satisfaction in long-distance relationships",
+      "journal": "Journal of Social and Personal Relationships",
+      "volumeIssuePages": "38(12), 3543–3565",
+      "doi": "10.1177/02654075211043296",
+      "url": "https://doi.org/10.1177/02654075211043296",
+      "readUrl": "https://static1.squarespace.com/static/57a40c19414fb54f51f8095f/t/685dac2b5a001b4af607d3df/1750969387992/2021_HoltzmanKushlevetal.pdf",
+      "readScope": "作者公開全文；Participants／Measures／Results／Discussion。PMC 入口本次遇驗證頁，改查作者全文。",
+      "method": "橫斷線上問卷；647 名在加拿大就學的 18–25 歲約會／交往者，36.5% 為遠距；93.7% 自認異性戀，其他性向比例小。",
+      "scope": "把媒介使用頻率與感受到的回應性分開研究；遠距組文字頻率及回應性與滿意度有關聯。",
+      "limitations": "研究中的統計預測不是未來預測或因果；視訊頻率與滿意度未見顯著關聯。不能定最佳聊天次數、要求秒回，或宣稱跨族群等同性。",
+      "checkedAt": "2026-10-08",
+      "role": "question-concept"
+    },
+    {
+      "id": "stafford-2010",
+      "authors": "Laura Stafford",
+      "year": 2010,
+      "title": "Geographic Distance and Communication During Courtship",
+      "journal": "Communication Research",
+      "volumeIssuePages": "37(2), 275–297",
+      "doi": "10.1177/0093650209356390",
+      "url": "https://doi.org/10.1177/0093650209356390",
+      "readUrl": "https://journals.sagepub.com/doi/10.1177/0093650209356390",
+      "readScope": "出版者摘要與期刊中繼資料；未完成全文及原問卷核對。",
+      "method": "比較交往者地理距離與對話特徵的研究；本輪不主張已核對完整樣本或施測細節。",
+      "scope": "遠距交往的談話內容、議題迴避與共同決策之研究方向。",
+      "limitations": "不能從本站的延後討論選項判定迴避人格、關係品質或不願承諾。",
+      "checkedAt": "2026-10-08",
+      "role": "question-concept"
+    },
+    {
+      "id": "sahlstein-2006",
+      "authors": "Erin M. Sahlstein",
+      "year": 2006,
+      "title": "Making Plans: Praxis Strategies for Negotiating Uncertainty–Certainty in Long-Distance Relationships",
+      "journal": "Western Journal of Communication",
+      "volumeIssuePages": "70(2), 147–165",
+      "doi": "10.1080/10570310600710042",
+      "url": "https://doi.org/10.1080/10570310600710042",
+      "readUrl": "https://www.tandfonline.com/doi/abs/10.1080/10570310600710042",
+      "readScope": "出版者公開摘要；另查出版者全文搜尋可讀的 Making Plans as Balance 段落，未完成全文審查。",
+      "method": "20 段遠距約會關係的伴侶訪談，以關係辯證觀點分析規劃如何處理確定與不確定。",
+      "scope": "安排見面與談話可以帶來可預期性，也可能因計畫未實現形成不確定。",
+      "limitations": "質性研究不提供最佳見面間隔、固定檢討週期或本站選項的效度。旅行費用與時差等具體選項屬本站情境延伸。",
+      "checkedAt": "2026-10-08",
+      "role": "question-concept"
+    },
+    {
+      "id": "stafford-merolla-2007",
+      "authors": "Laura Stafford & Andy J. Merolla",
+      "year": 2007,
+      "title": "Idealization, reunions, and stability in long-distance dating relationships",
+      "journal": "Journal of Social and Personal Relationships",
+      "volumeIssuePages": "24(1), 37–54",
+      "doi": "10.1177/0265407507072578",
+      "url": "https://doi.org/10.1177/0265407507072578",
+      "readUrl": "https://journals.sagepub.com/doi/10.1177/0265407507072578",
+      "readScope": "出版者摘要；作者上傳全文僅核對 Study 2 為六個月追蹤，未完成所有方法／結果審查。",
+      "method": "兩項研究，其中第二項含六個月追蹤，討論理想化、見面與轉為地理接近後的穩定。",
+      "scope": "遠距與轉為地理接近是不同情境；不能假定搬到同一地點就消除所有相處差異。",
+      "limitations": "不是個人分手預測工具；不能用本題庫量出理想化，或要求以同居／婚姻作終點。",
+      "checkedAt": "2026-10-08",
+      "role": "question-concept"
+    },
+    {
+      "id": "pistole-roberts-2011",
+      "authors": "M. Carole Pistole & Amber Roberts",
+      "year": 2011,
+      "title": "Measuring Long-Distance Romantic Relationships: A Validity Study",
+      "journal": "Measurement and Evaluation in Counseling and Development",
+      "volumeIssuePages": "44(2), 63–76",
+      "doi": "10.1177/0748175611400288",
+      "url": "https://doi.org/10.1177/0748175611400288",
+      "readUrl": "https://journals.sagepub.com/doi/10.1177/0748175611400288",
+      "readScope": "出版者摘要及期刊資料；未核對完整題本、譯本與使用許可。",
+      "method": "遠距關係指數的建構效度研究，摘要報告單因子結構及聚合／區辨證據。",
+      "scope": "比較候選工具：辨識遠距情境的指數，不是遠距伴侶契合度或溝通需求全題庫。",
+      "limitations": "本輪不轉錄原題、不推算原工具分數；不以公里數或該指數決定本站參與資格。",
+      "checkedAt": "2026-10-08",
+      "role": "instrument-comparison"
+    },
+    {
+      "id": "stafford-2011",
+      "authors": "Laura Stafford",
+      "year": 2011,
+      "title": "Measuring relationship maintenance behaviors: Critique and development of the revised relationship maintenance behavior scale",
+      "journal": "Journal of Social and Personal Relationships",
+      "volumeIssuePages": "28(2), 278–303",
+      "doi": "10.1177/0265407510378125",
+      "url": "https://doi.org/10.1177/0265407510378125",
+      "readUrl": "https://journals.sagepub.com/doi/abs/10.1177/0265407510378125",
+      "readScope": "出版者摘要及使用條件入口；未核對完整 RMBM 題本、繁體譯本及公開網站使用許可。",
+      "method": "工具發展研究；摘要指出 RMBM 因子結構於三個樣本穩定。",
+      "scope": "比較候選工具：關係維繫行為測量；原 RMSM 與後續 RMBM 不是同一工具。",
+      "limitations": "不是完整遠距期待工具；不能把自編單選題冠上 RMBM 名稱或套其分數。",
+      "checkedAt": "2026-10-08",
+      "role": "instrument-comparison"
+    },
+    {
+      "id": "crasta-2021",
+      "authors": "Dev Crasta, Ronald D. Rogge, Michael R. Maniaci & Harry T. Reis",
+      "year": 2021,
+      "title": "Toward an optimized measure of perceived partner responsiveness: Development and validation of the perceived responsiveness and insensitivity scale",
+      "journal": "Psychological Assessment",
+      "volumeIssuePages": "33(4), 338–355",
+      "doi": "10.1037/pas0000986",
+      "url": "https://doi.org/10.1037/pas0000986",
+      "readUrl": "https://pubmed.ncbi.nlm.nih.gov/33600200/",
+      "readScope": "PubMed 搜尋可讀摘要；直接開啟失敗。另閱讀作者機構 PRI Handout 的授權、翻譯及計分說明（前兩頁），未複製原題。",
+      "method": "以項目反應理論發展 PRI，兩個各 8 題的分量表：回應性及不敏感；手冊另列 8 題短版。",
+      "scope": "比較候選工具：測量本人感受到的回應，不等於回覆速度或雙人期待相似程度。",
+      "limitations": "作者手冊要求非臨床／非研究使用另取得書面許可；翻譯另聯絡作者。本網站用途不能自行視為免費研究用途。",
+      "permissionUrl": "https://sas.rochester.edu/psy/sites/reis/wp-content/uploads/2025/10/PRI-Handout.pdf",
+      "checkedAt": "2026-10-08",
+      "role": "instrument-comparison"
+    }
+  ],
+  "questions": [
+    {
+      "id": "ldr-contact-actual",
+      "order": 1,
+      "dimension": "日常分享",
+      "prompt": "最近 7 天，你和對方有來回文字聊天的日子，大約有幾天？",
+      "help": "一天有一次來回就算一天，不計訊息總數。沒有開始遠距時可選不適用。",
+      "options": [
+        {
+          "id": "none",
+          "label": "沒有"
+        },
+        {
+          "id": "one-two-days",
+          "label": "1–2 天"
+        },
+        {
+          "id": "three-four-days",
+          "label": "3–4 天"
+        },
+        {
+          "id": "five-six-days",
+          "label": "5–6 天"
+        },
+        {
+          "id": "every-day",
+          "label": "每天"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距，或這段時間不適用"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holtzman-2021"
+        ],
+        "note": "概念依據：文字聯絡頻率。本站原創情境題，非原工具翻譯或節錄；7 天、天數區間與來回定義是本站設計，不是原研究量尺；少聯絡不代表不在乎。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "這週的聯絡情況，是你們平常的樣子嗎？",
+        "pairGroup": "text-days",
+        "pairRole": "recent",
+        "comparison": "context-only"
+      }
+    },
+    {
+      "id": "ldr-contact-wanted",
+      "order": 2,
+      "dimension": "日常分享",
+      "prompt": "一般的一週，你希望有來回文字聊天的日子，大約有幾天？",
+      "help": "回答自己目前的期待；不需要選看起來比較親密的答案。",
+      "options": [
+        {
+          "id": "none",
+          "label": "沒有"
+        },
+        {
+          "id": "one-two-days",
+          "label": "1–2 天"
+        },
+        {
+          "id": "three-four-days",
+          "label": "3–4 天"
+        },
+        {
+          "id": "five-six-days",
+          "label": "5–6 天"
+        },
+        {
+          "id": "every-day",
+          "label": "每天"
+        },
+        {
+          "id": "flexible",
+          "label": "不設定天數，依彼此狀況就好"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holtzman-2021"
+        ],
+        "note": "概念依據：頻率和回應性需要分開理解。本站原創情境題，非原工具翻譯或節錄；理想天數屬設計延伸，不能以選項差換算契合分數。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "這個期待在忙碌週也一樣嗎？",
+        "pairGroup": "text-days",
+        "pairRole": "wanted",
+        "comparison": "context-only"
+      }
+    },
+    {
+      "id": "ldr-medium-actual",
+      "order": 3,
+      "dimension": "日常分享",
+      "prompt": "最近 14 天，分隔兩地時，你們主要用什麼方式聯絡？",
+      "help": "選最常用的一項；未聯絡與尚未開始遠距分開回答。",
+      "options": [
+        {
+          "id": "text",
+          "label": "文字訊息"
+        },
+        {
+          "id": "voice-message",
+          "label": "語音留言"
+        },
+        {
+          "id": "voice-call",
+          "label": "語音通話"
+        },
+        {
+          "id": "video-call",
+          "label": "視訊通話"
+        },
+        {
+          "id": "mixed",
+          "label": "沒有主要方式，會混合使用"
+        },
+        {
+          "id": "none",
+          "label": "這段時間沒有遠端聯絡"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013",
+          "holtzman-2021"
+        ],
+        "note": "概念依據：不同媒介提供不同互動線索。本站原創情境題，非原工具翻譯或節錄；媒介選項是分類，不能排序成親密程度。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "你喜歡現在的方式嗎？有沒有受網路、環境或隱私限制？"
+      }
+    },
+    {
+      "id": "ldr-medium-wanted",
+      "order": 4,
+      "dimension": "日常分享",
+      "prompt": "想深入聊自己的感受時，你最希望用哪一種方式？",
+      "help": "選目前最適合自己的一項；文字或語音也可以是合適的選擇。",
+      "options": [
+        {
+          "id": "text",
+          "label": "文字訊息"
+        },
+        {
+          "id": "voice-message",
+          "label": "語音留言"
+        },
+        {
+          "id": "voice-call",
+          "label": "語音通話"
+        },
+        {
+          "id": "video-call",
+          "label": "視訊通話"
+        },
+        {
+          "id": "in-person",
+          "label": "等能見面時當面聊"
+        },
+        {
+          "id": "situational",
+          "label": "看當下內容與彼此環境"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：媒介的即時性及可用線索。本站原創情境題，非原工具翻譯或節錄；研究沒有替每個人選出最佳媒介；此偏好不與上一題判成不一致。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "什麼情況讓你比較容易表達，而不用趕著回應？"
+      }
+    },
+    {
+      "id": "ldr-overlap-capacity",
+      "order": 5,
+      "dimension": "日常分享",
+      "prompt": "以目前的作息，一般一週你實際能安排幾次專心的即時通話？",
+      "help": "即時通話指雙方同時在線的語音或視訊；這是可用時間，不是愛的程度。",
+      "options": [
+        {
+          "id": "none",
+          "label": "目前很難安排"
+        },
+        {
+          "id": "once",
+          "label": "大約 1 次"
+        },
+        {
+          "id": "two-three",
+          "label": "大約 2–3 次"
+        },
+        {
+          "id": "four-six",
+          "label": "大約 4–6 次"
+        },
+        {
+          "id": "daily",
+          "label": "大約每天 1 次"
+        },
+        {
+          "id": "variable",
+          "label": "每週差異很大"
+        },
+        {
+          "id": "undecided",
+          "label": "還不確定"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holtzman-2021",
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：媒介使用與規劃互動。本站原創情境題，非原工具翻譯或節錄；次數和時差／作息情境是本站延伸，不提供最低通話要求。"
+      },
+      "design": {
+        "kind": "constraint",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "哪一段時間對雙方都比較不勉強？"
+      }
+    },
+    {
+      "id": "ldr-call-arrangement",
+      "order": 6,
+      "dimension": "日常分享",
+      "prompt": "對語音或視訊的時間，你比較喜歡怎麼安排？",
+      "help": "不要求長時間或隨時可接通；選最符合你的安排方式。",
+      "options": [
+        {
+          "id": "fixed",
+          "label": "事先約好固定時段"
+        },
+        {
+          "id": "weekly-plan",
+          "label": "每週再確認方便的時段"
+        },
+        {
+          "id": "spontaneous",
+          "label": "當天先問是否方便，再決定"
+        },
+        {
+          "id": "mixed",
+          "label": "保留部分固定時段，其餘彈性"
+        },
+        {
+          "id": "no-calls",
+          "label": "目前不想安排即時通話"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：規劃與可預期性。本站原創情境題，非原工具翻譯或節錄；具體安排是原創選項；固定或彈性都不是較高品質的標準。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "約好的時間遇到加班、課程或休息需要時，怎麼調整？"
+      }
+    },
+    {
+      "id": "ldr-ordinary-disclosure",
+      "order": 7,
+      "dimension": "日常分享",
+      "prompt": "最近 14 天，當你想讓對方知道日常不太順利的事時，你有說出來的情況大約占多少？",
+      "help": "只想自己保留的事不算在分母；不需要揭露事件細節。",
+      "options": [
+        {
+          "id": "none",
+          "label": "幾乎都沒有說"
+        },
+        {
+          "id": "few",
+          "label": "少部分有說"
+        },
+        {
+          "id": "about-half",
+          "label": "大約一半有說"
+        },
+        {
+          "id": "most",
+          "label": "大部分有說"
+        },
+        {
+          "id": "all",
+          "label": "幾乎都有說"
+        },
+        {
+          "id": "no-opportunity",
+          "label": "這段時間沒有這類想分享的事"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：自我揭露。本站原創情境題，非原工具翻譯或節錄；分享頻率是情境描述，不測誠實程度或理想化；保留私人事不算缺陷。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "如果你想說但沒說，主要是時間、方式，還是當時還沒準備好？"
+      }
+    },
+    {
+      "id": "ldr-shared-activity",
+      "order": 8,
+      "dimension": "日常分享",
+      "prompt": "如果想隔著距離一起做點事，你目前最想嘗試哪一種？",
+      "help": "選最想先嘗試的一項；不一定需要增加螢幕時間。",
+      "options": [
+        {
+          "id": "talk",
+          "label": "專心聊天"
+        },
+        {
+          "id": "watch",
+          "label": "一起看相同的影片或節目"
+        },
+        {
+          "id": "play",
+          "label": "一起玩遊戲或進行共同興趣"
+        },
+        {
+          "id": "routine",
+          "label": "各自做日常事情，偶爾交流"
+        },
+        {
+          "id": "async",
+          "label": "不同時間做同一件事，之後再分享"
+        },
+        {
+          "id": "none",
+          "label": "目前不需要安排共同活動"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：透過媒介維持互動。本站原創情境題，非原工具翻譯或節錄；活動種類完全是本站提案；原研究未驗證這些活動有改善效果。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "可以先試一個對雙方都不增加負擔的安排嗎？"
+      }
+    },
+    {
+      "id": "ldr-busy-actual",
+      "order": 9,
+      "dimension": "回應與支持",
+      "prompt": "最近 14 天，當你忙到不能好好回覆時，你最常怎麼處理？",
+      "help": "回答自己通常的做法；工作、睡眠或其他條件可能讓人無法先通知。",
+      "options": [
+        {
+          "id": "before",
+          "label": "忙之前先說一聲"
+        },
+        {
+          "id": "acknowledge",
+          "label": "看到訊息時先簡短回覆，之後再聊"
+        },
+        {
+          "id": "after",
+          "label": "忙完後再完整回覆"
+        },
+        {
+          "id": "varies",
+          "label": "依當天情況，沒有固定做法"
+        },
+        {
+          "id": "no-opportunity",
+          "label": "這段時間沒有遇到這種情況"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holtzman-2021"
+        ],
+        "note": "概念依據：聯絡行為與回應性分開。本站原創情境題，非原工具翻譯或節錄；忙碌通知方式是本站延伸；不由回覆速度推斷在乎程度。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "這個做法對你而言方便嗎？對方知道你的情況嗎？",
+        "pairGroup": "busy-response",
+        "pairRole": "provide",
+        "comparison": "A-wanted-vs-B-provide-and-B-wanted-vs-A-provide"
+      }
+    },
+    {
+      "id": "ldr-busy-wanted",
+      "order": 10,
+      "dimension": "回應與支持",
+      "prompt": "當對方忙到不能好好回覆時，你比較希望對方怎麼處理？",
+      "help": "選最接近你需要的一項；期待需要與對方的能力一起談。",
+      "options": [
+        {
+          "id": "before",
+          "label": "忙之前先說一聲"
+        },
+        {
+          "id": "acknowledge",
+          "label": "看到訊息時先簡短回覆，之後再聊"
+        },
+        {
+          "id": "after",
+          "label": "忙完後再完整回覆"
+        },
+        {
+          "id": "varies",
+          "label": "依當天情況，沒有固定做法"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holtzman-2021"
+        ],
+        "note": "概念依據：感受到的回應不能等同訊息速度。本站原創情境題，非原工具翻譯或節錄；通知期待是本站原創，不表示有權要求隨時可聯絡。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "如果對方連簡短回覆都做不到，什麼安排能讓雙方安心？",
+        "pairGroup": "busy-response",
+        "pairRole": "wanted",
+        "comparison": "A-wanted-vs-B-provide-and-B-wanted-vs-A-provide"
+      }
+    },
+    {
+      "id": "ldr-support-wanted",
+      "order": 11,
+      "dimension": "回應與支持",
+      "prompt": "當你想和對方分享煩惱時，你最希望先得到哪一種回應？",
+      "help": "問的是最希望先得到什麼，不代表其他方式都不需要。",
+      "options": [
+        {
+          "id": "listen",
+          "label": "先聽我說，讓我把感受講完"
+        },
+        {
+          "id": "comfort",
+          "label": "先用關心或安慰的話回應"
+        },
+        {
+          "id": "solutions",
+          "label": "先一起想可行的做法"
+        },
+        {
+          "id": "check-need",
+          "label": "先問我現在希望怎麼被陪伴"
+        },
+        {
+          "id": "space",
+          "label": "先留一些空間，之後再關心"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：回應需連到分享者的感受與需要。本站原創情境題，非原工具翻譯或節錄；五種方式是本站設計，不能當同理心或依附類型分類。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "同一種煩惱，你每次需要的回應都一樣嗎？",
+        "pairGroup": "support",
+        "pairRole": "wanted",
+        "comparison": "A-wanted-vs-B-provide-and-B-wanted-vs-A-provide"
+      }
+    },
+    {
+      "id": "ldr-support-actual",
+      "order": 12,
+      "dimension": "回應與支持",
+      "prompt": "最近 14 天，對方向你分享煩惱時，你最常先做什麼？",
+      "help": "回答自己實際的第一步，並不代表對方一定因此感到被支持。",
+      "options": [
+        {
+          "id": "listen",
+          "label": "先聽對方說完"
+        },
+        {
+          "id": "comfort",
+          "label": "先用關心或安慰的話回應"
+        },
+        {
+          "id": "solutions",
+          "label": "先一起想可行的做法"
+        },
+        {
+          "id": "check-need",
+          "label": "先問對方現在希望怎麼被陪伴"
+        },
+        {
+          "id": "space",
+          "label": "先留一些空間，之後再關心"
+        },
+        {
+          "id": "other",
+          "label": "最常先做的不是上面這些"
+        },
+        {
+          "id": "no-opportunity",
+          "label": "這段時間沒有遇到這種情況"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：支持行為和對方感受到的回應不同。本站原創情境題，非原工具翻譯或節錄；此題不評定做法優劣；配對只能作為確認需要的起點。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "你習慣提供的第一步，是對方當下想要的嗎？",
+        "pairGroup": "support",
+        "pairRole": "provide",
+        "comparison": "A-wanted-vs-B-provide-and-B-wanted-vs-A-provide"
+      }
+    },
+    {
+      "id": "ldr-understood",
+      "order": 13,
+      "dimension": "回應與支持",
+      "prompt": "最近 14 天，你向對方說自己的感受後，有覺得對方理解你的情況大約占多少？",
+      "help": "回答你的感受，不替對方判定動機；沒有分享時可選沒有這類互動。",
+      "options": [
+        {
+          "id": "none",
+          "label": "幾乎都沒有"
+        },
+        {
+          "id": "few",
+          "label": "少部分有"
+        },
+        {
+          "id": "about-half",
+          "label": "大約一半有"
+        },
+        {
+          "id": "most",
+          "label": "大部分有"
+        },
+        {
+          "id": "all",
+          "label": "幾乎都有"
+        },
+        {
+          "id": "no-opportunity",
+          "label": "這段時間沒有這類互動"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：本人感受到的理解。本站原創情境題，非原工具翻譯或節錄；獨立情境問題，不是 PRI 原題或其繁體譯本；不建立回應性分量表。"
+      },
+      "design": {
+        "kind": "recent-perception",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "哪一次互動讓你有這個感覺？如果願意，可以談談那個差別。"
+      }
+    },
+    {
+      "id": "ldr-text-misunderstanding",
+      "order": 14,
+      "dimension": "回應與支持",
+      "prompt": "文字訊息讓你不確定對方的語氣時，你最希望先怎麼釐清？",
+      "help": "不要求立刻處理；選在你目前情況下比較適合的第一步。",
+      "options": [
+        {
+          "id": "ask-text",
+          "label": "先用文字確認對方原本的意思"
+        },
+        {
+          "id": "voice",
+          "label": "方便時用語音說明"
+        },
+        {
+          "id": "video",
+          "label": "方便時用視訊說明"
+        },
+        {
+          "id": "pause",
+          "label": "先整理想法，再約時間談"
+        },
+        {
+          "id": "in-person",
+          "label": "先保留，等見面時釐清"
+        },
+        {
+          "id": "situational",
+          "label": "依議題和環境決定"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "jiang-hancock-2013"
+        ],
+        "note": "概念依據：不同媒介提供不同線索。本站原創情境題，非原工具翻譯或節錄；處理步驟是本站提案，未做衝突介入效果評估。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "如果想先暫停，怎麼讓對方知道這件事還會再談？"
+      }
+    },
+    {
+      "id": "ldr-serious-topic-actual",
+      "order": 15,
+      "dimension": "回應與支持",
+      "prompt": "最近 14 天，有重要但不容易談的關係議題時，你最常怎麼安排？",
+      "help": "例如彼此期待或見面安排；不需要寫出議題內容。",
+      "options": [
+        {
+          "id": "immediate",
+          "label": "在當下可用的方式談"
+        },
+        {
+          "id": "scheduled",
+          "label": "另外約遠端談話時間"
+        },
+        {
+          "id": "next-visit",
+          "label": "先約定下次見面時談"
+        },
+        {
+          "id": "deferred",
+          "label": "先放著，還沒有定再談時間"
+        },
+        {
+          "id": "mixed",
+          "label": "沒有固定方式，依議題安排"
+        },
+        {
+          "id": "no-opportunity",
+          "label": "這段時間沒有這類議題"
+        },
+        {
+          "id": "not-applicable",
+          "label": "還沒有開始遠距"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "stafford-2010",
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：議題延後與重要談話安排。本站原創情境題，非原工具翻譯或節錄；延後可能來自條件、準備度或安全；不直接判定逃避或不願承諾。"
+      },
+      "design": {
+        "kind": "recent-behavior",
+        "timeFrame": "題幹所列的最近 7／14 天",
+        "basis": "original-research-informed",
+        "discussionPrompt": "如果有件事還沒談，現在需要訂時間，還是先確認是否適合談？"
+      }
+    },
+    {
+      "id": "ldr-resume-after-pause",
+      "order": 16,
+      "dimension": "回應與支持",
+      "prompt": "如果你需要暫停一次不太順利的遠端談話，你希望怎麼安排後續？",
+      "help": "暫停時不需要承諾自己做不到的期限；彼此都要能休息。",
+      "options": [
+        {
+          "id": "time-now",
+          "label": "先約一個雙方可行的再談時間"
+        },
+        {
+          "id": "check-in",
+          "label": "先約何時確認是否準備好，再定談話時間"
+        },
+        {
+          "id": "ready-contact",
+          "label": "準備好的人先聯絡，再確認另一方是否方便"
+        },
+        {
+          "id": "situational",
+          "label": "依議題和當下狀況決定"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：規劃談話以處理不確定。本站原創情境題，非原工具翻譯或節錄；不是經驗證的修復技巧；不要求任何一方在不舒服或不安全時繼續。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "你希望對方怎麼知道你需要暫停，又還願意在合適時候再談？"
+      }
+    },
+    {
+      "id": "ldr-visit-wanted",
+      "order": 17,
+      "dimension": "見面與未來",
+      "prompt": "以你現在的期待，你希望多久能見一次面？",
+      "help": "先回答期待，不必把期待壓成目前做得到的安排。",
+      "options": [
+        {
+          "id": "weekly",
+          "label": "大約每週"
+        },
+        {
+          "id": "twice-monthly",
+          "label": "大約每兩週"
+        },
+        {
+          "id": "monthly",
+          "label": "大約每月"
+        },
+        {
+          "id": "few-months",
+          "label": "大約每兩到三個月"
+        },
+        {
+          "id": "less-often",
+          "label": "間隔比三個月更久"
+        },
+        {
+          "id": "flexible",
+          "label": "不固定，視假期與情況安排"
+        },
+        {
+          "id": "no-plan",
+          "label": "目前沒有見面的期待"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006",
+          "stafford-merolla-2007"
+        ],
+        "note": "概念依據：見面及分隔情境。本站原創情境題，非原工具翻譯或節錄；間隔是本站選項，不是穩定關係的標準；不依答案預測分手。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "這個間隔對你最重要的原因是什麼？",
+        "pairGroup": "visits",
+        "pairRole": "wanted",
+        "comparison": "wanted-vs-capacity-context-only"
+      }
+    },
+    {
+      "id": "ldr-visit-capacity",
+      "order": 18,
+      "dimension": "見面與未來",
+      "prompt": "以目前時間、旅費和交通條件，你實際大約多久能見一次面？",
+      "help": "回答可行安排，不代表你比較想或不想見對方。",
+      "options": [
+        {
+          "id": "weekly",
+          "label": "大約每週"
+        },
+        {
+          "id": "twice-monthly",
+          "label": "大約每兩週"
+        },
+        {
+          "id": "monthly",
+          "label": "大約每月"
+        },
+        {
+          "id": "few-months",
+          "label": "大約每兩到三個月"
+        },
+        {
+          "id": "less-often",
+          "label": "間隔比三個月更久"
+        },
+        {
+          "id": "flexible",
+          "label": "不固定，視假期與情況安排"
+        },
+        {
+          "id": "not-feasible",
+          "label": "目前還無法安排見面"
+        },
+        {
+          "id": "undecided",
+          "label": "還不確定"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：規劃有可能受到現實限制。本站原創情境題，非原工具翻譯或節錄；旅費、交通與區間是本站延伸；不把限制當不願投入。"
+      },
+      "design": {
+        "kind": "constraint",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "期待和可行條件不同時，哪一項限制最需要一起了解？",
+        "pairGroup": "visits",
+        "pairRole": "capacity",
+        "comparison": "wanted-vs-capacity-context-only"
+      }
+    },
+    {
+      "id": "ldr-visit-costs",
+      "order": 19,
+      "dimension": "見面與未來",
+      "prompt": "談到見面的旅費，你比較希望先用哪一種原則分擔？",
+      "help": "不問收入、資產或金額；回答目前比較希望先討論的方式。",
+      "options": [
+        {
+          "id": "own",
+          "label": "各自負擔自己的交通費"
+        },
+        {
+          "id": "equal",
+          "label": "把兩人的交通費合計後平均分擔"
+        },
+        {
+          "id": "capacity",
+          "label": "依目前負擔能力協商"
+        },
+        {
+          "id": "alternate",
+          "label": "依誰移動或每次安排輪流調整"
+        },
+        {
+          "id": "case-by-case",
+          "label": "每次見面分別討論"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "not-applicable",
+          "label": "目前不適用"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：共同規劃的研究背景。本站原創情境題，非原工具翻譯或節錄；費用分擔未由此研究驗證，是產品情境延伸；不能標成財務公平量表。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "除了費用，移動的時間和體力是否也需要納入討論？"
+      }
+    },
+    {
+      "id": "ldr-visit-style",
+      "order": 20,
+      "dimension": "見面與未來",
+      "prompt": "在有限的見面時間裡，你目前最想優先安排什麼？",
+      "help": "選最想優先的項目；不是要排除其他活動。",
+      "options": [
+        {
+          "id": "special",
+          "label": "特別的約會或旅行"
+        },
+        {
+          "id": "ordinary",
+          "label": "一起過普通日常"
+        },
+        {
+          "id": "conversation",
+          "label": "留時間好好聊天"
+        },
+        {
+          "id": "rest",
+          "label": "一起放鬆休息"
+        },
+        {
+          "id": "mixed",
+          "label": "不要固定優先項目，當次再決定"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "not-applicable",
+          "label": "目前不適用"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "stafford-merolla-2007",
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：見面和一般日常可能有不同情境。本站原創情境題，非原工具翻譯或節錄；活動優先順序是本站延伸，不用選項診斷理想化。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "你期待的是特別的回憶、平常的陪伴，還是兩者都想保留？"
+      }
+    },
+    {
+      "id": "ldr-visit-change",
+      "order": 21,
+      "dimension": "見面與未來",
+      "prompt": "原定見面計畫需要改變時，你最希望先確認什麼？",
+      "help": "選對你最有幫助的第一件事；不一定能立刻定出新日期。",
+      "options": [
+        {
+          "id": "reason",
+          "label": "先知道改變的原因"
+        },
+        {
+          "id": "new-date",
+          "label": "先看看有沒有可行的新時間"
+        },
+        {
+          "id": "next-check",
+          "label": "先約定何時再確認"
+        },
+        {
+          "id": "feelings",
+          "label": "先有機會說說自己對變動的感受"
+        },
+        {
+          "id": "situational",
+          "label": "依原因和當次情況決定"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "not-applicable",
+          "label": "目前不適用"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：規劃未能實現時的不確定。本站原創情境題，非原工具翻譯或節錄；步驟是自編，未證實何者最有效；無法改期不能推論沒有承諾。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "如果現在沒有答案，下一次確認要怎麼安排？"
+      }
+    },
+    {
+      "id": "ldr-future-location",
+      "order": 22,
+      "dimension": "見面與未來",
+      "prompt": "想到接下來一段時間，你目前比較期待哪一種距離安排？",
+      "help": "不預設同居或婚姻是終點；可以還沒有答案。",
+      "options": [
+        {
+          "id": "same-area",
+          "label": "希望找機會住在較接近的地方，各自安排住所"
+        },
+        {
+          "id": "live-together",
+          "label": "希望找機會一起住"
+        },
+        {
+          "id": "continue-distance",
+          "label": "希望維持分隔兩地，但有可行的見面安排"
+        },
+        {
+          "id": "temporary-transition",
+          "label": "先維持遠距，之後依工作或生活機會調整"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "stafford-merolla-2007",
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：地理接近轉變與未來安排。本站原創情境題，非原工具翻譯或節錄；距離終點是本站探索題，不推定越想住一起越投入，也不預測關係穩定。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "這個期待有哪些條件？哪些事情你希望自己仍能作主？"
+      }
+    },
+    {
+      "id": "ldr-future-discussed",
+      "order": 23,
+      "dimension": "見面與未來",
+      "prompt": "截至目前，你們對未來距離安排談到哪一步？",
+      "help": "回答自己所知道的討論狀態，不代替對方表示已同意。",
+      "options": [
+        {
+          "id": "not-discussed",
+          "label": "還沒談過"
+        },
+        {
+          "id": "mentioned",
+          "label": "提過各自的想法，還沒談條件"
+        },
+        {
+          "id": "constraints",
+          "label": "談過可行條件，但沒有共同的下一步"
+        },
+        {
+          "id": "next-step",
+          "label": "有目前雙方確認的下一步"
+        },
+        {
+          "id": "no-shared-plan",
+          "label": "已談過，現階段不打算訂共同安排"
+        },
+        {
+          "id": "unclear",
+          "label": "我不確定彼此是否理解一樣"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006",
+          "stafford-2010"
+        ],
+        "note": "概念依據：重要議題與共同規劃。本站原創情境題，非原工具翻譯或節錄；階段不是承諾高低或滿意度分數；本題不測重要程度，不能稱未談的重要期待。"
+      },
+      "design": {
+        "kind": "discussion-status",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "你們對目前談到哪裡的理解一樣嗎？還有哪句話需要確認？"
+      }
+    },
+    {
+      "id": "ldr-future-revisit",
+      "order": 24,
+      "dimension": "見面與未來",
+      "prompt": "關於未來的距離安排，你比較希望什麼時候再一起確認？",
+      "help": "這是討論節奏，不要求現在決定搬家或訂期限。",
+      "options": [
+        {
+          "id": "monthly",
+          "label": "大約每月找機會談一次"
+        },
+        {
+          "id": "few-months",
+          "label": "大約每幾個月談一次"
+        },
+        {
+          "id": "changed",
+          "label": "工作、學業或生活條件有變時再談"
+        },
+        {
+          "id": "scheduled-next",
+          "label": "先約一次具體時間，之後再決定"
+        },
+        {
+          "id": "need-based",
+          "label": "任何一方想談時再約"
+        },
+        {
+          "id": "undecided",
+          "label": "還沒想清楚"
+        },
+        {
+          "id": "prefer-not-share",
+          "label": "這題暫不分享"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "sahlstein-2006"
+        ],
+        "note": "概念依據：規劃與確定／不確定的處理。本站原創情境題，非原工具翻譯或節錄；確認週期屬本站提案，不是最佳檢討頻率。"
+      },
+      "design": {
+        "kind": "expectation",
+        "timeFrame": "目前的期待、條件或討論狀態",
+        "basis": "original-research-informed",
+        "discussionPrompt": "要怎麼提出想再談，而不讓人覺得必須立刻給最終答案？"
+      }
+    }
+  ]
+}

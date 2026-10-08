@@ -41,6 +41,18 @@ npm run dev
 
 ## 常見修改位置
 
+### 遠距戀愛候選內容（2026-10-08）
+
+研究與完整 24 題見 [遠距候選稿](quizzes/long-distance.md)，結構化原稿為 `docs/quizzes/long-distance-candidate.json`。每題記錄穩定 ID、來源、原創改寫邊界與結果討論提案；三段只是閱讀分類，不是三個量表分數。流程為期刊／作者材料 → 來源查核記錄 → 候選 JSON → 審閱稿 → 後續內容審查；目前沒有 HTTP 請求、答案保存或前端匯入。
+
+網站仍顯示遠距「籌備中」是預期結果。若 JSON 壞掉，先用 `Get-Content docs/quizzes/long-distance-candidate.json -Raw -Encoding UTF8 | ConvertFrom-Json` 查語法，再用 `rg -n '來源ID|題目ID' docs/quizzes/long-distance-candidate.json` 查參照；DOI 無法讀取時查來源 `readUrl`，不要把摘要標成已讀全文。
+
+維護範例：調整忙碌通知選項時，同步 `ldr-busy-actual` 與 `ldr-busy-wanted` 的選項 ID／文案、本文題稿及候選版本；A 的期待對照 B 的實際做法，再反向對照，不能只比兩人的期待。暫不分享、不適用、沒有事件與不確定都不能換成分數。完整排查與審閱記錄模板見候選稿末段。
+
+本輪只新增研究文件／候選資料，網站版維持 0.6.0、現有回合與資料庫不變。正式接入再轉成 `QuizDefinition`、核定遠距版本／結果規則、檢查完整雙人流程；不要直接將文件 `candidate` 改成產品 `ready`，或套用核心價值相近度。
+
+已驗證：候選 24 題／3 段／8 篇來源的 JSON 與現有內容契約、文稿一致性及兩組配對選項；`npm run check` 的既有 58 項測試、`npm run build` 通過。沒有產品 UI 變更或新畫面驗收；來源部分僅讀摘要，認知訪談、心理測量及產品效果未完成。
+
 ### 0.6 完整雙人探索與計分
 
 公開入口： https://between-us.forest-between-us.workers.dev/#/start/core-values 。它會建立完整 57 題雙人回合；原 `#/trial/core-values` 保留為不保存的單人探索。舊三題回合仍按原快照顯示三題，不改歷史答案；重新建立 core-values 才使用新 57 題。core-values-example 另保留三題工程示例，不在主題館增加第六個主題。

@@ -51,6 +51,7 @@ npm run preview
 - [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
 - [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已提供公開單人試讀。
+- [遠距戀愛研究與 24 題候選稿](docs/quizzes/long-distance.md)：8 篇期刊來源與工具比較、完整題目／選項、逐題依據、結果提案及維護方式；自編未驗證，目前尚未接入網站。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
 - [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
 - [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。
