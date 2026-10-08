@@ -18,6 +18,8 @@
 
 本輪完成的是來源整理與原題資料完整性查核。逐字轉錄不等於翻譯效度審查；原量表的研究證據不等於本產品的結果比較或討論提示已驗證。缺答、代名詞施測方式、最新計分文件與人生方向工具仍待處理。
 
+第二輪已在 [候選稿的試讀執行章節](quizzes/core-values-pvqrr.md#第二輪中文審查與試讀執行稿) 整理優先疑點、試讀流程與空白記錄模板。方法入口參考 [CDC／NCHS 認知訪談](https://www.cdc.gov/nchs/ccqder/question-evaluation/cognitive-interviewing.html)；本專案的人數及執行安排是設計提案。Taiwan 官方檔案仍無法下載；尚未訪談、沒有試答資料、沒有依回饋修改原題。內容問題、受訪者觀察與測量驗證必須分開記錄。
+
 ## 每題的依據紀錄
 
 `src/content/quizzes.ts` 中：
