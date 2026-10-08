@@ -164,7 +164,7 @@ A 同意並提交 + B 同意並提交
 
 ## Cloudflare 雲端架構（0.4）
 
-已選用 Workers＋D1。Workers 接收 HTTP 並提供 `dist/` 靜態網頁，D1 是 Cloudflare 管理的持久 SQL 資料庫；沒有會員也能保存每輪答案，權限來自私人返回憑證。首次公開部署仍等待帳號授權。下方 0.3 的 Pages＋獨立 Node 主機做法保留作為替代方案，現在不需執行。
+已選用 Workers＋D1，2026-10-08 已發布至 https://between-us.forest-between-us.workers.dev/ 並驗證完整 API 雙人流程。Workers 接收 HTTP 並提供 `dist/` 靜態網頁，D1 是 Cloudflare 管理的持久 SQL 資料庫；沒有會員也能保存每輪答案，權限來自私人返回憑證。下方 0.3 的 Pages＋獨立 Node 主機做法保留作為替代方案，現在不需執行。
 
 ```text
 瀏覽器 → src/lib/api.ts → 同一網址 /api

@@ -351,18 +351,18 @@ Invoke-RestMethod 'https://你的後端網域/api/health'
 ### GitHub 接線驗證紀錄
 
 2026-10-08：遠端原先沒有分支，普通 push 成功建立 main 及 v0.1.0～v0.3.0，沒有 force push。GitHub 的 [Check project run 37728077077](https://github.com/tivico/between-us/actions/runs/37728077077) 對 `5bfa3e1` 回 `completed / success`，實際驗證了 GitHub runner 的安裝、40 項測試與建置。Pages API 重新讀取確認 `build_type=workflow`、`https_enforced=true`、`public=true`，尚無已發布狀態。後端未指定，沒有觸發 Pages deploy。此前「尚未驗證 GitHub Actions」的紀錄已由此次驗證補足；真實 Pages 網站、雲端與跨裝置仍待測試。
-# Cloudflare Workers＋D1（0.4）
+## Cloudflare Workers＋D1（0.4）
 
-目前：本機 46 項測試、一般／Cloudflare 建置與 Worker dry-run 打包通過；本機 Wrangler 真實 Worker 執行環境已通過完整 API 雙人流程，瀏覽器確認起始頁雲端文案與排版。尚等待帳號授權，未建立遠端 D1 或公開網站。GitHub 是程式碼來源，實際網站將使用 `workers.dev` 免費網址。不要將本機 SQLite 上傳或放進 dist。
+目前已上線：[之間 Between Us](https://between-us.forest-between-us.workers.dev/)。Worker 名稱 `between-us`，D1 名稱 `between-us`；account_id 與 database_id 已填入 wrangler.jsonc，這兩項不是管理金鑰。GitHub 是程式碼來源，Cloudflare 提供實際網站與資料保存；不要再建立同名 D1、上傳本機 SQLite 或啟動 Pages workflow。
 
-第一次部署（只做一次）：
+以下首次部署已完成，只有另建一套環境才需執行：
 
 ```powershell
 npx wrangler login
 npx wrangler d1 create between-us
 ```
 
-登入頁由本人確認 Allow，無需將密碼或管理 token 傳給其他人。把 create 顯示的 `database_id` 填入 `wrangler.jsonc` 的 DB binding，目前全零是尚未建立的 placeholder。多帳號時先 `npx wrangler whoami` 確認，再設定正確 account_id；不可部署到不確定的帳號。
+登入頁由本人確認 Authorize，無需將密碼或管理 token 傳給其他人。本次使用 `npx wrangler login --device --browser=false`，因一般登入回傳 localhost:8976 時連線失敗；裝置授權不需本機回呼。Wrangler 管理 OAuth 憑證，存於使用者設定區而非專案。把 create 顯示的 `database_id` 填入 `wrangler.jsonc` 的 DB binding；現有環境已填妥。多帳號時先 `npx wrangler whoami` 確認，再設定正確 account_id；不可部署到不確定的帳號。
 
 ```powershell
 npx wrangler d1 migrations apply between-us --remote
@@ -384,3 +384,11 @@ npm run cloudflare:deploy
 修改範例：新增核定題目時改 `src/content/quizzes.ts` 並升該測驗版本，跑 check，再 cloudflare:deploy；新回合才採新內容，舊回合使用既有 snapshot。如果變更 API 欄位，需一起改 src/domain/round.ts、RoundFlow、Node store、D1 store 與相關測試。
 
 回復：程式故障可回復已驗證的 Git commit 後重建部署；資料庫仍維持原 D1。已變更 schema 時先評估舊版相容性，不直接切換舊程式或覆寫資料。正式使用前仍需另定資料期限、刪除／撤銷、找回與備份規則；目前三題是自編試玩示例。
+
+### 0.4 上線驗證紀錄
+
+2026-10-08：46 項測試、一般／Cloudflare 建置、dry-run、本機 Worker HTTP 雙人流程與起始頁排版通過。GitHub [CI run 37730772724](https://github.com/tivico/between-us/actions/runs/37730772724) 對程式里程碑 `608eb3a` 為 completed/success，包括 Miniflare 測試與 Worker dry-run；未把 OAuth 憑證放進 GitHub。
+
+遠端 D1 建於 APAC，0001_rounds.sql 已套用，migrations list 顯示無待套用項目。Worker 版本 `37c5a2b7-0acb-4091-b03c-a9c7f5475762` 已發布（100% 流量）。新網址初次發生 TLS／QUIC 連線失敗，稍後正常連線，沒有關閉 TLS 驗證。公開 /api/health 回 200 與 cloudflare-test；check-cloudflare.mjs 以虛構 A/B 驗證建立、保存、邀請、陌生憑證 401、雙方完成前 423、提交後 409 與共同真實選項。公開首頁在瀏覽器正常顯示。雲端留有一輪虛構 QA 資料；本機既有答案沒有上傳。
+
+尚未驗證：兩部實體裝置、長期運作／流量、正式題庫與分數。後續一般修改只需 `npm run cloudflare:deploy`，不重跑 create；資料庫結構有新增 migration 才套用 remote migration。推送 GitHub 目前只做 CI，不會自動發布網站。

@@ -24,4 +24,5 @@
 - 0.3 已備妥 CI、手動 Pages workflow、公開 API URL／base 設定與 npm start 獨立 API；GitHub CI 已通過，仍不是已上線。後端方案／主機尚待選定，不假定能直接在 Pages 跑 SQLite。
 - 公開 API 必須明確設定 DATA_FILE 與 ALLOWED_ORIGINS；只能單一實例＋持久磁碟，不能以會被重啟清空的檔案系統保存答案。Pages 發布先檢查後端健康狀態與 CORS，VITE_ 只放公開網址。
 - 0.4 已選用 Cloudflare Workers＋D1，同一網址提供網頁/API。部署入口 wrangler.jsonc；雲端 store 在 cloudflare/store.mjs，schema 用 cloudflare/migrations。不要將 node:sqlite 帶進 Worker。
+- 0.4 已上線 https://between-us.forest-between-us.workers.dev/ ，已設定真正 account_id / database_id，公開健康與完整雙人 API 已驗證。不要重建 D1；GitHub push 目前只做 CI，發布需 cloudflare:deploy。OAuth 由 Wrangler 管理，不提交到 repo。
 - 本機 Node 與雲端 D1 是獨立資料庫；不自動搬移既有答案。改 API／提交規則時同步兩種 store，D1 必須使用交易／條件更新處理非同步競爭。

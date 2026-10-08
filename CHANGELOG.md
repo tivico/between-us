@@ -4,7 +4,7 @@
 
 ## 0.4.0 — 2026-10-08
 
-狀態：Cloudflare 部署程式已準備；等待帳號 OAuth 授權，尚未公開上線。題庫仍為 0.1.0 三題自編示例。
+狀態：已公開上線 https://between-us.forest-between-us.workers.dev/ ，GitHub CI 通過。題庫仍為 0.1.0 三題自編示例。
 
 - Workers 同時提供網頁與 API；D1 持久保存回合、題庫快照與兩人答案。
 - 非同步 D1 store 使用交易與條件更新，維持一次邀請、過時更新與提交前互看保護。
@@ -12,7 +12,7 @@
 - 雲端模式保存說明與 no-referrer 資產標頭；既有本機資料獨立保留。
 - 固定部署工具版本，sharp 0.35.5 override 修補相依套件通報。
 
-驗證：46 項測試、一般及 Cloudflare 建置、Worker dry-run 成功，npm audit 無已知漏洞。遠端部署與實體裝置尚待驗證。
+驗證：46 項測試、一般及 Cloudflare 建置、Worker dry-run 成功，npm audit 無已知漏洞。GitHub CI、遠端 D1 migration、公開 HTTPS 健康檢查、完整雲端雙人 API 流程與瀏覽器首頁均通過；尚未以兩部實體裝置驗證。
 
 ## 0.3.0 — 2026-10-08
 

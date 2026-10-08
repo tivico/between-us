@@ -2,7 +2,7 @@
 
 給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前為 **0.4.0 雲端部署準備版**。雙人保存、邀請與答案比較已接上 Cloudflare Workers＋D1，網站與 API 可由同一個網址提供。原始碼位於公開的 [tivico/between-us](https://github.com/tivico/between-us)。**目前等待 Cloudflare 帳號授權，尚未公開部署**。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
+目前為 **0.4.0 雲端試玩版**，已上線：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)。Cloudflare Workers 同時提供網頁與 API，D1 保存雙人回合，已驗證保存、邀請、提交前保密與共同答案。原始碼位於公開的 [tivico/between-us](https://github.com/tivico/between-us)，GitHub CI 已通過。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
 
 ## 現在可以做什麼
 
@@ -15,7 +15,7 @@
 - 使用手機或桌面瀏覽；支援鍵盤選答與減少動態效果偏好。
 - 單人「介面預覽」仍不保存或分享，與雙人回合分開。
 
-本機的 `127.0.0.1` 連結只能在此電腦測試；Cloudflare 公開部署完成後才能邀請遠方的人使用。正式題庫、計分、科普文章、討論收藏、資料期限與刪除／找回規則尚未完成；請使用測試答案。
+本機的 `127.0.0.1` 連結只能在此電腦測試；使用上方的 Cloudflare 網址即可邀請遠方的人，兩人都提交後才能查看彼此答案。正式題庫、計分、科普文章、討論收藏、資料期限與刪除／找回規則尚未完成；請使用測試答案。
 
 ## 本機啟動
 
@@ -79,13 +79,15 @@ GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保�
 | `scripts/start-api.mjs`、`server/config.mjs` | 獨立 API 啟動、資料磁碟與允許來源設定 |
 | `src/lib/deployment-config.ts`、`src/lib/deployment.ts` | Pages 資產路徑、API 網址驗證與保存說明 |
 | `.github/workflows/`、`scripts/check-hosted-api.mjs` | CI、手動 Pages 發布與後端連線檢查 |
+| `cloudflare/`、`wrangler.jsonc` | 雲端 Worker API、D1 store、migration 與網站部署設定 |
+| `scripts/check-cloudflare.mjs` | 用虛構資料驗證部署後的雙人 API 流程 |
 | `vite.config.ts` | 本機服務與建置設定 |
 
 ## 技術選擇
 
 使用 React + TypeScript + Vite 的單一前端專案。React 負責畫面，TypeScript 幫忙偵測資料與程式型別錯誤，Vite 負責本機開發與建置。Hash 路由是網址 `#` 後面的頁面識別，讓靜態主機也能直接開啟子頁；目前不用路由套件、全域狀態套件或設計元件庫。
 
-使用 Node 原生 HTTP 與 SQLite 後端，沒有 ORM、會員、管理後台或額外後端框架。`npm start` 可獨立啟動 API，需要 Node 24.13+、持久磁碟、HTTPS 代理與明確的允許來源；不是 `vite preview` 對外服務。維持單一 API 實例。主機平台仍待選；GitHub Pages 只能提供前端，不能直接執行 SQLite 後端。若改用 Cloudflare Workers／D1，仍需移植後端，現有 `npm start` 不能直接搬過去。
+本機使用 Node 原生 HTTP 與 SQLite；雲端使用 Cloudflare Workers＋D1，沒有 ORM、會員、管理後台或額外後端框架。移植入口與非同步保存規則已實作，使用 `cloudflare:deploy` 發布。既有 `npm start` 是獨立 Node 主機的替代方式，不能直接在 Worker 執行；GitHub Pages 也只能提供前端。
 
 免會員的保存與返回入口已在本機實作。私人憑證只在瀏覽器的網址片段／最近入口，以及 API 的授權傳遞中使用；資料庫只保存雜湊，不保存原始憑證。保存期限、資料刪除與遺失連結找回仍待定；裝置入口移除不會刪除 SQLite 資料。感情科普與第一份正式三觀工具仍待整理。
 

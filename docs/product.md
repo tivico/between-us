@@ -98,7 +98,7 @@
 
 ## 0.3 部署準備（已實作，尚未上線）
 
-使用者已要求部署，程式碼位於自己的 GitHub tivico/between-us，實際網頁與後端採 Cloudflare Workers＋D1。0.4 已實作雲端保存與同來源 API，目前等待 Cloudflare 帳號授權，尚未公開上線。既有 Pages workflow 保留作替代方案，不需同時發布。不能把「程式已上傳」視為「另一半已能遠端使用」。現有三題仍是自編示例，保留學術工具未定稿的標示。正式期限、刪除與找回仍待定，試玩僅使用測試答案。
+使用者已要求部署，程式碼位於自己的 GitHub tivico/between-us，實際網頁與後端採 Cloudflare Workers＋D1。0.4 已上線至 https://between-us.forest-between-us.workers.dev/ ，雲端雙人 API 流程與公開首頁已驗證，可分享遠端邀請。既有 Pages workflow 保留作替代方案，不需同時發布。現有三題仍是自編示例，保留學術工具未定稿的標示。正式期限、刪除與找回仍待定，試玩僅使用測試答案；尚未用兩部實體裝置驗證。
 
 ## 0.2 本機雙人流程（已實作）
 

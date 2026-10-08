@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "between-us",
+  "account_id": "12f68924cf47d343d2067d92c70c7bea",
   "main": "cloudflare/worker.mjs",
   "compatibility_date": "2026-10-08",
   "compatibility_flags": ["nodejs_compat"],
@@ -13,7 +14,7 @@
   "d1_databases": [{
     "binding": "DB",
     "database_name": "between-us",
-    "database_id": "00000000-0000-0000-0000-000000000000",
+    "database_id": "c7694cfa-1d1b-47e9-9379-6cd08812947a",
     "migrations_dir": "cloudflare/migrations"
   }]
 }
