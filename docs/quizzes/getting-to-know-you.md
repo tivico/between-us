@@ -1,6 +1,6 @@
 # 更認識你：32 題雙人問答候選稿
 
-更新日期：2026-10-08。候選版本：`0.3.0`（新增第一輪逐題審閱、來源查核與自願試答執行稿；32 題題幹、選項及提示保持原稿）。結果規則候選版本仍為 `0.1.0`。使用者認為目前題目已夠白話，故本輪只記修訂提案，不直接改寫題目。內容尚未核定、接入程式或發布，舊候選稿保留在 Git 歷史。
+更新日期：2026-10-08。候選版本：`0.4.0`（依使用者偏好固定一輪一題組、四題，完成後另選下一組；保留第一輪審閱與原有 32 題）。結果規則候選版本仍為 `0.1.0`。使用者認為目前題目已夠白話，修訂提案未套用。內容尚未核定、接入程式或發布，舊候選稿保留在 Git 歷史。
 
 ## 定位與範圍
 
@@ -23,7 +23,15 @@
 | life | 生活與未來 | 25–28 | 深入 | 生活安排問答；不混入人生方向量表 |
 | us | 我們的關係 | 29–32 | 深入、主動選擇 | 「關於我們」題組 |
 
-首次可選 daily 或 thinking，四題一組；每輪選一至兩組，共四至八題，不自動升級到私密題組。表中的歸屬不是已開放功能；未來每題保留單一主要歸屬，避免在多處複製後內容不同步。
+八個題組各四題，每輪只選一組、固定四題，完成這組即可看本組共同點、差異與建議。首次可選 daily 或 thinking，題組沒有必須完成的順序；不要求一次做完 32 題，也不自動升級到私密題組。表中的歸屬不是已開放功能；每題保留單一主要歸屬，避免在多處複製後內容不同步。
+
+### 一次四題的預計體驗
+
+題組列表顯示八張可各自開始的卡片，各標「四題」與內容深度。選一組後，填答進度顯示「第 1／4 題」，不是「第 1／32 題」。四題都已選答案或明確暫不分享即可提交；雙方完成後就能看這一輪的整理，不需等待其他七組。
+
+結果頁提供「回題組列表」及可選的「再玩一組」。下一組是另一輪，不增加本輪題數、不清除已完成結果、不強制續玩。每輪固定題組 ID、四個題目 ID、內容／結果規則版本，A／B 回答同一組；B 接受邀請前知道本組主題與分享範圍，可以不加入。
+
+所有整理只描述本組可分享的答案；四題不足以推論整體人格、完整關係或八面向總覽。選哪組與選四題是依填答負擔的產品選擇，尚未實測時間或證明四題比八題效果更好。
 
 ## 共用作答與分享規則（待接入）
 
@@ -429,7 +437,7 @@
 
 | 來源 | 已讀範圍與支持內容 | 本稿的限制 |
 | --- | --- | --- |
-| [Aron et al., 1997, The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003) | 出版社公開摘要：45 分鐘、逐步深入的自我揭露與關係建立任務；Study 1 比閒聊有較高的互動後親近感 | 八面向、四至八題、單選、非同步揭曉與猜題都不是該研究驗證的程序；不宣稱本稿提升親近或讓人相愛 |
+| [Aron et al., 1997, The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003) | 出版社公開摘要：45 分鐘、逐步深入的自我揭露與關係建立任務；Study 1 比閒聊有較高的互動後親近感 | 八面向、每輪四題、單選、非同步揭曉與猜題都不是該研究驗證的程序；不宣稱本稿提升親近或讓人相愛 |
 | [Pagani et al., 2019, Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping](https://doi.org/10.3389/fpsyg.2019.00401) | 本輪成功讀到摘要、Participants／Procedure、Results：55 對義大利異性夫妻、兩週日記；明確壓力表達與感受到的回應性相關，控制回應性後滿意度的直接關聯未獲支持。先前全文開啟失敗的限制已部分補足 | 概念背景，不是四選項、先聽／先建議順序或交往前效果的證據；不是因果實驗，不按研究中的性別分流施測 |
 
 各題仍是自編討論內容。本輪增加以下原始研究與逐題對應；概念背景、本站情境延伸、直接測量證據分開。沒有找到直接對應的選項證據就如實保留，不把一般研究掛在所有題目上當作效度。
@@ -442,7 +450,7 @@
 
 | 來源 ID／作者、期刊與完整標題 | 已讀範圍、方法與支持內容 | 不支持的推論 |
 | --- | --- | --- |
-| `aron-1997`：Arthur Aron、Edward Melinat、Elaine N. Aron、Robert Darrin Vallone、Renee J. Bator（1997）。Personality and Social Psychology Bulletin, 23(4), 363–377。[The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003)。DOI：10.1177/0146167297234003 | 出版社摘要；45 分鐘逐步深入任務，Study 1 比閒聊有較高互動後親近感。作整體流程背景，不掛在所有題目 | 四至八題、單選、非同步及猜題的效果；不承諾讓人相愛 |
+| `aron-1997`：Arthur Aron、Edward Melinat、Elaine N. Aron、Robert Darrin Vallone、Renee J. Bator（1997）。Personality and Social Psychology Bulletin, 23(4), 363–377。[The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings](https://journals.sagepub.com/doi/10.1177/0146167297234003)。DOI：10.1177/0146167297234003 | 出版社摘要；45 分鐘逐步深入任務，Study 1 比閒聊有較高互動後親近感。作整體流程背景，不掛在所有題目 | 每輪四題、單選、非同步及猜題的效果；不承諾讓人相愛 |
 | `laurenceau-1998`：Jean-Philippe Laurenceau、Lisa Feldman Barrett、Paula R. Pietromonaco（1998）。Journal of Personality and Social Psychology, 74(5), 1238–1251。[Intimacy as an interpersonal process: the importance of self-disclosure, partner disclosure, and perceived partner responsiveness in interpersonal exchanges](https://pubmed.ncbi.nlm.nih.gov/9599440/)。DOI：10.1037/0022-3514.74.5.1238 | PubMed 摘要；兩項一／兩週事件日記研究，揭露與感受到的回應性和互動親近相關。未完成全文樣本／族群核對 | 本站單題能測回應性、揭露愈多愈好、四種欣賞方式已驗證 |
 | `pagani-2019`：Ariela F. Pagani et al.（2019）。Frontiers in Psychology, 10:401。[Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.00401/full)。DOI：10.3389/fpsyg.2019.00401 | 摘要、Participants／Procedure、Results；55 對義大利異性夫妻、兩週日記，明確壓力表達與感受到的回應性相關。控制回應性後滿意度的直接關聯未獲支持 | 先聽或先建議何者最好、因果效果、全性向或所有關係階段的測量等同性 |
 | `patrick-2007`：Heather Patrick、C. Raymond Knee、Amy Canevello、Cynthia Lonsbary（2007）。Journal of Personality and Social Psychology, 92(3), 434–457。[The role of need fulfillment in relationship functioning and well-being: a self-determination theory perspective](https://pubmed.ncbi.nlm.nih.gov/17352602/)。DOI：10.1037/0022-3514.92.3.434 | PubMed 搜尋可讀摘要；直接開啟本輪未正常回傳。三項研究包含日記，自主、能力、連結需求滿足與關係運作相關；全文樣本待核對 | 最佳獨處時間、朋友聯絡規則或相處頻率；不以需求概念推人格 |
@@ -531,15 +539,18 @@
 預計產品流程：
 
 ```text
-選一至兩個題組 → 固定本輪題目、選項與分享規則版本
+選一個四題題組 → 固定本輪題組、四題、選項與分享規則版本
   → A 各題選答或明確暫不分享 → 確認提交 → 邀請 B
   → B 回答相同題目並確認提交
   → 後端確認雙方完成 → 並排呈現可分享答案與未分享狀態
   → 整理共同點／差異 → 個別與雙人嘗試建議 → 自選討論提示
   → 不產生契合總分
+  → 可回列表結束；想再玩另一組時另開一輪
 ```
 
 接入前需設計題組選擇、明確跳過、提交完整性與分享欄位，同步 Node store／D1 store 驗證及回傳。不能直接放寬所有測驗的缺答條件；core-values 計分與舊 snapshot 保持原規則。A／B 回答同一輪固定題目，不各自抽到不同題目。
+
+四題規格只適用於本問答內容，不能把既有 57 題核心價值截成四題。題組與完整性檢查以本輪快照中的題目為準，不拿整份 32 題當每輪提交條件；本輪結果也不混入其他回合或未作答題組。
 
 首版結果提供並排選項、共同點／差異、具體嘗試建議與提示，不需「相同選項比例」。「猜猜你」模式留待後續：另存本人答案與對對方的猜測，另定猜中規則；暫不分享等狀態不參與猜中判定，不混成關係品質分數。
 
@@ -551,12 +562,15 @@
 - 文件已改但網站沒出現：這是預期，本稿未被 src 匯入。用 `rg -n 'getting-to-know-you|know-care-support' docs src server cloudflare` 確認位置，不需改部署或清資料庫。
 - 未來解鎖前出現對方答案：先查 Network 的 status／邀請 API 回傳及後端授權，不只看畫面。解鎖後仍出現不該分享的選項則查答案狀態、後端輸出欄位與快照；不把私人憑證或答案放進 log。
 - 共同點或建議不符合答案：依序核對題目與選項語意 ID、特殊狀態、觸發規則 ID、版本及你／對方方向；尤其檢查是否把「希望收到」誤當「實際提供」。錯誤建議先停用該規則，不改寫原答案或重新計分。
+- 未來做完四題卻不能提交、進度顯示 32 題：先查題組 ID 與本輪快照是否只有該組四題，再查完整性規則是否誤用全題庫；前端改分母不能解決後端仍要求 32 題的問題。
 
 修改範例：若 09 題缺少「幫我處理眼前的小事」，先判斷是否與「整理問題與下一步」不同，再調整該題選項、提示、記錄原因並升候選版本。保持題目 ID 可追蹤；接入時給選項語意 ID，不以 A–D 作永久識別或分數。已發布題目改選項需升測驗版本，保留舊回合快照。
 
 本稿為候選內容單一來源；接入後明確指定資料檔來源，避免手動維護兩份。歸屬或分享政策變更同步 [產品文件](../product.md)，新增研究主張同步 [研究文件](../research.md)。程式接入需跑 `npm run check`、`npm run build` 及相關畫面／雙人授權驗證，不能以文件檢查替代。
 
 結果修改範例：把 09 題「一起想」提示改成先詢問是否需要建議，應改結果規則與樣稿並升結果規則版本；不因此改 09 題本人選項。接入時驗證 A/A、A/B、B/A、特殊狀態與暫不分享，確認互換角色及無資料分支都正確；八面向分類不可直接充當八個分數。
+
+題組修改範例：想在關心題組增加一題時，先決定替換哪一題，維持本組四題，更新題組／內容版本與受影響的結果條件；舊回合仍用原快照。若改成五題，需另核定單輪題數與介面，不能只在清單追加就讓本輪負擔變多。
 
 ## 本次驗證與待辦
 
@@ -565,5 +579,7 @@
 同日候選 `0.2.0` 更新：確認 32 題題幹、選項與提示相較前一份已提交稿完全未變；四則結果條件樣稿與產品分類已補齊，三份修改文件的 15 個相對檔案連結目標存在。針對本次文件的 `git diff --check` 通過。結果規則尚未執行、沒有新增畫面或 API；這是設計文件驗證，不是功能或效果驗證。
 
 同日候選 `0.3.0` 更新：32 題原文與前版逐段比對完全一致；32 筆審閱均對應有效題目 ID，九個來源 ID 唯一、逐題參照存在。12 項修訂提案與 20 題保留試答逐筆核對；六項內容核定欄位皆未勾選。五份文件的 33 個相對檔案連結目標存在，`git diff --check` 通過，私有筆記位置經 `git check-ignore` 確認會被忽略。未保存任何私人選項至 repo。本次僅改內容文件，沒有執行程式 check／build、功能畫面或 API 驗證。
+
+同日候選 `0.4.0` 更新：確認八組題號範圍各四題、每題 ID 都屬於對應題組，全部 32 題原文維持不變。五份文件的 33 個相對檔案連結目標存在，`git diff --check` 通過。每輪四題與下一組另開回合已同步到產品／試答文件；目前是文件規劃，尚未實作題組選擇、四題回合或畫面，未執行程式 check／build。
 
 研究方向與自編應用已分開。未完成：逐題使用者驗收、各主題完整來源查核、完整結果規則與建議驗收、認知訪談、測量或產品效果驗證、兩種導覽入口、選題組／暫不分享 API、猜題與發布。寫成候選稿或機械檢查通過，不代表量表驗證。
