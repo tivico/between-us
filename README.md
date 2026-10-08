@@ -1,6 +1,6 @@
 # 之間 Between Us
 
-給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
+給各種性向與性別認同的兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
 目前為 **0.4.0 雲端試玩版**，已上線：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)。Cloudflare Workers 同時提供網頁與 API，D1 保存雙人回合，已驗證保存、邀請、提交前保密與共同答案。原始碼位於公開的 [tivico/between-us](https://github.com/tivico/between-us)，GitHub CI 已通過。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
 
@@ -49,7 +49,7 @@ npm run preview
 
 - [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
-- [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：完整原題、作答選項、來源／授權與中文審查問題；已整理、尚未導入網站。
+- [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已整理、尚未導入網站。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
 - [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
 - [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。
