@@ -1,5 +1,13 @@
 # 架構與資料流程
 
+## 0.7 了解關係與科普短卡
+
+公開閱讀流程：網址 #/learn 或 #/learn/:id → parseRoute → App.Page → relationshipArticles / getRelationshipArticle → RelationshipLibrary / RelationshipArticlePage。文章在建置時打包，不發 API，不讀寫 D1、SQLite、localStorage 或私人答案；不要求測驗或登入。目錄捲動到段落標題並移動鍵盤焦點，不改 hash，避免破壞路由。
+
+src/content/relationship-articles.ts 保存文章版本、段落種類、來源 ID、DOI／全文入口、方法與閱讀範圍。研究與本站例子／聊天提案分開顯示；第一批三篇各使用一項直接相關的原始研究，不宣稱系統性回顧。文章畫面在 RelationshipPages.tsx，手機與桌面排版在 styles.css。
+
+結果短卡依既有結果解鎖流程顯示：SharedResults → ValueResults → ResultLearningCards；coreValues 指定價值閱讀卡，noScore 區分無總分說明，一般舊回合只顯示通用回應卡。卡片不計分、不根據分數高低判定關係，文章連結可獨立分享。網站升 0.7.0，文章各為 1.0.0；測驗快照與比較規則版本不變，沒有資料庫 migration。詳細維護見 docs/runbook.md 的 0.7 章節。
+
 ## 現況：完整雙人探索與結果計分
 
 React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.6 已公開部署完整 57 題雙人核心價值探索、19 類計分與探索性相近度，沒有會員。保留單人探索及三題示例；單人探索不建立回合或保存答案。

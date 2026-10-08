@@ -10,9 +10,11 @@ describe('直接連結與路由', () => {
     expect(parseRoute('#/topics/core-values')).toEqual({ page: 'topic', id: 'core-values' });
     expect(parseRoute('#/demo/core-values')).toEqual({ page: 'demo', id: 'core-values' });
     expect(parseRoute('#/trial/core-values')).toEqual({ page: 'trial', id: 'core-values' });
+    expect(parseRoute('#/learn')).toEqual({ page: 'learn' });
+    expect(parseRoute('#/learn/feeling-understood')).toEqual({ page: 'article', id: 'feeling-understood' });
   });
   it('不把格式錯誤或額外路徑視為有效主題', () => {
-    for (const path of ['#/topics/', '#/demo/a/extra', '#/trial/core-values/extra', '#/trial/', '#/unknown', '#/topics/%3Cscript%3E']) {
+    for (const path of ['#/topics/', '#/demo/a/extra', '#/trial/core-values/extra', '#/trial/', '#/unknown', '#/topics/%3Cscript%3E', '#/learn/a/extra', '#/learn/%3Cscript%3E']) {
       expect(parseRoute(path)).toEqual({ page: 'not-found' });
     }
   });

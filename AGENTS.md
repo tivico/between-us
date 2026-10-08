@@ -34,3 +34,4 @@
 - 0.6 已接入完整 57 題雙人核心價值，新增 src/content/core-values.ts 與 src/domain/compatibility.ts。core-values 新回合版本 0.3.0，候選措辭仍 0.2.0；core-values-example 保留三題，quizzes 為 5 個可見主題，roundQuizzes 另外含示例。ready 表示功能開放，不表示改寫量表已驗證。
 - 使用者已明確選擇「採用這個 0–100 相近度」：19 類各三題平均減 MRAT，再以平均絕對差等權重換算 100*(1-gap/5)，規則 1.0.0。此指標由本站設計，不作成功率、常模、高低門檻或人生方向總分；任一 19 類輪廓未分化不顯示總分。
 - Node/D1 results 均在驗證雙方提交後，依 round.snapshot 的 scoring 呼叫 compareValues；status／邀請不傳對方答案或比較分數。缺答不能提交，不填零。未來新算法另增版本與分支，保留 1.0.0 演算法，不能直接改舊分支而改掉舊結果。
+- 0.7 獨立「了解關係」在 #/learn 與 #/learn/:id；relationship-articles.ts 保存完整文章／來源，RelationshipPages.tsx 顯示全文。使用者追加結果科普短卡，ResultLearningCards.tsx 接在既有 SharedResults／ValueResults 解鎖後；不做六選項說明。閱讀不需測驗、不存紀錄、不讀私人回合。研究／本站提案與族群限制明示，文章版本獨立於題庫與計分版本。

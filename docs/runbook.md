@@ -13,6 +13,34 @@ npm run dev
 
 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
+## 0.7「了解關係」與結果科普短卡
+
+使用者指定獨立完整文章與可查核來源，並追加結果科普短卡；不加六選項說明。文章入口為 #/learn，全文為 #/learn/:id。第一批為核心價值、感受到的回應、遠距日常，每篇 1.0.0。估計閱讀時間不是實測。來源查核於 2026-10-08，依原始論文工具／摘要／模型／方法段落，不宣稱系統性回顧；研究段落就近附 DOI，篇末附方法、閱讀範圍及全文入口。本站生活例子／聊天提案另外標示，不是已驗證介入。
+
+**修改與原因**：原網站只有測驗來源與計分細節，閱讀依賴進入測驗；新增公開文章館，讓兩人隨時閱讀。結果短卡放在相近度摘要之後、19 類圖表之前，讓使用者先理解比較；沒有總分時用專屬解釋，三題舊回合僅顯示通用回應短卡。固定教育內容不依高低分貼人格／關係標籤，也不根據性向或性別改內容。
+
+**重要檔案與流程**：
+
+1. src/lib/routes.ts 解析 #/learn 與 #/learn/:id；App.tsx 的 Page 選 RelationshipLibrary 或 getRelationshipArticle → RelationshipArticlePage。
+2. src/content/relationship-articles.ts 保存文章 ID、version、updated、sections、conversation、sources。每段 kind 分研究／本站應用／生活背景／限制；sourceIds 指向同篇 sources。
+3. RelationshipPages.tsx 將資料顯示為卡片、完整內文、目錄、聊天提示與研究書目；目錄按鈕捲動並聚焦標題，不變更 hash 或建立新回合。
+4. SharedResults 在既有後端 results 解鎖後顯示 ValueResults → ResultLearningCards；後者依 coreValues / noScore 選教育文案，不計分、不發 API、不讀私人答案。一般舊回合走 SharedResults 的通用卡片。
+5. 短卡的文章 ID → getRelationshipArticle → 原研究連結／#/learn/:id。文章閱讀不要求憑證、不讀寫 SQLite、D1 或 localStorage；靜態文字隨 Vite 建置打包。樣式在 styles.css 的 reading-* / result-learning-*。
+
+**故障排查順序**：
+
+- 導覽或文章出現找不到：先確認 #/learn、# 後的英文字 ID 與內容一致；檢查 parseRoute、Page 分支、getRelationshipArticle。尾斜線與額外段落不是有效路由。
+- 點目錄沒跳轉：檢查 reading-加段落 ID 的 h2 是否存在、ID 是否唯一；查 goToSection 的目標與鍵盤焦點。不用把段落寫成新 hash，避免被路由當成其他頁。
+- 短卡沒出現：先確定是在雙方已提交的 SharedResults，不是本人答案整理／等待頁；57 題需有後端 comparison。不要改前端顯示來繞過結果解鎖。分數 null 應見「沒有總分，也可以了解彼此」。
+- 文獻網址失效：核對 DOI、readUrl 與作者／年份，換到原作者或出版者可信入口；不能把讀不到的全文記成已讀。英文書名在手機溢出時先看 overflow-wrap 與 min-width，不刪除書目來縮短。
+- 本機看得到、線上仍舊版：先重新整理；執行 npm run check、npm run build:cloudflare，再 npm run cloudflare:deploy；GitHub push 不會自動部署。沒有 schema 改動，不重建 D1。需要暫時移除文章時可回復上一個前端發布版本，不刪答案。
+
+**自行修改範例**：要新增「衝突後如何再開口」，在 relationshipArticles 增加不重複、穩定的英文 ID、文章版本／日期、完整段落與來源；研究段落的 sourceIds 必須找到同篇來源。文章館、直接連結與延伸閱讀會自動更新。要放到結果短卡，再改 ResultLearningCards 的 cards，明示研究與本站提案邊界。只有修改文章不用升題庫或比較規則；重要內容修訂升文章 version 並更新日期。一般文字用 React 字串輸出，維持不用原始 HTML 注入。
+
+本機驗證：npm run check 的 10 個測試檔／58 項測試通過（沿用並擴充路由案例），一般／Cloudflare 建置通過；瀏覽器檢查文章館、三篇直接入口、段落跳轉與焦點、DOI／原文連結、短卡→全文；本機虛構正常分数／無總分／三題回合實際顯示短卡，手機 390px 模擬未見橫向溢出。這是工程與畫面驗證，不是科普介入效果、實體手機或測量驗證。來源可查核不等於科普建議效果已驗證。
+
+發布使用本次提交的固定副本（git archive → .local/releases/relationship-0.7.0），依該副本建置與部署；原工作區可能同時有其他功能開發，不能把未驗收變更一起發布。副本的 node_modules 以 junction 指向同專案套件，不包含 .env、私人答案或 .git。副本不是日常開發入口；未來仍在根目錄修改，發布時再固定所要發布的提交。
+
 ## 新增一個主題
 
 先在 `src/content/quizzes.ts` 的 `quizzes` 陣列增加資料，不必複製畫面。例如新增尚未有題庫的「共同休閒」：

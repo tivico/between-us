@@ -3,6 +3,8 @@ import { quizzes, getQuiz } from './content/quizzes';
 import { Motif } from './components/Motif';
 import { HistoryPage, JoinRound, RoundPage, StartRound } from './components/RoundFlow';
 import { ContentTrial } from './components/ContentTrial';
+import { RelationshipLibrary, RelationshipArticlePage } from './components/RelationshipPages';
+import { getRelationshipArticle } from './content/relationship-articles';
 import { coreValuesTrial } from './content/core-values-trial';
 import type { QuizDefinition, TopicStatus } from './domain/quiz';
 import { parseRoute, type Route } from './lib/routes';
@@ -130,6 +132,11 @@ function NotFound() {
 
 function Page({ route }: { route: Route }) {
   if (route.page === 'catalog') return <Catalog />;
+  if (route.page === 'learn') return <RelationshipLibrary />;
+  if (route.page === 'article') {
+    const article = getRelationshipArticle(route.id);
+    return article ? <RelationshipArticlePage key={article.id} article={article} /> : <NotFound />;
+  }
   if (route.page === 'not-found') return <NotFound />;
   if (route.page === 'history') return <HistoryPage />;
   if (route.page === 'invite') return <JoinRound key={route.token} token={route.token} />;
@@ -151,14 +158,15 @@ export function App() {
   }, []);
   useEffect(() => {
     const quiz = 'id' in route ? getQuiz(route.id) : undefined;
-    document.title = route.page === 'trial' ? '核心價值探索｜之間 Between Us' : quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
+    const article = route.page === 'article' ? getRelationshipArticle(route.id) : undefined;
+    document.title = route.page === 'learn' ? '了解關係｜之間 Between Us' : article ? `${article.title}｜之間 Between Us` : route.page === 'trial' ? '核心價值探索｜之間 Between Us' : quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
     window.scrollTo(0, 0);
     document.getElementById('page-heading')?.focus();
   }, [route]);
   return <>
     <a className="skip-link" href="#main-content" onClick={(event) => { event.preventDefault(); document.getElementById('main-content')?.focus(); }}>跳到主要內容</a>
     <div className="preview-banner">慢慢認識彼此 <span aria-hidden="true">·</span> 留一點時間，給重要的人</div>
-    <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/">測驗主題館</a><a href="#/history">最近紀錄</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
+    <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/" aria-current={route.page === 'catalog' ? 'page' : undefined}>測驗主題館</a><a href="#/learn" aria-current={route.page === 'learn' || route.page === 'article' ? 'page' : undefined}>了解關係</a><a href="#/history" aria-current={route.page === 'history' ? 'page' : undefined}>最近紀錄</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
     <main id="main-content" tabIndex={-1}><Page route={route} /></main>
     <footer className="site-footer"><a className="footer-brand" href="#/">之間 <span>BETWEEN US</span></a><p>留一點好奇，給最靠近的人。</p><span className="footer-note">理解彼此的對話起點</span></footer>
   </>;

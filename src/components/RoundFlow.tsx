@@ -1,4 +1,5 @@
 import { ValueResults } from './ValueResults';
+import { ResultLearningCards } from './ResultLearningCards';
 import { useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import type { QuizDefinition } from '../domain/quiz';
@@ -83,6 +84,7 @@ function SharedResults({ results }: { results: RoundResults }) {
   return <section className="shared-results"><p className="eyebrow">TWO ANSWERS, ONE CONVERSATION</p><h1 id="page-heading" tabIndex={-1}>一起看見，你們的選擇。</h1><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     {results.quiz.scoring && (results.comparison ? <ValueResults comparison={results.comparison} names={[a.nickname, b.nickname]} /> : <ErrorNotice message="價值比較暫時無法讀取，請重新整理。" />)}
     <div className="result-overview"><div><strong>{same}</strong><span>題選項相同</span></div><div><strong>{results.quiz.questions.length - same}</strong><span>題選項不同</span></div><p>這裡比較逐題選項；相同選項也可能有不同理由，差異則是再問一句的起點。</p></div>
+    {!results.quiz.scoring && <ResultLearningCards />}
     <div className="comparison-list">{results.quiz.questions.map((question, index) => <article key={question.id} className="comparison-card"><p className="eyebrow">{String(index + 1).padStart(2, '0')} / {question.dimension}</p><h2>{question.prompt}</h2><div className="answer-pair">{[a, b].map((person) => <div className={`person-answer person-${person.slot.toLowerCase()}`} key={person.slot}><span>{person.nickname}</span><p>{question.options.find((option) => option.id === person.answers[question.id])?.label}</p></div>)}</div><p className="conversation-prompt">一起聊聊：你選這個答案時，想到的是什麼經驗或考量？</p><details className="question-evidence"><summary>這題的依據與限制</summary><p>{question.evidence.note}</p>{results.quiz.sources.filter((source) => question.evidence.sourceIds.includes(source.id)).map((source) => <p key={source.id}><a href={source.url} target="_blank" rel="noreferrer">{source.authors}（{source.year}） ↗</a></p>)}</details></article>)}</div>
     <div className="preview-notice"><h2>理解，從再問一句開始。</h2><p>{results.quiz.scoring ? '選一題你們相同或不同的答案，說說背後的經驗。此結果涵蓋核心價值，人生方向與其他主題會另外探索。' : '本輪為三題示例，只比較實際選項，不提供契合分數。'}</p></div>
     <div className="demo-actions"><a className="button secondary" href="#/history">查看最近紀錄</a><a className="button primary" href={`#/start/${results.quiz.id}`}>另開一輪 →</a></div>
