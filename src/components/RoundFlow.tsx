@@ -4,6 +4,7 @@ import type { QuizDefinition } from '../domain/quiz';
 import type { InvitationPreview, RoundResults, RoundStatus } from '../domain/round';
 import { api, ApiError, createPrivateToken, messageOf } from '../lib/api';
 import { absoluteLink, forgetRound, recentRounds, rememberRound, roundPath } from '../lib/history';
+import { invitationNote, storageNote } from '../lib/deployment';
 
 const dateOf = (value: string) => new Intl.DateTimeFormat('zh-TW', { dateStyle: 'medium', timeZone: 'Asia/Taipei' }).format(new Date(value));
 
@@ -37,14 +38,14 @@ function EntryForm({ title, invitation, invitationToken, quiz }: { title: string
     } catch (failure) { setError(messageOf(failure)); setBusy(false); }
   }
   return <div className="flow-page"><a className="back-link" href="#/">← 回到主題館</a><p className="eyebrow">A CONVERSATION FOR TWO</p><h1 id="page-heading" tabIndex={-1}>{invitation ? `${invitation.hostName} 想更認識你。` : '先從你自己開始。'}</h1><p className="flow-intro">{title} · {invitation?.questionCount ?? quiz?.questions.length} 題流程示例</p>
-    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>你們各自填答，彼此完成後，才會公開本輪所有選項。提交後答案鎖定；想重新回答時，另開一輪。</p><p>目前使用三題自編示例，尚未驗證，不提供契合分數。答案會保存在此電腦的本機服務，保存期限尚未定案。</p></div>
+    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>你們各自填答，彼此完成後，才會公開本輪所有選項。提交後答案鎖定；想重新回答時，另開一輪。</p><p>目前使用三題自編示例，尚未驗證，不提供契合分數。{storageNote}，保存期限與刪除規則尚未定案，目前請使用測試答案。</p></div>
     {invitation?.claimed ? <ErrorNotice message="這個邀請已有人加入。請使用自己的私人返回連結，或從最近紀錄返回。" /> : <form className="entry-form" onSubmit={enter}>
       <label className="field-label" htmlFor="nickname">你希望對方怎麼稱呼你？</label><input className="name-input" id="nickname" value={nickname} maxLength={24} required autoComplete="off" placeholder="你的暱稱" onChange={(event) => setNickname(event.target.value)} disabled={busy} />
       <label className="consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} disabled={busy} /><span>我同意雙方完成後，彼此查看本輪所有答案。</span></label>
       {error && <ErrorNotice message={error} />}
       <button className="button primary" disabled={busy || !consent || !nickname.trim()}>{busy ? '正在準備…' : invitation ? '接受邀請，開始填答' : '建立這一輪，開始填答'} <span aria-hidden="true">→</span></button>
     </form>}
-    <p className="local-note">目前連結供同一電腦的不同瀏覽器測試。網站與後端上線後，才能邀請遠方的人。</p>
+    <p className="local-note">{invitationNote}</p>
   </div>;
 }
 
@@ -176,7 +177,7 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
     {!historySaved && <ErrorNotice message="此瀏覽器未能保存最近紀錄入口，請另外保留私人返回連結。" />}
     {error && <ErrorNotice message={error} retry={() => void load(!round.own.submittedAt)} />}
     {results ? <SharedResults results={results} /> : round.own.submittedAt ? <section className="waiting-panel"><p className="eyebrow">A LITTLE PATIENCE, A SHARED MOMENT</p><h1 id="page-heading" tabIndex={-1}>你的答案，先好好保留。</h1><p className="flow-intro">{round.peer ? `${round.peer.nickname} 已加入，等待對方完成。` : '分享邀請，讓另一個人在自己的時間裡回答。'}</p><div className="participant-progress"><div><span className="done-dot">✓</span><strong>{round.own.nickname}</strong><span>已完成</span></div><div><span className="waiting-dot">○</span><strong>{round.peer?.nickname ?? '另一個人'}</strong><span>{round.peer ? '填答中' : '尚未加入'}</span></div></div><p className="waiting-note">雙方完成後才會解鎖答案。這個頁面會定期更新，也可以手動確認。</p><button className="button secondary" onClick={() => void load()}>更新完成狀態</button>{round.invitationToken && <LinkCard title="給另一個人的邀請連結" note="只邀請一人加入。這個連結不包含你的私人返回憑證。" path={`#/invite/${round.invitationToken}`} />}</section> : <>
-      <div className="save-status" role="status">{saveError ? '尚有答案未保存' : pending ? '正在儲存…' : '已儲存至本機服務'}</div>
+      <div className="save-status" role="status">{saveError ? '尚有答案未保存' : pending ? '正在儲存…' : '已儲存'}</div>
       {saveError && <ErrorNotice message={saveError} retryLabel={reloadRequired ? '重新載入最新紀錄，取代未保存選擇' : '重試儲存'} retry={() => {
         if (reloadRequired) void load(true);
         else { failed.current = ''; setSaveError(''); save(latestAnswers.current); }

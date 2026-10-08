@@ -21,3 +21,5 @@
 - 已同意三觀契合度總覽作為趣味入口，定義為本輪價值取向相近程度；核心價值同頻度與人生方向交集分開。數字公式尚待核定，不產生假分數或關係成功率，不任意合併兩個區塊。
 - 本機資料為 .local/data/between-us.sqlite，不能進入 Git／前端資產，維持 Vite fs.deny 的 .local 保護；不要刪除實際回合資料來讓測試通過。
 - 後端與前端共用 src/content/quizzes.ts，原生 Node 讀取的 TypeScript import 需保留 .ts 副檔名。變更資料庫結構需明確 migration，不覆寫較新的 user_version。
+- 0.3 已備妥 CI、手動 Pages workflow、公開 API URL／base 設定與 npm start 獨立 API；不是已上線。repository／連線／後端主機尚待使用者提供，不假定能直接在 Pages 跑 SQLite。
+- 公開 API 必須明確設定 DATA_FILE 與 ALLOWED_ORIGINS；只能單一實例＋持久磁碟，不能以會被重啟清空的檔案系統保存答案。Pages 發布先檢查後端健康狀態與 CORS，VITE_ 只放公開網址。

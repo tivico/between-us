@@ -2,7 +2,7 @@
 
 ## 現況：本機前端＋雙人 API
 
-0.2 為 React + TypeScript + Vite 前端，以及 Node 原生 HTTP＋SQLite 的本機後端，仍在同一個專案。沒有會員、雲端帳號、服務端管理金鑰或對外部署。
+React + TypeScript + Vite 前端，以及 Node 原生 HTTP＋SQLite 後端，仍在同一個專案。0.3 增加獨立 API 與 GitHub 部署流程；目前仍在本機使用，沒有會員或對外部署。
 
 ```text
 index.html
@@ -70,7 +70,7 @@ index.html
 
 `src/lib/history.ts` 將最近 20 個回合的 ID、本人 token、主題、暱稱與日期保存到 localStorage；不保存答案。這些入口本身含存取權，因此共用此瀏覽器的人也能開啟。localStorage 儲存失敗時，畫面要求另存私人連結。移除索引不刪除後端答案，再次開啟私人連結會重新加入。
 
-目前不使用 cookie，也沒有帳號層的完整歷史找回。`5173` 開發與 `4173` 建置預覽使用同一 SQLite，但瀏覽器索引因不同 origin 分開；將私人連結改到正在使用的本機服務入口即可讀取同一後端紀錄。未來 GitHub Pages 跨來源 API 與憑證傳遞仍要另行實測。
+目前不使用 cookie，也沒有帳號層的完整歷史找回。`5173` 開發與 `4173` 建置預覽使用同一 SQLite，但瀏覽器索引因不同 origin 分開；將私人連結改到正在使用的本機服務入口即可讀取同一後端紀錄。0.3 已測試跨來源 HTTP／授權邊界，真實 Pages 與雲端仍待部署後實測。本機測試資料不隨原始碼推送，也不自動匯入雲端。
 
 ### 真正的雙人請求流程
 
@@ -154,7 +154,7 @@ A 同意並提交 + B 同意並提交
 
 - 邀請與返回憑證用足夠隨機的 token，不能靠遞增回合 ID 取得權限。
 - 選定後端後決定安全的交換方式（例如 token 換取 HttpOnly cookie）；憑證不放一般分析、網址追蹤、console 或伺服器 log。
-- 正式結果頁避免外部分析／第三方資產取得私人網址，設定相應 Referrer-Policy；目前 hash 裡只有公開主題 ID。
+- 結果頁避免分析工具取得私人網址；私人／邀請憑證在 hash 中，index.html 與本機回應設定 no-referrer，不將憑證寫入 log。
 - 資料庫限制每個回合兩個席位；存取規則應測試 A、B、陌生人與提交前後。
 - `.env` 不入 Git。任何 `VITE_` 變數會打包到瀏覽器，不能放管理金鑰。
 - 保存期限與刪除機制是正式版本交付前必須定義的產品行為。
@@ -162,29 +162,29 @@ A 同意並提交 + B 同意並提交
 
 技術參考：[Node 24 SQLite](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html)、[Vite 代理設定](https://vite.dev/config/server-options.html#server-proxy)。本機流程已驗證，正式上線仍需 HTTPS、允許來源、頻率限制、備份、撤銷與保存規則。
 
-## GitHub 部署方向（規劃）
+## GitHub 部署準備（0.3 已實作，尚未上線）
 
-使用者希望未來程式與部署以自己的 GitHub 為入口。實際 repository 尚未指定，目前沒有 remote 或 Actions 工作流程，不會自動把本機 commit 發布上網。
-
-GitHub repository 保存原始碼與版本歷史；GitHub Pages 是靜態網站服務，適合目前的前端資產，不能執行本專案未來的寫入答案、加入邀請或解鎖 API。正式雙人體驗可採以下分工，後端供應商待選：
+使用者已要求部署。repository 與帳號連線尚待提供，目前沒有 remote 或 push；工作流程已寫好不代表網站已上線。GitHub 保存原始碼／前端，後端主機另選。
 
 ```text
-本機變更 → 檢查與 commit → push 到指定 GitHub repository
-  → GitHub Actions 安裝依賴、檢查、建置
-  → GitHub Pages 提供前端
-  → 使用者瀏覽器透過 HTTPS 呼叫後端
-  → 後端驗證參與者、讀寫資料庫、控制結果解鎖
+push main / PR → ci.yml → npm ci → check → build（只檢查）
+main 手動執行 pages.yml
+  → configure-pages 取得 origin / base_path
+  → check → check-hosted-api.mjs（健康狀態＋允許來源＋OPTIONS）
+  → build（VITE_BASE_PATH、VITE_API_BASE_URL）
+  → 僅上傳 dist → GitHub Pages
+瀏覽器 → src/lib/api.ts → HTTPS API
+  → http.mjs（明確 CORS＋Bearer）→ store.mjs → 持久磁碟 SQLite
 ```
 
-原始碼與網站公開範圍要各自確認；私人 repository 不代表 Pages 網址必然是私人。GitHub Free 可使用公開 repository 的 Pages；私人來源 repository 的支援取決於方案。具體方案與存取方式要在實際部署時核對，不假定所有朋友專用網站都必須公開原始碼。
+`VITE_API_BASE_URL` 為公開的 `https://後端網域/api`；本機留空時沿用 `/api` 代理。`VITE_BASE_PATH` 控制 CSS、JS 與 favicon 位於 `/` 或 `/<repository>/`；hash 與邀請連結沿用目前 pathname，所以 Pages 子路徑不會丟失。兩項設定在建置時固定，改 GitHub variable 後要重新發布。
 
-### 前端上線前需完成
+`npm start` 執行 `scripts/start-api.mjs`，`readHostedConfig()` 要求明確的 `DATA_FILE` 絕對路徑與 `ALLOWED_ORIGINS`，預設監聽 `0.0.0.0:8787`。主機提供 HTTPS，API 程序提供 HTTP。`DATA_FILE` 必須位於主機持久磁碟，維持一個 API 實例；目前不是分散式資料庫，不支援多副本擴展。不能將 `.local` 資料推送 GitHub 或用會被重啟清空的磁碟存答案。
 
-- 若網址為 `https://<帳號>.github.io/<repository>/`，建置時 Vite `base` 必須對應 `/<repository>/`；帳號首頁或自訂網域通常為 `/`。本機目前使用預設 `/`，不能當作已支援所有 Pages 路徑。
-- 核對 `index.html` 的 favicon 與建置後 CSS／JS 的 URL；不能在 repository 子目錄站點仍指向網站根目錄的資產。
-- 使用 `npm ci → npm run check → npm run build` 建置，只發布 `dist/`；不發布原始私密資料、`.env`、快取或 `node_modules/`。
-- 設定 Pages 的 GitHub Actions 建置來源，部署 workflow 需限制分支／標籤與權限。
-- 建議正式版本使用 `v*` 標籤或手動觸發部署，功能開發 commit 不等於自動更新朋友正在使用的網站。實際工作流程待設定。
-- 接入後端後，須處理允許的前端來源（CORS）、憑證傳遞、儲存期限、存取規則與前後端相容性。
+CORS 是瀏覽器跨網站呼叫時的允許規則。`ALLOWED_ORIGINS` 是 `https://帳號.github.io`，不含 repository 路徑。API 只回這個精確來源，不用 `*`，不使用 cookie／Allow-Credentials；JSON 與 Bearer 請求先以 OPTIONS 預檢。CORS 不取代私人憑證授權，命令列仍可呼叫公開 API，答案保護繼續由 store 執行。
 
-官方參考：[GitHub Pages 的性質與方案](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)、[Vite 的 GitHub Pages 部署方式](https://vite.dev/guide/static-deploy.html#github-pages)。此處只記錄設計，尚未驗證實際 GitHub 部署。
+正式主機未選，Node API 可使用具持久磁碟的平台；Render 免費 web service 不能保留 SQLite。若改 Cloudflare Workers＋D1，需要另外移植儲存與 HTTP 執行方式，不能直接執行此 Node server。設定與排查步驟見 [維護手冊](runbook.md#github-與雲端部署)。
+
+原始碼公開範圍與網站公開範圍分開：私人 repository 不保證 Pages 網站私人，GitHub Free 的 Pages 要使用公開 repository，私人來源支援依帳號方案核對。現有三題是試玩示例；期限、刪除／撤銷／找回規則仍未定稿。
+
+官方參考：[GitHub Pages 的性質與方案](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)、[Pages workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[Vite Pages 設定](https://vite.dev/guide/static-deploy.html#github-pages)、[Render 免費服務限制](https://render.com/docs/free)。本機已驗證不代表真實雲端已驗證。

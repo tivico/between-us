@@ -260,3 +260,66 @@ Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；本機 
 - 開發 HTTP 直接下載 `.local/data/between-us.sqlite` 與 WAL 皆回 403；Git 忽略 `.local`。
 
 尚待：真實手機／跨裝置、雲端授權與部署、正式保留／刪除／撤銷／找回規則、正式題庫、科普與契合度公式。工程測試通過不代表心理測量效度已驗證。
+
+## GitHub 與雲端部署
+
+0.3 已加入部署程式與設定，**尚未 push 或上線**。先取得使用者指定的 repository、登入連線與後端主機；不要猜帳號／建立 remote。若原始碼為私人，先核對帳號方案是否支援私人 repository 的 Pages；Pages 網站本身的公開範圍需另核對。
+
+### 元件與執行順序
+
+1. `.github/workflows/ci.yml`：推送 main 或 PR 時自動 `npm ci → npm run check → npm run build`。CI 是自動檢查，不會發布。
+2. `scripts/start-api.mjs`：後端主機執行 `npm start`，`server/config.mjs` 讀取明確設定，`http.mjs` 收請求，`store.mjs` 存 SQLite。不需要 Vite 提供正式 API。
+3. `.github/workflows/pages.yml`：在 main 手動執行。取得 Pages 網址、跑測試、檢查 API 與 CORS，再依路徑建置、只上傳 `dist/`。
+4. 瀏覽器的 `src/lib/api.ts` 讀取建置時的公開 API 網址，跨來源呼叫後端；前端最近入口仍只是索引，真正答案在主機資料庫。
+
+### 後端主機設定
+
+需支援 Node 24.13+、單一實例、持久磁碟與 HTTPS。建置／安裝可使用 `npm ci --omit=dev`；開始命令為 `npm start`，健康檢查為 `/api/health`。不以 `npm run preview` 當正式 API。
+
+| 環境變數 | 範例與用途 |
+| --- | --- |
+| `DATA_FILE` | `/var/data/between-us.sqlite`；必須是持久磁碟上的絕對路徑 |
+| `ALLOWED_ORIGINS` | `https://帳號.github.io`；不含 `/repository/` 或尾斜線，多個來源以逗號分隔 |
+| `PORT` | 主機指定的埠；未指定使用 `8787` |
+| `API_HOST` | 雲端預設 `0.0.0.0`；本機驗證可設 `127.0.0.1` |
+
+Render 免費 web service 的 SQLite 會在重啟／重新部署／休眠後消失，也不能掛持久磁碟；保留此 SQLite 架構時需有磁碟的主機方案。Cloudflare Workers／D1 有不同執行與儲存方式，需要另外移植後端。平台選擇與付費建立需依使用者決定，不能宣稱所有方案都免費可用。[Render 官方限制](https://render.com/docs/free)
+
+`npm start` 遇到缺少位置／來源會以 `API_START_FAILED` 結束，避免默默使用暫存資料。設定正確會印 `API_READY port=... mode=hosted-test`。雲端是全新資料庫；本機測試答案不會跟 GitHub 程式一起搬過去。不要上傳資料庫作為前端資產。
+
+### GitHub Pages 設定
+
+1. 原始碼推送至確認的 repository。若 remote 已有內容，先核對、整合，不 force push。
+2. Repository → Settings → Pages → Source 選 **GitHub Actions**。
+3. Settings → Secrets and variables → Actions → **Variables** 新增 `API_BASE_URL`，例如 `https://你的後端網域/api`。這是公開網址，不能填 token／金鑰。
+4. 確認後端 `ALLOWED_ORIGINS` 包含 Pages 的 origin，例如 `https://帳號.github.io`。
+5. Actions → **Deploy GitHub Pages** → **Run workflow** 選 `main`。工作流程依 Pages metadata 提供 `VITE_BASE_PATH`，不需將 repository 名稱寫死在程式。
+6. `build` 先檢查後端回 `hosted-test`、CORS 精確 origin 及 OPTIONS 預檢；任一步失敗不會上傳／發布新版。成功後由 deploy job 顯示實際 URL。
+7. 用兩部裝置、虛構答案測試建立、邀請、提交前不可互看、共同結果及重新開啟。重啟後端後確認紀錄仍在，再記錄實際上線 URL／commit／日期。
+
+首次上線仍需補核對雲端備份、公開網站實際權限與資料保存規則。三題自編示例可供流程試玩，不能包裝成正式學術三觀測驗。
+
+### 部署壞掉的排查順序
+
+- 畫面空白、JS／CSS／favicon 404：先看 Actions build log 與 `dist/index.html`。`/<repository>/assets/...` 要符合實際 Pages 網址；不要只改瀏覽器 URL。
+- 點建立顯示連不上保存服務：DevTools → Network 找 `/api/rounds`。若網址仍是 `github.io/api/...`，`API_BASE_URL` 缺少或尚未重建；若是正確 API，查後端健康狀態。
+- 預檢／請求 403 或 CORS 錯誤：看 OPTIONS 的 Origin 與後端 `ALLOWED_ORIGINS`，比較完整的協定＋網域＋埠，不把 `/repository/` 塞進來源。錯誤回應也需有允許來源標頭，才能讓前端顯示 401／409 的實際原因。
+- API 回 401：檢查是否本人私人返回連結、是否打到同一資料庫；不能把邀請 token 當本人 token，也不要將 token 貼進 log。
+- 重啟後全找不到紀錄：查 `DATA_FILE` 路徑與磁碟掛載、是否換成全新資料庫／多實例。先停寫並備份舊磁碟，再恢復相同檔案；不可刪庫讓服務「正常」。健康檢查通過不能證明磁碟持久化。
+- Pages workflow `HOSTED_API_CHECK_FAILED`：先確認後端網址可用、回 `{ok:true,mode:"hosted-test"}`，再檢查 CORS。缺少後端時停止部署是預期結果。
+
+可安全查詢健康狀態，不包含答案或憑證：
+
+```powershell
+Invoke-RestMethod 'https://你的後端網域/api/health'
+```
+
+修改範例：更換 API 網域時，更新 GitHub variable `API_BASE_URL`，在主機確認 `ALLOWED_ORIGINS`，再手動重跑 Pages。改 variable 不會修改已發布的 JavaScript。切換資料位置時，先停止 API、備份完整 SQLite 檔案／WAL，再更新 `DATA_FILE` 並恢復；不要直接把位置改到空目錄。撤回前端發布不等於恢復後端資料庫。
+
+### 0.3 驗證紀錄
+
+2026-10-08，Node 24.19.0：型別檢查與 7 檔／40 項測試通過；包含不安全部署網址、缺少磁碟設定、CORS 預檢與跨來源 Bearer 授權。一般建置與 `/between-us/` 子路徑建置成功，JS／CSS／favicon 均保留子路徑。未設定雲端 API 時發布檢查以非零狀態停止，符合預期。
+
+瀏覽器用 `127.0.0.1:4174/between-us/` 網頁跨來源呼叫獨立 `127.0.0.1:8790` API，虛構 A／B 完成建立、暫存、邀請、加入、提交與共同結果；1 題相同、2 題不同，選項與兩人輸入一致。邀請／返回連結保留 `/between-us/`，沒有瀏覽器 error／warn。使用獨立 `.local/deployment-test.sqlite`，沒有搬移或修改既有試玩資料庫。這是本機跨來源驗證，不是真實 Pages／雲端／遠距驗證。
+
+尚未驗證：真實 GitHub Actions／Pages、雲端 HTTPS 與磁碟、付費方案、兩部實體裝置。測試通過不能視為已完成公開部署。

@@ -1,10 +1,12 @@
+import { apiBase } from './deployment';
+
 export class ApiError extends Error {
   constructor(public code: string, message: string) { super(message); }
 }
 export async function api<T>(path: string, { token, method = 'GET', body }: { token?: string; method?: string; body?: unknown } = {}): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(`/api${path}`, {
+    response = await fetch(`${apiBase}${path}`, {
       method,
       headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}), ...(body !== undefined ? { 'Content-Type': 'application/json' } : {}) },
       ...(body !== undefined ? { body: JSON.stringify(body) } : {}),

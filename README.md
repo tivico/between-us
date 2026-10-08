@@ -2,7 +2,7 @@
 
 給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前為 **0.2.0 本機雙人流程測試版**。可以完成兩人的保存、邀請與答案比較；正式量表、契合度與遠距部署仍在準備。暫定名稱「之間」可再調整。
+目前為 **0.3.0 部署準備版**。可以完成兩人的保存、邀請與答案比較，已補上 GitHub CI／Pages 工作流程與獨立 API 啟動設定。**尚未推送或上線**；repository、GitHub 連線與後端主機仍待提供。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
 
 ## 現在可以做什麼
 
@@ -41,7 +41,7 @@ npm run preview
 - `build`：型別檢查及產出 `dist/`。
 - `preview`：啟動建置版網頁 `http://127.0.0.1:4173` 與相同本機 API／SQLite。先停止 `dev` 再使用，避免占用 8787；這不是對外正式服務。
 - `.npmrc` 把快取放在專案內的 `.npm-cache/`，避免依賴個人帳號的全域快取權限。
-- 沒有必要的環境變數或雲端帳號；`.env.example` 說明未來金鑰處理原則。
+- 本機流程沒有必要的環境變數或雲端帳號；`.env.example` 另列雲端啟動與 Pages 建置設定。
 
 ## 文件入口
 
@@ -54,11 +54,11 @@ npm run preview
 
 ## 提交、版本與未來部署
 
-每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。現在為 `0.2.0`；下一個新功能可升為 `0.3.0`，小修正可升為 `0.2.1`，純文件整理通常維持原版號。
+每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。現在為 `0.3.0`；下一個新功能可升為 `0.4.0`，小修正可升為 `0.3.1`，純文件整理通常維持原版號。
 
-網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。現在網站為 `0.2.0`，三題草案仍為 `0.1.0`，題目沒有改變。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
+網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。現在網站為 `0.3.0`，三題草案仍為 `0.1.0`，題目沒有改變。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
-未來使用使用者指定的 GitHub repository 保存程式。若網站前端部署於 GitHub Pages，仍需另外的後端保存雙人答案與控制解鎖。目前沒有 remote、push、Actions 工作流程或實際部署。部署流程與限制見 [架構文件](docs/architecture.md#github-部署方向規劃)。
+GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保存雙人答案與控制解鎖。已有 `.github/workflows/ci.yml` 自動檢查，以及 `pages.yml` 從 main 手動發布。Pages 發布前會檢查已上線 API 與跨來源設定；沒有後端就停止發布。目前沒有 remote、push 或實際部署。[實際設定步驟](docs/runbook.md#github-與雲端部署)、[架構與分工](docs/architecture.md#github-部署準備03-已實作尚未上線)。
 
 ## 重要檔案
 
@@ -74,13 +74,16 @@ npm run preview
 | `src/lib/api.ts`、`src/lib/history.ts` | API 呼叫、錯誤處理與此瀏覽器最近入口 |
 | `server/http.mjs`、`server/store.mjs` | HTTP 授權邊界、雙人規則、交易與 SQLite 保存 |
 | `scripts/dev.mjs` | 一次啟動網頁與 API；關閉服務 |
+| `scripts/start-api.mjs`、`server/config.mjs` | 獨立 API 啟動、資料磁碟與允許來源設定 |
+| `src/lib/deployment-config.ts`、`src/lib/deployment.ts` | Pages 資產路徑、API 網址驗證與保存說明 |
+| `.github/workflows/`、`scripts/check-hosted-api.mjs` | CI、手動 Pages 發布與後端連線檢查 |
 | `vite.config.ts` | 本機服務與建置設定 |
 
 ## 技術選擇
 
 使用 React + TypeScript + Vite 的單一前端專案。React 負責畫面，TypeScript 幫忙偵測資料與程式型別錯誤，Vite 負責本機開發與建置。Hash 路由是網址 `#` 後面的頁面識別，讓靜態主機也能直接開啟子頁；目前不用路由套件、全域狀態套件或設計元件庫。
 
-先以 Node 原生 HTTP 與 SQLite 做本機後端，沒有 ORM、會員、管理後台或額外後端框架。一次只允許一份此資料庫的本機 API 服務。未來託管平台仍待選，GitHub Pages 只能提供前端；本機 API 不能直接當作 Pages 的部署產物。
+使用 Node 原生 HTTP 與 SQLite 後端，沒有 ORM、會員、管理後台或額外後端框架。`npm start` 可獨立啟動 API，需要 Node 24.13+、持久磁碟、HTTPS 代理與明確的允許來源；不是 `vite preview` 對外服務。維持單一 API 實例。主機平台仍待選；GitHub Pages 只能提供前端，不能直接執行 SQLite 後端。若改用 Cloudflare Workers／D1，仍需移植後端，現有 `npm start` 不能直接搬過去。
 
 免會員的保存與返回入口已在本機實作。私人憑證只在瀏覽器的網址片段／最近入口，以及 API 的授權傳遞中使用；資料庫只保存雜湊，不保存原始憑證。保存期限、資料刪除與遺失連結找回仍待定；裝置入口移除不會刪除 SQLite 資料。感情科普與第一份正式三觀工具仍待整理。
 

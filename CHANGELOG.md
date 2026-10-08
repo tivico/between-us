@@ -2,6 +2,19 @@
 
 網站版號標記可交付的產品里程碑，不是每筆 commit 都需升版；測驗題庫版本另行管理。公開部署狀態需另外記錄，不以本機 Git tag 當作已上線。
 
+## 0.3.0 — 2026-10-08
+
+狀態：部署準備完成，尚未推送或公開上線；待提供 GitHub repository、帳號連線與後端主機。題庫維持 `0.1.0` 三題自編示例，不提供正式契合度。
+
+- GitHub CI 檢查 main／PR；Pages 從 main 手動發布，與 commit 分開。
+- Pages 建置依網站 metadata 設定資產 base；API_BASE_URL 指向已上線 HTTPS 後端。
+- 發布前檢查 API 健康狀態與 CORS；只上傳 dist，不上傳 SQLite／本機答案。
+- API 支援明確來源的 CORS 與 OPTIONS 預檢；授權與雙方提交解鎖規則維持原契約。
+- npm start 獨立啟動 Node API，明確要求 DATA_FILE、ALLOWED_ORIGINS；主機需提供 HTTPS 與持久磁碟。
+- 保存／邀請說明依實際 API 設定顯示本機或雲端模式。
+
+驗證：型別檢查與 40 項測試、建置；部署與瀏覽器驗證紀錄見維護手冊。未驗證真實 GitHub Actions、雲端磁碟與兩部實體裝置。
+
 ## 0.2.0 — 2026-10-08
 
 狀態：本機雙人流程測試版；尚未推送 GitHub 或對外部署。三題草案與題庫版本維持 `0.1.0`，正式量表與契合度尚未實作。

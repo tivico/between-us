@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { RoundError } from './store.mjs';
 
-const origins = new Set(['http://127.0.0.1:5173', 'http://localhost:5173', 'http://127.0.0.1:4173', 'http://localhost:4173']);
+const localOrigins = ['http://127.0.0.1:5173', 'http://localhost:5173', 'http://127.0.0.1:4173', 'http://localhost:4173'];
 async function bodyOf(req) {
   if (!req.headers['content-type']?.startsWith('application/json')) throw new RoundError('JSON_REQUIRED', '請使用 JSON 傳送資料。', 415);
   const chunks = [];
@@ -19,18 +19,31 @@ async function bodyOf(req) {
     return body;
   } catch { throw new RoundError('INVALID_JSON', '資料格式不正確。'); }
 }
-export function createApi(store) {
+export function createApi(store, { allowedOrigins = localOrigins, mode = 'local-development' } = {}) {
+  const origins = new Set(allowedOrigins);
   return createServer(async (req, res) => {
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Vary', 'Origin');
     const send = (status, value) => { res.writeHead(status); res.end(JSON.stringify(value)); };
     try {
-      if (req.headers.origin && !origins.has(req.headers.origin)) throw new RoundError('ORIGIN_DENIED', '這個來源不能存取本機測試服務。', 403);
+      const origin = req.headers.origin;
+      if (origin && !origins.has(origin)) throw new RoundError('ORIGIN_DENIED', '這個來源不能存取保存服務。', 403);
+      if (origin) res.setHeader('Access-Control-Allow-Origin', origin);
       const path = new URL(req.url, 'http://127.0.0.1').pathname;
+      if (req.method === 'OPTIONS' && path.startsWith('/api/')) {
+        const requestedHeaders = (req.headers['access-control-request-headers'] ?? '').toLowerCase().split(',').map((header) => header.trim()).filter(Boolean);
+        if (!origin || !['GET', 'POST', 'PUT'].includes(req.headers['access-control-request-method']) || requestedHeaders.some((header) => !['authorization', 'content-type'].includes(header))) {
+          throw new RoundError('PREFLIGHT_DENIED', '這個跨來源請求不受支援。', 403);
+        }
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT');
+        res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+        res.writeHead(204); res.end(); return;
+      }
       const token = /^Bearer ([a-f0-9]{64})$/.exec(req.headers.authorization ?? '')?.[1];
-      if (req.method === 'GET' && path === '/api/health') return send(200, { ok: true, mode: 'local-development' });
+      if (req.method === 'GET' && path === '/api/health') return send(200, { ok: true, mode });
       if (req.method === 'POST' && path === '/api/rounds') return send(201, store.create(await bodyOf(req)));
       if (req.method === 'GET' && path === '/api/invitations/preview') return send(200, store.invitationPreview(token));
       if (req.method === 'POST' && path === '/api/invitations/claim') return send(200, store.claim(await bodyOf(req)));
