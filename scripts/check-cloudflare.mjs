@@ -25,7 +25,11 @@ try {
   const partial = { ...answers }; delete partial['pvqrr-57'];
   await request(`/rounds/${id}/results`, { token: a, expected: 423 });
   await request(`/rounds/${id}/status`, { token: b, expected: 401 });
-  await request(`/rounds/${id}/answers`, { method: 'PUT', token: a, body: { answers, revision: 0 } });
+  await request(`/rounds/${id}/answers`, { method: 'PUT', token: a, body: { answers: partial, revision: 0 } });
+  const incomplete = await request(`/rounds/${id}/submit`, { method: 'POST', token: a, body: {}, expected: 400 });
+  assert.equal(incomplete.code, 'INCOMPLETE');
+  assert.deepEqual((await request(`/rounds/${id}/status`, { token: a })).own.answers, partial);
+  await request(`/rounds/${id}/answers`, { method: 'PUT', token: a, body: { answers, revision: 1 } });
   const { invitationToken } = await request(`/rounds/${id}/submit`, { method: 'POST', token: a, body: {} });
   await request('/invitations/claim', { method: 'POST', body: { invitationToken, nickname: '部署測試 B', consent: true, privateToken: b } });
   const statusB = await request(`/rounds/${id}/status`, { token: b });

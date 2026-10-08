@@ -154,9 +154,9 @@ Grouzet 的 Table 1 與方法支持比較不同目標內容；分析保留 1,854
 
 0.5.0 的實際試讀流程是「候選 JSON → `createCoreValuesTrial()` 取 `prompt`／引導／六選項 → `ContentTrial` → 本頁 React state → `summarizeTrial()` 整理本人選項／未答／標記」。題庫在建置時匯入；試答不呼叫 API、不寫 localStorage 或資料庫。離開該元件、關閉或重新整理即清除；同頁返回修改保留選擇。
 
-入口為主題介紹中的「試讀 57 題核心價值」，或 `#/trial/core-values`。作答與整理不顯示價值面向／逐題解釋或第 49 題的已知預期意思，避免在提前查看整理後影響尚未閱讀的題目。具體審查問題留在本文件，試讀者若已讀過也需記錄提示接觸情況。跳過是未答狀態，不是第七個量表選項或零分；可以在任一題查看目前整理。
+保留的單人入口為主題介紹中的「先自己探索（不保存）」，或 `#/trial/core-values`；完整雙人入口為 `#/start/core-values`。作答與整理不顯示價值面向／逐題解釋或第 49 題的已知預期意思，避免在提前查看整理後影響尚未閱讀的題目。具體審查問題留在本文件，試讀者若已讀過也需記錄提示接觸情況。跳過是未答狀態，不是第七個量表選項或零分；可以在任一題查看目前整理。
 
-正式雙人接入時預計由候選資料的 `prompt` 與 `instructions` 建立 `src/content/quizzes.ts` 的工具定義，並補上題目數值、改寫紀錄與施測版本契約；不根據性別選 `portraits`。建立回合時由 Node 或 D1 store 固定內容及規則快照。兩人答案都提交後，先依原工具計分，再按另行核定的比較規則形成結果；性別／性向不參與計算。0.6 已按此流程接入；實際檔案為 src/content/core-values.ts、src/domain/compatibility.ts、兩種 store 的 results 與 ValueResults。
+0.6 雙人接入由候選資料的 `prompt` 與 `instructions` 建立 `src/content/quizzes.ts` 的工具定義，並補上題目數值、改寫紀錄與施測版本契約；不根據性別選 `portraits`。建立回合時由 Node 或 D1 store 固定內容及規則快照。兩人答案都提交後，先依原工具計分，再按使用者已同意的比較規則形成結果；性別／性向不參與計算。0.6 已按此流程接入；實際檔案為 src/content/core-values.ts、src/domain/compatibility.ts、兩種 store 的 results 與 ValueResults。
 
 維護者可依這個順序排查：
 

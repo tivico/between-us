@@ -62,7 +62,7 @@ npm run dev
 2. RoundPage 每次選答發 PUT /api/rounds/:id/answers，後端核對 snapshot 中合法選項與 revision；只有本人的 answers 回傳。畫面顯示已儲存後才算保存成功，失敗可重試；衝突需載入最新版。
 3. POST submit 要求全部 57 題合法；A 提交後鎖定並產生邀請，B claim 後獨立保存。邀請 hasValueScore 只說明分享範圍，不傳答案。
 4. GET results 先驗證本人憑證、兩人 submitted_at；未完成回 423，陌生憑證 401。解鎖後用 snapshot 的選項數值／映射計分，回 comparison（profiles、values、meanGap、score、ruleVersion）及真實答案。
-5. SharedResults → ValueResults 顯示相近度與 19 類圖，再呈現 57 題並排。前端不自行偷算未解鎖結果，最近紀錄僅保存私人返回入口；真正答案在後端。
+5. SharedResults → ValueResults 顯示相近度與 19 類圖，再呈現 57 題並排。前端只呈現後端解鎖後回傳的結果，最近紀錄僅保存私人返回入口；真正答案在後端。
 
 **計分規則 1.0.0**：原選項依明確 optionValues 對應 1–6，不能把 option ID 的次序當分數。每個價值平均＝對應三題平均；MRAT＝本人全部 57 題平均；centered＝價值平均 − MRAT。它描述相對於自己整體答案的優先程度，負數沒有好壞，也不能換成百分比。
 
@@ -85,7 +85,7 @@ npm run dev
 
 **驗證紀錄 2026-10-08**：10 檔／58 項測試、一般與 Cloudflare 建置通過。包含作者映射、手算平均／中心化／公式、對稱、整體平移不變、缺答／不合法拒絕、不分化不給分、完整 A/B results 與舊三題 core-values 快照不追改。CLI 實際 native Node 匯入 JSON／TS 成功，本機 Worker HTTP QA 通過。瀏覽器用虛構 A/B 各完整操作 57 題：保存、稍後回答、缺答禁止、重新整理回第一個未答、確認／邀請／獨立加入／解鎖；雙方同為 74.3 / 100，顯示 19 類圖與 57 題並排。另 HTTP QA 輪為 73.9，不當作人類測量資料。390px 模擬沒有橫向溢出，恢復尺寸設定；工程頁沒有 Console error／warn。
 
-Cloudflare 已發布版本 `8ff28816-2c5e-4ee3-a5e4-28fb098d9b42`；本次沒有 remote migration，不重建 D1；本機 cloudflare:dev 只套用本機模擬庫的 0001。部署後線上 check-cloudflare 回 CLOUDFLARE_FLOW_OK，實際驗證 57 題缺答／保密／計分；公開 start/core-values 顯示 57 題、答案與比較結果分享同意。線上新留一輪虛構 QA，沒有讀既有私人回合；截圖 .local/core-values-pair-live.png 不提交。截圖 .local/core-values-pair-results.png 僅為虛構工程畫面，不提交。尚未驗證／完成：本地改寫及雙人公式測量效度、實體雙手機、人生方向、正式保存期限與刪除／遺失憑證找回；功能驗證不能替代這些。
+Cloudflare 已發布版本 `8ff28816-2c5e-4ee3-a5e4-28fb098d9b42`；本次沒有 remote migration，不重建 D1；本機 cloudflare:dev 只套用本機模擬庫的 0001。部署後線上 check-cloudflare 回 CLOUDFLARE_FLOW_OK，實際驗證 57 題缺答／保密／計分；公開 start/core-values 顯示 57 題、答案與比較結果分享同意。本次線上留下兩輪虛構 QA，沒有讀既有私人回合；截圖 .local/core-values-pair-live.png 不提交。截圖 .local/core-values-pair-results.png 僅為虛構工程畫面，不提交。尚未驗證／完成：本地改寫及雙人公式測量效度、實體雙手機、人生方向、正式保存期限與刪除／遺失憑證找回；功能驗證不能替代這些。
 
 ### 單人核心價值探索（保留 0.5 的入口）
 
@@ -499,3 +499,9 @@ npm run cloudflare:deploy
 除錯：仍看到「試讀」先核對部署網址、重新整理與最新 Worker；畫面文字的定位用 `rg -n '試讀|試答' src`，檢查 UI 而不是直接全域替換，內部錯誤訊息、測試名稱與歷史研究紀錄可保留。標記／整理錯誤則查 answers、flagged 與 summarizeTrial；網站空白看 Console，再跑 npm run check。
 
 驗證：50 項測試、一般／Cloudflare 建置通過；本機虛構選「像我」並標記，摘要仍為已答 1／未答 56／標記 1，題幹與六選項未改。公開入口已顯示新標題與「開始探索」，研究來源可展開且保留改寫測量限制，Console 無 error／warn。發布 Worker 版本 `b26587fb-9830-4f36-955c-aa74cebc3e94`，截圖 `.local/core-values-exploration-live.png` 不提交。資料庫結構與 API 未修改；正式計分、57 題雙人回合及改寫測量驗證仍待完成。
+
+### 0.6 GitHub 與發布查核
+
+功能 commit `702cd196bb46d401f940d31f78b74b5f4f9f19a8` 與 v0.6.0 已推送。[GitHub CI run 37759825630](https://github.com/tivico/between-us/actions/runs/37759825630) 回 completed/success，包含 58 項測試、兩種建置與 Worker dry-run。後續 test/docs commit 補強線上 smoke check：先保存 56 題，實際檢查 INCOMPLETE 與恢復草稿，再補完第 57 題、完整雙人流程與結果；公開檢查再次通過。這只加強 QA 腳本／發布交接，不改已發布網頁／API，因此網站與標籤仍為 0.6.0。
+
+本機原生 Node 的 store／JSON／TS 計分匯入已直接執行確認，回 questions:57、values:19；獨立 4180 模擬器完成後已停止，4173 一般建置已恢復。只有忽略的本機虛構 QA 資料，沒有搬移使用者本機答案到雲端。
