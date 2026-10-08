@@ -41,9 +41,9 @@ npm run dev
 
 ## 常見修改位置
 
-### 57 題內容試讀（0.5）
+### 57 題核心價值探索（0.5.1）
 
-由主題介紹按「試讀 57 題核心價值」，或開 [公開試讀入口](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。本機可開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機與公開版均為 0.5.0，main／v0.5.0 已推送。
+由主題介紹按「開始 57 題核心價值探索」，或開 [公開探索入口](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。本機可開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機與公開版均為 0.5.1；0.5.0 起已有此功能，0.5.1 調整產品文案。
 
 重要位置：
 
@@ -441,3 +441,15 @@ npm run cloudflare:deploy
 維護範例：改試讀版面後先 check／build，再提交與 push，最後執行 cloudflare:deploy；只 push 會看到 GitHub 更新、網站仍是舊版。若部署後顯示三題，先核對 trial 路徑再重新整理；若 API 異常先查 `/api/health`、DB binding 與 Wrangler tail。故障時可從先前已驗證 commit 重建再發布；本次 D1 schema 未變更，仍需保留原資料，不以刪除 D1 止血。
 
 已驗證：公開 0.5 試讀、既有雙人 API、CI 與發布。尚未驗證／完成：兩部實體裝置、研究用認知訪談、改寫測量等同性、正式計分、57 題雙人流程與人生方向區塊；介面驗收不代表這些項目已完成。
+
+### 0.5.1 文案修正與維護（2026-10-08）
+
+使用者實際供自己與伴侶使用，要求主流程不必標示「試讀」。本次改為「核心價值探索」，保留自然的作答、跳過、答案整理與「想再想」標記。研究開發與測量狀態仍記在候選文件與可展開的「研究來源與說明」，不因此將候選資料改成 ready。
+
+重要位置與資料流：`src/App.tsx` 管主題入口、頁首與瀏覽器標題；`src/components/ContentTrial.tsx` 管介紹、按鈕、答案整理與來源說明；`src/content/core-values-trial.ts` 產生探索定義與來源。網址仍是 `#/trial/core-values`，App 仍渲染 ContentTrial，候選 JSON 轉換為中性題幹／六選項，再由 React state 與 summarizeTrial 整理本人選項。沒有新增 API、migration 或保存；trial 是內部名稱，保留它讓原連結繼續有效。
+
+維護範例：只改「開始探索」按鈕，可改 ContentTrial 的文字；若改主題入口則一起改 App。品牌／介面文案只升網站修正版，題幹、作答引導、選項或計分規則才另升題庫版本。不能為了改顯示名稱重建資料庫或把試讀 ID 放入雙人 registry。
+
+除錯：仍看到「試讀」先核對部署網址、重新整理與最新 Worker；畫面文字的定位用 `rg -n '試讀|試答' src`，檢查 UI 而不是直接全域替換，內部錯誤訊息、測試名稱與歷史研究紀錄可保留。標記／整理錯誤則查 answers、flagged 與 summarizeTrial；網站空白看 Console，再跑 npm run check。
+
+驗證：50 項測試、一般／Cloudflare 建置通過；本機虛構選「像我」並標記，摘要仍為已答 1／未答 56／標記 1，題幹與六選項未改。公開入口已顯示新標題與「開始探索」，研究來源可展開且保留改寫測量限制，Console 無 error／warn。發布 Worker 版本 `b26587fb-9830-4f36-955c-aa74cebc3e94`，截圖 `.local/core-values-exploration-live.png` 不提交。資料庫結構與 API 未修改；正式計分、57 題雙人回合及改寫測量驗證仍待完成。

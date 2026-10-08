@@ -19,7 +19,7 @@ export function createCoreValuesTrial(candidate: typeof bank): TrialDefinition {
     if (!option.id.trim() || !option.label.trim() || option.value !== index + 1) fail('原選項或順序不完整');
   });
   return {
-    id: 'core-values-pvqrr-trial', version: candidate.version, title: '核心價值・題庫試讀',
+    id: 'core-values-pvqrr-trial', version: candidate.version, title: '核心價值探索',
     instructions: candidate.instructions,
     // 此處只選取中性 prompt，不根據性別讀取 portraits，也不帶入計分值。
     questions: candidate.items.map((item) => ({ id: item.id, number: item.sourceItemNumber, prompt: item.prompt })),

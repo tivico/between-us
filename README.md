@@ -2,13 +2,13 @@
 
 給各種性向與性別認同的兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前已公開部署 **0.5.0 題庫試讀版**：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)、[直接試讀 57 題](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。新增 57 題性別中性措辭的單人試讀，保留三題雙人流程。Cloudflare Workers 提供網頁與 API，D1 保存雙人回合；57 題試讀答案只在當頁。原始碼與 v0.5.0 位於 [tivico/between-us](https://github.com/tivico/between-us)，[0.5 GitHub CI](https://github.com/tivico/between-us/actions/runs/37752512199)、公開試讀操作與雙人 API 已驗證。正式量表與契合度尚未定稿。
+目前已公開部署 **0.5.1 核心價值探索版**：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)、[開始 57 題探索](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。使用者偏好伴侶日常使用的自然文案，因此主流程不再標示「試讀」；研究來源與改寫限制保留於可展開說明。Cloudflare Workers 提供網頁與 API，D1 保存三題雙人回合；57 題個人探索的答案只在當頁。原始碼位於 [tivico/between-us](https://github.com/tivico/between-us)。正式計分與 57 題雙人比較尚未接入。
 
 ## 現在可以做什麼
 
 - 瀏覽 5 個主題、切換篩選、查看主題介紹與研究來源。
 - 體驗三觀主題的 3 題自編示例：選答、上一題、下一題、查看自己的答案、返回修改。
-- 本機與公開網站的 `#/trial/core-values`：57 題中性措辭試讀，六段單選、上一題／下一題／跳過、想再讀標記與本人選項整理。可隨時查看整理，不提供分數；答案只在本頁，離開或重新整理會清除。
+- 本機與公開網站的 `#/trial/core-values`：57 題核心價值探索，六段單選、上一題／下一題／跳過、想再想標記與本人選項整理。可隨時查看整理，不提供分數；答案只在本頁，離開或重新整理會清除。
 - 建立雙人測試回合、同意分享、填答自動保存、確認提交後鎖定答案。
 - A 提交後產生 B 的邀請；B 獨立回答，雙方完成才解鎖彼此選項與討論提示。
 - 每位參與者有私人返回連結；此瀏覽器保存最近 20 個入口。
@@ -58,9 +58,9 @@ npm run preview
 
 ## 提交、版本與未來部署
 
-每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。本機現在為 `0.5.0`；下一個新功能可升為 `0.6.0`，小修正可升為 `0.5.1`，純文件整理通常維持原版號。
+每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。本機現在為 `0.5.1`；下一個新功能可升為 `0.6.0`，小修正可升為 `0.5.2`，純文件整理通常維持原版號。
 
-網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。網站本機 `0.5.0`，三題草案 `0.1.0`，57 題中性候選 `0.2.0`；本次只是接入試讀，題幹未改。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
+網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。網站本機 `0.5.1`，三題草案 `0.1.0`，57 題中性候選 `0.2.0`；本次只修正介面文案，題幹未改。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
 GitHub repository 保存程式，push 會觸發 `.github/workflows/ci.yml` 檢查，但不會自動發布網站。現行發布執行 `npm run cloudflare:deploy`，依序檢查、建置、上傳 Worker 與網頁資產；沿用既有 D1。`origin` 為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main，不使用 force push。`pages.yml` 保留為另行配置外部 API 的替代方案，現行 Cloudflare 網站不使用它。[部署與除錯步驟](docs/runbook.md)。
 

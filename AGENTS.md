@@ -28,3 +28,5 @@
 - 0.4 已上線 https://between-us.forest-between-us.workers.dev/ ，已設定真正 account_id / database_id，公開健康與完整雙人 API 已驗證。不要重建 D1；GitHub push 目前只做 CI，發布需 cloudflare:deploy。OAuth 由 Wrangler 管理，不提交到 repo。
 - 本機 Node 與雲端 D1 是獨立資料庫；不自動搬移既有答案。改 API／提交規則時同步兩種 store，D1 必須使用交易／條件更新處理非同步競爭。
 - 0.5 已驗收、推送 main／v0.5.0 並公開部署 `#/trial/core-values` 的 57 題中性候選試讀，來源 docs/quizzes/core-values-pvqrr.json，轉換在 src/content/core-values-trial.ts；不加入共用 quizzes 陣列或後端回合。答案／標記只在 React state，跳過保持未答，不提供分數。候選內容 0.2.0；不把使用者介面驗收或工程試答當作認知訪談或測量驗證。發布紀錄與 Worker 版本見 docs/runbook.md。
+
+- 0.5.1 依使用者偏好，57 題產品文案稱「核心價值探索」，不在主流程標示試讀／審閱；研究與候選狀態仍保留於來源說明與研究文件。內部 trial 路由／類別／資料契約維持原名稱，題庫未改、不升題庫版本；不要因移除試讀名稱而聲稱已驗證或已接入 57 題雙人回合。
