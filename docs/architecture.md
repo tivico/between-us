@@ -164,7 +164,7 @@ A 同意並提交 + B 同意並提交
 
 ## GitHub 部署準備（0.3 已實作，尚未上線）
 
-使用者已要求部署。repository 與帳號連線尚待提供，目前沒有 remote 或 push；工作流程已寫好不代表網站已上線。GitHub 保存原始碼／前端，後端主機另選。
+使用者已指定公開的 [tivico/between-us](https://github.com/tivico/between-us)。origin、main 上游與 GitHub 帳號選擇已設定，程式與 v0.1.0～v0.3.0 已推送，GitHub CI 已通過。Pages 已設為 Actions 發布來源與 HTTPS；後端主機／API 網址尚待選定，沒有執行 Pages 發布。GitHub 保存原始碼／前端，後端主機另選。
 
 ```text
 push main / PR → ci.yml → npm ci → check → build（只檢查）

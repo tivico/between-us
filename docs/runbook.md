@@ -219,7 +219,7 @@ git log -5 --oneline
 git status --short
 ```
 
-Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；本機 tag 並不代表網站已部署。推送與部署留給指定 GitHub repository 後的工作流程，不把 `git push --tags` 當一般存檔操作。
+Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；tag 並不代表網站已部署。目前已推送 v0.1.0～v0.3.0 到使用者指定的 tivico/between-us；日後只推送當次明確要交付的 tag，不把 `git push --tags` 當一般存檔操作。
 
 ### 壞掉時怎麼定位與回復
 
@@ -263,7 +263,31 @@ Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；本機 
 
 ## GitHub 與雲端部署
 
-0.3 已加入部署程式與設定，**尚未 push 或上線**。先取得使用者指定的 repository、登入連線與後端主機；不要猜帳號／建立 remote。若原始碼為私人，先核對帳號方案是否支援私人 repository 的 Pages；Pages 網站本身的公開範圍需另核對。
+0.3 已加入部署程式與設定，**程式已 push，網站尚未發布**。使用者指定的 [tivico/between-us](https://github.com/tivico/between-us) 為公開 repository；Pages 已使用 Actions＋HTTPS，後端服務仍待選定。不能只上傳畫面就把雙人保存當作已完成上線。
+
+### 本專案已確認的設定
+
+| 項目 | 現況 |
+| --- | --- |
+| Git remote | `origin = https://github.com/tivico/between-us.git` |
+| 分支 | `main` 追蹤 `origin/main` |
+| 版本標籤 | v0.1.0、v0.2.0、v0.3.0 已推送 |
+| GitHub 帳號 | 本機專案設定 `credential.https://github.com.username = tivico`；只選帳號，不保存 token 至原始碼或更改全域設定 |
+| Pages | `build_type = workflow`、HTTPS enforced，公開 |
+| 預定網站入口 | `https://tivico.github.io/between-us/`；尚未發布，不是可試玩網址 |
+| 後端／API_BASE_URL | 尚未選定／未設定；不能執行有效的雙人網站發布 |
+
+原始碼修改與發布分開：
+
+```powershell
+git remote -v
+git status --short
+git push
+```
+
+先依前文提交修改，再 `git push` 推送 main。此動作會觸發 [Check project](https://github.com/tivico/between-us/actions/workflows/ci.yml)，不會自動發布 Pages。若失敗，先看 Actions 第一個紅色步驟與對應 log；修正、重新檢查後再提交／push，不能因 CI 失敗把測試移除。
+
+若 Git 顯示無法選擇帳號／讀取 Username，先執行 `git config --local --get credential.https://github.com.username` 確認為 tivico，再使用 Git Credential Manager 的官方登入。這次指定帳號後即可使用既有登入，沒有另發 token 或新增 GitHub 插件。憑證過期時到 GitHub 登入，勿把 token 放入 remote URL、文件或 console。
 
 ### 元件與執行順序
 
@@ -322,4 +346,8 @@ Invoke-RestMethod 'https://你的後端網域/api/health'
 
 瀏覽器用 `127.0.0.1:4174/between-us/` 網頁跨來源呼叫獨立 `127.0.0.1:8790` API，虛構 A／B 完成建立、暫存、邀請、加入、提交與共同結果；1 題相同、2 題不同，選項與兩人輸入一致。邀請／返回連結保留 `/between-us/`，沒有瀏覽器 error／warn。使用獨立 `.local/deployment-test.sqlite`，沒有搬移或修改既有試玩資料庫。這是本機跨來源驗證，不是真實 Pages／雲端／遠距驗證。
 
-尚未驗證：真實 GitHub Actions／Pages、雲端 HTTPS 與磁碟、付費方案、兩部實體裝置。測試通過不能視為已完成公開部署。
+尚未驗證：公開 Pages 網站、雲端 HTTPS 與磁碟、付費方案、兩部實體裝置。GitHub Actions 的後續實測見下段；測試通過不能視為已完成公開部署。
+
+### GitHub 接線驗證紀錄
+
+2026-10-08：遠端原先沒有分支，普通 push 成功建立 main 及 v0.1.0～v0.3.0，沒有 force push。GitHub 的 [Check project run 37728077077](https://github.com/tivico/between-us/actions/runs/37728077077) 對 `5bfa3e1` 回 `completed / success`，實際驗證了 GitHub runner 的安裝、40 項測試與建置。Pages API 重新讀取確認 `build_type=workflow`、`https_enforced=true`、`public=true`，尚無已發布狀態。後端未指定，沒有觸發 Pages deploy。此前「尚未驗證 GitHub Actions」的紀錄已由此次驗證補足；真實 Pages 網站、雲端與跨裝置仍待測試。

@@ -14,12 +14,12 @@
 - 依使用者偏好，每個完整且已驗證的功能里程碑建立一次本機 commit；修正可獨立提交，不把多個無關大功能塞進同一筆。
 - Commit 與發布版號分開：交付新功能升 0.x 的中間碼，交付修正升最後一碼；同步 package.json、package-lock.json 與 CHANGELOG.md。純文件整理通常不升版。
 - 網站版號與 QuizDefinition.version 是不同概念。題目或結果規則變更要另更新該測驗版本，不因全站版號變更就一起修改所有題庫。
-- 未來原始碼保存於使用者指定的 GitHub repository。GitHub Pages 可承載前端，正式雙人儲存／解鎖仍需要後端；沒有指定 repository 前不建立 remote、不推送或部署。
+- 使用者已指定公開 repository https://github.com/tivico/between-us.git，origin/main 與 v0.1.0～v0.3.0 已推送；GitHub Pages 使用 Actions＋HTTPS，尚未發布。GitHub Pages 可承載前端，正式雙人儲存／解鎖仍需要另外後端。不要擅自改 remote 或 force push。
 - 已確認初期免會員，後端保存＋每輪私人返回連結＋此裝置最近紀錄入口；不得以 browser-only 暫存當成跨裝置歷史。保存期限、刪除與遺失憑證找回仍待定。
 - 感情科普也必須有可查核來源；分清楚研究發現、測量證據與自編應用。獨立科普＋結果短卡的分工已確認，文章與顯示條件仍待設計，不把尚未核定內容當正式功能。
 - 第一份三觀聚焦核心價值與人生方向，依 docs/quizzes/core-values.md 開發；六個白話概念不是已驗證的六面向量表，正式題庫／計分須另核定。
 - 已同意三觀契合度總覽作為趣味入口，定義為本輪價值取向相近程度；核心價值同頻度與人生方向交集分開。數字公式尚待核定，不產生假分數或關係成功率，不任意合併兩個區塊。
 - 本機資料為 .local/data/between-us.sqlite，不能進入 Git／前端資產，維持 Vite fs.deny 的 .local 保護；不要刪除實際回合資料來讓測試通過。
 - 後端與前端共用 src/content/quizzes.ts，原生 Node 讀取的 TypeScript import 需保留 .ts 副檔名。變更資料庫結構需明確 migration，不覆寫較新的 user_version。
-- 0.3 已備妥 CI、手動 Pages workflow、公開 API URL／base 設定與 npm start 獨立 API；不是已上線。repository／連線／後端主機尚待使用者提供，不假定能直接在 Pages 跑 SQLite。
+- 0.3 已備妥 CI、手動 Pages workflow、公開 API URL／base 設定與 npm start 獨立 API；GitHub CI 已通過，仍不是已上線。後端方案／主機尚待選定，不假定能直接在 Pages 跑 SQLite。
 - 公開 API 必須明確設定 DATA_FILE 與 ALLOWED_ORIGINS；只能單一實例＋持久磁碟，不能以會被重啟清空的檔案系統保存答案。Pages 發布先檢查後端健康狀態與 CORS，VITE_ 只放公開網址。

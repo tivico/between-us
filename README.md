@@ -2,7 +2,7 @@
 
 給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前為 **0.3.0 部署準備版**。可以完成兩人的保存、邀請與答案比較，已補上 GitHub CI／Pages 工作流程與獨立 API 啟動設定。**尚未推送或上線**；repository、GitHub 連線與後端主機仍待提供。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
+目前為 **0.3.0 部署準備版**。可以完成兩人的保存、邀請與答案比較，已有 GitHub CI／Pages 工作流程與獨立 API 啟動設定。原始碼與 `v0.1.0`～`v0.3.0` 標籤已推送至公開的 [tivico/between-us](https://github.com/tivico/between-us)，GitHub CI 已通過，Pages 已啟用 Actions 與 HTTPS。**網站尚未發布**；後端主機／網址仍待選定。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
 
 ## 現在可以做什麼
 
@@ -58,7 +58,7 @@ npm run preview
 
 網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。現在網站為 `0.3.0`，三題草案仍為 `0.1.0`，題目沒有改變。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
-GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保存雙人答案與控制解鎖。已有 `.github/workflows/ci.yml` 自動檢查，以及 `pages.yml` 從 main 手動發布。Pages 發布前會檢查已上線 API 與跨來源設定；沒有後端就停止發布。目前沒有 remote、push 或實際部署。[實際設定步驟](docs/runbook.md#github-與雲端部署)、[架構與分工](docs/architecture.md#github-部署準備03-已實作尚未上線)。
+GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保存雙人答案與控制解鎖。`.github/workflows/ci.yml` 自動檢查；`pages.yml` 從 main 手動發布。Pages 發布前會檢查已上線 API 與跨來源設定；沒有後端就停止發布。`origin` 已設定為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main；本專案的 GitHub 帳號選擇為 tivico，不改全域設定。未設定後端 `API_BASE_URL`，尚未執行 Pages 發布。[實際設定步驟](docs/runbook.md#github-與雲端部署)、[架構與分工](docs/architecture.md#github-部署準備03-已實作尚未上線)。
 
 ## 重要檔案
 

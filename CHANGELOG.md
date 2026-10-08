@@ -4,7 +4,7 @@
 
 ## 0.3.0 — 2026-10-08
 
-狀態：部署準備完成，尚未推送或公開上線；待提供 GitHub repository、帳號連線與後端主機。題庫維持 `0.1.0` 三題自編示例，不提供正式契合度。
+狀態：部署準備完成；原始碼與版本標籤已推送至公開的 tivico/between-us，GitHub CI 已通過，Pages Actions／HTTPS 已啟用。後端方案待選，網站尚未發布。題庫維持 `0.1.0` 三題自編示例，不提供正式契合度。
 
 - GitHub CI 檢查 main／PR；Pages 從 main 手動發布，與 commit 分開。
 - Pages 建置依網站 metadata 設定資產 base；API_BASE_URL 指向已上線 HTTPS 後端。
