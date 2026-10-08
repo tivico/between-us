@@ -162,7 +162,30 @@ A 同意並提交 + B 同意並提交
 
 技術參考：[Node 24 SQLite](https://nodejs.org/download/release/latest-v24.x/docs/api/sqlite.html)、[Vite 代理設定](https://vite.dev/config/server-options.html#server-proxy)。本機流程已驗證，正式上線仍需 HTTPS、允許來源、頻率限制、備份、撤銷與保存規則。
 
-## GitHub 部署準備（0.3 已實作，尚未上線）
+## Cloudflare 雲端架構（0.4）
+
+已選用 Workers＋D1。Workers 接收 HTTP 並提供 `dist/` 靜態網頁，D1 是 Cloudflare 管理的持久 SQL 資料庫；沒有會員也能保存每輪答案，權限來自私人返回憑證。首次公開部署仍等待帳號授權。下方 0.3 的 Pages＋獨立 Node 主機做法保留作為替代方案，現在不需執行。
+
+```text
+瀏覽器 → src/lib/api.ts → 同一網址 /api
+  → cloudflare/worker.mjs（Origin、JSON 大小、Bearer、路由）
+  → cloudflare/store.mjs：D1RoundStore（身份、答案驗證、兩人提交判斷）
+  → DB binding → D1 rounds / participants
+  → 只回本人狀態，或雙方已提交的共同答案 → RoundFlow.tsx
+其他網址 → ASSETS binding → dist 網頁
+```
+
+`wrangler.jsonc` 指定 Worker 入口、資產目錄與 D1 ID；ID 是公開資源識別碼，不能以私人憑證代替。`cloudflare/migrations/0001_rounds.sql` 建立回合與兩席資料表，首次發布前套用。題庫依舊共用 `src/content/quizzes.ts`；建立回合時保存完整快照，所以新題目不影響舊答案。
+
+D1 為非同步操作，不能照搬本機的同步 `BEGIN IMMEDIATE`。建立回合使用 `batch()` 交易，失敗會連同新 round 回滾；加入邀請靠 `(round_id,slot)` 唯一鍵只允許一位 B。保存使用 `UPDATE ... WHERE revision=? AND submitted_at IS NULL` 避免過時更新覆蓋答案；提交同樣核對 revision，A 的邀請雜湊與提交一起寫入。每個 API 請求使用 `first-primary` session，維持讀寫順序。未同時提交時結果 API 回 423，不傳對方答案。
+
+`npm run build:cloudflare` 以 cloudflare mode 顯示雲端保存文案。API 固定同來源 `/api`，不需 Pages 的跨來源設定。`public/_headers` 與 API 均設 no-referrer；私人 token 仍放 hash、透過 Authorization 呼叫，資料庫只保存雜湊。OAuth 由 Wrangler 管理，不進 Git、VITE 變數或前端。
+
+本機 `npm run dev` 仍使用 `server/store.mjs`＋原 SQLite；`npm run cloudflare:dev` 另使用 `.wrangler/state` 的 D1 模擬庫。雲端是獨立資料庫，不自動上傳本機實際答案。兩個 store 必須維持相同 API 契約；改提交規則時兩者與測試一起更新。
+
+官方參考：[Worker 靜態資產與 API](https://developers.cloudflare.com/workers/static-assets/binding/)、[D1 batch 交易](https://developers.cloudflare.com/d1/worker-api/d1-database/)。
+
+## GitHub 部署準備（0.3 替代方案）
 
 使用者已指定公開的 [tivico/between-us](https://github.com/tivico/between-us)。origin、main 上游與 GitHub 帳號選擇已設定，程式與 v0.1.0～v0.3.0 已推送，GitHub CI 已通過。Pages 已設為 Actions 發布來源與 HTTPS；後端主機／API 網址尚待選定，沒有執行 Pages 發布。GitHub 保存原始碼／前端，後端主機另選。
 

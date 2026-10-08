@@ -351,3 +351,36 @@ Invoke-RestMethod 'https://你的後端網域/api/health'
 ### GitHub 接線驗證紀錄
 
 2026-10-08：遠端原先沒有分支，普通 push 成功建立 main 及 v0.1.0～v0.3.0，沒有 force push。GitHub 的 [Check project run 37728077077](https://github.com/tivico/between-us/actions/runs/37728077077) 對 `5bfa3e1` 回 `completed / success`，實際驗證了 GitHub runner 的安裝、40 項測試與建置。Pages API 重新讀取確認 `build_type=workflow`、`https_enforced=true`、`public=true`，尚無已發布狀態。後端未指定，沒有觸發 Pages deploy。此前「尚未驗證 GitHub Actions」的紀錄已由此次驗證補足；真實 Pages 網站、雲端與跨裝置仍待測試。
+# Cloudflare Workers＋D1（0.4）
+
+目前：本機 46 項測試、一般／Cloudflare 建置與 Worker dry-run 打包通過；本機 Wrangler 真實 Worker 執行環境已通過完整 API 雙人流程，瀏覽器確認起始頁雲端文案與排版。尚等待帳號授權，未建立遠端 D1 或公開網站。GitHub 是程式碼來源，實際網站將使用 `workers.dev` 免費網址。不要將本機 SQLite 上傳或放進 dist。
+
+第一次部署（只做一次）：
+
+```powershell
+npx wrangler login
+npx wrangler d1 create between-us
+```
+
+登入頁由本人確認 Allow，無需將密碼或管理 token 傳給其他人。把 create 顯示的 `database_id` 填入 `wrangler.jsonc` 的 DB binding，目前全零是尚未建立的 placeholder。多帳號時先 `npx wrangler whoami` 確認，再設定正確 account_id；不可部署到不確定的帳號。
+
+```powershell
+npx wrangler d1 migrations apply between-us --remote
+npm run cloudflare:deploy
+```
+
+第一次 migration 在空資料庫建立兩張表。之後部署程式不會自動刪除或重建 D1。新增資料表／欄位要新增下一份 migration、備份並評估舊版本相容性，再套用；不要編輯已套用的 0001。`cloudflare:deploy` 先 check 與 Cloudflare build，再上傳 Worker 和 dist；發布 URL 以 Wrangler 的實際輸出為準。現有 Pages workflow 不需啟動。發布後可執行 `node scripts/check-cloudflare.mjs https://實際網站/`：它會建立一輪虛構測試資料，驗證 HTTP 與答案保護，不會讀既有回合，也不輸出私人憑證；每次執行會留下該輪 QA 資料。
+
+本機 Cloudflare 驗證：`npm run cloudflare:dev` 建置、套用 local migration，提供 `http://127.0.0.1:4180`。它與原本 5173／4173 的 Node SQLite 是不同資料庫；Ctrl+C 停止不清除資料。`npm run check` 另使用 Miniflare 暫時庫測試競爭加入、過時保存與互看權限。Miniflare 5 使用官方 `convertV4MiniflareOptions` 介面；sharp override 固定在 0.35.5 修補版本，更新工具時先檢查 override 是否仍需要。
+
+壞掉時依序排查：
+
+1. 空白／資產 404：重新執行 `npm run build:cloudflare`，確認 dist/index.html 與 assets；Cloudflare 使用根路徑與同來源 API，別沿用 Pages 的 VITE_BASE_PATH／外部 API 設定。
+2. 無法保存：瀏覽器 Network 看 `/api/rounds`，安全查 `Invoke-RestMethod 'https://實際網站/api/health'`。正常應為 `ok:true, mode:cloudflare-test`；健康檢查會實際查 D1。
+3. 500：查 DB binding 的 database_id 與 migration；`npx wrangler d1 migrations list between-us --remote` 檢查是否套用。`npx wrangler tail` 看 `API_INTERNAL_ERROR`，不要列出私人 token／答案。
+4. 401：確認用本人返回連結，且連到同一網站／資料庫；邀請連結不等於本人權限。409 是邀請已使用、答案鎖定或其他分頁已更新，依畫面操作重新載入，不以清資料解決。
+5. 423：兩人未都提交，這是預期保護。若兩人都聲稱完成，先查各自畫面的已提交狀態，勿跳過後端檢查。
+
+修改範例：新增核定題目時改 `src/content/quizzes.ts` 並升該測驗版本，跑 check，再 cloudflare:deploy；新回合才採新內容，舊回合使用既有 snapshot。如果變更 API 欄位，需一起改 src/domain/round.ts、RoundFlow、Node store、D1 store 與相關測試。
+
+回復：程式故障可回復已驗證的 Git commit 後重建部署；資料庫仍維持原 D1。已變更 schema 時先評估舊版相容性，不直接切換舊程式或覆寫資料。正式使用前仍需另定資料期限、刪除／撤銷、找回與備份規則；目前三題是自編試玩示例。

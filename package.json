@@ -1,7 +1,7 @@
 {
   "name": "forest-between-us",
   "private": true,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "type": "module",
   "engines": {
     "node": ">=24.13.0"
@@ -13,8 +13,12 @@
     "check": "npm run typecheck && npm test",
     "build": "npm run typecheck && vite build",
     "preview": "node --env-file-if-exists=.env scripts/dev.mjs --preview",
-    "start": "node --env-file-if-exists=.env scripts/start-api.mjs"
+    "start": "node --env-file-if-exists=.env scripts/start-api.mjs",
+    "build:cloudflare": "npm run typecheck && vite build --mode cloudflare",
+    "cloudflare:dev": "npm run build:cloudflare && wrangler d1 migrations apply between-us --local && wrangler dev --port 4180",
+    "cloudflare:deploy": "npm run check && npm run build:cloudflare && wrangler deploy"
   },
+  "overrides": { "sharp": "0.35.5" },
   "dependencies": {
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -23,8 +27,10 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.1.2",
+    "miniflare": "5.20261006.0-alpha",
     "typescript": "7.0.2",
     "vite": "8.3.3",
-    "vitest": "5.0.3"
+    "vitest": "5.0.3",
+    "wrangler": "4.148.0"
   }
 }

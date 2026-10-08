@@ -2,7 +2,7 @@
 
 給兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前為 **0.3.0 部署準備版**。可以完成兩人的保存、邀請與答案比較，已有 GitHub CI／Pages 工作流程與獨立 API 啟動設定。原始碼與 `v0.1.0`～`v0.3.0` 標籤已推送至公開的 [tivico/between-us](https://github.com/tivico/between-us)，GitHub CI 已通過，Pages 已啟用 Actions 與 HTTPS。**網站尚未發布**；後端主機／網址仍待選定。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
+目前為 **0.4.0 雲端部署準備版**。雙人保存、邀請與答案比較已接上 Cloudflare Workers＋D1，網站與 API 可由同一個網址提供。原始碼位於公開的 [tivico/between-us](https://github.com/tivico/between-us)。**目前等待 Cloudflare 帳號授權，尚未公開部署**。正式量表與契合度尚未定稿。暫定名稱「之間」可再調整。
 
 ## 現在可以做什麼
 
@@ -15,7 +15,7 @@
 - 使用手機或桌面瀏覽；支援鍵盤選答與減少動態效果偏好。
 - 單人「介面預覽」仍不保存或分享，與雙人回合分開。
 
-目前只綁定此電腦的 `127.0.0.1`，邀請供同一電腦的不同瀏覽器／測試身份使用；尚未部署，不能把本機連結傳給遠方的人使用。正式題庫、計分、科普文章、討論收藏、資料期限與刪除／找回規則尚未完成；請使用測試答案。
+本機的 `127.0.0.1` 連結只能在此電腦測試；Cloudflare 公開部署完成後才能邀請遠方的人使用。正式題庫、計分、科普文章、討論收藏、資料期限與刪除／找回規則尚未完成；請使用測試答案。
 
 ## 本機啟動
 
@@ -45,6 +45,8 @@ npm run preview
 
 ## 文件入口
 
+雲端部署採 **Cloudflare Workers（執行 API 並提供網頁）＋D1（持久 SQL 資料庫）**，GitHub 保存程式碼；不需要另外購買網域，也不需要再部署 GitHub Pages。`npm run cloudflare:dev` 可在獨立的本機 D1 測試庫驗證；首次登入、建立資料庫、發布與除錯步驟見 [Cloudflare 維護手冊](docs/runbook.md#cloudflare-workersd1-04)。既有本機 SQLite 不會自動搬到雲端。
+
 - [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
@@ -54,9 +56,9 @@ npm run preview
 
 ## 提交、版本與未來部署
 
-每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。現在為 `0.3.0`；下一個新功能可升為 `0.4.0`，小修正可升為 `0.3.1`，純文件整理通常維持原版號。
+每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。現在為 `0.4.0`；下一個新功能可升為 `0.5.0`，小修正可升為 `0.4.1`，純文件整理通常維持原版號。
 
-網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。現在網站為 `0.3.0`，三題草案仍為 `0.1.0`，題目沒有改變。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
+網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。現在網站為 `0.4.0`，三題草案仍為 `0.1.0`，題目沒有改變。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
 GitHub repository 保存程式；GitHub Pages 提供前端，另外的後端保存雙人答案與控制解鎖。`.github/workflows/ci.yml` 自動檢查；`pages.yml` 從 main 手動發布。Pages 發布前會檢查已上線 API 與跨來源設定；沒有後端就停止發布。`origin` 已設定為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main；本專案的 GitHub 帳號選擇為 tivico，不改全域設定。未設定後端 `API_BASE_URL`，尚未執行 Pages 發布。[實際設定步驟](docs/runbook.md#github-與雲端部署)、[架構與分工](docs/architecture.md#github-部署準備03-已實作尚未上線)。
 
