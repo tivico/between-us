@@ -18,7 +18,7 @@ try {
     ? await preview({ preview: { host: '127.0.0.1' } })
     : await createServer({ server: { host: '127.0.0.1' } });
   if (web.listen) await web.listen();
-  console.log('本機雙人流程測試；三題示例尚未驗證，不提供契合分數。');
+  console.log('本機核心價值雙人探索；57 題與探索性相近度，原三題示例另留。');
   console.log('API: http://127.0.0.1:8787  |  資料：.local/data/between-us.sqlite');
   web.printUrls();
   let stopping = false;

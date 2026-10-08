@@ -1,15 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { quizzes } from '../content/quizzes';
+import { quizzes, coreValuesExample } from '../content/quizzes';
 import { validateAnswer, validateQuiz, type QuizDefinition } from './quiz';
 
-const draft = quizzes[0];
+const draft = coreValuesExample;
 function copy(): QuizDefinition { return structuredClone(draft); }
 
 describe('測驗內容的完整性', () => {
-  it('每個主題皆符合內容契約，且目前沒有誤標成正式開放', () => {
+  it('每個主題皆符合內容契約，並區分開放功能與測量驗證', () => {
     for (const quiz of quizzes) {
       expect(validateQuiz(quiz), quiz.id).toEqual([]);
-      expect(quiz.status).not.toBe('ready');
+      if (quiz.status === 'ready') expect(quiz.questions.length).toBe(57);
+      expect(quiz.questions.every((question) => question.evidence.status === 'research-informed')).toBe(true);
     }
     expect(new Set(quizzes.map((quiz) => quiz.id)).size).toBe(quizzes.length);
   });

@@ -1,8 +1,8 @@
 # 架構與資料流程
 
-## 現況：前端、雙人 API 與單人題庫試讀
+## 現況：完整雙人探索與結果計分
 
-React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.5 已公開部署三題雙人流程與 57 題中性措辭試讀，沒有會員。單人試讀不建立回合或保存答案。
+React + TypeScript + Vite 前端，以及本機 Node＋SQLite／雲端 Workers＋D1，仍在同一個專案。0.6 已公開部署完整 57 題雙人核心價值探索、19 類計分與探索性相近度，沒有會員。保留單人探索及三題示例；單人探索不建立回合或保存答案。
 
 ```text
 index.html
@@ -230,3 +230,13 @@ CORS 是瀏覽器跨網站呼叫時的允許規則。`ALLOWED_ORIGINS` 是 `http
 原始碼公開範圍與網站公開範圍分開：私人 repository 不保證 Pages 網站私人，GitHub Free 的 Pages 要使用公開 repository，私人來源支援依帳號方案核對。現有三題是試玩示例；期限、刪除／撤銷／找回規則仍未定稿。
 
 官方參考：[GitHub Pages 的性質與方案](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)、[Pages workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[Vite Pages 設定](https://vite.dev/guide/static-deploy.html#github-pages)、[Render 免費服務限制](https://render.com/docs/free)。本機已驗證不代表真實雲端已驗證。
+
+## 0.6 完整題庫、固定計分與解鎖結果
+
+`src/content/core-values.ts` 從候選 JSON 取得共用中性題幹、六選項數值與作者 19 類各三題對應，先驗證題序／映射；回合 QuizDefinition 版本為 0.3.0。`quizzes.ts` 的可見 quizzes 有五主題，roundQuizzes 另含 core-values-example。native Node 匯入 JSON 使用 import attributes 的 `with { type: 'json' }`，共用 TS 匯入維持 .ts 副檔名；不把原始來源檔帶入資料庫。
+
+流程：`#/start/core-values` → EntryForm 同意分享答案與比較結果 → POST /api/rounds → Node/D1 store 將包含 scoring 的 quiz 寫入 rounds.snapshot → RoundPage 每次選答 PUT /api/rounds/:id/answers 寫 participants.answers／revision → POST submit 核對全部 57 題並鎖定 → A 取得邀請 → B claim 後獨立填答 → GET results 先驗證身份與兩人 submitted_at，再 compareValues(保存的 quiz, A answers, B answers) → 回 comparison → SharedResults／ValueResults 渲染分數、19 類圖與逐題並排。status 的 peer 仍只有暱稱與提交狀態，邀請新增 hasValueScore 只用於說明分享範圍，沒有答案或比較結果。
+
+`scoring` 快照含 kind、規則 version、optionValues 與 19 類 questionIds；因此新題庫不追改舊回合。compareValues 對沒有 scoring 的三題舊快照回 undefined，維持舊答案比較；有不支援版本或破損映射會失敗，不能靜默用最新規則。新版 schema 沒有變更，既有 snapshot/answers TEXT 可保存新增契約，雲端 D1 不重建。
+
+結果規則與數學、例外與除錯詳見 Runbook「0.6 完整雙人探索與計分」。新增規則版本時需保留原 1.0.0 分支，因已保存的結果仍需可重現；單改原函式會改掉舊結果，即使資料庫中的 version 沒變。

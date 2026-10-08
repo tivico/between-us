@@ -397,3 +397,46 @@ progress::-moz-progress-bar { background: #6e8869; }
   .comparison-card h2 { font-size: 20px; }
   .answer-pair { grid-template-columns: 1fr; }
 }
+
+/* 完整核心價值結果：相對分數雙向條，不把負值當壞價值。 */
+.value-overview { padding: 35px 30px; border-radius: 16px; text-align: center; }
+.value-overview h2 { font-size: 25px; margin: 12px 0; }
+.value-overview > p { font-size: 13px; line-height: 1.9; }
+.value-score { margin: 8px 0; color: #43614c; }
+.value-score strong { font: 76px/1.2 Georgia, serif; }
+.value-score span { font-size: 16px; }
+.value-overview .value-limits { font-size: 11px; color: var(--muted); margin-bottom: 0; }
+.value-no-score { display: block; font-family: var(--serif); font-size: 24px; margin: 18px 0; }
+.value-highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 35px; }
+.value-highlights > div { padding: 22px; background: #f6f3ec; border-radius: 12px; }
+.value-highlights h3 { font-size: 19px; line-height: 1.8; }
+.value-highlights p:last-child { color: var(--muted); font-size: 12px; margin-bottom: 0; }
+.value-chart-heading { padding-top: 24px; }
+.value-chart-heading h2 { font-size: 25px; }
+.value-chart-heading > p { font-size: 12px; color: var(--muted); }
+.value-legend { display: flex; gap: 24px; flex-wrap: wrap; font-size: 12px; margin: 20px 0; }
+.value-legend span { overflow-wrap: anywhere; }
+.value-legend span::before { content: ''; display: inline-block; height: 9px; width: 9px; border-radius: 50%; margin-right: 8px; background: #789479; }
+.value-legend .legend-b::before { background: #c19070; }
+.value-chart { list-style: none; padding: 0; margin: 0; }
+.value-chart > li { padding: 19px 0; border-top: 1px solid var(--line); }
+.value-row-heading { display: flex; justify-content: space-between; gap: 16px; align-items: baseline; margin-bottom: 12px; }
+.value-row-heading h3 { font-size: 18px; margin: 0; }
+.value-row-heading > span { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.value-person { display: grid; grid-template-columns: 100px minmax(0,1fr) 56px; gap: 12px; align-items: center; margin: 9px 0; }
+.value-name { font-size: 11px; overflow-wrap: anywhere; }
+.value-number { font: 12px/1.5 monospace; text-align: right; }
+.value-track { position: relative; height: 13px; background: #e9ece3; border-radius: 4px; }
+.value-zero { position: absolute; left: 50%; height: 17px; top: -2px; width: 1px; background: #9da794; }
+.value-bar { position: absolute; height: 13px; background: #789479; border-radius: 3px; }
+.value-person-1 .value-bar { background: #c19070; }
+.value-method { margin: 20px 0 35px; border: 1px solid var(--line); padding: 20px; border-radius: 9px; font-size: 12px; line-height: 1.9; }
+.value-method summary { cursor: pointer; }
+.value-method p { margin: 16px 0; color: var(--muted); }
+.round-review-links { display: flex; justify-content: space-between; gap: 24px; }
+@media(max-width:640px) {
+ .value-overview { padding: 25px 17px; }
+ .value-score strong { font-size: 66px; }
+ .value-highlights { grid-template-columns: 1fr; }
+ .value-person { grid-template-columns: 60px minmax(0,1fr) 48px; gap: 8px; }
+}

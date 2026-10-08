@@ -39,6 +39,13 @@ export interface QuizDefinition {
   questions: Question[];
   sources: ResearchSource[];
   evidenceSummary: string;
+  instructions?: string;
+  scoring?: {
+    kind: 'pvqrr-centered-distance';
+    version: '1.0.0';
+    optionValues: Record<string, number>;
+    values: { id: string; label: string; questionIds: string[] }[];
+  };
 }
 
 export interface Answer {
@@ -71,6 +78,15 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     if (!question.evidence.note.trim()) errors.push(`缺少依據說明：${question.id}`);
   }
   if (quiz.status === 'ready' && !quiz.questions.length) errors.push('正式測驗不能沒有題目');
+  if (quiz.scoring) {
+    const scoring = quiz.scoring;
+    if (scoring.kind !== 'pvqrr-centered-distance' || scoring.version !== '1.0.0') errors.push('不支援的計分版本');
+    const ids = scoring.values.flatMap((value) => value.questionIds);
+    if (quiz.questions.length !== 57 || scoring.values.length !== 19 || scoring.values.some((value) => value.questionIds.length !== 3 || !value.label.trim()) || new Set(ids).size !== 57 || ids.some((id) => !questionIds.has(id)) || new Set(scoring.values.map((value) => value.id)).size !== 19) errors.push('計分對應需完整涵蓋 57 題與 19 類');
+    for (const question of quiz.questions) {
+      if (question.options.length !== 6 || question.options.some((option, index) => scoring.optionValues[option.id] !== index + 1)) errors.push(`量表選項數值不完整：${question.id}`);
+    }
+  }
   for (const source of quiz.sources) {
     try {
       if (new URL(source.url).protocol !== 'https:') errors.push(`研究來源須使用 HTTPS：${source.id}`);

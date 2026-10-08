@@ -845,9 +845,9 @@
       "reason": "試讀中性稱呼能否清楚指向每題的描述人物；尤其第 6、48 題重複「這個人」，第 7、34 題以「自己」回指。各性向／性別認同的可使用設計不等於已證實跨族群測量等同。"
     }
   ],
-  "scoringStatus": "19-value item mapping transcribed; scoring not implemented",
-  "missingAnswerPolicy": "pending original-rule review; do not invent values or impute skipped items",
-  "releaseStatus": "frontend-only content trial available locally; not in shared round registry; not a ready quiz",
+  "scoringStatus": "19-value original mapping implemented; paired exploratory rule version 1.0.0",
+  "missingAnswerPolicy": "product requires all 57 valid answers before submission; no imputation; this is not an original missing-data recommendation",
+  "releaseStatus": "57-item paired exploration uses adapted content in quiz version 0.3.0; measurement validation remains pending",
   "wording": "gender-neutral-third-person",
   "adaptation": {
     "id": "zh-hant-gender-neutral-v1",

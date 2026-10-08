@@ -1,5 +1,5 @@
 // 僅前端試讀匯入；不要加入共用 quizzes 陣列或後端回合題庫。
-import bank from '../../docs/quizzes/core-values-pvqrr.json';
+import bank from '../../docs/quizzes/core-values-pvqrr.json' with { type: 'json' };
 import type { TrialDefinition } from '../domain/trial';
 
 export function createCoreValuesTrial(candidate: typeof bank): TrialDefinition {

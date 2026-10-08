@@ -12,7 +12,8 @@ describe('核心價值內容試讀', () => {
     expect(coreValuesTrial.questions[50].prompt).toBe('這個人重視從不使其他人生氣。');
     expect(coreValuesTrial.options[0]).not.toHaveProperty('value');
     expect(coreValuesTrial.questions[0]).not.toHaveProperty('portraits');
-    expect(getQuiz('core-values')?.questions).toHaveLength(3);
+    expect(getQuiz('core-values')?.questions).toHaveLength(57);
+    expect(getQuiz('core-values-example')?.questions).toHaveLength(3);
     expect(getQuiz(coreValuesTrial.id)).toBeUndefined();
   });
   it('拒絕缺少中性題幹或改回帶性別稱呼的候選資料，不回退到原文', () => {

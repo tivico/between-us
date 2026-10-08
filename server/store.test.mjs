@@ -3,7 +3,7 @@ import { randomBytes, randomUUID } from 'node:crypto';
 import { resolve } from 'node:path';
 import { existsSync, rmSync } from 'node:fs';
 import { RoundStore } from './store.mjs';
-import { quizzes } from '../src/content/quizzes.ts';
+import { coreValuesExample, roundQuizzes } from '../src/content/quizzes.ts';
 
 const token = () => randomBytes(32).toString('hex');
 const fullAnswers = (quiz) => Object.fromEntries(quiz.questions.map((question) => [question.id, question.options[0].id]));
@@ -12,7 +12,7 @@ let a;
 let id;
 beforeEach(() => {
   store = new RoundStore(); a = token();
-  id = store.create({ quizId: 'core-values', nickname: '測試 A', consent: true, privateToken: a }).id;
+  id = store.create({ quizId: 'core-values-example', nickname: '測試 A', consent: true, privateToken: a }).id;
 });
 afterEach(() => store.close());
 function submitA() {
@@ -23,14 +23,14 @@ function submitA() {
 
 describe('私人回合與保存', () => {
   it('建立需同意分享，未準備的主題不能建立；重試不新增回合', () => {
-    expect(() => store.create({ quizId: 'core-values', nickname: '人', consent: false, privateToken: token() })).toThrow('同意');
+    expect(() => store.create({ quizId: 'core-values-example', nickname: '人', consent: false, privateToken: token() })).toThrow('同意');
     expect(() => store.create({ quizId: 'long-distance', nickname: '人', consent: true, privateToken: token() })).toThrow('還沒有');
-    expect(store.create({ quizId: 'core-values', nickname: '測試 A', consent: true, privateToken: a }).id).toBe(id);
+    expect(store.create({ quizId: 'core-values-example', nickname: '測試 A', consent: true, privateToken: a }).id).toBe(id);
     expect(store.db.prepare('SELECT count(*) AS n FROM rounds').get().n).toBe(1);
   });
   it('陌生憑證或其他回合的憑證不能讀寫此回合', () => {
     const other = token();
-    store.create({ quizId: 'core-values', nickname: '其他人', consent: true, privateToken: other });
+    store.create({ quizId: 'core-values-example', nickname: '其他人', consent: true, privateToken: other });
     for (const unknown of [token(), other, undefined]) {
       expect(() => store.status(id, unknown)).toThrow();
       expect(() => store.save(id, unknown, { answers: {}, revision: 0 })).toThrow();
@@ -52,13 +52,14 @@ describe('私人回合與保存', () => {
     expect(store.status(id, a).own.answers).toEqual(answers);
   });
   it('題庫更新不改既有回合', () => {
-    const catalog = structuredClone(quizzes);
+    const catalog = structuredClone(roundQuizzes);
     const isolated = new RoundStore(':memory:', { catalog });
     try {
       const key = token();
-      const created = isolated.create({ quizId: 'core-values', nickname: '人', consent: true, privateToken: key });
-      catalog[0].title = '新版'; catalog[0].questions[0].prompt = '新版題目';
-      expect(isolated.status(created.id, key).quiz.title).toBe('三觀與核心價值');
+      const created = isolated.create({ quizId: 'core-values-example', nickname: '人', consent: true, privateToken: key });
+      const example = catalog.find((quiz) => quiz.id === 'core-values-example');
+      example.title = '新版'; example.questions[0].prompt = '新版題目';
+      expect(isolated.status(created.id, key).quiz.title).toBe('核心價值・3 題示例');
       expect(isolated.status(created.id, key).quiz.questions[0].prompt).not.toBe('新版題目');
     } finally { isolated.close(); }
   });
@@ -72,12 +73,12 @@ describe('私人回合與保存', () => {
     const key = token();
     let persistent = new RoundStore(file);
     try {
-      const round = persistent.create({ quizId: 'core-values', nickname: '人', consent: true, privateToken: key });
+      const round = persistent.create({ quizId: 'core-values-example', nickname: '人', consent: true, privateToken: key });
       persistent.save(round.id, key, { answers: fullAnswers(persistent.status(round.id, key).quiz), revision: 0 });
       const invite = persistent.submit(round.id, key).invitationToken;
       persistent.close(); persistent = new RoundStore(file);
       expect(persistent.status(round.id, key).invitationToken).toBe(invite);
-      expect(persistent.status(round.id, key).own.answers).toEqual(fullAnswers(quizzes[0]));
+      expect(persistent.status(round.id, key).own.answers).toEqual(fullAnswers(coreValuesExample));
     } finally {
       persistent.close();
       for (const path of [file, `${file}-wal`, `${file}-shm`]) if (existsSync(path)) rmSync(path);
@@ -122,11 +123,62 @@ describe('雙人授權與解鎖', () => {
   it('兩人完成才解鎖，雙方可讀相同結果；B 提交後也不能修改', () => {
     const invite = submitA(); const b = token();
     store.claim({ invitationToken: invite, privateToken: b, nickname: '測試 B', consent: true });
-    const answers = fullAnswers(quizzes[0]); answers['values-work-choice'] = 'security';
+    const answers = fullAnswers(coreValuesExample); answers['values-work-choice'] = 'security';
     store.save(id, b, { answers, revision: 0 }); store.submit(id, b);
     expect(store.status(id, a).state).toBe('unlocked');
     expect(store.results(id, a)).toEqual(store.results(id, b));
     expect(store.results(id, a).participants[1].answers['values-work-choice']).toBe('security');
     expect(() => store.save(id, b, { answers: {}, revision: 1 })).toThrow('已鎖定');
   });
+});
+
+
+it('57 題完整保存、保密與 snapshot 計分；新題庫變動不追改結果', () => {
+  const catalog = structuredClone(roundQuizzes);
+  const isolated = new RoundStore(':memory:', { catalog });
+  try {
+    const a = token(); const b = token();
+    const { id } = isolated.create({ quizId: 'core-values', nickname: '工程 A', consent: true, privateToken: a });
+    const quiz = isolated.status(id, a).quiz;
+    expect(quiz.questions).toHaveLength(57);
+    expect(quiz.version).toBe('0.3.0');
+    expect(isolated.status(id, a)).not.toHaveProperty('comparison');
+    const answers = Object.fromEntries(quiz.questions.map((q, i) => [q.id, q.options[i % 6].id]));
+    const partial = { ...answers }; delete partial['pvqrr-57'];
+    isolated.save(id, a, { answers: partial, revision: 0 });
+    expect(() => isolated.submit(id, a)).toThrow('所有題目');
+    isolated.save(id, a, { answers, revision: 1 });
+    const invite = isolated.submit(id, a).invitationToken;
+    expect(isolated.invitationPreview(invite)).toMatchObject({ questionCount: 57, hasValueScore: true });
+    isolated.claim({ invitationToken: invite, nickname: '工程 B', consent: true, privateToken: b });
+    expect(isolated.status(id, b).peer).not.toHaveProperty('answers');
+    expect(() => isolated.results(id, b)).toThrow('雙方完成');
+    isolated.save(id, b, { answers, revision: 0 }); isolated.submit(id, b);
+    catalog[0].scoring.version = 'future'; catalog[0].questions[0].prompt = 'future';
+    const result = isolated.results(id, a);
+    expect(result).toEqual(isolated.results(id, b));
+    expect(result.comparison.score).toBe(100);
+    expect(result.comparison.values).toHaveLength(19);
+    expect(result.quiz.scoring.version).toBe('1.0.0');
+    expect(() => isolated.save(id, a, { answers, revision: 2 })).toThrow('鎖定');
+  } finally { isolated.close(); }
+});
+
+
+it('舊 core-values 三題快照在新版服務仍是三題且沒有相近度', () => {
+  const legacy = { ...structuredClone(coreValuesExample), id: 'core-values', title: '三觀與核心價值' };
+  const catalog = [legacy]; const isolated = new RoundStore(':memory:', { catalog });
+  try {
+    const a = token(); const b = token();
+    const { id } = isolated.create({ quizId: 'core-values', nickname: '舊回合 A', consent: true, privateToken: a });
+    const answers = fullAnswers(legacy);
+    catalog[0] = structuredClone(roundQuizzes[0]);
+    isolated.save(id, a, { answers, revision: 0 });
+    const invitationToken = isolated.submit(id, a).invitationToken;
+    isolated.claim({ invitationToken, nickname: '舊回合 B', consent: true, privateToken: b });
+    isolated.save(id, b, { answers, revision: 0 }); isolated.submit(id, b);
+    expect(isolated.results(id, a).quiz.questions).toHaveLength(3);
+    expect(isolated.results(id, a).quiz.version).toBe('0.1.0');
+    expect(isolated.results(id, a)).not.toHaveProperty('comparison');
+  } finally { isolated.close(); }
 });

@@ -1,3 +1,4 @@
+import { coreValuesQuiz } from './core-values.ts';
 import { validateQuiz, type QuizDefinition, type ResearchSource } from '../domain/quiz.ts';
 
 const valuesSource: ResearchSource = {
@@ -91,8 +92,12 @@ export const quizzes: QuizDefinition[] = [
   },
 ];
 
+export const coreValuesExample: QuizDefinition = { ...quizzes[0], id: 'core-values-example', title: '核心價值・3 題示例' };
+quizzes[0] = coreValuesQuiz;
+export const roundQuizzes = [...quizzes, coreValuesExample];
+
 const ids = new Set<string>();
-for (const quiz of quizzes) {
+for (const quiz of roundQuizzes) {
   const errors = validateQuiz(quiz);
   if (ids.has(quiz.id)) errors.push(`測驗 ID 重複：${quiz.id}`);
   ids.add(quiz.id);
@@ -100,5 +105,5 @@ for (const quiz of quizzes) {
 }
 
 export function getQuiz(id: string): QuizDefinition | undefined {
-  return quizzes.find((quiz) => quiz.id === id);
+  return roundQuizzes.find((quiz) => quiz.id === id);
 }

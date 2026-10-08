@@ -2,21 +2,21 @@
 
 給各種性向與性別認同的兩個人的主題測驗網站。各自回答，再一起了解彼此重視什麼、期待什麼，以及有哪些話值得聊。
 
-目前已公開部署 **0.5.1 核心價值探索版**：[開啟之間 Between Us](https://between-us.forest-between-us.workers.dev/)、[開始 57 題探索](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。使用者偏好伴侶日常使用的自然文案，因此主流程不再標示「試讀」；研究來源與改寫限制保留於可展開說明。Cloudflare Workers 提供網頁與 API，D1 保存三題雙人回合；57 題個人探索的答案只在當頁。原始碼位於 [tivico/between-us](https://github.com/tivico/between-us)。正式計分與 57 題雙人比較尚未接入。
+目前已公開部署 **0.6.0 完整雙人核心價值探索**：[開啟網站](https://between-us.forest-between-us.workers.dev/)、[開始 57 題雙人探索](https://between-us.forest-between-us.workers.dev/#/start/core-values)。各自完整回答 57 題，A 提交後邀請 B，雙方提交才解鎖彼此選項、19 類相對價值與 0–100 核心價值相近度。Cloudflare Workers 提供網站/API，D1 保存回合；免會員，以私人返回連結找回。相近度是使用者同意的本站探索性公式，不是經驗證的伴侶契合量表或關係成功率。
 
 ## 現在可以做什麼
 
 - 瀏覽 5 個主題、切換篩選、查看主題介紹與研究來源。
-- 體驗三觀主題的 3 題自編示例：選答、上一題、下一題、查看自己的答案、返回修改。
+- 完整 57 題雙人核心價值探索：六段單選、自動保存、稍後回答、逐題修改、完整提交後鎖定；兩人完成後解鎖比較。
 - 本機與公開網站的 `#/trial/core-values`：57 題核心價值探索，六段單選、上一題／下一題／跳過、想再想標記與本人選項整理。可隨時查看整理，不提供分數；答案只在本頁，離開或重新整理會清除。
-- 建立雙人測試回合、同意分享、填答自動保存、確認提交後鎖定答案。
+- 查看 19 類相對分數、相近度、比較接近與值得多聊的方向，以及 57 題並排選項；任一輪廓未呈現差異時不給總分。
 - A 提交後產生 B 的邀請；B 獨立回答，雙方完成才解鎖彼此選項與討論提示。
 - 每位參與者有私人返回連結；此瀏覽器保存最近 20 個入口。
 - SQLite 保存於 `.local/data/between-us.sqlite`，重新整理／重啟服務後仍能找回雙人回合。
 - 使用手機或桌面瀏覽；支援鍵盤選答與減少動態效果偏好。
 - 單人「介面預覽」仍不保存或分享，與雙人回合分開。
 
-本機的 `127.0.0.1` 連結只能在此電腦測試；使用上方的 Cloudflare 網址即可邀請遠方的人，兩人都提交後才能查看彼此答案。正式題庫、計分、科普文章、討論收藏、資料期限與刪除／找回規則尚未完成；請使用測試答案。
+本機的 `127.0.0.1` 連結只能在此電腦測試；使用上方的 Cloudflare 網址即可邀請遠方的人，兩人都提交後才能查看彼此答案。本中文改寫與雙人公式尚未完成測量驗證；人生方向、科普文章、討論收藏、資料期限與刪除／遺失連結找回仍待完成。
 
 ## 本機啟動
 
@@ -58,9 +58,9 @@ npm run preview
 
 ## 提交、版本與未來部署
 
-每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。本機現在為 `0.5.1`；下一個新功能可升為 `0.6.0`，小修正可升為 `0.5.2`，純文件整理通常維持原版號。
+每個完整、已驗證的功能／修正建立一個本機 commit（可回復的變更紀錄）；版號標記交付版本，不要求每筆 commit 都升版。本機現在為 `0.6.0`；下一個新功能可升為 `0.7.0`，小修正可升為 `0.6.1`，純文件整理通常維持原版號。
 
-網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。網站本機 `0.5.1`，三題草案 `0.1.0`，57 題中性候選 `0.2.0`；本次只修正介面文案，題幹未改。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
+網站版號記於 `package.json`／`package-lock.json`，各測驗的 `version` 另外管理；改網站色彩不需要改題庫版本。網站 `0.6.0`，57 題雙人回合 `0.3.0`，措辭來源候選 `0.2.0`，比較規則 `1.0.0`；三題示例快照仍為 `0.1.0`。建立回合時一併固定題目、選項數值與規則版本，舊回合不追套新規則。詳細操作與回復方式見 [維護手冊的提交與版本規則](docs/runbook.md#提交與版本規則)。
 
 GitHub repository 保存程式，push 會觸發 `.github/workflows/ci.yml` 檢查，但不會自動發布網站。現行發布執行 `npm run cloudflare:deploy`，依序檢查、建置、上傳 Worker 與網頁資產；沿用既有 D1。`origin` 為 `https://github.com/tivico/between-us.git`，main 追蹤 origin/main，不使用 force push。`pages.yml` 保留為另行配置外部 API 的替代方案，現行 Cloudflare 網站不使用它。[部署與除錯步驟](docs/runbook.md)。
 
@@ -69,7 +69,8 @@ GitHub repository 保存程式，push 會觸發 `.github/workflows/ci.yml` 檢�
 | 檔案 | 角色 |
 | --- | --- |
 | `src/App.tsx` | 主題館、介紹、作答預覽與個人答案頁 |
-| `src/content/quizzes.ts` | 主題、草題、選項與研究來源 |
+| `src/content/quizzes.ts`、`src/content/core-values.ts` | 可見主題、完整 57 題、原數值與 19 類映射；三題示例另保留 |
+| `src/domain/compatibility.ts`、`src/components/ValueResults.tsx` | 依回合快照計分，以及相近度／19 類結果顯示 |
 | `src/content/core-values-trial.ts`、`src/components/ContentTrial.tsx`、`src/domain/trial.ts` | 57 題前端候選轉換、試讀介面、本人答案整理；不接雙人 API |
 | `src/domain/quiz.ts` | TypeScript 內容契約及驗證函式 |
 | `src/lib/routes.ts` | `#/topics/...` 與 `#/demo/...` 路由解析 |

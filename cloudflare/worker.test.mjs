@@ -24,7 +24,7 @@ async function call(path, { method = 'GET', credential, body, origin, contentTyp
   return { status: response.status, body: await response.json(), headers: response.headers };
 }
 async function create() {
-  const a = token(); const input = { quizId: 'core-values', nickname: '測試 A', consent: true, privateToken: a };
+  const a = token(); const input = { quizId: 'core-values-example', nickname: '測試 A', consent: true, privateToken: a };
   const { id } = await store().create(input); return { id, a, input };
 }
 async function submitA(id, a) {
@@ -61,7 +61,7 @@ it('兩人獨立保存、邀請與解鎖，提交前不傳對方答案，陌生�
   expect((await call(`/api/rounds/${id}/answers`, { method: 'PUT', credential: a, body: { answers: {}, revision: 1 } })).status).toBe(409);
 });
 it('同時建立重試不留下多餘回合；資料庫只保存憑證雜湊', async () => {
-  const a = token(); const input = { quizId: 'core-values', nickname: '重試', consent: true, privateToken: a };
+  const a = token(); const input = { quizId: 'core-values-example', nickname: '重試', consent: true, privateToken: a };
   const results = await Promise.all([store().create(input), store().create(input)]);
   expect(results[0]).toEqual(results[1]);
   expect((await db.prepare("SELECT count(*) AS n FROM participants WHERE nickname='重試'").first()).n).toBe(1);
@@ -92,7 +92,35 @@ it('驗證 HTTP JSON 格式、大小、同意分享與未準備主題', async ()
   expect((await call('/api/rounds', { method: 'POST', body: '{broken' })).status).toBe(400);
   expect((await call('/api/rounds', { method: 'POST', body: 'x'.repeat(32769) })).status).toBe(413);
   expect((await call('/api/rounds', { method: 'POST', body: {}, contentType: 'text/plain' })).status).toBe(415);
-  const input = { quizId: 'core-values', nickname: '人', privateToken: token(), consent: false };
+  const input = { quizId: 'core-values-example', nickname: '人', privateToken: token(), consent: false };
   expect((await call('/api/rounds', { method: 'POST', body: input })).body.code).toBe('CONSENT_REQUIRED');
   expect((await call('/api/rounds', { method: 'POST', body: { ...input, consent: true, quizId: 'long-distance' } })).body.code).toBe('TOPIC_UNAVAILABLE');
+});
+
+
+it('57 題 HTTP 回合只在雙方提交後回傳 19 類與相近度，缺答拒絕提交', async () => {
+  const a = token(); const b = token();
+  const created = await call('/api/rounds', { method: 'POST', body: { quizId: 'core-values', nickname: '工程 A', consent: true, privateToken: a } });
+  expect(created.status).toBe(201); const id = created.body.id;
+  const status = await call(`/api/rounds/${id}/status`, { credential: a });
+  const quiz = status.body.quiz;
+  expect(quiz.questions).toHaveLength(57); expect(status.body).not.toHaveProperty('comparison');
+  const answers = Object.fromEntries(quiz.questions.map((q, i) => [q.id, q.options[i % 6].id]));
+  const partial = { ...answers }; delete partial['pvqrr-57'];
+  await call(`/api/rounds/${id}/answers`, { method: 'PUT', credential: a, body: { answers: partial, revision: 0 } });
+  expect((await call(`/api/rounds/${id}/submit`, { method: 'POST', credential: a, body: {} })).body.code).toBe('INCOMPLETE');
+  await call(`/api/rounds/${id}/answers`, { method: 'PUT', credential: a, body: { answers, revision: 1 } });
+  const submitted = await call(`/api/rounds/${id}/submit`, { method: 'POST', credential: a, body: {} });
+  const invite = submitted.body.invitationToken;
+  expect((await call('/api/invitations/preview', { credential: invite })).body).toMatchObject({ questionCount: 57, hasValueScore: true });
+  await call('/api/invitations/claim', { method: 'POST', body: { invitationToken: invite, privateToken: b, nickname: '工程 B', consent: true } });
+  expect((await call(`/api/rounds/${id}/results`, { credential: b })).status).toBe(423);
+  const peer = (await call(`/api/rounds/${id}/status`, { credential: b })).body;
+  expect(peer.peer).not.toHaveProperty('answers'); expect(peer).not.toHaveProperty('comparison');
+  await call(`/api/rounds/${id}/answers`, { method: 'PUT', credential: b, body: { answers, revision: 0 } });
+  await call(`/api/rounds/${id}/submit`, { method: 'POST', credential: b, body: {} });
+  const result = (await call(`/api/rounds/${id}/results`, { credential: a })).body;
+  expect(result.comparison.score).toBe(100); expect(result.comparison.values).toHaveLength(19);
+  expect(result).toEqual((await call(`/api/rounds/${id}/results`, { credential: b })).body);
+  expect((await call(`/api/rounds/${id}/results`, { credential: token() })).status).toBe(401);
 });

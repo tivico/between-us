@@ -9,7 +9,7 @@ npm ci
 npm run dev
 ```
 
-終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用；0.5 公開網址已有三題雙人邀請與 57 題單人試讀。
+終端機顯示 Local URL 後開啟；手機版可先用瀏覽器裝置模擬。`127.0.0.1` 只供此電腦使用；0.6 公開網址已有完整 57 題雙人邀請與結果；單人探索與舊三題另保留。
 
 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
@@ -41,9 +41,55 @@ npm run dev
 
 ## 常見修改位置
 
-### 57 題核心價值探索（0.5.1）
+### 0.6 完整雙人探索與計分
 
-由主題介紹按「開始 57 題核心價值探索」，或開 [公開探索入口](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。本機可開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站本機與公開版均為 0.5.1；0.5.0 起已有此功能，0.5.1 調整產品文案。
+公開入口： https://between-us.forest-between-us.workers.dev/#/start/core-values 。它會建立完整 57 題雙人回合；原 `#/trial/core-values` 保留為不保存的單人探索。舊三題回合仍按原快照顯示三題，不改歷史答案；重新建立 core-values 才使用新 57 題。core-values-example 另保留三題工程示例，不在主題館增加第六個主題。
+
+**這次改什麼與原因**：0.5 只有 57 題單人整理，雙人流程還是三題；0.6 讓完整內容使用既有保存、邀請與解鎖規則，結果增加原 19 類計分及使用者同意的探索性相近度。ready 表示功能可用；來源 candidate／research-informed 表示改寫證據狀態，兩者不互相取代。沒有新增會員或資料表，沿用 rounds.snapshot 和 participants.answers／submitted_at／revision。
+
+重要檔案：
+
+- `src/content/core-values.ts`：中性 57 題、六段原數值、19 類各三題、研究來源與 scoring 契約，工具版 0.3.0；來源 JSON 措辭仍 0.2.0。`quizzes.ts` 的 roundQuizzes 另含三題示例。
+- `src/domain/quiz.ts`：驗證 57 題、19 類、數值 1–6、沒有重複或缺題的 scoring 契約。
+- `src/domain/compatibility.ts`：scoreValues 算個人分數，compareValues 算雙人差距與相近度；只依回合快照，不讀最新題庫。
+- `server/store.mjs`／`cloudflare/store.mjs`：保存快照、驗證身份與雙方提交，results 才呼叫計分。兩種 store 使用同一套算法。
+- `src/components/RoundFlow.tsx`：建立、同意、保存隊列、跳過、逐題修改、提交、邀請與結果；ValueResults.tsx 顯示分數、19 類圖、來源／公式。
+- `scripts/check-cloudflare.mjs`：用新的一輪虛構 A/B 驗證 57 題、缺答、保密、計分與鎖定，不讀既有私人回合。
+
+**Request / Data Flow**：
+
+1. StartRound／EntryForm 發 POST /api/rounds；store 固定完整 quiz（含 scoring）到 rounds.snapshot。
+2. RoundPage 每次選答發 PUT /api/rounds/:id/answers，後端核對 snapshot 中合法選項與 revision；只有本人的 answers 回傳。畫面顯示已儲存後才算保存成功，失敗可重試；衝突需載入最新版。
+3. POST submit 要求全部 57 題合法；A 提交後鎖定並產生邀請，B claim 後獨立保存。邀請 hasValueScore 只說明分享範圍，不傳答案。
+4. GET results 先驗證本人憑證、兩人 submitted_at；未完成回 423，陌生憑證 401。解鎖後用 snapshot 的選項數值／映射計分，回 comparison（profiles、values、meanGap、score、ruleVersion）及真實答案。
+5. SharedResults → ValueResults 顯示相近度與 19 類圖，再呈現 57 題並排。前端不自行偷算未解鎖結果，最近紀錄僅保存私人返回入口；真正答案在後端。
+
+**計分規則 1.0.0**：原選項依明確 optionValues 對應 1–6，不能把 option ID 的次序當分數。每個價值平均＝對應三題平均；MRAT＝本人全部 57 題平均；centered＝價值平均 − MRAT。它描述相對於自己整體答案的優先程度，負數沒有好壞，也不能換成百分比。
+
+本站公式：meanGap＝19 個 `abs(A.centered − B.centered)` 的平均；相近度＝`100 * (1 - meanGap / 5)`，呈現一位小數。19 類等權重，不合併成十類／四類／人生方向；5 是 1–6 量尺下平均絕對中心化差距的保守上界（單一類的差可以超過 5），不是研究得到的戀愛門檻。例如 meanGap 為 1 → 80；它不是「80% 成功率」。同一相對輪廓可來自不同原選項，故逐題答案另顯示。原 MRAT／中心化依作者計分文件，這個雙人換算由本站設計、使用者已選擇採用，沒有常模、優劣門檻或效果驗證。
+
+缺答不補值，完整 57 題才能提交；這是產品流程規則，不冒充原工具缺答建議。任一人的 19 類分數都沒有相對差異時（數值誤差容許 1e-9）回 score:null／undifferentiated；頁面說明不代表錯誤或不合。相對分數沒有變異時給 100 會誤導，因此不給總分。19 類均值一樣，也可能由不同逐題答案產生，不只全選同一選項。
+
+**故障排查**：
+
+- 仍只有三題：先看是否為舊私人回合／core-values-example；本機 Node API 載入題庫後不會自動重讀，改共用題庫後需重啟自己的 dev／preview 程序；新 `#/start/core-values` 的建立頁應顯示 57。不要把舊答案搬進新回合或刪資料。
+- 沒保存／重新整理少了答案：先看「已儲存」或錯誤、Network 的 PUT／revision。409 是過時更新或已鎖定，不以重建資料庫解決。先用自己的返回連結，不用邀請代替。
+- 提交沒反應：確認所有 57 題都回答、沒有 pending／saveError；查看答案可直接跳到未答題。HTTP INCOMPLETE 是正常防護。
+- 等待不解鎖：各自確認已提交，再按「更新完成狀態」；423 是尚未雙方完成。health 只確認 D1 連線，不能證明該輪已完成。
+- 分數空白：若頁面解釋未分化，是正常 score:null；若有錯誤，依序查 snapshot.scoring.kind／version、57 題映射、optionValues、完整答案，再以工程假資料重現。不要在 log 或公開文件印出真實答案／返回憑證。
+- 分數怪：核對原始平均、MRAT、centered、19 類 gap、meanGap，不只比相同選項數；例外涵蓋第 49 題翻譯待審。兩種後端均應依 snapshot 而非目前全域題庫。
+
+安全診斷：`npm run check`、`npm run build`、`Invoke-RestMethod 'https://between-us.forest-between-us.workers.dev/api/health'`。`node scripts/check-cloudflare.mjs https://between-us.forest-between-us.workers.dev/` 會新增一輪工程 QA 回合，可驗證全流程，不輸出憑證／答案；本機可用 http://127.0.0.1:4180/。`--local-proof` 僅允許本機，暫存虛構返回連結到忽略的 .local/qa/core-values-proof.json，供 UI QA；不是收集朋友答案或測量研究資料。
+
+**自行修改與版本範例**：只改結果標題，改 ValueResults，不動題庫版；改第 49 題，先另記來源差異、改寫與審查，更新 candidate／回合工具版本，不覆寫原文。若改算法，新建 1.1.0／2.0.0 規則並保留原 1.0.0 運算分支，同時升新回合版本；直接改原分支會讓舊回合結果改變，即使 snapshot.version 沒變。新選項／映射／規則須一起改 validateQuiz、scoreValues／compareValues、契約與測試；至少驗證手算、對稱、平移、不分化、缺答、舊快照與 Node/D1 解鎖邊界。回復程式也要保留已產生的 0.3.0 快照解析與規則；不能回到不支援新結果的舊版後宣稱資料遺失，先保留 D1。
+
+**驗證紀錄 2026-10-08**：10 檔／58 項測試、一般與 Cloudflare 建置通過。包含作者映射、手算平均／中心化／公式、對稱、整體平移不變、缺答／不合法拒絕、不分化不給分、完整 A/B results 與舊三題 core-values 快照不追改。CLI 實際 native Node 匯入 JSON／TS 成功，本機 Worker HTTP QA 通過。瀏覽器用虛構 A/B 各完整操作 57 題：保存、稍後回答、缺答禁止、重新整理回第一個未答、確認／邀請／獨立加入／解鎖；雙方同為 74.3 / 100，顯示 19 類圖與 57 題並排。另 HTTP QA 輪為 73.9，不當作人類測量資料。390px 模擬沒有橫向溢出，恢復尺寸設定；工程頁沒有 Console error／warn。
+
+Cloudflare 已發布版本 `8ff28816-2c5e-4ee3-a5e4-28fb098d9b42`；本次沒有 remote migration，不重建 D1；本機 cloudflare:dev 只套用本機模擬庫的 0001。部署後線上 check-cloudflare 回 CLOUDFLARE_FLOW_OK，實際驗證 57 題缺答／保密／計分；公開 start/core-values 顯示 57 題、答案與比較結果分享同意。線上新留一輪虛構 QA，沒有讀既有私人回合；截圖 .local/core-values-pair-live.png 不提交。截圖 .local/core-values-pair-results.png 僅為虛構工程畫面，不提交。尚未驗證／完成：本地改寫及雙人公式測量效度、實體雙手機、人生方向、正式保存期限與刪除／遺失憑證找回；功能驗證不能替代這些。
+
+### 單人核心價值探索（保留 0.5 的入口）
+
+由主題介紹按「先自己探索（不保存）」，或開 [公開探索入口](https://between-us.forest-between-us.workers.dev/#/trial/core-values)。本機可開 `http://127.0.0.1:4173/#/trial/core-values`（先 `npm run build`／`npm run preview`）；開發模式使用 5173。網站目前為 0.6.0；此不保存入口自 0.5 保留，完整雙人請用 start 路徑。
 
 重要位置：
 
@@ -254,7 +300,7 @@ git log -5 --oneline
 git status --short
 ```
 
-Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；tag 並不代表網站已部署。目前已推送 v0.1.0～v0.5.0 到使用者指定的 tivico/between-us；日後只推送當次明確要交付的 tag，不把 `git push --tags` 當一般存檔操作。
+Tag 是指向特定 commit 的版本標記。不可覆寫已交付 tag；tag 並不代表網站已部署。目前交付 v0.1.0～v0.6.0 到使用者指定的 tivico/between-us；日後只推送當次明確要交付的 tag，不把 `git push --tags` 當一般存檔操作。
 
 ### 壞掉時怎麼定位與回復
 
