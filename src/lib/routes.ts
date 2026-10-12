@@ -1,12 +1,15 @@
 export type Route = { page: 'catalog' } | { page: 'topic' | 'demo' | 'start' | 'trial'; id: string }
   | { page: 'history' } | { page: 'round'; id: string; token: string } | { page: 'invite'; token: string }
-  | { page: 'learn' } | { page: 'article'; id: string } | { page: 'not-found' };
+  | { page: 'learn' } | { page: 'questions' } | { page: 'article' | 'question-topic'; id: string } | { page: 'not-found' };
 
 export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#/, '') || '/';
   if (path === '/') return { page: 'catalog' };
   if (path === '/history') return { page: 'history' };
   if (path === '/learn') return { page: 'learn' };
+  if (path === '/questions') return { page: 'questions' };
+  const questionTopic = /^\/questions\/([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(path);
+  if (questionTopic) return { page: 'question-topic', id: questionTopic[1] };
   const article = /^\/learn\/([a-z0-9]+(?:-[a-z0-9]+)*)$/.exec(path);
   if (article) return { page: 'article', id: article[1] };
   const round = /^\/rounds\/([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})\/([a-f0-9]{64})$/.exec(path);

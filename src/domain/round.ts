@@ -1,5 +1,6 @@
 import type { QuizDefinition } from './quiz';
 import type { ValueComparison } from './compatibility';
+import type { ConversationComparison } from './conversation';
 import type { DistanceAnalysis } from './long-distance';
 import type { ValueFeedback } from './value-feedback';
 
@@ -18,6 +19,7 @@ export interface RoundResults {
   participants: { slot: 'A' | 'B'; nickname: string; answers: Record<string, string>; submittedAt: string }[];
   comparison?: ValueComparison;
   valueFeedback?: ValueFeedback;
+  conversation?: ConversationComparison;
   pairAnalysis?: DistanceAnalysis;
 }
-export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; hasPairAnalysis?: boolean }
+export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean }

@@ -1,10 +1,10 @@
 # 架構與資料流程
 
-## 0.9 核心價值回饋層
+## 0.10 核心價值回饋層
 
 新 core-values 工具 0.4.0 在 rounds.snapshot 保存 feedback V1（概念／題號／情境／問題）。Node / D1 完成原授權與雙方提交檢查後，共用 buildValueFeedback，依原 comparison 選共同相對優先、差異與各自方向。原 scoring 1.0.0 不變。舊已發布 0.3.0 符合固定映射時加明示 legacy-reading-layer V1，三題不套用；無 migration，不改舊 snapshot 或原分數。
 
-SharedResults → ValueResults → ValueFeedbackReport：報告先於收合的 19 類／相近度／完整答案。聊天步驟只為本頁 React state，沒有聊天 API、同步或效果評分。內容與算法分別為 core-value-feedback.ts / value-feedback.ts。版本、排序、證據與除錯見 runbook.md 的 0.9 章節。
+SharedResults → ValueResults → ValueFeedbackReport：報告先於收合的 19 類／相近度／完整答案。聊天步驟只為本頁 React state，沒有聊天 API、同步或效果評分。內容與算法分別為 core-value-feedback.ts / value-feedback.ts。版本、排序、證據與除錯見 runbook.md 的 0.10 章節。
 
 ## 0.8 遠距雙人分析（已公開部署）
 
@@ -264,6 +264,28 @@ CORS 是瀏覽器跨網站呼叫時的允許規則。`ALLOWED_ORIGINS` 是 `http
 原始碼公開範圍與網站公開範圍分開：私人 repository 不保證 Pages 網站私人，GitHub Free 的 Pages 要使用公開 repository，私人來源支援依帳號方案核對。現有三題是試玩示例；期限、刪除／撤銷／找回規則仍未定稿。
 
 官方參考：[GitHub Pages 的性質與方案](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)、[Pages workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[Vite Pages 設定](https://vite.dev/guide/static-deploy.html#github-pages)、[Render 免費服務限制](https://render.com/docs/free)。本機已驗證不代表真實雲端已驗證。
+
+## 0.9 四題一組的雙人問答
+
+2026-10-12 接入；公開發布紀錄另見 Runbook。`docs/quizzes/getting-to-know-you.json` 是運行題庫的單一來源，原稿 32 題、八組各四題，內容 1.0.0；各主要選項有語意 ID、`kind:choice` 及 `guidance`（給另一方的相處提案），每題另有 `discussion`、`together`。`questionnaires.ts` 轉為八個獨立 QuizDefinition（know-daily 等），只加入 roundQuizzes，不混入原五個測驗主題。
+
+`QuestionnairePages.tsx` 提供 #/questions 列表、#/questions/:id 介紹及 ConversationResults。問答與主題測驗分開入口，共用 RoundFlow、API 與既有資料表。每輪固定四題，做完即可提交；另一組另開一輪，沒有八組總分或強制續玩。
+
+```text
+JSON → questionnaires.ts → quizzes.ts 的 roundQuizzes
+  → #/questions/:id → #/start/:id → POST /api/rounds
+  → rounds.snapshot 固定本組四題、所有選項及提案版本
+  → RoundFlow／ConversationOptions 選答 → PUT /answers → participants.answers／revision
+  → A submit → B claim／獨立填答 → B submit
+  → GET /results：Node／D1 驗證雙方提交才呼叫 compareConversation(snapshot, A, B)
+  → conversation.items → ConversationResults：共同／不同／情境狀態與個別、雙人提案
+```
+
+所有答案仍用同一份字串 map 保存，特殊狀態與名目選擇都不是分數。`not-shared` 是專用狀態 ID，ConversationOptions 用獨立操作提供；選擇時直接取代本題原 ID，後端只保存目前版本。結果只回未分享狀態，不保留另一個可被讀取的「隱藏原答案」。這是目前答案的取代，不代表提供資料永久刪除、備份清除或找回功能。
+
+`compareConversation` 規則 1.0.0：只有雙方 `kind:choice` 才比較相同／不同；給 A 的提案取自 B 的選項，給 B 取自 A。其他、依情境、不確定、不適用、未經歷與未分享都進 context，個別／雙人提案為 null。未分享也不顯示追問提示。status／邀請不回對方答案或分析，只新增公開的 isQuestionnaire 讓邀請畫面顯示正確分享說明。
+
+沒有 schema 變更或雲端 migration；舊核心價值與三題回合繼續依自己的快照與舊算法。修改 JSON 提案要升內容版本，修改分類算法則另加規則版本並保留 V1；不能改原分支讓舊結果改變。Vite fs.deny 保留 .local 保護，另禁止 .wrangler 本機 D1 資料；不要在 .local 下啟動 Vite 前端工作目錄。
 
 ## 0.6 完整題庫、固定計分與解鎖結果
 

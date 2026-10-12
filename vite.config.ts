@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
       proxy: { '/api': 'http://127.0.0.1:8787' },
       headers: { 'Referrer-Policy': 'no-referrer' },
       forwardConsole: false,
-      fs: { deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/.local/**'] },
+      fs: { deny: ['.env', '.env.*', '*.{crt,pem}', '**/.git/**', '**/.local/**', '**/.wrangler/**'] },
     },
     preview: {
       port: 4173, strictPort: true,
