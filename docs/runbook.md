@@ -1,5 +1,38 @@
 # 維護與除錯
 
+## 0.9 核心價值結論與交流
+
+2026-10-12：改善「完成 57 題後只有分數／圖表、缺少收穫」的問題。先顯示各自相對優先、最多三個共同方向與差異；每卡有具體情境／聊法及可展開的三題依據。再提供四步口頭交流：發現、情境、輪流分享、重新確認。19 類、相近度、公式與 57 題改成可展開區域，沒有刪除。聊天步驟只是本頁引導，不保存或同步，不代表兩人已完成交流；原相近度算法仍是 1.0.0。
+
+### 選題與證據
+
+概念參照 [Schwartz & Cieciuch 原研究 Table 1](https://journals.sagepub.com/doi/full/10.1177/1073191121998760)。生活情境、問題與選題規則是本站提案，沒有伴侶介入效果／互動預測證據。共同方向要求雙方 centered > 0，按 min(A,B) 降序；差異按 abs(A-B) 降序；各自優先按本人 centered 降序。各取最多三個，不把共同低分或最小 gap 當共同重視。不足三個、零差距、無交集、未分化如實說明；同分依原 scoring.values 次序，前三名邊界同分時明示。1e-9 僅容許浮點誤差，不是測量／統計門檻。
+
+第 49 題原繁體語意仍待核對：face 保留全部 19 類計分及 57 題資料，暫不生成生活敘事。MRAT 仍含該題，所以也可能影響其他相對分數；排除敘事不等於修復測量問題。不從低分判定固執、自私、不重視；不從單一／多面向推定衝突模式、關係成功率或高低契合。不用外部 AI，不傳送答案給第三方生成服務。
+
+### 檔案與 Request / Data Flow
+
+1. src/content/core-value-feedback.ts 保存固定 V1 的 18 個概念、三題映射、情境與問題，以及 legacyCoreValueLayoutV1。修訂另立版本，不覆寫 V1 追改舊報告。
+2. src/content/core-values.ts 的新工具 0.4.0 保存 feedback 的獨立拷貝；建立回合寫入 rounds.snapshot。原措辭 0.2.0、相近度 1.0.0 不變；src/domain/quiz.ts 驗證來源、19 類覆蓋與題號契約。
+3. GET /api/rounds/:id/results → Node / D1 store.results 驗證本人及雙方提交 → snapshot → compareValues → buildValueFeedback → 回傳 comparison、valueFeedback 與真正的兩人答案。status／邀請不回傳計算後回饋。
+4. buildValueFeedback 在 src/domain/value-feedback.ts：新快照只讀自己的 feedback；舊 core-values 0.3.0 符合固定 57 題／19 類映射才加 origin:legacy-reading-layer 的 V1 閱讀層，不寫回原 snapshot、答案或分數。三題／其他不支援舊版不套用。
+5. SharedResults → ValueResults → ValueFeedbackReport；樣式在 ValueFeedbackReport.css。value-data / raw-answer-details 保留資料，科普短卡保留。chosen、conversationRun、step 是 React state，只控制本頁；重新整理不保存聊天進度。
+6. vite.config.ts 的 test.include 限定 src、server、cloudflare 正式測試，避免 .local / .worktrees 歷史副本混入同一輪，不刪副本／答案來讓測試過。
+
+### 排查與自行修改
+
+- 仍見舊圖表：先重新整理私人結果；看 GET results 是否有 valueFeedback，未完成 423、陌生憑證 401。0.3.0 看 origin；三題或映射不符保留舊顯示。不要改 DB 版本或繞過提交鎖。
+- 卡片與答案不符：查三題 mean、MRAT、centered，再查 snapshot.feedback.perspectives 的 questionIds 與 scoring.values；不拿最新 registry 解讀舊回合。
+- 共同／差異卡不足：查 reason、centered、gap；無交集／零差距／未分化可為合法結果。同分不代表統計顯著。
+- 按鈕沒跳或沒重置：查 chosen、conversationRun、GuidedConversation key、useEffect 後 guided-heading 焦點。四步不發 API，另一裝置不會跟著跳。
+- npm test 掃到暫存副本：查 test.include。Windows 受限暫存 ENOENT／通訊端限制要用正常權限完成必要驗證，不改資料／算法來修環境問題。
+- 本輪本機 Worker 4182 監聽後健康逾時，未完成本機 Worker HTTP UI；改用既有 Node API＋Vite、隔離記憶體虛構回合做 UI。D1 與授權／解鎖由 Miniflare HTTP 測試驗證，公開部署另外記錄，不混稱三種結果。
+- 修改例：自主行動改成行程分工聊法，要新增 V2 內容／算法分支、升工具版，再把新回合指向 V2；保留 V1 與 0.3.0 固定閱讀層。純 CSS 或頁面標題只升網站修正版。需驗證共同低分、零差距、同分、未分化、舊 0.3.0、快照不追改、401／423，再檢查相關畫面。
+
+驗證：13 個正式測試檔／76 項通過，一般／Cloudflare 建置通過。測試包含共同低分不當共同重視、無交集／零差距／同分／未分化、題號／來源契約、快照不追改、舊完整 0.3.0 不改答案／分數，以及 Node／Miniflare D1 授權與 results 解鎖。瀏覽器使用隔離 Node 記憶體虛構回合，正常三共同／三差異、無交集、未分化、legacy 標示、三題依據、19 類／57 題展開、方向跳轉與四步交流均通過；390px 模擬無溢出，未見 console 錯誤／警告。沒有實體雙手機或使用者成效驗證。
+
+是否提升理解感，仍需使用者閱讀與交流後回饋；工程測試不能代替產品成效。正式發布紀錄在本節補充。
+
 ## 固定開發流程
 
 整理日期：2026-10-08。這是後續建議採用的工作規律，不是新增自動化或保證每週發布。現況先看 [README 核心總覽](../README.md#核心內容與現況總覽)，產品邊界看 [product.md](product.md)，實際請求與保存方式看 [architecture.md](architecture.md)。下方版本章節是當時的驗收／發布紀錄；早期限制需配合後續版本閱讀。

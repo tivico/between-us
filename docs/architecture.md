@@ -1,5 +1,11 @@
 # 架構與資料流程
 
+## 0.9 核心價值回饋層
+
+新 core-values 工具 0.4.0 在 rounds.snapshot 保存 feedback V1（概念／題號／情境／問題）。Node / D1 完成原授權與雙方提交檢查後，共用 buildValueFeedback，依原 comparison 選共同相對優先、差異與各自方向。原 scoring 1.0.0 不變。舊已發布 0.3.0 符合固定映射時加明示 legacy-reading-layer V1，三題不套用；無 migration，不改舊 snapshot 或原分數。
+
+SharedResults → ValueResults → ValueFeedbackReport：報告先於收合的 19 類／相近度／完整答案。聊天步驟只為本頁 React state，沒有聊天 API、同步或效果評分。內容與算法分別為 core-value-feedback.ts / value-feedback.ts。版本、排序、證據與除錯見 runbook.md 的 0.9 章節。
+
 ## 0.8 遠距雙人分析（已公開部署）
 
 `src/content/long-distance.ts` 將研究原稿 24 題及分析設定變成共用 QuizDefinition；`quizzes.ts` 在前端、Node、D1 載入同一份內容。新增的是描述性 analysis，與核心價值 scoring 分開；analysis 只允許已知 kind／version，驗證題號、特殊選項和提案參照。候選原題 0.1.0、回合工具 0.2.0、規則 1.0.0、網站 0.8.0 分別管理。

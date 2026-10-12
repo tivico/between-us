@@ -2,6 +2,14 @@ export type TopicStatus = 'draft' | 'planned' | 'ready';
 export type EvidenceStatus = 'research-informed' | 'validated';
 export type Theme = 'sage' | 'clay' | 'sand' | 'lavender' | 'blue';
 
+export interface ValueFeedbackConfig {
+  kind: 'core-values-conversation';
+  version: '1.0.0';
+  sourceId: string;
+  excludedValueIds: string[];
+  perspectives: { id: string; questionIds: string[]; meaning: string; title: string; scenario: string; question: string; followUp: string }[];
+}
+
 export interface ResearchSource {
   id: string;
   title: string;
@@ -40,6 +48,7 @@ export interface QuizDefinition {
   sources: ResearchSource[];
   evidenceSummary: string;
   instructions?: string;
+  feedback?: ValueFeedbackConfig;
   analysis?: {
     kind: 'long-distance-paired';
     version: '1.0.0';
@@ -93,6 +102,16 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     if (quiz.questions.length !== 57 || scoring.values.length !== 19 || scoring.values.some((value) => value.questionIds.length !== 3 || !value.label.trim()) || new Set(ids).size !== 57 || ids.some((id) => !questionIds.has(id)) || new Set(scoring.values.map((value) => value.id)).size !== 19) errors.push('計分對應需完整涵蓋 57 題與 19 類');
     for (const question of quiz.questions) {
       if (question.options.length !== 6 || question.options.some((option, index) => scoring.optionValues[option.id] !== index + 1)) errors.push(`量表選項數值不完整：${question.id}`);
+    }
+  }
+  if (quiz.feedback) {
+    const feedback = quiz.feedback;
+    const values = quiz.scoring?.values ?? [];
+    const ids = [...feedback.excludedValueIds, ...feedback.perspectives.map((item) => item.id)];
+    if (!quiz.scoring || feedback.kind !== 'core-values-conversation' || feedback.version !== '1.0.0' || !sourceIds.has(feedback.sourceId) || feedback.excludedValueIds.length !== 1 || feedback.excludedValueIds[0] !== 'face' || ids.length !== 19 || new Set(ids).size !== 19 || ids.some((id) => !values.some((value) => value.id === id))) errors.push('核心價值回饋契約不完整');
+    for (const item of feedback.perspectives) {
+      const value = values.find((value) => value.id === item.id);
+      if (!value || item.questionIds.length !== 3 || new Set(item.questionIds).size !== 3 || item.questionIds.some((id) => !value.questionIds.includes(id)) || [item.meaning, item.title, item.scenario, item.question, item.followUp].some((text) => !text.trim())) errors.push(`核心價值回饋缺少內容或題號不符：${item.id}`);
     }
   }
   if (quiz.analysis) {

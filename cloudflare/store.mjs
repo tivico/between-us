@@ -2,6 +2,7 @@ import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { roundQuizzes } from '../src/content/quizzes.ts';
 import { compareValues } from '../src/domain/compatibility.ts';
 import { analyzeDistance } from '../src/domain/long-distance.ts';
+import { buildValueFeedback } from '../src/domain/value-feedback.ts';
 
 export class RoundError extends Error {
   constructor(code, message, status = 400) { super(message); this.code = code; this.status = status; }
@@ -131,7 +132,8 @@ export class D1RoundStore {
     const round = await this.one('SELECT snapshot,created_at FROM rounds WHERE id=?', id);
     const quiz = JSON.parse(round.snapshot);
     const comparison = compareValues(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
+    const valueFeedback = buildValueFeedback(quiz, comparison);
     const pairAnalysis = analyzeDistance(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
-    return { quiz, ...(comparison ? { comparison } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
+    return { quiz, ...(comparison ? { comparison } : {}), ...(valueFeedback ? { valueFeedback } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
   }
 }

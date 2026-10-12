@@ -19,6 +19,7 @@ try {
   const a = randomBytes(32).toString('hex'); const b = randomBytes(32).toString('hex');
   const { id } = await request('/rounds', { method: 'POST', expected: 201, body: { quizId: 'core-values', nickname: '部署測試 A', consent: true, privateToken: a } });
   const status = await request(`/rounds/${id}/status`, { token: a });
+  assert(!('valueFeedback' in status));
   assert.equal(status.quiz.questions.length, 57);
   assert.equal(status.quiz.scoring.version, '1.0.0');
   const answers = Object.fromEntries(status.quiz.questions.map((q, index) => [q.id, q.options[index % 6].id]));
@@ -41,6 +42,10 @@ try {
   const results = await request(`/rounds/${id}/results`, { token: a });
   assert.deepEqual(results.participants.map((p) => p.answers), [answers, answersB]);
   assert.equal(results.comparison.values.length, 19);
+  assert.equal(results.valueFeedback.version, '1.0.0');
+  assert.equal(results.valueFeedback.origin, 'snapshot');
+  assert(results.valueFeedback.common.every((item) => item.a > 0 && item.b > 0 && item.id !== 'face'));
+  assert([...results.valueFeedback.common, ...results.valueFeedback.differences].every((item) => item.questionIds.length === 3 && item.questionIds.every((questionId) => status.quiz.questions.some((q) => q.id === questionId))));
   assert(Number.isFinite(results.comparison.score) && results.comparison.score >= 0 && results.comparison.score < 100);
   assert.deepEqual(results, await request(`/rounds/${id}/results`, { token: b }));
   if (process.argv[3] === '--local-proof') {

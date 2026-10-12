@@ -1,17 +1,19 @@
 import bank from '../../docs/quizzes/core-values-pvqrr.json' with { type: 'json' };
 import { createCoreValuesTrial } from './core-values-trial.ts';
 import type { QuizDefinition } from '../domain/quiz.ts';
+import { coreValueFeedbackV1 } from './core-value-feedback.ts';
 
 const content = createCoreValuesTrial(bank);
 for (const value of bank.values) {
   if (value.itemNumbers.some((number) => bank.items[number - 1]?.valueId !== value.id)) throw new Error('原計分題號與價值類別不一致');
 }
 export const coreValuesQuiz: QuizDefinition = {
-  id: 'core-values', version: '0.3.0', title: '三觀與核心價值',
+  id: 'core-values', version: '0.4.0', title: '三觀與核心價值',
   subtitle: '認識你心裡，重要的事。',
-  description: '從 57 個人物描述，探索你重視的事。各自回答，邀請對方，再一起看見相近的方向與值得聊的差異。',
+  description: '從 57 個人物描述，探索你重視的事。各自回答，邀請對方，完成後一起讀有作答依據的回饋：共同方向、值得理解的差異，以及具體聊法。',
   audience: '交往前探索・交往中的伴侶', status: 'ready', theme: 'sage', motif: 'arches',
   instructions: content.instructions,
+  feedback: structuredClone(coreValueFeedbackV1),
   dimensions: bank.values.map((value) => value.editorialLabel),
   questions: bank.items.map((item) => ({
     id: item.id, dimension: bank.values.find((value) => value.id === item.valueId)!.editorialLabel,

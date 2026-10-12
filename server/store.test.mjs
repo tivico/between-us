@@ -141,8 +141,9 @@ it('57 題完整保存、保密與 snapshot 計分；新題庫變動不追改結
     const { id } = isolated.create({ quizId: 'core-values', nickname: '工程 A', consent: true, privateToken: a });
     const quiz = isolated.status(id, a).quiz;
     expect(quiz.questions).toHaveLength(57);
-    expect(quiz.version).toBe('0.3.0');
+    expect(quiz.version).toBe('0.4.0');
     expect(isolated.status(id, a)).not.toHaveProperty('comparison');
+    expect(isolated.status(id, a)).not.toHaveProperty('valueFeedback');
     const answers = Object.fromEntries(quiz.questions.map((q, i) => [q.id, q.options[i % 6].id]));
     const partial = { ...answers }; delete partial['pvqrr-57'];
     isolated.save(id, a, { answers: partial, revision: 0 });
@@ -155,11 +156,16 @@ it('57 題完整保存、保密與 snapshot 計分；新題庫變動不追改結
     expect(() => isolated.results(id, b)).toThrow('雙方完成');
     isolated.save(id, b, { answers, revision: 0 }); isolated.submit(id, b);
     catalog[0].scoring.version = 'future'; catalog[0].questions[0].prompt = 'future';
+    catalog[0].feedback.perspectives[0].scenario = 'future-scenario';
     const result = isolated.results(id, a);
     expect(result).toEqual(isolated.results(id, b));
     expect(result.comparison.score).toBe(100);
     expect(result.comparison.values).toHaveLength(19);
     expect(result.quiz.scoring.version).toBe('1.0.0');
+    expect(result.valueFeedback.origin).toBe('snapshot');
+    expect(result.valueFeedback.common.every((item) => item.a > 0 && item.b > 0)).toBe(true);
+    expect(result.valueFeedback.differences).toHaveLength(0);
+    expect(result.valueFeedback.common.map((item) => item.scenario)).not.toContain('future-scenario');
     expect(() => isolated.save(id, a, { answers, revision: 2 })).toThrow('鎖定');
   } finally { isolated.close(); }
 });
@@ -180,5 +186,24 @@ it('舊 core-values 三題快照在新版服務仍是三題且沒有相近度', 
     expect(isolated.results(id, a).quiz.questions).toHaveLength(3);
     expect(isolated.results(id, a).quiz.version).toBe('0.1.0');
     expect(isolated.results(id, a)).not.toHaveProperty('comparison');
+    expect(isolated.results(id, a)).not.toHaveProperty('valueFeedback');
+  } finally { isolated.close(); }
+});
+
+it('既有 0.3.0 完整回合取得明示閱讀層，原答案與相近度不變', () => {
+  const legacy = structuredClone(roundQuizzes[0]); delete legacy.feedback; legacy.version = '0.3.0';
+  const isolated = new RoundStore(':memory:', { catalog: [legacy] });
+  try {
+    const a = token(); const b = token();
+    const { id } = isolated.create({ quizId: 'core-values', nickname: '舊完整工程 A', consent: true, privateToken: a });
+    const answers = Object.fromEntries(legacy.questions.map((q, i) => [q.id, q.options[i % 6].id]));
+    isolated.save(id, a, { answers, revision: 0 }); const invitationToken = isolated.submit(id, a).invitationToken;
+    isolated.claim({ invitationToken, nickname: '舊完整工程 B', consent: true, privateToken: b });
+    isolated.save(id, b, { answers, revision: 0 }); isolated.submit(id, b);
+    const result = isolated.results(id, a);
+    expect(result.valueFeedback.origin).toBe('legacy-reading-layer');
+    expect(result.quiz.version).toBe('0.3.0'); expect(result.quiz).not.toHaveProperty('feedback');
+    expect(result.comparison.score).toBe(100);
+    expect(result.participants.map((person) => person.answers)).toEqual([answers, answers]);
   } finally { isolated.close(); }
 });

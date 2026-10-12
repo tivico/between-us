@@ -105,6 +105,7 @@ it('57 題 HTTP 回合只在雙方提交後回傳 19 類與相近度，缺答拒
   const status = await call(`/api/rounds/${id}/status`, { credential: a });
   const quiz = status.body.quiz;
   expect(quiz.questions).toHaveLength(57); expect(status.body).not.toHaveProperty('comparison');
+  expect(status.body).not.toHaveProperty('valueFeedback');
   const answers = Object.fromEntries(quiz.questions.map((q, i) => [q.id, q.options[i % 6].id]));
   const partial = { ...answers }; delete partial['pvqrr-57'];
   await call(`/api/rounds/${id}/answers`, { method: 'PUT', credential: a, body: { answers: partial, revision: 0 } });
@@ -121,6 +122,9 @@ it('57 題 HTTP 回合只在雙方提交後回傳 19 類與相近度，缺答拒
   await call(`/api/rounds/${id}/submit`, { method: 'POST', credential: b, body: {} });
   const result = (await call(`/api/rounds/${id}/results`, { credential: a })).body;
   expect(result.comparison.score).toBe(100); expect(result.comparison.values).toHaveLength(19);
+  expect(result.valueFeedback).toMatchObject({ version: '1.0.0', origin: 'snapshot' });
+  expect(result.valueFeedback.common.every((item) => item.a > 0 && item.b > 0 && item.questionIds.length === 3)).toBe(true);
+  expect(result.valueFeedback.differences).toHaveLength(0);
   expect(result).toEqual((await call(`/api/rounds/${id}/results`, { credential: b })).body);
   expect((await call(`/api/rounds/${id}/results`, { credential: token() })).status).toBe(401);
 });
