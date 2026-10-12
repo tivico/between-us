@@ -18,6 +18,16 @@
 
 本次原工作區同時有日常三觀功能開發，因此使用 .worktrees/communication-deploy 與 codex/communication-deploy。公開部署由此工作目錄執行；整合時保留新communication分支與另一主題，網站版本若後續另有新功能須再升版，不用舊main覆蓋已發布溝通入口。
 
+### 0.11 公開部署紀錄
+
+2026-10-12：功能commit `4f22fed` 已推送 origin/codex/communication-deploy；原工作區日常三觀仍在修改，因此未合併main。發布在獨立工作目錄執行 npm run cloudflare:deploy，90項測試與Cloudflare建置通過；Worker版本 `de09a8b1-788e-466c-9309-816ee88561a7`，網址仍為 https://between-us.forest-between-us.workers.dev/ 。沿用原D1，不套remote migration。
+
+公開 check-communication.mjs 通過24題混合／全未分享兩輪完整API（含缺答、狀態／邀請保密、401／423／409、未分享替換與雙方一致結果）；check-cloudflare.mjs通過既有57題回饋／計分，check-long-distance.mjs通過遠距分析，check-questionnaires.mjs八組各四題全部通過（含保密、特殊狀態、建議方向及提交鎖定）。公開主題頁顯示已開放與24題入口，畫面證據保存在本工作目錄 .local/qa/communication-live.png，不進Git。
+
+v0.11.0標籤指向功能commit4f22fed，發布紀錄另以文件commit保存。本次建置仍有超過500KB單一JS檔案的提醒（gzip約154KB），不是建置失敗；慢速網路效能與實體雙手機尚未驗證。
+
+後續主工作區日常三觀完成並提交後，才整合 codex/communication-deploy；合併衝突時保留兩個主題各自的內容／型別／store呼叫，不讓原本「communication為planned」或「只有questionnaire能有特殊kind」的舊程式覆蓋新版。重新check／build／兩個主題畫面與API驗證，再升下一個功能版、重新部署。main尚未整合時，維護溝通功能請使用此發布分支，不直接從舊main重建上線。
+
 ## 0.10 核心價值結論與交流
 
 2026-10-12：改善「完成 57 題後只有分數／圖表、缺少收穫」的問題。先顯示各自相對優先、最多三個共同方向與差異；每卡有具體情境／聊法及可展開的三題依據。再提供四步口頭交流：發現、情境、輪流分享、重新確認。19 類、相近度、公式與 57 題改成可展開區域，沒有刪除。聊天步驟只是本頁引導，不保存或同步，不代表兩人已完成交流；原相近度算法仍是 1.0.0。
