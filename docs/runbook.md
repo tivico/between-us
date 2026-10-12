@@ -15,6 +15,7 @@ npm run check
 npm run build
 npm run build:cloudflare
 node scripts/check-questionnaires.mjs http://127.0.0.1:4182/
+node scripts/check-long-distance.mjs http://127.0.0.1:4182/
 node scripts/check-cloudflare.mjs http://127.0.0.1:4182/
 ```
 
@@ -37,7 +38,13 @@ Windows 工具環境：Vitest 在沙箱中讀轉譯暫存時遇 ENOENT，一般�
 
 ### 0.9 公開發布紀錄
 
-尚待本次部署與公開驗證結果補入。沿用既有 Worker、D1 與網址，不重建資料庫或套用 remote migration。
+2026-10-12：功能整合提交 `c3971e241180b1d713711339ae87c519407dd6e3` 已推送 codex/publish-four-question-qa，v0.9.0 指向此提交並已推送；[草稿 PR #1](https://github.com/tivico/between-us/pull/1) 供分支審閱，沒有改動主工作目錄的未提交資料、沒有合併此 PR 到 main。[GitHub CI 38189932255](https://github.com/tivico/between-us/actions/runs/38189932255) 對該提交 completed/success，包含 75 項測試、兩種建置與 Worker dry-run。
+
+`npm run cloudflare:deploy` 再次完成 75 項測試與建置，回報 Worker 版本 `40f9e3e5-c34c-4ce0-92ea-279aff755577`。公開 [八題組問答](https://between-us.forest-between-us.workers.dev/#/questions) 顯示八張四題卡片，開始畫面及分享說明正確；390px 手機模擬無橫向溢出，Console 無 error／warn。公開 JS `/assets/index-C0ZxS3Ie.js` 與固定建置相符，遠距介紹仍有「開始 24 題雙人探索」。截圖 `.local/questionnaires-live.jpg` 為公開入口證據，不提交到 Git。
+
+公開 `check-questionnaires` 八題組、`check-long-distance` 混合／全未分享兩回合、`check-cloudflare` 57 題全部通過，健康 ok:true。三支腳本這一輪新增十一輪工程 QA；先前短暫部署另留下九輪 QA，均未讀取或刪除使用者原回合。D1、Worker 名稱與網址沿用，沒有 migration、重建或搬移本機答案。兩部實體手機、長期負載、人類理解及內容／提案效果仍未驗證。
+
+版本整合事件：最初以本機較舊 main 基底發布過問答 0.8（Worker `ea0a91ed-2253-4348-a17c-4774e1f5b200`）。查遠端 tag／main 後發現遠距 0.8 已公開，立即恢復已核對的 `31423539-eed2-4686-95f5-bda3d99b1683`，再整合 origin/main `c320a9f`，重跑檢查與 CI，改採 0.9 發布。未覆寫 v0.8.0，未回復或刪除 D1。後續發布前先 fetch、核對遠端 main、既有標籤及最新部署，不只以本機分支或舊文件推定公開功能。
 
 ## 固定開發流程
 
