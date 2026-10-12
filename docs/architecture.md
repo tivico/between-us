@@ -1,6 +1,6 @@
 # 架構與資料流程
 
-## 0.8 遠距雙人分析（分支，未公開部署）
+## 0.8 遠距雙人分析（已公開部署）
 
 `src/content/long-distance.ts` 將研究原稿 24 題及分析設定變成共用 QuizDefinition；`quizzes.ts` 在前端、Node、D1 載入同一份內容。新增的是描述性 analysis，與核心價值 scoring 分開；analysis 只允許已知 kind／version，驗證題號、特殊選項和提案參照。候選原題 0.1.0、回合工具 0.2.0、規則 1.0.0、網站 0.8.0 分別管理。
 

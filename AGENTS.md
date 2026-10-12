@@ -35,7 +35,7 @@
 - 使用者已明確選擇「採用這個 0–100 相近度」：19 類各三題平均減 MRAT，再以平均絕對差等權重換算 100*(1-gap/5)，規則 1.0.0。此指標由本站設計，不作成功率、常模、高低門檻或人生方向總分；任一 19 類輪廓未分化不顯示總分。
 - Node/D1 results 均在驗證雙方提交後，依 round.snapshot 的 scoring 呼叫 compareValues；status／邀請不傳對方答案或比較分數。缺答不能提交，不填零。未來新算法另增版本與分支，保留 1.0.0 演算法，不能直接改舊分支而改掉舊結果。
 
-- 0.8 的 codex/long-distance-analysis 分支已接入 24 題遠距雙人探索；尚未合併 main、推送或公開部署。原創題幹候選 0.1.0、回合工具 0.2.0、描述性分析 1.0.0；ready 仍只代表功能開放，不是題庫／建議效果驗證。
+- 0.8 已合併 main、推送 main／codex/long-distance-analysis／v0.8.0 並於 2026-10-08 公開部署 24 題遠距雙人探索；2026-10-12 公開遠距與既有核心價值 API 續驗通過。沿用原 D1，不需 migration；Worker 版本與 CI 見 docs/runbook.md。原創題幹候選 0.1.0、回合工具 0.2.0、描述性分析 1.0.0；ready 仍只代表功能開放，不是題庫／建議效果驗證。
 - 遠距規則與提案在 src/content/long-distance.ts 的 analysis，執行在 src/domain/long-distance.ts；Node/D1 只能在授權且雙方提交後的 results 呼叫，回傳 pairAnalysis。全部依回合 snapshot，不查新 registry、不用外部生成服務。
 - 忙碌／支持做 A 期待對 B 自述、B 期待對 A 自述；見面本人期待／可行條件放 conditions，不列為兩人的共同點。特殊／彈性選項保留 context、advice:null，不推論一致／衝突，不提供百分比。改提案升工具版、改算法另加分析版本並保留 V1，舊快照不追套。
 - 0.7 獨立「了解關係」在 #/learn 與 #/learn/:id；relationship-articles.ts 保存完整文章／來源，RelationshipPages.tsx 顯示全文。使用者追加結果科普短卡，ResultLearningCards.tsx 接在既有 SharedResults／ValueResults 解鎖後；不做六選項說明。閱讀不需測驗、不存紀錄、不讀私人回合。研究／本站提案與族群限制明示，文章版本獨立於題庫與計分版本。

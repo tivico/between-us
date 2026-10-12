@@ -90,7 +90,7 @@ npm run dev
 
 部署後可執行 `node scripts/check-long-distance.mjs https://between-us.forest-between-us.workers.dev/`，驗證遠距 24 題、缺答／草稿恢復、邀請、401／423／409、雙向分析與本人條件、雙方結果一致、全暫不分享。它只建立兩輪虛構 QA，不讀既有使用者回合、不輸出答案／憑證，不刪資料。加 `--qa-proof` 會把它自建回合的返回入口保存於忽略的 `.local/qa/long-distance-proof.json`，僅供畫面驗證，不提交或轉傳。既有 `scripts/check-cloudflare.mjs` 另驗證 57 題核心價值，兩者分開執行。
 
-狀態：`codex/long-distance-analysis` 分支、本機已驗證；未合併 main、未推送／公開部署。本次使用獨立 worktree，避免與其他聊天同時修改主 checkout。先在該 worktree 執行指令；原本 forest/main 仍可繼續其他工作。網站版 0.8.0、遠距回合工具版 0.2.0、原題候選 0.1.0、描述性規則 1.0.0。
+狀態：2026-10-08 已合併 main、推送 main／遠距分支／v0.8.0 並公開部署；2026-10-12 完成公開 API 與結果畫面續驗。開發／發布使用獨立 worktree，避免納入其他聊天尚未驗收的修改；後續可在 forest/main 正常開發。網站版 0.8.0、遠距回合工具版 0.2.0、原題候選 0.1.0、描述性規則 1.0.0。
 
 **修改與原因**：遠距原本只有研究稿及 planned 卡片；現在可建立完整 24 題雙人回合、自動保存與恢復、A 提交邀請 B、雙方提交後解鎖。結果顯示共同偏好／相符回應、不同需要、各自的見面期待與可行條件，以及至多六項依答案產生的討論提案；卡片展開可查觸發題幹／答案／概念來源。先呈現雙方實際選項，使每項解讀可核對。本人條件不列為兩人的共同點；近期經驗、未確定、未提供固定安排及暫不分享不推論為一致或衝突。題庫與建議效果未驗證、不提供契合分數。
 
@@ -106,7 +106,7 @@ npm run dev
 
 **壞掉時照這個順序查**：
 
-- 仍顯示籌備中／三題示例：先確認是不是 main、公開舊版或另一個 Node 程序。確認 worktree 的 package.json 為 0.8.0，執行下方題庫診斷應回 0.2.0／24／1.0.0。修改共用題庫後需重啟自己啟動的 Node API；Vite 更新畫面不會自動重載 Node 模組。
+- 仍顯示籌備中／三題示例：確認公開網址並重新整理，本機則確認 checkout 的 package.json 為 0.8.0。執行下方題庫診斷應回 0.2.0／24／1.0.0。修改共用題庫後需重啟自己啟動的 Node API；Vite 更新畫面不會自動重載 Node 模組。
 - 保存／提交失敗：Network 看 answers、submit；INCOMPLETE 是仍有未答，暫不分享是合法選項，不能補零。409 看 revision／鎖定狀態；重新載入本人紀錄，不刪資料。
 - 分析沒顯示：先確認雙方提交，results 423 是保護；401 是私人憑證錯誤。等待畫面不能用前端繞過。沒有 analysis 的舊快照仍只看原答案。
 - results 500／畫面提示分析無法讀取：查看公開規則快照是否有 analysis.kind／version、合法 comparison／pairs 題號與排除選項；確認前後端為同一發布版本。Node 只記 API_INTERNAL_ERROR，勿輸出原始憑證或私人答案。先重啟自己的 API，再跑 check；不要靠清空 SQLite 或 D1 止血。
@@ -133,7 +133,21 @@ npm run build:cloudflare
 
 **已驗證與限制**：12 檔／69 項測試，包含 7 項語意／來源／排除／快照測試及 4 項 Node／D1 共同契約；一般與 Cloudflare 建置、Worker dry-run 成功。dry-run 只打包，不上傳或部署；隔離 checkout 的 bundler 讀目錄與 Wrangler log 寫入原被沙箱阻擋，使用一次已授權的執行完成。隔離 5190／5191 服務只用虛構 QA 資料與記憶體 SQLite，完成 A/B 各 24 題 UI、缺答按鈕、草稿重新整理、邀請分享說明、結果解鎖及一致性、建議原因／來源展開、全暫不分享與 390px 模擬。最後全新頁面無 console error／warn，手機無橫向溢出。截圖放該 worktree 的 .local/distance-desktop.png 與 distance-mobile.png，不提交 Git。沒有讀寫使用者原 SQLite，沒有雲端答案或 schema 變更。
 
-尚未完成：合併／公開部署、實體雙手機、認知訪談、本題庫心理測量、建議效果。回復程式時使用已驗證 commit；資料庫無 migration，保留所有原答案，不為回復重建 D1。對外發布另依現有 Cloudflare 步驟，使用固定且已驗證的分支提交，避免把其他聊天的修改一起部署。
+尚未完成：實體雙手機、認知訪談、本題庫心理測量、建議效果。回復程式時使用已驗證 commit；資料庫無 migration，保留所有原答案，不為回復重建 D1。未來發布依現有 Cloudflare 步驟，使用固定且已驗證的提交，避免把其他聊天的修改一起部署。
+
+### 0.8 發布與續驗紀錄
+
+發布日期：2026-10-08；續驗及文件更新：2026-10-12（Asia/Taipei）。功能提交 `045dcc8`，整合最新 main 的提交 `4494500`，公開 API 檢查腳本提交 `cb90ec28cbae4f61bece48b0e6440ae1eada710d`；main、`codex/long-distance-analysis` 與新標籤 `v0.8.0` 已普通推送，沒有 force push 或覆寫舊 tag。合併時保留其他聊天草稿，核對「更認識你」原文件指紋未改，其餘兩份文件只新增本次遠距內容。
+
+[GitHub CI run 37786526935](https://github.com/tivico/between-us/actions/runs/37786526935) 對發布提交回報 completed/success，包含 69 項測試、兩種建置及 Worker dry-run。`npm run cloudflare:deploy` 在固定 checkout 再執行 check／Cloudflare build，再上傳網站資產及 Worker；Wrangler 回報版本 `31423539-eed2-4686-95f5-bda3d99b1683`。2026-10-12 唯讀查 deployments list 確認該版本仍為最新、100% 流量，發布時刻為 2026-10-08 21:44:08（Asia/Taipei）。網址沿用 https://between-us.forest-between-us.workers.dev/ ，D1 沿用原 database_id，沒有 migration、重建 D1 或搬移本機答案。
+
+上次部署已完成，但續驗工作因自動核准服務額度不足中斷；當時 57 題公開檢查未執行。2026-10-12 重新核准執行兩個腳本，實際回報 `LONG_DISTANCE_FLOW_OK` 與 `CLOUDFLARE_FLOW_OK`。遠距檢查涵蓋 24 題、缺答／草稿恢復、邀請分享範圍、陌生憑證 401、提交前結果 423、鎖定後保存 409、雙向期待與自述做法、本人見面條件、相同共同結果及全暫不分享。既有 57 題檢查涵蓋保存、提交、19 類計分與相近度。本輪只新增兩輪遠距及一輪核心價值的虛構 QA，未讀取或刪除既有私人答案。
+
+公開瀏覽器確認 24 題入口、共同點／差異、獨立的期待與可行條件、六張建議卡、觸發答案與研究連結、全暫不分享時無具體建議；新頁面 Console 無 error／warn。390px DOM 量測未見橫向溢出；本次手機截圖工具未能取得影像，不將它記成實體手機或新的手機影像驗收。桌面證據保存於遠距 worktree 的 `.local/distance-live-desktop.png`，不提交 Git。私人 QA 返回入口也僅在忽略的 `.local/qa/long-distance-proof.json`。
+
+發布資料流：main／v0.8.0 固定來源 → GitHub CI → Wrangler 上傳 dist 與 Worker → ASSETS 提供網頁 → `/api/*` 讀寫原 D1 → 雙方提交後依 snapshot 產生 pairAnalysis。GitHub push 本身不會更新網站；本次文件交接提交不改網頁／API，因此不升版、不重新部署或移動 `v0.8.0`。
+
+維護範例：要改「先傾聽」提案，修改 `src/content/long-distance.ts` 的 support／optionAdvice.listen，升遠距工具版並跑 check／build；舊回合仍用其原 snapshot。發布後先安全查看 `/api/health`，再跑相應 smoke check；出現 401／423／409 依上方授權／提交／revision 順序處理，不以刪答案止血。回復時重建已驗證且仍支援既有快照的版本，保留同一個 D1。
 
 
 ## 0.7「了解關係」與結果科普短卡
