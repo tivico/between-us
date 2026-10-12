@@ -1,8 +1,8 @@
 # 維護與除錯
 
-## 0.8 四題雙人問答維護與驗證
+## 0.9 四題雙人問答維護與驗證
 
-2026-10-12 已實作，發布結果另記本節末。入口 #/questions，八組各四題；原白話題目維持不變，未套用候選稿的 12 項修訂提案。網站 0.8.0，運行題庫與描述性規則各 1.0.0；自編題與建議尚未完成測量／效果驗證。
+2026-10-12 已實作，發布結果另記本節末。入口 #/questions，八組各四題；原白話題目維持不變，未套用候選稿的 12 項修訂提案。網站 0.9.0，運行題庫與描述性規則各 1.0.0；自編題與建議尚未完成測量／效果驗證。
 
 重要位置：`docs/quizzes/getting-to-know-you.json` 保存題目、特殊狀態、語意選項 ID、對方選此項時的 guidance、兩人 together 與討論提示；`src/content/questionnaires.ts` 把每組轉成回合定義；`src/domain/conversation.ts` 只依快照做描述性整理；`QuestionnairePages.tsx` 管列表／介紹／結果，`ConversationOptions.tsx` 管四個主要選項、特殊答案展開與未分享操作。`RoundFlow.tsx` 沿用保存、提交及邀請，Node／D1 results 都在雙方完成後才計算。
 
@@ -29,13 +29,13 @@ node scripts/check-cloudflare.mjs http://127.0.0.1:4182/
 5. 未分享仍顯示舊選項：查本人 status 的本題 ID 是否已取代為 not-shared、最後保存是否成功，再查後端結果；不能只用 CSS 隱藏。暫時停用錯誤結果顯示並保留資料。
 6. 500／401／423／409：依既有 Cloudflare 檢查健康與授權，不輸出 token 或答案。423 是雙方尚未完整提交，不是要繞過的限制。
 
-回復時保留 D1 與現有快照。若問答新入口故障，先停止新的問答回合入口，保留 1.0.0 結果算法供已存在回合使用；不可直接退回不認識 questionnaire 的 0.7，造成新回合無法正確解讀。修正後 check／build、畫面驗證、提交與部署。
+回復時保留 D1 與現有快照。若問答新入口故障，先停止新的問答回合入口，保留 1.0.0 結果算法供已存在回合使用；不可直接退回不認識 questionnaire 的 0.8 或更舊版本，造成新回合無法正確解讀。修正後 check／build、畫面驗證、提交與部署。
 
-本次工程驗證：64 項測試（含 Node／D1 的八組回合、快照不追套、特殊狀態及角色互換）與兩種建置通過。4182 的完整 HTTP 檢查與 57 題既有流程通過。瀏覽器使用明確標示的虛構 QA A／B 驗證四題、重新整理續答、把原選項取代為未分享、獨立邀請、提交／解鎖、共同點篩選及個別／雙人提案；390px 手機模擬無橫向溢出，Console 無 error／warn。尚未驗證兩部實體手機、長期負載或自編內容／提案效果。
+本次工程驗證：75 項測試（含 Node／D1 的八組回合、快照不追套、特殊狀態及角色互換）與兩種建置通過。4182 的完整 HTTP 檢查、24 題遠距及 57 題既有流程通過。瀏覽器使用明確標示的虛構 QA A／B 驗證四題、重新整理續答、把原選項取代為未分享、獨立邀請、提交／解鎖、共同點篩選及個別／雙人提案；390px 手機模擬無橫向溢出，Console 無 error／warn。尚未驗證兩部實體手機、長期負載或自編內容／提案效果。
 
-Windows 工具環境：Vitest 在沙箱中讀轉譯暫存時遇 ENOENT，一般本機權限下相同 `npm run check` 通過。發布工作目錄改在 `.worktrees/separate-quiz-and-qa`，分支為 codex/publish-four-question-qa；原 .local 工作目錄因 Windows 拒絕直接搬移而保留，沒有刪除私人資料或放寬 fs.deny。遠距分析分支尚未合併，不包含在本次發布。
+Windows 工具環境：Vitest 在沙箱中讀轉譯暫存時遇 ENOENT，一般本機權限下相同 `npm run check` 通過。發布工作目錄改在 `.worktrees/separate-quiz-and-qa`，分支為 codex/publish-four-question-qa；原 .local 工作目錄因 Windows 拒絕直接搬移而保留，沒有刪除私人資料或放寬 fs.deny。本次整合遠端 main 已公開的遠距 0.8，保留其 24 題與描述性規則；問答採網站 0.9.0，沒有覆寫既有 v0.8.0。
 
-### 0.8 公開發布紀錄
+### 0.9 公開發布紀錄
 
 尚待本次部署與公開驗證結果補入。沿用既有 Worker、D1 與網址，不重建資料庫或套用 remote migration。
 
@@ -125,6 +125,70 @@ npm run dev
 
 `npm run dev` 同時啟動網頁 5173 與 API 8787；需要 Node 24.13 以上。SQLite 固定在 `.local/data/between-us.sqlite`；單人預覽／內容試讀不保存，雙人回合會保存。公開部署與本機資料獨立，詳見下方 Cloudflare 章節。
 
+## 0.8 遠距雙人探索與個別建議
+
+部署後可執行 `node scripts/check-long-distance.mjs https://between-us.forest-between-us.workers.dev/`，驗證遠距 24 題、缺答／草稿恢復、邀請、401／423／409、雙向分析與本人條件、雙方結果一致、全暫不分享。它只建立兩輪虛構 QA，不讀既有使用者回合、不輸出答案／憑證，不刪資料。加 `--qa-proof` 會把它自建回合的返回入口保存於忽略的 `.local/qa/long-distance-proof.json`，僅供畫面驗證，不提交或轉傳。既有 `scripts/check-cloudflare.mjs` 另驗證 57 題核心價值，兩者分開執行。
+
+狀態：2026-10-08 已合併 main、推送 main／遠距分支／v0.8.0 並公開部署；2026-10-12 完成公開 API 與結果畫面續驗。開發／發布使用獨立 worktree，避免納入其他聊天尚未驗收的修改；後續可在 forest/main 正常開發。網站版 0.8.0、遠距回合工具版 0.2.0、原題候選 0.1.0、描述性規則 1.0.0。
+
+**修改與原因**：遠距原本只有研究稿及 planned 卡片；現在可建立完整 24 題雙人回合、自動保存與恢復、A 提交邀請 B、雙方提交後解鎖。結果顯示共同偏好／相符回應、不同需要、各自的見面期待與可行條件，以及至多六項依答案產生的討論提案；卡片展開可查觸發題幹／答案／概念來源。先呈現雙方實際選項，使每項解讀可核對。本人條件不列為兩人的共同點；近期經驗、未確定、未提供固定安排及暫不分享不推論為一致或衝突。題庫與建議效果未驗證、不提供契合分數。
+
+**檔案與實際流程**：
+
+1. `docs/quizzes/long-distance-candidate.json` 保留研究原稿及逐題證據；`src/content/long-distance.ts` 將 24 題轉成共用 QuizDefinition，宣告 analysis.comparisons（14 題偏好）、pairs（忙碌／支持雙向、見面本人條件）、排除選項、optionAdvice 與逐題討論提示。工具候選的 PRI 等三個來源不作產品題目來源；產品只列實際引用的五篇概念研究。
+2. `quizzes.ts` 匯入 longDistanceQuiz，仍維持五個主題；`validateQuiz` 檢查題號、建議、選項參照、版本與完整提示。ready 是功能開放，research-informed 是證據狀態。
+3. StartRound → POST /api/rounds；Node／D1 保存整份 quiz 到 rounds.snapshot。PUT answers 暫存，POST submit 驗證 24 題都有合法選項；稍後回答仍未答，選暫不分享則已答，但不提供可比較內容。原本的 revision、提交鎖定與授權規則不變。
+4. A 完成後以邀請讓 B 加入；InvitationPreview 只新增 hasPairAnalysis 表明分享範圍，不含分析／對方答案。status 仍只回本人答案與對方完成狀態；quiz.analysis 是公開規則模板，不是結果。
+5. GET /api/rounds/:id/results：Node `server/store.mjs`、D1 `cloudflare/store.mjs` 都先授權且確認兩人提交，之後呼叫 `analyzeDistance(snapshot, A, B)`。缺答／非法答案／破損或未知規則拒絕分析，不補值。
+6. `src/domain/long-distance.ts` 的 V1 產生 common、differences、conditions、context、suggestions；忙碌／支持是 A 希望對 B 自述、B 希望對 A 自述兩個方向，見面是本人希望對本人可行條件。排序是編輯安排，不是心理風險排名。模板與 optionAdvice 讀 snapshot，不查最新題庫、不呼叫外部 AI／生成服務、不傳送額外答案。
+7. SharedResults → `LongDistanceResults.tsx`／其獨立 CSS：共同點／差異預設各三組，可展開其他；條件獨立呈現；建議卡可查為何出現；context 保留原選項。原 24 題並排也保留逐題提示；不適用等答案不要求補原因。原核心價值算法與科普卡仍保留。
+
+**壞掉時照這個順序查**：
+
+- 仍顯示籌備中／三題示例：確認公開網址並重新整理，本機則確認 checkout 的 package.json 為 0.8.0。執行下方題庫診斷應回 0.2.0／24／1.0.0。修改共用題庫後需重啟自己啟動的 Node API；Vite 更新畫面不會自動重載 Node 模組。
+- 保存／提交失敗：Network 看 answers、submit；INCOMPLETE 是仍有未答，暫不分享是合法選項，不能補零。409 看 revision／鎖定狀態；重新載入本人紀錄，不刪資料。
+- 分析沒顯示：先確認雙方提交，results 423 是保護；401 是私人憑證錯誤。等待畫面不能用前端繞過。沒有 analysis 的舊快照仍只看原答案。
+- results 500／畫面提示分析無法讀取：查看公開規則快照是否有 analysis.kind／version、合法 comparison／pairs 題號與排除選項；確認前後端為同一發布版本。Node 只記 API_INTERNAL_ERROR，勿輸出原始憑證或私人答案。先重啟自己的 API，再跑 check；不要靠清空 SQLite 或 D1 止血。
+- 期待對錯人：看該 finding.evidence 的 slot／questionId／role；A 的 wanted 要連 B 的 provided，再反向。見面兩項必須同 slot，且只進 conditions。
+- 暫不分享被列共同點、未知做法被判差異：先看 snapshot.analysis.excludedOptionIds，檢查 special 選項是不是被重命名。context 的 advice 必須為 null，suggestions 不得含它。純粹未答仍不可提交。
+- 手機卡片擠出：看 LongDistanceResults.css 的 min-width、overflow-wrap 和 720／400px 斷點；不要刪除原答案來縮短。開發中變更結果契約後先重新載入新頁並重啟測試 API，避免舊 React state／舊後端混合。
+
+安全診斷（只輸出公開題庫資訊）：
+
+```powershell
+node --input-type=module -e "import { getQuiz } from './src/content/quizzes.ts'; const q=getQuiz('long-distance'); console.log(q.version,q.questions.length,q.analysis.version);"
+npm run check
+npm run build
+npm run build:cloudflare
+```
+
+**教到能自行修改**：
+
+「快照」就是建立這輪時存下來的一份題目與規則副本。之後更新題庫只影響新回合；結果不能回頭讀最新模板，否則同一輪會無故改變。
+
+例子：要改「先傾聽」的建議，在 long-distance.ts 的 pairs 找 support → optionAdvice.listen，保留選項 ID。這是新提案，升遠距工具版、同步研究文件；舊回合的那句提案仍由原 snapshot 保留。若改配對演算法，另加分析版本與分支、保留 analyzeDistanceV1，不直接改 V1。新增選項先同步原稿與對應的期待／實際題、更新映射；若新增題目數，連同 importer 的完整題序檢查、入口題數與必要測試一起改，不把 ID 當數值。
+
+驗證需確認雙向 slot、特殊選項不推論、缺答不能提交、舊快照不追套，以及 Node／D1 一致。即使工程測試通過，仍不能把 evidence 改為 validated 或宣稱建議已有效。
+
+**已驗證與限制**：12 檔／69 項測試，包含 7 項語意／來源／排除／快照測試及 4 項 Node／D1 共同契約；一般與 Cloudflare 建置、Worker dry-run 成功。dry-run 只打包，不上傳或部署；隔離 checkout 的 bundler 讀目錄與 Wrangler log 寫入原被沙箱阻擋，使用一次已授權的執行完成。隔離 5190／5191 服務只用虛構 QA 資料與記憶體 SQLite，完成 A/B 各 24 題 UI、缺答按鈕、草稿重新整理、邀請分享說明、結果解鎖及一致性、建議原因／來源展開、全暫不分享與 390px 模擬。最後全新頁面無 console error／warn，手機無橫向溢出。截圖放該 worktree 的 .local/distance-desktop.png 與 distance-mobile.png，不提交 Git。沒有讀寫使用者原 SQLite，沒有雲端答案或 schema 變更。
+
+尚未完成：實體雙手機、認知訪談、本題庫心理測量、建議效果。回復程式時使用已驗證 commit；資料庫無 migration，保留所有原答案，不為回復重建 D1。未來發布依現有 Cloudflare 步驟，使用固定且已驗證的提交，避免把其他聊天的修改一起部署。
+
+### 0.8 發布與續驗紀錄
+
+發布日期：2026-10-08；續驗及文件更新：2026-10-12（Asia/Taipei）。功能提交 `045dcc8`，整合最新 main 的提交 `4494500`，公開 API 檢查腳本提交 `cb90ec28cbae4f61bece48b0e6440ae1eada710d`；main、`codex/long-distance-analysis` 與新標籤 `v0.8.0` 已普通推送，沒有 force push 或覆寫舊 tag。合併時保留其他聊天草稿，核對「更認識你」原文件指紋未改，其餘兩份文件只新增本次遠距內容。
+
+[GitHub CI run 37786526935](https://github.com/tivico/between-us/actions/runs/37786526935) 對發布提交回報 completed/success，包含 69 項測試、兩種建置及 Worker dry-run。`npm run cloudflare:deploy` 在固定 checkout 再執行 check／Cloudflare build，再上傳網站資產及 Worker；Wrangler 回報版本 `31423539-eed2-4686-95f5-bda3d99b1683`。2026-10-12 唯讀查 deployments list 確認該版本仍為最新、100% 流量，發布時刻為 2026-10-08 21:44:08（Asia/Taipei）。網址沿用 https://between-us.forest-between-us.workers.dev/ ，D1 沿用原 database_id，沒有 migration、重建 D1 或搬移本機答案。
+
+上次部署已完成，但續驗工作因自動核准服務額度不足中斷；當時 57 題公開檢查未執行。2026-10-12 重新核准執行兩個腳本，實際回報 `LONG_DISTANCE_FLOW_OK` 與 `CLOUDFLARE_FLOW_OK`。遠距檢查涵蓋 24 題、缺答／草稿恢復、邀請分享範圍、陌生憑證 401、提交前結果 423、鎖定後保存 409、雙向期待與自述做法、本人見面條件、相同共同結果及全暫不分享。既有 57 題檢查涵蓋保存、提交、19 類計分與相近度。本輪只新增兩輪遠距及一輪核心價值的虛構 QA，未讀取或刪除既有私人答案。
+
+公開瀏覽器確認 24 題入口、共同點／差異、獨立的期待與可行條件、六張建議卡、觸發答案與研究連結、全暫不分享時無具體建議；新頁面 Console 無 error／warn。390px DOM 量測未見橫向溢出；本次手機截圖工具未能取得影像，不將它記成實體手機或新的手機影像驗收。桌面證據保存於遠距 worktree 的 `.local/distance-live-desktop.png`，不提交 Git。私人 QA 返回入口也僅在忽略的 `.local/qa/long-distance-proof.json`。
+
+發布資料流：main／v0.8.0 固定來源 → GitHub CI → Wrangler 上傳 dist 與 Worker → ASSETS 提供網頁 → `/api/*` 讀寫原 D1 → 雙方提交後依 snapshot 產生 pairAnalysis。GitHub push 本身不會更新網站；本次文件交接提交不改網頁／API，因此不升版、不重新部署或移動 `v0.8.0`。
+
+維護範例：要改「先傾聽」提案，修改 `src/content/long-distance.ts` 的 support／optionAdvice.listen，升遠距工具版並跑 check／build；舊回合仍用其原 snapshot。發布後先安全查看 `/api/health`，再跑相應 smoke check；出現 401／423／409 依上方授權／提交／revision 順序處理，不以刪答案止血。回復時重建已驗證且仍支援既有快照的版本，保留同一個 D1。
+
+
 ## 0.7「了解關係」與結果科普短卡
 
 使用者指定獨立完整文章與可查核來源，並追加結果科普短卡；不加六選項說明。文章入口為 #/learn，全文為 #/learn/:id。第一批為核心價值、感受到的回應、遠距日常，每篇 1.0.0。估計閱讀時間不是實測。來源查核於 2026-10-08，依原始論文工具／摘要／模型／方法段落，不宣稱系統性回顧；研究段落就近附 DOI，篇末附方法、閱讀範圍及全文入口。本站生活例子／聊天提案另外標示，不是已驗證介入。
@@ -183,7 +247,9 @@ npm run dev
 
 ## 常見修改位置
 
-### 遠距戀愛候選內容（2026-10-08）
+### 遠距戀愛初次研究交付紀錄（2026-10-08）
+
+以下是接入前的歷史記錄；目前分支功能與維護見本文件上方 0.8 章節。
 
 研究與完整 24 題見 [遠距候選稿](quizzes/long-distance.md)，結構化原稿為 `docs/quizzes/long-distance-candidate.json`。每題記錄穩定 ID、來源、原創改寫邊界與結果討論提案；三段只是閱讀分類，不是三個量表分數。流程為期刊／作者材料 → 來源查核記錄 → 候選 JSON → 審閱稿 → 後續內容審查；目前沒有 HTTP 請求、答案保存或前端匯入。
 

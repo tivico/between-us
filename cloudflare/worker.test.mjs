@@ -94,7 +94,7 @@ it('驗證 HTTP JSON 格式、大小、同意分享與未準備主題', async ()
   expect((await call('/api/rounds', { method: 'POST', body: {}, contentType: 'text/plain' })).status).toBe(415);
   const input = { quizId: 'core-values-example', nickname: '人', privateToken: token(), consent: false };
   expect((await call('/api/rounds', { method: 'POST', body: input })).body.code).toBe('CONSENT_REQUIRED');
-  expect((await call('/api/rounds', { method: 'POST', body: { ...input, consent: true, quizId: 'long-distance' } })).body.code).toBe('TOPIC_UNAVAILABLE');
+  expect((await call('/api/rounds', { method: 'POST', body: { ...input, consent: true, quizId: 'communication' } })).body.code).toBe('TOPIC_UNAVAILABLE');
 });
 
 

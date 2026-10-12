@@ -5,6 +5,7 @@ import { dirname } from 'node:path';
 import { roundQuizzes } from '../src/content/quizzes.ts';
 import { compareValues } from '../src/domain/compatibility.ts';
 import { compareConversation } from '../src/domain/conversation.ts';
+import { analyzeDistance } from '../src/domain/long-distance.ts';
 
 export class RoundError extends Error {
   constructor(code, message, status = 400) { super(message); this.code = code; this.status = status; }
@@ -136,7 +137,7 @@ export class RoundStore {
     const a = this.db.prepare("SELECT nickname FROM participants WHERE round_id = ? AND slot = 'A'").get(round.id);
     const b = this.db.prepare("SELECT 1 FROM participants WHERE round_id = ? AND slot = 'B'").get(round.id);
     const quiz = JSON.parse(round.snapshot);
-    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), claimed: Boolean(b) };
+    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), hasPairAnalysis: Boolean(quiz.analysis), claimed: Boolean(b) };
   }
   claim({ invitationToken, nickname, consent, privateToken }) {
     requireToken(privateToken);
@@ -161,7 +162,8 @@ export class RoundStore {
     const round = this.db.prepare('SELECT snapshot,created_at FROM rounds WHERE id = ?').get(id);
     const quiz = JSON.parse(round.snapshot);
     const comparison = compareValues(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
+    const pairAnalysis = analyzeDistance(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
     const conversation = compareConversation(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
-    return { quiz, ...(comparison ? { comparison } : {}), ...(conversation ? { conversation } : {}), createdAt: round.created_at, participants: participants.map((person) => ({ slot: person.slot, nickname: person.nickname, answers: JSON.parse(person.answers), submittedAt: person.submitted_at })) };
+    return { quiz, ...(comparison ? { comparison } : {}), ...(conversation ? { conversation } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((person) => ({ slot: person.slot, nickname: person.nickname, answers: JSON.parse(person.answers), submittedAt: person.submitted_at })) };
   }
 }
