@@ -57,3 +57,5 @@
 - 0.10 核心價值結論與四步口頭交流：新工具 0.4.0 快照保存 feedback V1；Node/D1 解鎖後共用 value-feedback.ts。舊完整 0.3.0 符合固定映射可加明示 V1 閱讀層，不改答案／分數。共同方向要求雙方高於本人平均，差異按 gap 選最多三個；不足不硬湊、同分明示、未分化不排序。face 保留數據，因 q49 譯法待核對暫不生成敘事。不得覆寫 V1 追改舊報告，不推定人格／衝突模式；聊天 state 只在當前頁面，不保存或同步。
 
 - 本分支 0.9 接入 #/questions 的八組四題雙人問答，與主題測驗分開；運行來源 docs/quizzes/getting-to-know-you.json，questionnaires.ts 轉為 roundQuizzes，conversation.ts 規則 1.0.0 只在 Node／D1 解鎖 results 執行。特殊狀態不算共同／不同、不給個別提案；not-shared 取代本題原選項。改題或 guidance 升內容版，改算法保留 V1 再加新版本。本次保留已公開遠距 0.8 的全部功能與規則。
+
+- 0.11 溝通24題依使用者直接發布要求接入；src/content/communication.ts工具0.3.0、src/domain/communication.ts分析1.0.0，原創候選0.2.0。Node／D1僅授權且雙方提交後依snapshot產生communicationAnalysis；status／邀請不洩漏對方答案。特殊kind為context、advice:null，未分享取代原選項。無分數／人格判定／新schema，原V1保留。獨立工作目錄codex/communication-deploy避免混入同時進行的日常三觀；版本與公開驗證見docs/runbook.md。
