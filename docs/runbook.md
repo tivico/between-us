@@ -1,5 +1,51 @@
 # 維護與除錯
 
+## 0.9 四題雙人問答維護與驗證
+
+2026-10-12 已實作，發布結果另記本節末。入口 #/questions，八組各四題；原白話題目維持不變，未套用候選稿的 12 項修訂提案。網站 0.9.0，運行題庫與描述性規則各 1.0.0；自編題與建議尚未完成測量／效果驗證。
+
+重要位置：`docs/quizzes/getting-to-know-you.json` 保存題目、特殊狀態、語意選項 ID、對方選此項時的 guidance、兩人 together 與討論提示；`src/content/questionnaires.ts` 把每組轉成回合定義；`src/domain/conversation.ts` 只依快照做描述性整理；`QuestionnairePages.tsx` 管列表／介紹／結果，`ConversationOptions.tsx` 管四個主要選項、特殊答案展開與未分享操作。`RoundFlow.tsx` 沿用保存、提交及邀請，Node／D1 results 都在雙方完成後才計算。
+
+自行修改例子：想改「壓力很大時」對方選「一起整理下一步」的建議，改 JSON 對應選項的 guidance，再升內容 version；不改本人選項或把提案放到共用畫面。給 A 的內容源自 B 的答案，改完要檢查角色互換。不因問答升版修改 core-values 的工具／算法版本。
+
+安全驗證順序：
+
+```powershell
+npm run check
+npm run build
+npm run build:cloudflare
+node scripts/check-questionnaires.mjs http://127.0.0.1:4182/
+node scripts/check-long-distance.mjs http://127.0.0.1:4182/
+node scripts/check-cloudflare.mjs http://127.0.0.1:4182/
+```
+
+4182 是本次隔離 Worker 測試埠；一般 cloudflare:dev 為 4180，依實際網址改指令。check-questionnaires 會建立八個新的工程 QA 回合，驗證缺一題不能提交、只有本組四題、特殊狀態不算差異、B 未提交的 423、陌生憑證 401、兩人相同結果與提交後 409。另一支腳本保護原 57 題核心價值流程。它們不讀既有答案、不輸出憑證或私人連結；在雲端執行會留下八加一輪明確命名的 QA 資料，不以刪 D1 或使用者回合清理。
+
+排查順序：
+
+1. 找不到問答入口：確認 #/questions，重新整理後查部署版本與新 dist，僅推 Git 不會更新 Worker。
+2. 四題答完還不能提交：查是否四題都有選項或明確未分享、儲存狀態是否完成，再查 status.quiz.questions 是否只有四題。本組不能混入其他組；不能只改前端進度分母。
+3. 沒看到共同點／建議：先看是否特殊狀態，context 不提供個別建議是預期；再查已解鎖的 results 是否有 conversation、快照 questionnaire.version 是否為 1.0.0。未解鎖時不要用 status 偷算比較。
+4. 給兩人的方向不對：依序查題目 ID、語意選項 ID、guidance 與 A／B 映射。期待題不代表實際做法；不改原答案來配合建議。
+5. 未分享仍顯示舊選項：查本人 status 的本題 ID 是否已取代為 not-shared、最後保存是否成功，再查後端結果；不能只用 CSS 隱藏。暫時停用錯誤結果顯示並保留資料。
+6. 500／401／423／409：依既有 Cloudflare 檢查健康與授權，不輸出 token 或答案。423 是雙方尚未完整提交，不是要繞過的限制。
+
+回復時保留 D1 與現有快照。若問答新入口故障，先停止新的問答回合入口，保留 1.0.0 結果算法供已存在回合使用；不可直接退回不認識 questionnaire 的 0.8 或更舊版本，造成新回合無法正確解讀。修正後 check／build、畫面驗證、提交與部署。
+
+本次工程驗證：75 項測試（含 Node／D1 的八組回合、快照不追套、特殊狀態及角色互換）與兩種建置通過。4182 的完整 HTTP 檢查、24 題遠距及 57 題既有流程通過。瀏覽器使用明確標示的虛構 QA A／B 驗證四題、重新整理續答、把原選項取代為未分享、獨立邀請、提交／解鎖、共同點篩選及個別／雙人提案；390px 手機模擬無橫向溢出，Console 無 error／warn。尚未驗證兩部實體手機、長期負載或自編內容／提案效果。
+
+Windows 工具環境：Vitest 在沙箱中讀轉譯暫存時遇 ENOENT，一般本機權限下相同 `npm run check` 通過。發布工作目錄改在 `.worktrees/separate-quiz-and-qa`，分支為 codex/publish-four-question-qa；原 .local 工作目錄因 Windows 拒絕直接搬移而保留，沒有刪除私人資料或放寬 fs.deny。本次整合遠端 main 已公開的遠距 0.8，保留其 24 題與描述性規則；問答採網站 0.9.0，沒有覆寫既有 v0.8.0。
+
+### 0.9 公開發布紀錄
+
+2026-10-12：功能整合提交 `c3971e241180b1d713711339ae87c519407dd6e3` 已推送 codex/publish-four-question-qa，v0.9.0 指向此提交並已推送；[草稿 PR #1](https://github.com/tivico/between-us/pull/1) 供分支審閱，沒有改動主工作目錄的未提交資料、沒有合併此 PR 到 main。[GitHub CI 38189932255](https://github.com/tivico/between-us/actions/runs/38189932255) 對該提交 completed/success，包含 75 項測試、兩種建置與 Worker dry-run。
+
+`npm run cloudflare:deploy` 再次完成 75 項測試與建置，回報 Worker 版本 `40f9e3e5-c34c-4ce0-92ea-279aff755577`。公開 [八題組問答](https://between-us.forest-between-us.workers.dev/#/questions) 顯示八張四題卡片，開始畫面及分享說明正確；390px 手機模擬無橫向溢出，Console 無 error／warn。公開 JS `/assets/index-C0ZxS3Ie.js` 與固定建置相符，遠距介紹仍有「開始 24 題雙人探索」。截圖 `.local/questionnaires-live.jpg` 為公開入口證據，不提交到 Git。
+
+公開 `check-questionnaires` 八題組、`check-long-distance` 混合／全未分享兩回合、`check-cloudflare` 57 題全部通過，健康 ok:true。三支腳本這一輪新增十一輪工程 QA；先前短暫部署另留下九輪 QA，均未讀取或刪除使用者原回合。D1、Worker 名稱與網址沿用，沒有 migration、重建或搬移本機答案。兩部實體手機、長期負載、人類理解及內容／提案效果仍未驗證。
+
+版本整合事件：最初以本機較舊 main 基底發布過問答 0.8（Worker `ea0a91ed-2253-4348-a17c-4774e1f5b200`）。查遠端 tag／main 後發現遠距 0.8 已公開，立即恢復已核對的 `31423539-eed2-4686-95f5-bda3d99b1683`，再整合 origin/main `c320a9f`，重跑檢查與 CI，改採 0.9 發布。未覆寫 v0.8.0，未回復或刪除 D1。後續發布前先 fetch、核對遠端 main、既有標籤及最新部署，不只以本機分支或舊文件推定公開功能。
+
 ## 固定開發流程
 
 整理日期：2026-10-08。這是後續建議採用的工作規律，不是新增自動化或保證每週發布。現況先看 [README 核心總覽](../README.md#核心內容與現況總覽)，產品邊界看 [product.md](product.md)，實際請求與保存方式看 [architecture.md](architecture.md)。下方版本章節是當時的驗收／發布紀錄；早期限制需配合後續版本閱讀。

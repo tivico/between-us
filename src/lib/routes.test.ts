@@ -11,6 +11,8 @@ describe('直接連結與路由', () => {
     expect(parseRoute('#/demo/core-values')).toEqual({ page: 'demo', id: 'core-values' });
     expect(parseRoute('#/trial/core-values')).toEqual({ page: 'trial', id: 'core-values' });
     expect(parseRoute('#/learn')).toEqual({ page: 'learn' });
+    expect(parseRoute('#/questions')).toEqual({ page: 'questions' });
+    expect(parseRoute('#/questions/know-daily')).toEqual({ page: 'question-topic', id: 'know-daily' });
     expect(parseRoute('#/learn/feeling-understood')).toEqual({ page: 'article', id: 'feeling-understood' });
   });
   it('不把格式錯誤或額外路徑視為有效主題', () => {

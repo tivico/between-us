@@ -39,3 +39,5 @@
 - 遠距規則與提案在 src/content/long-distance.ts 的 analysis，執行在 src/domain/long-distance.ts；Node/D1 只能在授權且雙方提交後的 results 呼叫，回傳 pairAnalysis。全部依回合 snapshot，不查新 registry、不用外部生成服務。
 - 忙碌／支持做 A 期待對 B 自述、B 期待對 A 自述；見面本人期待／可行條件放 conditions，不列為兩人的共同點。特殊／彈性選項保留 context、advice:null，不推論一致／衝突，不提供百分比。改提案升工具版、改算法另加分析版本並保留 V1，舊快照不追套。
 - 0.7 獨立「了解關係」在 #/learn 與 #/learn/:id；relationship-articles.ts 保存完整文章／來源，RelationshipPages.tsx 顯示全文。使用者追加結果科普短卡，ResultLearningCards.tsx 接在既有 SharedResults／ValueResults 解鎖後；不做六選項說明。閱讀不需測驗、不存紀錄、不讀私人回合。研究／本站提案與族群限制明示，文章版本獨立於題庫與計分版本。
+
+- 本分支 0.9 接入 #/questions 的八組四題雙人問答，與主題測驗分開；運行來源 docs/quizzes/getting-to-know-you.json，questionnaires.ts 轉為 roundQuizzes，conversation.ts 規則 1.0.0 只在 Node／D1 解鎖 results 執行。特殊狀態不算共同／不同、不給個別提案；not-shared 取代本題原選項。改題或 guidance 升內容版，改算法保留 V1 再加新版本。本次保留已公開遠距 0.8 的全部功能與規則。

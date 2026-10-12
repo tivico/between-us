@@ -1,5 +1,6 @@
 export type TopicStatus = 'draft' | 'planned' | 'ready';
-export type EvidenceStatus = 'research-informed' | 'validated';
+export type EvidenceStatus = 'self-authored' | 'research-informed' | 'validated';
+export type ResponseKind = 'choice' | 'other' | 'varies' | 'uncertain' | 'not-applicable' | 'not-experienced' | 'not-shared';
 export type Theme = 'sage' | 'clay' | 'sand' | 'lavender' | 'blue';
 
 export interface ResearchSource {
@@ -17,7 +18,9 @@ export interface Question {
   dimension: string;
   prompt: string;
   help: string;
-  options: { id: string; label: string }[];
+  options: { id: string; label: string; kind?: ResponseKind; guidance?: string }[];
+  discussion?: string;
+  together?: string;
   evidence: {
     status: EvidenceStatus;
     sourceIds: string[];
@@ -40,6 +43,7 @@ export interface QuizDefinition {
   sources: ResearchSource[];
   evidenceSummary: string;
   instructions?: string;
+  questionnaire?: { kind: 'four-question-conversation'; version: '1.0.0'; groupId: string; depth: '輕鬆' | '深入' | '較私密' };
   analysis?: {
     kind: 'long-distance-paired';
     version: '1.0.0';
@@ -79,13 +83,26 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     const optionIds = new Set(question.options.map((option) => option.id));
     if (optionIds.size !== question.options.length) errors.push(`選項 ID 重複：${question.id}`);
     if (question.options.some((option) => !option.id.trim() || !option.label.trim())) errors.push(`空白選項：${question.id}`);
-    if (!question.evidence.sourceIds.length) errors.push(`缺少研究來源：${question.id}`);
+    if (!question.evidence.sourceIds.length && question.evidence.status !== 'self-authored') errors.push(`缺少研究來源：${question.id}`);
     for (const sourceId of question.evidence.sourceIds) {
       if (!sourceIds.has(sourceId)) errors.push(`找不到研究來源：${question.id}/${sourceId}`);
     }
     if (!question.evidence.note.trim()) errors.push(`缺少依據說明：${question.id}`);
   }
   if (quiz.status === 'ready' && !quiz.questions.length) errors.push('正式測驗不能沒有題目');
+  if (quiz.questionnaire) {
+    if (quiz.questionnaire.kind !== 'four-question-conversation' || quiz.questionnaire.version !== '1.0.0' || !quiz.questionnaire.groupId.trim()) errors.push('不支援的問答規則');
+    if (quiz.questions.length !== 4 || quiz.scoring) errors.push('雙人問答每輪需四題且不能附量表計分');
+    for (const question of quiz.questions) {
+      const choices = question.options.filter((option) => option.kind === 'choice');
+      if (choices.length !== 4 || choices.some((option) => !option.guidance?.trim()) || !question.discussion?.trim() || !question.together?.trim()) errors.push(`問答選項或建議不完整：${question.id}`);
+      if (question.options.filter((option) => option.kind === 'not-shared').length !== 1) errors.push(`缺少唯一未分享狀態：${question.id}`);
+    }
+  }
+  for (const question of quiz.questions) {
+    if (!quiz.questionnaire && question.options.some((option) => option.kind)) errors.push(`特殊問答狀態不能加入既有測驗：${question.id}`);
+    if (question.options.some((option) => option.kind && !['choice', 'other', 'varies', 'uncertain', 'not-applicable', 'not-experienced', 'not-shared'].includes(option.kind))) errors.push(`未知答案狀態：${question.id}`);
+  }
   if (quiz.scoring) {
     const scoring = quiz.scoring;
     if (scoring.kind !== 'pvqrr-centered-distance' || scoring.version !== '1.0.0') errors.push('不支援的計分版本');

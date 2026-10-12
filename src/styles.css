@@ -17,6 +17,40 @@
   --art-light: #f7f5ef;
   --art-sun: #d8b66e;
 }
+.qa-entry { display: flex; align-items: center; justify-content: space-between; gap: 28px; padding: 28px 32px; margin-bottom: 44px; border: 1px solid var(--line); background: #eceee3; border-radius: 14px; }
+.qa-entry .eyebrow { margin-bottom: 8px; }
+.qa-entry p:last-child { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+.qa-entry .button { flex-shrink: 0; }
+.qa-library { padding: 52px 0 64px; }
+.qa-library h1 { font-size: clamp(29px, 4vw, 43px); line-height: 1.6; margin-bottom: 20px; }
+.qa-library-note { color: var(--muted); font-size: 14px; max-width: 760px; margin: 20px 0 30px; }
+.qa-library .card-body h2 { font-size: 23px; }
+.qa-source-note { margin: 32px 0; padding: 22px; background: #eeeee5; border: 1px solid var(--line); border-radius: 10px; }
+.qa-source-note summary { font-size: 14px; }
+.qa-source-note p { font-size: 13px; margin: 18px 0 0; }
+.qa-other-options { padding: 14px 18px; border: 1px solid var(--line); border-radius: 8px; font-size: 14px; }
+.qa-other-options .options { margin-top: 16px; }
+.qa-other-options .option { padding: 13px; font-size: 14px; }
+.qa-withhold { margin-top: 18px; }
+.qa-withhold[aria-pressed="true"] { font-weight: 600; }
+.qa-withhold-note { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
+.qa-result-filters { width: fit-content; max-width: 100%; flex-wrap: wrap; margin: 28px 0; }
+.qa-result-tag { display: inline-block; font-size: 12px; padding: 5px 12px; border-radius: 18px; background: #e7ebdf; margin-bottom: 20px; }
+.qa-different { background: #f0e6dd; }
+.qa-context { background: #ece8ee; }
+.qa-result-explanation { color: var(--muted); font-size: 13px; margin: 20px 0; }
+.qa-advice { background: #f3f3eb; padding: 18px; border-radius: 10px; margin: 20px 0; font-size: 14px; }
+.qa-advice summary { font-weight: 500; }
+.qa-advice h3 { font-size: 14px; margin: 22px 0 10px; }
+.qa-advice p { margin-bottom: 12px; }
+.qa-advice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.qa-advice-limit { color: var(--muted); font-size: 12px; }
+@media (max-width: 640px) {
+  .qa-entry { display: block; padding: 24px; }
+  .qa-entry .button { margin-top: 22px; width: 100%; }
+  .qa-advice-grid { grid-template-columns: 1fr; gap: 0; }
+  .qa-result-filters .filter { padding: 8px 11px; font-size: 12px; }
+}
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin: 0; }
