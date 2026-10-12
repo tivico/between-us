@@ -1,0 +1,2070 @@
+{
+  "version": "1.0.0",
+  "ruleVersion": "1.0.0",
+  "groups": [
+    {
+      "id": "daily",
+      "title": "日常與相處節奏",
+      "subtitle": "看看平常的你，喜歡怎麼過日子。",
+      "depth": "輕鬆",
+      "theme": "sage",
+      "motif": "arches",
+      "questions": [
+        {
+          "id": "know-daily-free-day",
+          "prompt": "以最近兩週的生活狀況來說，如果多出一天不用工作或處理既定責任的空檔，你最想先安排什麼？",
+          "options": [
+            {
+              "id": "stay-home",
+              "label": "待在家休息，做點自己的事",
+              "kind": "choice",
+              "guidance": "可以先問對方想在家怎麼休息，不把空檔全部排滿。"
+            },
+            {
+              "id": "go-out",
+              "label": "出門走走，換個環境",
+              "kind": "choice",
+              "guidance": "可以邀對方選一個想去的地方，再確認當天體力。"
+            },
+            {
+              "id": "connect",
+              "label": "約重要的人一起相處",
+              "kind": "choice",
+              "guidance": "可以先確認對方想和誰相處，以及是否想留一段兩人時間。"
+            },
+            {
+              "id": "personal-project",
+              "label": "投入一件一直想做的興趣或計畫",
+              "kind": "choice",
+              "guidance": "可以問對方想投入哪件事，再決定要參與還是各自安排。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "如果這天我們一起過，有沒有哪一段時間你想留給自己？",
+          "together": "一起各留一段想做的事，再確認願意共同安排的時間。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-daily-plan",
+          "prompt": "安排一次兩人的出遊，你目前比較喜歡哪種方式？",
+          "options": [
+            {
+              "id": "scheduled",
+              "label": "事先排好主要行程與時間",
+              "kind": "choice",
+              "guidance": "可以先一起確認主要行程與時間，再談哪些地方保留彈性。"
+            },
+            {
+              "id": "priorities",
+              "label": "先決定一兩個必去的地方，其他當天再說",
+              "kind": "choice",
+              "guidance": "可以先各提一個重點，確認其餘時間是否接受臨時安排。"
+            },
+            {
+              "id": "on-arrival",
+              "label": "只約好出發時間與集合地點，到了再安排",
+              "kind": "choice",
+              "guidance": "可以約好集合與返程的必要條件，再詢問當天想去哪裡。"
+            },
+            {
+              "id": "alternatives",
+              "label": "先列出幾種備案，依當天狀況挑選",
+              "kind": "choice",
+              "guidance": "可以先一起列幾個可行備案，不把備案當成必須全做。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪些安排你希望提前知道，哪些可以臨時決定？",
+          "together": "先確認必要安排，再各說一個想保留彈性的地方。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-daily-tired",
+          "prompt": "最近兩週，當你很累但還在和人相處時，最常出現哪種反應？",
+          "options": [
+            {
+              "id": "quiet",
+              "label": "話變少，反應也比較慢",
+              "kind": "choice",
+              "guidance": "當對方話少時，可以先問是否累了、想不想休息，不急著追問。"
+            },
+            {
+              "id": "irritable",
+              "label": "比較容易不耐煩",
+              "kind": "choice",
+              "guidance": "可以先確認是否需要休息，再另約時間說重要的事。"
+            },
+            {
+              "id": "seek-company",
+              "label": "想找熟悉的人說話或待在一起",
+              "kind": "choice",
+              "guidance": "可以問對方想聊天還是安靜待著，確認自己當天也有心力。"
+            },
+            {
+              "id": "usual",
+              "label": "表面上照常互動，別人不容易看出來",
+              "kind": "choice",
+              "guidance": "可以用簡短詢問確認狀況，不只憑表面互動猜測體力。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-experienced",
+              "label": "這段時間沒有這個情境／尚未經歷",
+              "kind": "not-experienced"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "對方怎麼確認你是不是累了，會讓你比較自在？",
+          "together": "用一句簡短詢問確認當天的體力與需要，不只靠觀察猜測。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-daily-social",
+          "prompt": "約會途中臨時遇到一群熟人，對方想加入他們的活動，你比較希望怎麼安排？",
+          "options": [
+            {
+              "id": "keep-plan",
+              "label": "維持原本兩人的安排",
+              "kind": "choice",
+              "guidance": "臨時遇到熟人時，可以先尊重原定兩人安排，再問要不要調整。"
+            },
+            {
+              "id": "brief-greeting",
+              "label": "短暫打招呼，再繼續原本安排",
+              "kind": "choice",
+              "guidance": "可以先約定打招呼的時間，避免短暫停留變成整段行程。"
+            },
+            {
+              "id": "join-together",
+              "label": "確認雙方都願意後，一起加入",
+              "kind": "choice",
+              "guidance": "可以先確認兩人都願意加入，再一起決定待多久。"
+            },
+            {
+              "id": "separate-plans",
+              "label": "對方可以加入，我自行安排接下來的時間",
+              "kind": "choice",
+              "guidance": "可以先確認分開後的安排與必要聯絡，不把各自行動當成拒絕。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "改變原本安排前，你最希望先確認什麼？",
+          "together": "改變原定安排前，先確認兩人是否都接受。",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "thinking",
+      "title": "思考與壓力",
+      "subtitle": "認識做決定與面對壓力時的步調。",
+      "depth": "輕鬆",
+      "theme": "sand",
+      "motif": "balance",
+      "questions": [
+        {
+          "id": "know-thinking-decision",
+          "prompt": "面對一個重要、但不需要立刻決定的個人選擇，你通常先做什麼？",
+          "options": [
+            {
+              "id": "research",
+              "label": "蒐集資料，比較各種可能",
+              "kind": "choice",
+              "guidance": "可以先給對方整理資料的時間，再問需要哪些資訊。"
+            },
+            {
+              "id": "intuition",
+              "label": "先確認自己最想要哪個方向",
+              "kind": "choice",
+              "guidance": "可以問對方最在意什麼，再分享自己的考量。"
+            },
+            {
+              "id": "discuss",
+              "label": "找信任的人聊聊",
+              "kind": "choice",
+              "guidance": "可以先問對方想聽你的看法，還是只是想把想法說清楚。"
+            },
+            {
+              "id": "small-trial",
+              "label": "先做一個能回頭的小嘗試",
+              "kind": "choice",
+              "guidance": "可以一起找可回頭的小嘗試，先確認風險與可接受範圍。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "對方在哪個階段參與，最能幫到你？",
+          "together": "先確認這次決定由誰作主，以及另一方怎麼參與最合適。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-thinking-pressure",
+          "prompt": "最近一個月，事情多到讓你有壓力時，你最常先怎麼處理？",
+          "options": [
+            {
+              "id": "prioritize",
+              "label": "列出待辦，分出先後順序",
+              "kind": "choice",
+              "guidance": "可以問對方是否想一起排優先順序，不直接接管全部安排。"
+            },
+            {
+              "id": "small-task",
+              "label": "先完成一件能處理的小事",
+              "kind": "choice",
+              "guidance": "可以先支持對方處理一件小事，再確認接下來需不需要協助。"
+            },
+            {
+              "id": "talk",
+              "label": "找人說說目前的狀況",
+              "kind": "choice",
+              "guidance": "可以先問是否有心力互相聽一段，別急著定解決方案。"
+            },
+            {
+              "id": "rest",
+              "label": "先停一下，恢復精神再處理",
+              "kind": "choice",
+              "guidance": "可以先確認對方希望休息多久、何時方便再談，不催促立刻處理。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-experienced",
+              "label": "這段時間沒有這個情境／尚未經歷",
+              "kind": "not-experienced"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有哪些行為看起來像拖延，其實是你在整理自己？",
+          "together": "先各說一件目前做得到的小事，確認誰需要哪種支持。",
+          "sourceIds": [
+            "pagani-2019"
+          ]
+        },
+        {
+          "id": "know-thinking-advice",
+          "prompt": "對方想對你正在煩惱的事提出建議，你希望對方怎麼開始？",
+          "options": [
+            {
+              "id": "ask-first",
+              "label": "先問我想不想聽建議",
+              "kind": "choice",
+              "guidance": "提出建議前，可以先問對方現在想不想聽。"
+            },
+            {
+              "id": "listen-first",
+              "label": "先聽完整件事，再提出想法",
+              "kind": "choice",
+              "guidance": "可以讓對方先說完整件事，再確認需要哪些回應。"
+            },
+            {
+              "id": "concrete-advice",
+              "label": "直接說一個具體可行的做法",
+              "kind": "choice",
+              "guidance": "可以先提一個具體做法，同時讓對方自由決定是否採用。"
+            },
+            {
+              "id": "clarify",
+              "label": "先一起釐清問題，不急著給做法",
+              "kind": "choice",
+              "guidance": "可以先一起釐清問題與限制，再問是否要討論做法。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "如果建議暫時不適合你，你希望怎麼回應彼此？",
+          "together": "先問「想聽建議嗎？」再確認這次需要什麼回應。",
+          "sourceIds": [
+            "pagani-2019"
+          ]
+        },
+        {
+          "id": "know-thinking-change",
+          "prompt": "一項你很期待的共同安排臨時取消時，你通常最先想做什麼？",
+          "options": [
+            {
+              "id": "reason",
+              "label": "先了解取消的原因",
+              "kind": "choice",
+              "guidance": "可以先說清楚取消原因，避免讓對方只能自行猜測。"
+            },
+            {
+              "id": "alternative",
+              "label": "立刻找替代安排",
+              "kind": "choice",
+              "guidance": "可以詢問對方想找替代安排，還是這次先休息。"
+            },
+            {
+              "id": "express-disappointment",
+              "label": "先說出自己的失望",
+              "kind": "choice",
+              "guidance": "可以先留時間讓對方表達失望，不把感受當成責怪。"
+            },
+            {
+              "id": "process",
+              "label": "留一點時間消化，再討論後續",
+              "kind": "choice",
+              "guidance": "可以先給對方整理感受的空間，再約時間談後續。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪一種說明或後續安排，對你最有幫助？",
+          "together": "先確認取消原因與各自感受，再選是否需要替代安排。",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "care",
+      "title": "關心與親近",
+      "subtitle": "聊聊什麼樣的關心，最能靠近你。",
+      "depth": "深入",
+      "theme": "clay",
+      "motif": "conversation",
+      "questions": [
+        {
+          "id": "know-care-support",
+          "prompt": "壓力很大時，你通常最希望對方先怎麼做？",
+          "options": [
+            {
+              "id": "listen",
+              "label": "聽我說，先不用給建議",
+              "kind": "choice",
+              "guidance": "對方分享壓力時，可以先聽，再問是否需要建議。"
+            },
+            {
+              "id": "plan",
+              "label": "陪我整理問題與下一步",
+              "kind": "choice",
+              "guidance": "對方分享壓力時，可以問是否想一起整理下一步。"
+            },
+            {
+              "id": "distraction",
+              "label": "陪我做點別的，暫時轉換心情",
+              "kind": "choice",
+              "guidance": "可以先問對方想做什麼來轉換心情，以及何時再回到原本的事。"
+            },
+            {
+              "id": "space",
+              "label": "讓我獨處，約好晚點再聯絡",
+              "kind": "choice",
+              "guidance": "可以先確認獨處與下次聯絡安排，不要求對方立刻說明所有事。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "你通常會怎麼讓對方知道，你現在需要這種支持？",
+          "together": "分享壓力前先問「想讓我聽，還是一起想？」需要也可以改變。",
+          "sourceIds": [
+            "pagani-2019"
+          ]
+        },
+        {
+          "id": "know-care-appreciation",
+          "prompt": "對方想表達欣賞時，你目前最希望被注意到哪一部分？",
+          "options": [
+            {
+              "id": "effort",
+              "label": "我為事情付出的努力",
+              "kind": "choice",
+              "guidance": "可以具體說出你看見的努力，不只評價成果。"
+            },
+            {
+              "id": "ability",
+              "label": "我處理事情的能力",
+              "kind": "choice",
+              "guidance": "可以說出對方處理哪件事讓你欣賞，避免空泛稱讚。"
+            },
+            {
+              "id": "character",
+              "label": "我待人或思考的方式",
+              "kind": "choice",
+              "guidance": "可以分享你欣賞的一個待人或思考細節。"
+            },
+            {
+              "id": "appearance",
+              "label": "我的外表或個人風格",
+              "kind": "choice",
+              "guidance": "可以先確認對方對外表稱讚是否自在，再自然表達欣賞。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "怎樣的稱讚會讓你感到具體，而不是客套？",
+          "together": "各說一個喜歡被具體注意到的細節，不要求用同一種稱讚。",
+          "sourceIds": [
+            "laurenceau-1998"
+          ]
+        },
+        {
+          "id": "know-care-affection",
+          "prompt": "在雙方都願意的前提下，見面時你目前最喜歡怎麼表達親近？",
+          "options": [
+            {
+              "id": "touch",
+              "label": "牽手或擁抱等肢體接觸",
+              "kind": "choice",
+              "guidance": "即使知道對方喜歡接觸，當次仍可以確認是否願意牽手或擁抱。"
+            },
+            {
+              "id": "words",
+              "label": "說出喜歡、在乎或想念",
+              "kind": "choice",
+              "guidance": "可以用自己的話表達在乎，不要求對方用同樣方式回應。"
+            },
+            {
+              "id": "shared-activity",
+              "label": "專心一起做一件事",
+              "kind": "choice",
+              "guidance": "可以一起選一件兩人都願意做的小活動。"
+            },
+            {
+              "id": "spaced-company",
+              "label": "保留身體距離，用陪伴表達",
+              "kind": "choice",
+              "guidance": "可以先確認對方喜歡怎樣的陪伴與距離，不以接觸證明親近。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "當天不想接觸時，你希望怎麼表達，讓彼此都自在？",
+          "together": "每次先確認雙方當下的意願，親近方式不同也可以保有自在。",
+          "sourceIds": [
+            "debrot-2013"
+          ]
+        },
+        {
+          "id": "know-care-surprise",
+          "prompt": "對方想為你安排一個特別的日子，你比較希望哪種方式？",
+          "options": [
+            {
+              "id": "joint-planning",
+              "label": "一起討論內容與細節",
+              "kind": "choice",
+              "guidance": "可以邀對方一起討論安排，不把參與規劃視為破壞浪漫。"
+            },
+            {
+              "id": "bounded-surprise",
+              "label": "先確認時間與預算，內容保留驚喜",
+              "kind": "choice",
+              "guidance": "可以先確認時間、預算與不適合的內容，再保留驚喜。"
+            },
+            {
+              "id": "choose-from-list",
+              "label": "從我提出的幾個選擇中安排",
+              "kind": "choice",
+              "guidance": "可以請對方給幾個願意的選擇，再從中安排。"
+            },
+            {
+              "id": "ordinary",
+              "label": "維持平常相處，不特別安排活動",
+              "kind": "choice",
+              "guidance": "可以問平常怎麼相處最自在，不要求一定要辦特別活動。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有哪些內容即使是驚喜，也需要先詢問你？",
+          "together": "先確認時間、費用與不適合的內容，再決定是否保留驚喜。",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "repair",
+      "title": "衝突與修復",
+      "subtitle": "不同意見，也能留下一條對話的路。",
+      "depth": "深入",
+      "theme": "lavender",
+      "motif": "conversation",
+      "questions": [
+        {
+          "id": "know-repair-expression",
+          "prompt": "最近一個月，對親近的人感到不滿時，你最常先怎麼表達？",
+          "options": [
+            {
+              "id": "say-now",
+              "label": "直接說出哪件事讓我不舒服",
+              "kind": "choice",
+              "guidance": "可以找私下且有心力的時刻，讓對方說出具體不舒服的事。"
+            },
+            {
+              "id": "prepare",
+              "label": "先整理想法，再找時間說",
+              "kind": "choice",
+              "guidance": "可以留整理時間，再約一個可談的時段，不要求立刻回應。"
+            },
+            {
+              "id": "write",
+              "label": "先用文字說明",
+              "kind": "choice",
+              "guidance": "可以確認是否適合用文字開始，重要內容之後再一起釐清。"
+            },
+            {
+              "id": "not-expressed",
+              "label": "當下沒有說出來，之後也不一定提起",
+              "kind": "choice",
+              "guidance": "可以用不逼迫的開場詢問是否有話想談，沒有準備好也可以另約。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-experienced",
+              "label": "這段時間沒有這個情境／尚未經歷",
+              "kind": "not-experienced"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "什麼場合或開場方式，會讓你比較容易把不滿說清楚？",
+          "together": "選一個私下且有心力的時段，先談一件具體的事。",
+          "sourceIds": [
+            "overall-2009"
+          ]
+        },
+        {
+          "id": "know-repair-pause",
+          "prompt": "發生爭執、需要暫停時，你比較希望怎麼安排？",
+          "options": [
+            {
+              "id": "short-break",
+              "label": "短暫休息後，接著談同一個問題",
+              "kind": "choice",
+              "guidance": "可以先確認短暫休息後是否都有心力再談，不把時間定成硬性期限。"
+            },
+            {
+              "id": "same-day",
+              "label": "先分開休息，約定當天再談",
+              "kind": "choice",
+              "guidance": "可以共同約好當天何時再談，若需要延後就更新安排。"
+            },
+            {
+              "id": "next-day",
+              "label": "留到隔天，約好時間再談",
+              "kind": "choice",
+              "guidance": "可以一起約好隔天的時間，並確認暫停期間的聯絡期待。"
+            },
+            {
+              "id": "write-first",
+              "label": "先用文字整理，再約時間談",
+              "kind": "choice",
+              "guidance": "可以讓對方先整理文字，再確認何時與如何接續談話。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "暫停期間，你希望維持怎樣的聯絡？如果需要延後，要怎麼說？",
+          "together": "暫停前一起約好如何恢復對話，需要延後時更新安排。",
+          "sourceIds": [
+            "overall-2009"
+          ]
+        },
+        {
+          "id": "know-repair-apology",
+          "prompt": "對方的行為讓你受傷後，在道歉過程中，你最希望先聽到什麼？",
+          "options": [
+            {
+              "id": "responsibility",
+              "label": "清楚說出哪個行為需要負責",
+              "kind": "choice",
+              "guidance": "可以清楚指出自己需要負責的具體行為，不把責任轉給對方。"
+            },
+            {
+              "id": "impact",
+              "label": "說明理解這件事對我的影響",
+              "kind": "choice",
+              "guidance": "可以先確認理解了對方受到的影響，不只解釋本意。"
+            },
+            {
+              "id": "change-plan",
+              "label": "提出下次會怎麼調整",
+              "kind": "choice",
+              "guidance": "可以提出可做到的調整，再讓對方確認是否回應了問題。"
+            },
+            {
+              "id": "hear-me",
+              "label": "先讓我說完我的感受",
+              "kind": "choice",
+              "guidance": "可以先讓對方把感受說完，再確認你理解到哪裡。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "除了說出口，之後哪些行動對你也很重要？",
+          "together": "先確認具體行為、影響與可做到的調整；道歉不等於必須原諒。",
+          "sourceIds": [
+            "lewicki-2016"
+          ]
+        },
+        {
+          "id": "know-repair-feedback",
+          "prompt": "對方想告訴你一件希望你調整的事，你最希望怎麼收到這個訊息？",
+          "options": [
+            {
+              "id": "private-now",
+              "label": "當下私下簡短指出",
+              "kind": "choice",
+              "guidance": "可以私下指出具體事情，先確認當下是否適合繼續談。"
+            },
+            {
+              "id": "scheduled-talk",
+              "label": "事先約一段時間，好好談",
+              "kind": "choice",
+              "guidance": "可以先約時間，避免對方在毫無準備或忙碌時被迫回應。"
+            },
+            {
+              "id": "written",
+              "label": "先傳文字，讓我有時間整理",
+              "kind": "choice",
+              "guidance": "可以先用文字說清楚具體事情，讓對方有整理時間。"
+            },
+            {
+              "id": "ask-readiness",
+              "label": "先問我現在能不能談，再決定時間與方式",
+              "kind": "choice",
+              "guidance": "可以先問現在能不能談，沒準備好時另約時間。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有哪些說法會讓你比較難聽見原本的重點？不必重述傷人的經歷。",
+          "together": "先確認現在能不能談，再從一個具體的事情開始。",
+          "sourceIds": [
+            "overall-2009"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "boundaries",
+      "title": "自主與界線",
+      "subtitle": "陪伴與空間，找到各自自在的距離。",
+      "depth": "深入",
+      "theme": "blue",
+      "motif": "space",
+      "questions": [
+        {
+          "id": "know-boundaries-alone",
+          "prompt": "當你明確說想獨處時，你希望對方接下來怎麼做？",
+          "options": [
+            {
+              "id": "self-initiate",
+              "label": "等我主動聯絡",
+              "kind": "choice",
+              "guidance": "可以尊重對方主動聯絡的安排；有必要事項時先一起另訂方式。"
+            },
+            {
+              "id": "agreed-time",
+              "label": "和我約好下次聯絡的時間",
+              "kind": "choice",
+              "guidance": "可以一起約好下次聯絡時間，需要延後時更新安排。"
+            },
+            {
+              "id": "brief-message",
+              "label": "可以留一句關心，不需要我立即回覆",
+              "kind": "choice",
+              "guidance": "可以留一句不要求立即回覆的關心，之後尊重對方的空間。"
+            },
+            {
+              "id": "check-in",
+              "label": "在事先約好的時段，簡短問我是否想恢復聯絡",
+              "kind": "choice",
+              "guidance": "可以在事先同意的時段簡短確認，不持續追問或臨時加密聯絡。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "如果需要延長獨處時間，你願意用什麼方式讓對方知道？",
+          "together": "各說清楚獨處時可接受的聯絡方式，需要變動時再確認。",
+          "sourceIds": [
+            "patrick-2007"
+          ]
+        },
+        {
+          "id": "know-boundaries-phone",
+          "prompt": "對於與交往對象分享手機密碼，你目前比較接近哪個想法？",
+          "options": [
+            {
+              "id": "private",
+              "label": "各自保留，不需要交換",
+              "kind": "choice",
+              "guidance": "可以尊重對方保留密碼，不要求交換來證明信任。"
+            },
+            {
+              "id": "emergency",
+              "label": "緊急需要時可以提供，平常不使用",
+              "kind": "choice",
+              "guidance": "可以先說清楚什麼算緊急用途，不把一次提供當成永久授權。"
+            },
+            {
+              "id": "ask-before-access",
+              "label": "可以交換，但查看內容前仍要詢問",
+              "kind": "choice",
+              "guidance": "查看內容前可以再次詢問，尤其涉及第三人的訊息。"
+            },
+            {
+              "id": "shared-access",
+              "label": "可以交換，也接受彼此直接查看",
+              "kind": "choice",
+              "guidance": "可以先確認可使用的用途與內容，知道密碼不等於所有內容都能看。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "知道密碼後，是否仍有需要另行取得同意的內容，例如其他人的私人訊息？",
+          "together": "先談用途與可接受的範圍；保留密碼是可以的，不要求交換來證明信任。",
+          "sourceIds": [
+            "dragiewicz-2026"
+          ]
+        },
+        {
+          "id": "know-boundaries-updates",
+          "prompt": "當你的行程改變、但不影響兩人原本約定時，你比較希望怎麼告知對方？",
+          "options": [
+            {
+              "id": "ordinary-sharing",
+              "label": "不需特別說，聊天時再分享",
+              "kind": "choice",
+              "guidance": "可以先確認不影響約定的變動是否各自安排，不要求即時提供位置。"
+            },
+            {
+              "id": "when-free",
+              "label": "方便時傳一句簡短更新",
+              "kind": "choice",
+              "guidance": "可以一起確認方便時更新的意思，不把它當成必須即時回覆。"
+            },
+            {
+              "id": "before-change",
+              "label": "事先說明大致去向與時間",
+              "kind": "choice",
+              "guidance": "可以先確認想知道的是大致安排，而不是持續追蹤所有去向。"
+            },
+            {
+              "id": "negotiate",
+              "label": "先由雙方約定哪些變動需要告知",
+              "kind": "choice",
+              "guidance": "可以先一起列出需要告知的變動，其他安排保留各自空間。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪些資訊是出於關心想知道，哪些是你不希望被要求提供的？",
+          "together": "先確認哪些變動影響共同約定，再談各自願意分享的範圍。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-boundaries-friends",
+          "prompt": "如果開始交往，對於各自和朋友單獨相處，你目前比較希望怎麼安排？",
+          "options": [
+            {
+              "id": "independent",
+              "label": "各自安排，不需要逐次告知",
+              "kind": "choice",
+              "guidance": "可以尊重各自安排，也一起說清楚會影響共同約定的情境。"
+            },
+            {
+              "id": "notify",
+              "label": "先告知大致安排，不需先取得同意",
+              "kind": "choice",
+              "guidance": "可以把告知與取得同意分開，不將分享行程變成逐次批准。"
+            },
+            {
+              "id": "agreed-boundaries",
+              "label": "先談好在意的情境，再各自安排",
+              "kind": "choice",
+              "guidance": "可以先談具體互動界線，不按朋友的性別或性向判斷。"
+            },
+            {
+              "id": "discuss-each-time",
+              "label": "每次先討論雙方的感受與安排",
+              "kind": "choice",
+              "guidance": "可以先確認每次討論的範圍，不把談感受變成要求控制朋友往來。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪些具體互動需要另談界線？以行為討論，不按朋友的性別或性向判斷。",
+          "together": "以具體互動談界線，告知不等於要求逐次批准。",
+          "sourceIds": [
+            "patrick-2007"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "vulnerability",
+      "title": "脆弱與支持",
+      "subtitle": "只分享願意說的部分，慢慢被理解。",
+      "depth": "較私密",
+      "theme": "lavender",
+      "motif": "arches",
+      "questions": [
+        {
+          "id": "know-vulnerability-hard-topic",
+          "prompt": "如果願意分享，目前哪一類事情比較難向親近的人開口？",
+          "options": [
+            {
+              "id": "self-doubt",
+              "label": "我對自己的不確定或沒自信",
+              "kind": "choice",
+              "guidance": "可以聽對方願意說的部分，不要求講出不想分享的原因。"
+            },
+            {
+              "id": "need-help",
+              "label": "我需要幫忙的地方",
+              "kind": "choice",
+              "guidance": "可以先問需要哪一種幫忙，讓對方自己決定說到哪裡。"
+            },
+            {
+              "id": "relationship-doubts",
+              "label": "我對這段關係的疑問",
+              "kind": "choice",
+              "guidance": "可以留一個不必立刻作決定的對話時段，聽對方願意說的疑問。"
+            },
+            {
+              "id": "mistakes",
+              "label": "我犯錯或做得不如預期的事情",
+              "kind": "choice",
+              "guidance": "可以先聽對方想怎麼處理，不要求透露私人細節來換取支持。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "不必說事情本身，只談什麼回應會讓你比較願意開口。",
+          "together": "只分享願意說的部分，對方可以陪伴而不要求故事細節。",
+          "sourceIds": [
+            "laurenceau-1998"
+          ]
+        },
+        {
+          "id": "know-vulnerability-recognition",
+          "prompt": "當你覺得自己做得不夠好時，你最希望對方先注意到什麼？",
+          "options": [
+            {
+              "id": "effort",
+              "label": "我已經付出的努力",
+              "kind": "choice",
+              "guidance": "可以說出你看見的一段努力，不只強調結果。"
+            },
+            {
+              "id": "limits",
+              "label": "我面對的限制與負擔",
+              "kind": "choice",
+              "guidance": "可以先了解當時能負擔的範圍，不急著說應該做更多。"
+            },
+            {
+              "id": "learning",
+              "label": "我正在學習或改變的地方",
+              "kind": "choice",
+              "guidance": "可以注意對方正在學習或改變的地方，讓進步被具體看見。"
+            },
+            {
+              "id": "capability",
+              "label": "我仍然有能力處理的部分",
+              "kind": "choice",
+              "guidance": "可以問對方哪部分想自己處理、哪部分需要協助，不直接接管。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有沒有一句你比較願意聽到的話？也可以只指出不希望聽到的說法。",
+          "together": "各說一種目前願意收到的支持，不把肯定變成評分。",
+          "sourceIds": [
+            "laurenceau-1998"
+          ]
+        },
+        {
+          "id": "know-vulnerability-tears",
+          "prompt": "如果你在對方面前哭了，你目前最希望對方先怎麼做？",
+          "options": [
+            {
+              "id": "quiet-company",
+              "label": "安靜陪著，等我想說再說",
+              "kind": "choice",
+              "guidance": "可以安靜陪著，讓對方自己決定何時想說。"
+            },
+            {
+              "id": "invite-talk",
+              "label": "問我想不想說發生了什麼",
+              "kind": "choice",
+              "guidance": "可以輕聲問是否想說，不把沉默當成必須追問的訊號。"
+            },
+            {
+              "id": "ask-touch",
+              "label": "問我是否希望被擁抱或有其他接觸",
+              "kind": "choice",
+              "guidance": "可以先問是否希望接觸，不因哭泣就直接擁抱。"
+            },
+            {
+              "id": "space-check",
+              "label": "給我一些空間，約好稍後確認狀況",
+              "kind": "choice",
+              "guidance": "可以留空間並約好稍後確認，不要求當下立刻解釋。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "如果當下的需要和平常不同，你希望怎麼讓對方確認？",
+          "together": "先確認當下希望陪伴、說話、接觸或空間，允許需要改變。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-vulnerability-disclosure",
+          "prompt": "當你準備談一件比較私人的事，你最希望先和對方確認什麼？",
+          "options": [
+            {
+              "id": "availability",
+              "label": "現在有沒有時間與心力聽",
+              "kind": "choice",
+              "guidance": "可以先確認雙方現在是否有時間與心力，再開始分享。"
+            },
+            {
+              "id": "confidentiality",
+              "label": "這件事會不會被轉告別人",
+              "kind": "choice",
+              "guidance": "可以先說清楚保密範圍，沒有同意不轉述私人內容。"
+            },
+            {
+              "id": "stop-right",
+              "label": "我可以自己決定說到哪裡、何時停止",
+              "kind": "choice",
+              "guidance": "可以明說對方隨時能停止、略過，不要求分享更多。"
+            },
+            {
+              "id": "advice-role",
+              "label": "對方會先聽，還是會提供建議",
+              "kind": "choice",
+              "guidance": "可以先問希望你傾聽還是提供建議，再配合當次需要。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "這次分享的範圍由你決定，不需要用說出更多來證明信任。",
+          "together": "先確認聆聽、保密與停止的範圍；未選某項不等於放棄這項界線。",
+          "sourceIds": [
+            "laurenceau-1998"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "life",
+      "title": "生活與未來",
+      "subtitle": "從具體安排，認識對生活的期待。",
+      "depth": "深入",
+      "theme": "sand",
+      "motif": "balance",
+      "questions": [
+        {
+          "id": "know-life-spending",
+          "prompt": "假設雙方都負擔得起，一次共同出遊的費用，你目前比較希望怎麼分？",
+          "options": [
+            {
+              "id": "equal",
+              "label": "共同費用平均分攤",
+              "kind": "choice",
+              "guidance": "可以先確認共同費用包含什麼，再談雙方是否都負擔得起。"
+            },
+            {
+              "id": "individual",
+              "label": "各付自己的費用，共用部分再分攤",
+              "kind": "choice",
+              "guidance": "可以先區分個人與共用費用，避免結帳時才發現認定不同。"
+            },
+            {
+              "id": "capacity",
+              "label": "按雙方可負擔的程度協議比例",
+              "kind": "choice",
+              "guidance": "可以按雙方自願提供的預算範圍討論，不要求公開全部收入。"
+            },
+            {
+              "id": "take-turns",
+              "label": "輪流負擔，定期確認彼此是否接受",
+              "kind": "choice",
+              "guidance": "可以先約定輪流方式與定期確認，避免彼此以為另一方會記得。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "收入或預算變動時，怎麼重新談會比較自在？",
+          "together": "先談這一次的預算與費用範圍，雙方都接受再安排。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-life-housework",
+          "prompt": "如果未來共同生活，家務分工你比較希望以什麼作為主要起點？",
+          "options": [
+            {
+              "id": "fixed",
+              "label": "固定分配各自負責的項目",
+              "kind": "choice",
+              "guidance": "可以一起列出項目與安排責任，再確認固定分工是否可行。"
+            },
+            {
+              "id": "weekly-capacity",
+              "label": "依當週時間與體力調整",
+              "kind": "choice",
+              "guidance": "可以每次按實際時間與體力調整，確認提醒與規劃工作也有歸屬。"
+            },
+            {
+              "id": "strengths",
+              "label": "按各自擅長或較能接受的項目分配",
+              "kind": "choice",
+              "guidance": "可以讓雙方都說能接受的項目，不把擅長當成永遠必須負責。"
+            },
+            {
+              "id": "rotation",
+              "label": "重要項目輪流做，避免長期固定由一人承擔",
+              "kind": "choice",
+              "guidance": "可以先約定輪替範圍與週期，臨時做不到時再調整。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "誰負責注意、安排與提醒，也需要一起談嗎？",
+          "together": "把動手做、安排、注意與提醒都列出來，再選一個可試的分工。",
+          "sourceIds": [
+            "daminger-2019"
+          ]
+        },
+        {
+          "id": "know-life-family",
+          "prompt": "對於把兩人的關係問題告訴家人，你目前比較希望怎麼處理？",
+          "options": [
+            {
+              "id": "between-us",
+              "label": "主要在兩人之間處理，平常不向家人談細節",
+              "kind": "choice",
+              "guidance": "可以先尊重不分享細節的偏好；需要安全協助時不必等待伴侶批准。"
+            },
+            {
+              "id": "own-feelings",
+              "label": "可以談自己的感受，不提供對方的私人細節",
+              "kind": "choice",
+              "guidance": "可以分享自己的感受，同時確認哪些細節涉及對方的隱私。"
+            },
+            {
+              "id": "agreed-scope",
+              "label": "雙方同意分享範圍後，再向家人請教",
+              "kind": "choice",
+              "guidance": "可以先談願意分享的範圍；遇到安全問題仍可直接求助。"
+            },
+            {
+              "id": "individual-support",
+              "label": "需要支持時，各自決定向家人談哪些內容",
+              "kind": "choice",
+              "guidance": "可以一起釐清本人求助與對方隱私的範圍，不要求任何人放棄外部支持。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪些內容牽涉對方的隱私？若遇到傷害或安全問題，尋求外部協助不需要對方批准。",
+          "together": "尊重外部支持與隱私，也保留遇到傷害時直接求助的空間。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-life-location",
+          "prompt": "如果有一個很吸引你的工作機會需要搬到外地，考慮關係安排時，你最想先釐清什麼？",
+          "options": [
+            {
+              "id": "distance",
+              "label": "是否能接受一段時間的遠距",
+              "kind": "choice",
+              "guidance": "可以先談能否接受遠距及現實限制，不把願意遠距當成承諾一切。"
+            },
+            {
+              "id": "move-together",
+              "label": "是否有機會一起搬遷",
+              "kind": "choice",
+              "guidance": "可以先確認兩人各自是否想搬與做得到，不要求一方放棄工作。"
+            },
+            {
+              "id": "local-alternative",
+              "label": "有沒有留在原地的替代選擇",
+              "kind": "choice",
+              "guidance": "可以一起找當地替代選擇，不先假定一定要留下。"
+            },
+            {
+              "id": "constraints",
+              "label": "雙方各自的生活與工作限制",
+              "kind": "choice",
+              "guidance": "可以先各自說明願意分享的限制，再討論有哪些可能安排。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "哪些事情現在能談，哪些需要知道更多條件才能決定？",
+          "together": "先談已知條件，再各自決定願意探索的安排，不把假設當成承諾。",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "us",
+      "title": "我們的關係",
+      "subtitle": "聊聊現在的我們，以及接下來想了解的事。",
+      "depth": "深入",
+      "theme": "clay",
+      "motif": "arches",
+      "questions": [
+        {
+          "id": "know-us-enjoy",
+          "prompt": "以最近一個月的相處來說，你目前最珍惜哪個部分？",
+          "options": [
+            {
+              "id": "daily-sharing",
+              "label": "可以自然分享日常",
+              "kind": "choice",
+              "guidance": "可以繼續保留自然分享日常的機會，不把每天報備當成必要。"
+            },
+            {
+              "id": "activities",
+              "label": "一起做事或出遊的感覺",
+              "kind": "choice",
+              "guidance": "可以一起選一件想再做的小活動，不假定對方喜歡所有共同活動。"
+            },
+            {
+              "id": "deep-talk",
+              "label": "能談比較深入的想法",
+              "kind": "choice",
+              "guidance": "可以邀請對方選一個願意聊的想法，保留不想深入時的出口。"
+            },
+            {
+              "id": "space-and-contact",
+              "label": "各自有空間，也能保持聯繫",
+              "kind": "choice",
+              "guidance": "可以尊重各自空間，也確認雙方舒服的聯絡方式。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-experienced",
+              "label": "這段時間沒有這個情境／尚未經歷",
+              "kind": "not-experienced"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "如果願意，可以說一個小例子；對方也可以說自己注意到什麼。",
+          "together": "各選一個願意保留的小片段，下一次相處再看看是否仍自在。",
+          "sourceIds": [
+            "laurenceau-1998"
+          ]
+        },
+        {
+          "id": "know-us-pace",
+          "prompt": "關於兩人的關係步調，你目前比較希望怎麼安排？",
+          "options": [
+            {
+              "id": "keep-pace",
+              "label": "維持現在的相處，暫時不加快",
+              "kind": "choice",
+              "guidance": "可以先確認維持現在具體指什麼，不自動推進關係。"
+            },
+            {
+              "id": "more-time",
+              "label": "增加相處時間，再觀察彼此的感受",
+              "kind": "choice",
+              "guidance": "可以先問雙方願意增加哪種相處，不要求立即答應更多。"
+            },
+            {
+              "id": "clarify-expectations",
+              "label": "找時間談清楚彼此對關係的期待",
+              "kind": "choice",
+              "guidance": "可以找雙方都有心力的時段，說出各自期待，不以這題逼迫承諾。"
+            },
+            {
+              "id": "less-time",
+              "label": "先降低相處頻率，留時間確認自己的想法",
+              "kind": "choice",
+              "guidance": "可以先確認想減少哪些相處與多久後再談，不推論感情變少。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "你說的「維持、增加或降低」，具體指什麼？這題的回答不要求另一方立刻答應。",
+          "together": "先確認各自希望的步調，不要求對方立即答應或以相處頻率證明愛。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-us-discuss-next",
+          "prompt": "如果要讓這段關係繼續發展，你最想先談清楚哪一件事？",
+          "options": [
+            {
+              "id": "contact",
+              "label": "聯絡與見面的安排",
+              "kind": "choice",
+              "guidance": "可以先選一個近期可協調的聯絡或見面安排來談。"
+            },
+            {
+              "id": "boundaries",
+              "label": "親近與個人空間的界線",
+              "kind": "choice",
+              "guidance": "可以先讓雙方說一項想保留的空間與界線，不要求立即折衷。"
+            },
+            {
+              "id": "commitment",
+              "label": "對關係承諾的理解",
+              "kind": "choice",
+              "guidance": "可以先說清楚各自如何理解承諾，不把答案當成交往或婚姻同意。"
+            },
+            {
+              "id": "disagreement",
+              "label": "意見不同時的處理方式",
+              "kind": "choice",
+              "guidance": "可以先約定不同意見時如何開始與暫停，之後依實際情境調整。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有哪一件可以先從小範圍開始談，而不用一次決定全部？",
+          "together": "先選一件可小範圍討論的事，不用一次決定全部。",
+          "sourceIds": []
+        },
+        {
+          "id": "know-us-understand",
+          "prompt": "在目前這段關係裡，你最希望接下來多了解哪一部分？",
+          "options": [
+            {
+              "id": "daily-life",
+              "label": "彼此的日常與生活習慣",
+              "kind": "choice",
+              "guidance": "可以問一個與日常相關的小問題，讓對方選願意分享的部分。"
+            },
+            {
+              "id": "care",
+              "label": "需要關心時，希望怎麼被對待",
+              "kind": "choice",
+              "guidance": "可以問當次希望怎麼被關心，不只記住一次答案就永遠照做。"
+            },
+            {
+              "id": "communication",
+              "label": "意見不同時，怎麼溝通",
+              "kind": "choice",
+              "guidance": "可以先談一個具體溝通情境，確認雙方想怎麼說與聽。"
+            },
+            {
+              "id": "future",
+              "label": "對關係與未來的期待",
+              "kind": "choice",
+              "guidance": "可以選一項近期想談的期待，不要求一次決定全部未來。"
+            },
+            {
+              "id": "other",
+              "label": "其他較接近我的做法",
+              "kind": "other"
+            },
+            {
+              "id": "varies",
+              "label": "沒有固定偏好，會依情境改變",
+              "kind": "varies"
+            },
+            {
+              "id": "uncertain",
+              "label": "尚未想清楚",
+              "kind": "uncertain"
+            },
+            {
+              "id": "not-applicable",
+              "label": "這題目前不適用",
+              "kind": "not-applicable"
+            },
+            {
+              "id": "not-shared",
+              "label": "未分享",
+              "kind": "not-shared"
+            }
+          ],
+          "discussion": "有沒有一件最近發生的事，讓你想多了解這一部分？也可以直接選下一次想聊的題組。",
+          "together": "各選一個下一次願意聊的面向，之後也可以改變。",
+          "sourceIds": []
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "aron-1997",
+      "title": "The Experimental Generation of Interpersonal Closeness: A Procedure and Some Preliminary Findings",
+      "url": "https://journals.sagepub.com/doi/10.1177/0146167297234003",
+      "year": 1997,
+      "authors": "Arthur Aron、Edward Melinat、Elaine N. Aron、Robert Darrin Vallone、Renee J. Bator",
+      "scope": "每輪四題、單選、非同步及猜題的效果；不承諾讓人相愛"
+    },
+    {
+      "id": "laurenceau-1998",
+      "title": "Intimacy as an interpersonal process: the importance of self-disclosure, partner disclosure, and perceived partner responsiveness in interpersonal exchanges",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9599440/",
+      "year": 1998,
+      "authors": "Jean-Philippe Laurenceau、Lisa Feldman Barrett、Paula R. Pietromonaco",
+      "scope": "本站單題能測回應性、揭露愈多愈好、四種欣賞方式已驗證"
+    },
+    {
+      "id": "pagani-2019",
+      "title": "Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping",
+      "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.00401/full",
+      "year": 2019,
+      "authors": "Ariela F. Pagani et al.",
+      "scope": "先聽或先建議何者最好、因果效果、全性向或所有關係階段的測量等同性"
+    },
+    {
+      "id": "patrick-2007",
+      "title": "The role of need fulfillment in relationship functioning and well-being: a self-determination theory perspective",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17352602/",
+      "year": 2007,
+      "authors": "Heather Patrick、C. Raymond Knee、Amy Canevello、Cynthia Lonsbary",
+      "scope": "最佳獨處時間、朋友聯絡規則或相處頻率；不以需求概念推人格"
+    },
+    {
+      "id": "debrot-2013",
+      "title": "Touch as an interpersonal emotion regulation process in couples' daily lives: the mediating role of psychological intimacy",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/23885034/",
+      "year": 2013,
+      "authors": "Anik Debrot、Dominik Schoebi、Meinrad Perrez、Andrea B. Horn",
+      "scope": "每個人都喜歡觸碰、必須接觸、本站四選項是愛的語言分類"
+    },
+    {
+      "id": "overall-2009",
+      "title": "Regulating partners in intimate relationships: the costs and benefits of different communication strategies",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/19254108/",
+      "year": 2009,
+      "authors": "Nickola C. Overall、Garth J. O. Fletcher、Jeffry A. Simpson、Chris G. Sibley",
+      "scope": "單題直接性等於成熟、能診斷衝突或指定冷靜時間"
+    },
+    {
+      "id": "lewicki-2016",
+      "title": "An Exploration of the Structure of Effective Apologies",
+      "url": "https://ncmr.lps.library.cmu.edu/article/id/264/",
+      "year": 2016,
+      "authors": "Roy J. Lewicki、Beth Polin、Robert B. Lount",
+      "scope": "不是伴侶道歉實驗、本站 15 題不是原量表；不能說單一組成足夠或要求原諒。原句不轉錄"
+    },
+    {
+      "id": "dragiewicz-2026",
+      "title": "Smartphone sharing with intimate partners in Australia: Characteristics and implications for cybersecurity",
+      "url": "https://journals.sagepub.com/doi/10.1177/14614448251414006",
+      "year": 2026,
+      "authors": "Molly Dragiewicz、Jeffrey Ackerman、Marianne Haaland",
+      "scope": "交換密碼等於信任、台灣或全性向的最佳界線；不把知道密碼當所有內容的授權"
+    },
+    {
+      "id": "daminger-2019",
+      "title": "The Cognitive Dimension of Household Labor",
+      "url": "https://journals.sagepub.com/doi/10.1177/0003122419859007",
+      "year": 2019,
+      "authors": "Allison Daminger",
+      "scope": "哪種分工最好、男女應分配何種家務、本站分工偏好的測量效度"
+    }
+  ]
+}

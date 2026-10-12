@@ -1,4 +1,5 @@
 import { coreValuesQuiz } from './core-values.ts';
+import { questionnaires } from './questionnaires.ts';
 import { validateQuiz, type QuizDefinition, type ResearchSource } from '../domain/quiz.ts';
 
 const valuesSource: ResearchSource = {
@@ -94,7 +95,7 @@ export const quizzes: QuizDefinition[] = [
 
 export const coreValuesExample: QuizDefinition = { ...quizzes[0], id: 'core-values-example', title: '核心價值・3 題示例' };
 quizzes[0] = coreValuesQuiz;
-export const roundQuizzes = [...quizzes, coreValuesExample];
+export const roundQuizzes = [...quizzes, coreValuesExample, ...questionnaires];
 
 const ids = new Set<string>();
 for (const quiz of roundQuizzes) {

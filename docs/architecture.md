@@ -239,6 +239,28 @@ CORS 是瀏覽器跨網站呼叫時的允許規則。`ALLOWED_ORIGINS` 是 `http
 
 官方參考：[GitHub Pages 的性質與方案](https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages)、[Pages workflow](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[Vite Pages 設定](https://vite.dev/guide/static-deploy.html#github-pages)、[Render 免費服務限制](https://render.com/docs/free)。本機已驗證不代表真實雲端已驗證。
 
+## 0.8 四題一組的雙人問答
+
+2026-10-12 接入；公開發布紀錄另見 Runbook。`docs/quizzes/getting-to-know-you.json` 是運行題庫的單一來源，原稿 32 題、八組各四題，內容 1.0.0；各主要選項有語意 ID、`kind:choice` 及 `guidance`（給另一方的相處提案），每題另有 `discussion`、`together`。`questionnaires.ts` 轉為八個獨立 QuizDefinition（know-daily 等），只加入 roundQuizzes，不混入原五個測驗主題。
+
+`QuestionnairePages.tsx` 提供 #/questions 列表、#/questions/:id 介紹及 ConversationResults。問答與主題測驗分開入口，共用 RoundFlow、API 與既有資料表。每輪固定四題，做完即可提交；另一組另開一輪，沒有八組總分或強制續玩。
+
+```text
+JSON → questionnaires.ts → quizzes.ts 的 roundQuizzes
+  → #/questions/:id → #/start/:id → POST /api/rounds
+  → rounds.snapshot 固定本組四題、所有選項及提案版本
+  → RoundFlow／ConversationOptions 選答 → PUT /answers → participants.answers／revision
+  → A submit → B claim／獨立填答 → B submit
+  → GET /results：Node／D1 驗證雙方提交才呼叫 compareConversation(snapshot, A, B)
+  → conversation.items → ConversationResults：共同／不同／情境狀態與個別、雙人提案
+```
+
+所有答案仍用同一份字串 map 保存，特殊狀態與名目選擇都不是分數。`not-shared` 是專用狀態 ID，ConversationOptions 用獨立操作提供；選擇時直接取代本題原 ID，後端只保存目前版本。結果只回未分享狀態，不保留另一個可被讀取的「隱藏原答案」。這是目前答案的取代，不代表提供資料永久刪除、備份清除或找回功能。
+
+`compareConversation` 規則 1.0.0：只有雙方 `kind:choice` 才比較相同／不同；給 A 的提案取自 B 的選項，給 B 取自 A。其他、依情境、不確定、不適用、未經歷與未分享都進 context，個別／雙人提案為 null。未分享也不顯示追問提示。status／邀請不回對方答案或分析，只新增公開的 isQuestionnaire 讓邀請畫面顯示正確分享說明。
+
+沒有 schema 變更或雲端 migration；舊核心價值與三題回合繼續依自己的快照與舊算法。修改 JSON 提案要升內容版本，修改分類算法則另加規則版本並保留 V1；不能改原分支讓舊結果改變。Vite fs.deny 保留 .local 保護，另禁止 .wrangler 本機 D1 資料；不要在 .local 下啟動 Vite 前端工作目錄。
+
 ## 0.6 完整題庫、固定計分與解鎖結果
 
 `src/content/core-values.ts` 從候選 JSON 取得共用中性題幹、六選項數值與作者 19 類各三題對應，先驗證題序／映射；回合 QuizDefinition 版本為 0.3.0。`quizzes.ts` 的可見 quizzes 有五主題，roundQuizzes 另含 core-values-example。native Node 匯入 JSON 使用 import attributes 的 `with { type: 'json' }`，共用 TS 匯入維持 .ts 副檔名；不把原始來源檔帶入資料庫。
