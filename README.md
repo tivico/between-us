@@ -79,7 +79,7 @@ npm run preview
 雲端部署採 **Cloudflare Workers（執行 API 並提供網頁）＋D1（持久 SQL 資料庫）**，GitHub 保存程式碼；不需要另外購買網域，也不需要再部署 GitHub Pages。`npm run cloudflare:dev` 可在獨立的本機 D1 測試庫驗證；首次登入、建立資料庫、發布與除錯步驟見 [Cloudflare 維護手冊](docs/runbook.md)。既有本機 SQLite 不會自動搬到雲端。
 
 - [產品核心與範圍](docs/product.md)：已確認需求、共用流程、第一版完成標準。
-- [日常三觀探索：候選情境與結果設計](docs/quizzes/daily-values.md)：獨立日常趣味版的 12 個候選情境、4 題完整示例、做法／理由／接受範圍與可追溯結果提案；尚未接入，正式題數與計分未定。
+- [日常三觀探索：候選情境與結果設計](docs/quizzes/daily-values.md)：草稿 0.2.0 展開 12 個候選；第一版已選 8 個情境的長度，暫分 8 個主情境與 4 個延伸。附做法／理由／接受範圍、個人選擇雙向比較與結果閱讀提案；尚未接入，題目組合與計分未核定。
 - [更認識你：32 題雙人問答候選稿](docs/quizzes/getting-to-know-you.md)：八題組各四題，每輪只做一組；含逐題審閱與九篇原始研究查核，附 [自願試答與理解回饋執行稿](docs/quizzes/getting-to-know-you-feedback.md)。歷史候選 0.4.0；運行題庫見 [JSON](docs/quizzes/getting-to-know-you.json)，內容／規則均為 1.0.0，已接入網站。
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
 - [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已提供公開單人試讀。
