@@ -84,7 +84,7 @@ npm run preview
 - [三觀測驗內容藍圖](docs/quizzes/core-values.md)：核心價值與人生方向的範圍、題型、結果及候選學術工具。
 - [PVQ-RR 57 題候選稿](docs/quizzes/core-values-pvqrr.md)：性別中性改寫、原文追溯、作答選項、來源／授權與中文審查問題；已提供公開單人試讀。
 - [遠距戀愛研究與 24 題](docs/quizzes/long-distance.md)：8 篇期刊來源與工具比較、完整題目／選項、逐題依據及維護方式；0.8 已接入並公開發布雙人分析，自編及建議效果未驗證。
-- [好好說，也好好聽：研究與內容藍圖](docs/quizzes/communication.md)：下一個主題已選定，直接問本人的做法與期待；含工具比較、四段規劃與八個原創題幹示例。尚未形成完整題庫或接入網站。
+- [好好說，也好好聽：研究與內容藍圖](docs/quizzes/communication.md)：直接問本人的做法與期待；含工具比較與[24題完整候選稿](docs/quizzes/communication-candidate.md)、12組雙向配對及原創提案。候選內容尚待審閱／試答，未接入網站。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
 - [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
 - [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。

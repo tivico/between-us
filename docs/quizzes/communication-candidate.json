@@ -1,0 +1,2130 @@
+{
+  "id": "communication-candidate",
+  "targetQuizId": "communication",
+  "version": "0.2.0",
+  "status": "candidate",
+  "language": "zh-Hant",
+  "reviewedAt": "2026-10-12",
+  "title": "好好說，也好好聽",
+  "subtitle": "不同的表達，也能找到交會。",
+  "purpose": "了解提出需求、回應、暫停與修復時，自己的做法與希望收到的方式，讓答案成為具體對話。",
+  "audience": "交往前探索與交往中的兩人，不限性向、性別認同、婚姻、同居或距離。",
+  "evidenceStatus": "original-research-informed-candidate; comprehension-measurement-and-effect-validation-pending",
+  "sectionMeaning": "四段是閱讀與導航分類，不是已驗證的四因子量表。24題為候選設計，完成時間未實測。",
+  "instructions": "直接回答自己的做法或期待。「你」是你，「對方」是這輪一起回答的人。行為題只回想最近一個月與這輪對方的經歷，不用過去伴侶或想像情境代答；期待題回答目前希望收到的方式。單選通常第一步／最優先的一項，沒有標準答案。每題可選其他、依情況改變、尚未想清楚、不適用或暫不分享。雙方完成後，你願意分享的選項與特殊狀態會讓對方看到；暫不分享只顯示未分享，不要求補寫私人故事。選答不等於同意履行某項安排。",
+  "responsePolicy": {
+    "type": "single-choice",
+    "skip": "尚未選就是未答；候選接入提案要求每題選主要選項或明確狀態才可提交，不補零。",
+    "notShared": "獨立答案狀態，取代本題原選項；只顯示未分享，不保留可供對方回推的原選項、敘事或配對。",
+    "noExperience": "只出現在行為題，不當成低能力；無本輪經歷不能以期望或過去關係代答。",
+    "contextOnlyKinds": [
+      "other",
+      "varies",
+      "uncertain",
+      "not-applicable",
+      "not-experienced",
+      "not-shared"
+    ],
+    "optionIdsAreScores": false,
+    "requiresGenderOrOrientation": false
+  },
+  "scoring": null,
+  "permissionNote": "本24題、選項及提案皆為本站原創，不轉錄／翻譯CPQ、DCI或PRI題本，也不套用其分數或效度。未取得原工具公開網站與翻譯使用許可，不以此候選稿宣稱已取得。",
+  "sections": [
+    {
+      "id": "opening",
+      "title": "提出需求",
+      "purpose": "了解談話時機、開頭與媒介。"
+    },
+    {
+      "id": "responding",
+      "title": "聽懂與回應",
+      "purpose": "了解先回應什麼，以及誤會與不同意見怎麼處理。"
+    },
+    {
+      "id": "pausing",
+      "title": "暫停與再談",
+      "purpose": "了解暫停通知、返回安排與暫停期間的聯絡期待。"
+    },
+    {
+      "id": "repairing",
+      "title": "修復與追蹤",
+      "purpose": "了解如何重啟、回應傷害與確認後續安排。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "cpq-crenshaw-2017",
+      "authors": "Alexander O. Crenshaw, Andrew Christensen, Donald H. Baucom, Norman B. Epstein & Brian R. W. Baucom",
+      "year": 2017,
+      "title": "Revised scoring and improved reliability for the Communication Patterns Questionnaire",
+      "journal": "Psychological Assessment, 29(7), 913–925",
+      "doi": "10.1037/pas0000385",
+      "url": "https://doi.org/10.1037/pas0000385",
+      "readScope": "PubMed 摘要、PMC／作者 PDF 搜尋可讀的 Measures、Discussion、Footnotes；直接 PMC 遇驗證頁，PDF 直接開啟未成功。未取得作者提供的完整題本。",
+      "support": "問題發生、討論中與討論後的互動概念及候選工具比較。",
+      "limits": "四個異性已婚樣本的原 CPQ 證據，不能沿用為本站24題、繁體改寫或全性向驗證。"
+    },
+    {
+      "id": "holley-2010",
+      "authors": "Sarah R. Holley, Virginia E. Sturm & Robert W. Levenson",
+      "year": 2010,
+      "title": "Exploring the basis for gender differences in the demand-withdraw pattern",
+      "journal": "Journal of Homosexuality, 57(5), 666–684",
+      "doi": "10.1080/00918361003712145",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20455136/",
+      "readScope": "PubMed 摘要、Figure 1 說明；PMC 搜尋可讀 Self-Report Measure。",
+      "support": "63 對異性、男同性、女同性伴侶的互動與希望改變程度差異，不固定性別角色。",
+      "limits": "不是暫停技巧實驗，不驗證全性向／性別認同等同性或本題庫。"
+    },
+    {
+      "id": "pagani-2019",
+      "authors": "Ariela Francesca Pagani, Silvia Donato, Miriam Parise, Anna Bertoni, Raffaella Iafrate & Dominik Schoebi",
+      "year": 2019,
+      "title": "Explicit Stress Communication Facilitates Perceived Responsiveness in Dyadic Coping",
+      "journal": "Frontiers in Psychology, 10:401",
+      "doi": "10.3389/fpsyg.2019.00401",
+      "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2019.00401/full",
+      "readScope": "摘要與 Introduction 概念；本輪未完成方法／結果全文審查。",
+      "support": "55 對已婚伴侶日記研究區分壓力表達與感受到的回應。",
+      "limits": "與滿意度直接關聯未獲支持；外部壓力不同於兩人分歧，四種回應是本站延伸。"
+    },
+    {
+      "id": "salvatore-2011",
+      "authors": "Jessica E. Salvatore, Sally I-Chun Kuo, Ryan D. Steele, Jeffry A. Simpson & W. Andrew Collins",
+      "year": 2011,
+      "title": "Recovering from conflict in romantic relationships: a developmental perspective",
+      "journal": "Psychological Science, 22(3), 376–383",
+      "doi": "10.1177/0956797610397055",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/21245491/",
+      "readScope": "PubMed 摘要。",
+      "support": "73 位目標參與者與其伴侶的觀察／追蹤，討論後恢復可另作研究。",
+      "limits": "不定最佳暫停時間，不把本題庫當依附、分手或修復效果驗證。"
+    },
+    {
+      "id": "christensen-2006",
+      "authors": "Andrew Christensen, Kathleen Eldridge, Adriana Bokel Catta-Preta, Veronica R. Lim & Rossella Santagata",
+      "year": 2006,
+      "title": "Cross-Cultural Consistency of the Demand/Withdraw Interaction Pattern in Couples",
+      "journal": "Journal of Marriage and Family, 68(4), 1029–1044",
+      "doi": "10.1111/j.1741-3737.2006.00311.x",
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/j.1741-3737.2006.00311.x",
+      "readScope": "出版社摘要與中繼資料，未核對完整方法、中文題本或翻譯許可。",
+      "support": "363 位來自巴西、義大利、台灣與美國的參與者，提供台灣使用線索。",
+      "limits": "不代表已取得適合本產品的繁體題本、2017計分版本或公開使用條件；未直接用作24題效度。"
+    }
+  ],
+  "questions": [
+    {
+      "id": "comm-timing-do",
+      "number": 1,
+      "sectionId": "opening",
+      "title": "什麼時候開始談｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當你想和對方談一件有不同想法的事時，你通常怎麼選擇開始談的時間？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "right-away",
+          "label": "想到時就直接開始談",
+          "kind": "choice",
+          "meaningId": "timing:right-away"
+        },
+        {
+          "id": "check-now",
+          "label": "先問對方現在方不方便談",
+          "kind": "choice",
+          "meaningId": "timing:check-now"
+        },
+        {
+          "id": "set-time",
+          "label": "先和對方約一個談這件事的時間",
+          "kind": "choice",
+          "meaningId": "timing:set-time"
+        },
+        {
+          "id": "wait-unplanned",
+          "label": "先等自己準備好，再開口；不先約時間",
+          "kind": "choice",
+          "meaningId": "timing:wait-unplanned"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "什麼情況你方便現在談，什麼情況希望另約？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "問題發生階段；開始談的時機是本站延伸，原研究不提供最佳時機。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-timing-want",
+      "number": 2,
+      "sectionId": "opening",
+      "title": "什麼時候開始談｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方想和你談一件有不同想法的事，你目前希望對方怎麼選擇開始談的時間？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "right-away",
+          "label": "想到時就直接開始談",
+          "kind": "choice",
+          "meaningId": "timing:right-away"
+        },
+        {
+          "id": "check-now",
+          "label": "先問我現在方不方便談",
+          "kind": "choice",
+          "meaningId": "timing:check-now"
+        },
+        {
+          "id": "set-time",
+          "label": "先和我約一個談這件事的時間",
+          "kind": "choice",
+          "meaningId": "timing:set-time"
+        },
+        {
+          "id": "wait-unplanned",
+          "label": "先等對方準備好，再開口；不先約時間",
+          "kind": "choice",
+          "meaningId": "timing:wait-unplanned"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "什麼情況你方便現在談，什麼情況希望另約？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "問題發生階段；開始談的時機是本站延伸，原研究不提供最佳時機。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-opening-do",
+      "number": 3,
+      "sectionId": "opening",
+      "title": "怎麼開口｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當你對兩人的安排有不同想法時，你通常先怎麼向對方開口？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "event",
+          "label": "先說是哪件安排讓我想再談",
+          "kind": "choice",
+          "meaningId": "opening:event"
+        },
+        {
+          "id": "feeling",
+          "label": "先說自己對這件安排的感受",
+          "kind": "choice",
+          "meaningId": "opening:feeling"
+        },
+        {
+          "id": "request",
+          "label": "先說我希望這件安排怎麼調整",
+          "kind": "choice",
+          "meaningId": "opening:request"
+        },
+        {
+          "id": "ask-view",
+          "label": "先問對方怎麼看這件安排",
+          "kind": "choice",
+          "meaningId": "opening:ask-view"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "聽到這種開頭時，你最容易理解到什麼？還想知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "問題發生與表達階段；四種開頭為本站原創分類，並非量表因子或優劣等級。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-opening-want",
+      "number": 4,
+      "sectionId": "opening",
+      "title": "怎麼開口｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方對兩人的安排有不同想法，你目前希望對方先怎麼向你開口？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "event",
+          "label": "先說是哪件安排讓對方想再談",
+          "kind": "choice",
+          "meaningId": "opening:event"
+        },
+        {
+          "id": "feeling",
+          "label": "先說對方對這件安排的感受",
+          "kind": "choice",
+          "meaningId": "opening:feeling"
+        },
+        {
+          "id": "request",
+          "label": "先說對方希望這件安排怎麼調整",
+          "kind": "choice",
+          "meaningId": "opening:request"
+        },
+        {
+          "id": "ask-view",
+          "label": "先問我怎麼看這件安排",
+          "kind": "choice",
+          "meaningId": "opening:ask-view"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "聽到這種開頭時，你最容易理解到什麼？還想知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "問題發生與表達階段；四種開頭為本站原創分類，並非量表因子或優劣等級。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-channel-do",
+      "number": 5,
+      "sectionId": "opening",
+      "title": "用什麼方式談｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當你想和對方談一件有不同想法的事時，你通常先用哪種方式開始？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "in-person",
+          "label": "見面時當面說",
+          "kind": "choice",
+          "meaningId": "channel:in-person"
+        },
+        {
+          "id": "voice",
+          "label": "用語音通話說",
+          "kind": "choice",
+          "meaningId": "channel:voice"
+        },
+        {
+          "id": "video",
+          "label": "用視訊通話說",
+          "kind": "choice",
+          "meaningId": "channel:video"
+        },
+        {
+          "id": "text",
+          "label": "用文字訊息說",
+          "kind": "choice",
+          "meaningId": "channel:text"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "哪些內容你喜歡用這種方式說，哪些內容會想換一種方式？",
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "媒介選擇為本站情境設計，不借用遠距頻率研究宣稱哪種方式最有效。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-channel-want",
+      "number": 6,
+      "sectionId": "opening",
+      "title": "用什麼方式談｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方想和你談一件有不同想法的事，你目前希望對方先用哪種方式開始？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "in-person",
+          "label": "見面時當面說",
+          "kind": "choice",
+          "meaningId": "channel:in-person"
+        },
+        {
+          "id": "voice",
+          "label": "用語音通話說",
+          "kind": "choice",
+          "meaningId": "channel:voice"
+        },
+        {
+          "id": "video",
+          "label": "用視訊通話說",
+          "kind": "choice",
+          "meaningId": "channel:video"
+        },
+        {
+          "id": "text",
+          "label": "用文字訊息說",
+          "kind": "choice",
+          "meaningId": "channel:text"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "哪些內容你喜歡用這種方式說，哪些內容會想換一種方式？",
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "媒介選擇為本站情境設計，不借用遠距頻率研究宣稱哪種方式最有效。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-first-response-do",
+      "number": 7,
+      "sectionId": "responding",
+      "title": "先回應什麼｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當對方說出和你不同的想法時，你通常先怎麼回應？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "listen-through",
+          "label": "先聽對方說完，再回應",
+          "kind": "choice",
+          "meaningId": "first-response:listen-through"
+        },
+        {
+          "id": "ask-detail",
+          "label": "先問一個想弄清楚的地方",
+          "kind": "choice",
+          "meaningId": "first-response:ask-detail"
+        },
+        {
+          "id": "reflect-feeling",
+          "label": "先回應我聽到的感受",
+          "kind": "choice",
+          "meaningId": "first-response:reflect-feeling"
+        },
+        {
+          "id": "state-view",
+          "label": "先說我對這件事的看法",
+          "kind": "choice",
+          "meaningId": "first-response:state-view"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "你期待的第一個回應，會讓你知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017",
+          "pagani-2019"
+        ],
+        "note": "討論中的表達與回應；Pagani 研究為日常壓力情境，本題延伸到分歧，未驗證這四種回應。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-first-response-want",
+      "number": 8,
+      "sectionId": "responding",
+      "title": "先回應什麼｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "當你說出和對方不同的想法時，你目前希望對方先怎麼回應？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "listen-through",
+          "label": "先聽我說完，再回應",
+          "kind": "choice",
+          "meaningId": "first-response:listen-through"
+        },
+        {
+          "id": "ask-detail",
+          "label": "先問一個想弄清楚的地方",
+          "kind": "choice",
+          "meaningId": "first-response:ask-detail"
+        },
+        {
+          "id": "reflect-feeling",
+          "label": "先回應我的感受",
+          "kind": "choice",
+          "meaningId": "first-response:reflect-feeling"
+        },
+        {
+          "id": "state-view",
+          "label": "先說對方對這件事的看法",
+          "kind": "choice",
+          "meaningId": "first-response:state-view"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "你期待的第一個回應，會讓你知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017",
+          "pagani-2019"
+        ],
+        "note": "討論中的表達與回應；Pagani 研究為日常壓力情境，本題延伸到分歧，未驗證這四種回應。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-clarifying-do",
+      "number": 9,
+      "sectionId": "responding",
+      "title": "覺得被誤解時｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當對方理解的意思和你想說的不一樣時，你通常先怎麼澄清？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "rephrase",
+          "label": "換一種說法，再說一次我的意思",
+          "kind": "choice",
+          "meaningId": "clarifying:rephrase"
+        },
+        {
+          "id": "example",
+          "label": "舉一個具體例子說明",
+          "kind": "choice",
+          "meaningId": "clarifying:example"
+        },
+        {
+          "id": "ask-understanding",
+          "label": "先問對方剛才是怎麼理解的",
+          "kind": "choice",
+          "meaningId": "clarifying:ask-understanding"
+        },
+        {
+          "id": "name-difference",
+          "label": "指出剛才哪一部分和我的意思不同",
+          "kind": "choice",
+          "meaningId": "clarifying:name-difference"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "哪種澄清讓你容易跟上？什麼說法反而需要再問一次？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "理解與討論概念的本站澄清情境，不是原工具的逐題改寫。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-clarifying-want",
+      "number": 10,
+      "sectionId": "responding",
+      "title": "覺得被誤解時｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果你理解的意思和對方想說的不一樣，你目前希望對方先怎麼澄清？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "rephrase",
+          "label": "換一種說法，再說一次對方的意思",
+          "kind": "choice",
+          "meaningId": "clarifying:rephrase"
+        },
+        {
+          "id": "example",
+          "label": "舉一個具體例子說明",
+          "kind": "choice",
+          "meaningId": "clarifying:example"
+        },
+        {
+          "id": "ask-understanding",
+          "label": "先問我剛才是怎麼理解的",
+          "kind": "choice",
+          "meaningId": "clarifying:ask-understanding"
+        },
+        {
+          "id": "name-difference",
+          "label": "指出剛才哪一部分和對方的意思不同",
+          "kind": "choice",
+          "meaningId": "clarifying:name-difference"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "哪種澄清讓你容易跟上？什麼說法反而需要再問一次？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "理解與討論概念的本站澄清情境，不是原工具的逐題改寫。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-disagreeing-do",
+      "number": 11,
+      "sectionId": "responding",
+      "title": "表達不同意見｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當對方提出一個你不同意的做法時，你通常先怎麼表達不同意？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "reason",
+          "label": "先說我不同意的原因",
+          "kind": "choice",
+          "meaningId": "disagreeing:reason"
+        },
+        {
+          "id": "concern",
+          "label": "先說我擔心這個做法會帶來什麼",
+          "kind": "choice",
+          "meaningId": "disagreeing:concern"
+        },
+        {
+          "id": "alternative",
+          "label": "先提出我比較能接受的另一個做法",
+          "kind": "choice",
+          "meaningId": "disagreeing:alternative"
+        },
+        {
+          "id": "acknowledge-part",
+          "label": "先說我能理解的部分，再說不同意的地方",
+          "kind": "choice",
+          "meaningId": "disagreeing:acknowledge-part"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "怎麼說會讓你知道對方不同意的是做法，而不是否定你整個人？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017",
+          "holley-2010"
+        ],
+        "note": "分歧互動與希望改變的程度；四種表達方式為本站分類，不診斷要求／退縮。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-disagreeing-want",
+      "number": 12,
+      "sectionId": "responding",
+      "title": "表達不同意見｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "當你提出一個對方不同意的做法時，你目前希望對方先怎麼表達不同意？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "reason",
+          "label": "先說對方不同意的原因",
+          "kind": "choice",
+          "meaningId": "disagreeing:reason"
+        },
+        {
+          "id": "concern",
+          "label": "先說對方擔心這個做法會帶來什麼",
+          "kind": "choice",
+          "meaningId": "disagreeing:concern"
+        },
+        {
+          "id": "alternative",
+          "label": "先提出對方比較能接受的另一個做法",
+          "kind": "choice",
+          "meaningId": "disagreeing:alternative"
+        },
+        {
+          "id": "acknowledge-part",
+          "label": "先說對方能理解的部分，再說不同意的地方",
+          "kind": "choice",
+          "meaningId": "disagreeing:acknowledge-part"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "怎麼說會讓你知道對方不同意的是做法，而不是否定你整個人？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017",
+          "holley-2010"
+        ],
+        "note": "分歧互動與希望改變的程度；四種表達方式為本站分類，不診斷要求／退縮。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-pause-notice-do",
+      "number": 13,
+      "sectionId": "pausing",
+      "title": "怎麼告知需要暫停｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當討論讓你情緒升高、想先停一下時，你通常最先讓對方知道什麼？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "need-space",
+          "label": "我現在需要一點時間整理自己",
+          "kind": "choice",
+          "meaningId": "pause-notice:need-space"
+        },
+        {
+          "id": "will-return",
+          "label": "我仍願意繼續談這件事",
+          "kind": "choice",
+          "meaningId": "pause-notice:will-return"
+        },
+        {
+          "id": "current-limit",
+          "label": "我現在無法繼續談的原因",
+          "kind": "choice",
+          "meaningId": "pause-notice:current-limit"
+        },
+        {
+          "id": "next-contact",
+          "label": "我想怎麼安排下一次聯絡",
+          "kind": "choice",
+          "meaningId": "pause-notice:next-contact"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "聽到這句暫停說明，你會怎麼理解？還需要知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holley-2010",
+          "salvatore-2011"
+        ],
+        "note": "互動與討論後恢復；通知內容是本站延伸，不把暫停等同迴避。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-pause-notice-want",
+      "number": 14,
+      "sectionId": "pausing",
+      "title": "怎麼告知需要暫停｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方因為情緒升高想先停一下，你目前最希望先知道什麼？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "need-space",
+          "label": "對方現在需要一點時間整理自己",
+          "kind": "choice",
+          "meaningId": "pause-notice:need-space"
+        },
+        {
+          "id": "will-return",
+          "label": "對方仍願意繼續談這件事",
+          "kind": "choice",
+          "meaningId": "pause-notice:will-return"
+        },
+        {
+          "id": "current-limit",
+          "label": "對方現在無法繼續談的原因",
+          "kind": "choice",
+          "meaningId": "pause-notice:current-limit"
+        },
+        {
+          "id": "next-contact",
+          "label": "對方想怎麼安排下一次聯絡",
+          "kind": "choice",
+          "meaningId": "pause-notice:next-contact"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "聽到這句暫停說明，你會怎麼理解？還需要知道什麼？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "holley-2010",
+          "salvatore-2011"
+        ],
+        "note": "互動與討論後恢復；通知內容是本站延伸，不把暫停等同迴避。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-resume-plan-do",
+      "number": 15,
+      "sectionId": "pausing",
+      "title": "怎麼安排再談｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，你提出先暫停討論時，通常怎麼安排何時再談？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "specific-time",
+          "label": "先提出一個具體時間，再和對方確認",
+          "kind": "choice",
+          "meaningId": "resume-plan:specific-time"
+        },
+        {
+          "id": "check-ready",
+          "label": "先約一個時間確認是否準備好再談",
+          "kind": "choice",
+          "meaningId": "resume-plan:check-ready"
+        },
+        {
+          "id": "ready-contact",
+          "label": "準備好時再聯絡對方；不先約時間",
+          "kind": "choice",
+          "meaningId": "resume-plan:ready-contact"
+        },
+        {
+          "id": "ask-schedule",
+          "label": "先問對方哪些時段方便，再一起選",
+          "kind": "choice",
+          "meaningId": "resume-plan:ask-schedule"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "如果到約定時間仍沒準備好，你希望怎麼重新安排？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011"
+        ],
+        "note": "恢復歷程的本站安排題；研究不支持最佳間隔、指定時長或誰必須先聯絡。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-resume-plan-want",
+      "number": 16,
+      "sectionId": "pausing",
+      "title": "怎麼安排再談｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方提出先暫停討論，你目前希望對方怎麼安排何時再談？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "specific-time",
+          "label": "先提出一個具體時間，再和我確認",
+          "kind": "choice",
+          "meaningId": "resume-plan:specific-time"
+        },
+        {
+          "id": "check-ready",
+          "label": "先約一個時間確認是否準備好再談",
+          "kind": "choice",
+          "meaningId": "resume-plan:check-ready"
+        },
+        {
+          "id": "ready-contact",
+          "label": "準備好時再聯絡我；不先約時間",
+          "kind": "choice",
+          "meaningId": "resume-plan:ready-contact"
+        },
+        {
+          "id": "ask-schedule",
+          "label": "先問我哪些時段方便，再一起選",
+          "kind": "choice",
+          "meaningId": "resume-plan:ask-schedule"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "如果到約定時間仍沒準備好，你希望怎麼重新安排？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011"
+        ],
+        "note": "恢復歷程的本站安排題；研究不支持最佳間隔、指定時長或誰必須先聯絡。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-pause-contact-do",
+      "number": 17,
+      "sectionId": "pausing",
+      "title": "暫停期間怎麼聯絡｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，一次討論暫停後、還沒重新開始前，你通常怎麼和對方聯絡？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "no-contact",
+          "label": "暫時不聯絡，等重新開始時再說",
+          "kind": "choice",
+          "meaningId": "pause-contact:no-contact"
+        },
+        {
+          "id": "logistics-only",
+          "label": "只聯絡眼前需要處理的事情",
+          "kind": "choice",
+          "meaningId": "pause-contact:logistics-only"
+        },
+        {
+          "id": "brief-check-in",
+          "label": "簡短問候，但先不談原本的議題",
+          "kind": "choice",
+          "meaningId": "pause-contact:brief-check-in"
+        },
+        {
+          "id": "daily-contact",
+          "label": "維持平常的日常聯絡，但先不談原本的議題",
+          "kind": "choice",
+          "meaningId": "pause-contact:daily-contact"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "這段期間什麼聯絡讓你自在，什麼聯絡會讓你覺得仍在討論？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011"
+        ],
+        "note": "討論後恢復的情境延伸；未驗證這些聯絡安排，不將少聯絡當作懲罰或缺乏關心。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-pause-contact-want",
+      "number": 18,
+      "sectionId": "pausing",
+      "title": "暫停期間怎麼聯絡｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "一次討論暫停後、還沒重新開始前，你目前希望對方怎麼和你聯絡？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "no-contact",
+          "label": "暫時不聯絡，等重新開始時再說",
+          "kind": "choice",
+          "meaningId": "pause-contact:no-contact"
+        },
+        {
+          "id": "logistics-only",
+          "label": "只聯絡眼前需要處理的事情",
+          "kind": "choice",
+          "meaningId": "pause-contact:logistics-only"
+        },
+        {
+          "id": "brief-check-in",
+          "label": "簡短問候，但先不談原本的議題",
+          "kind": "choice",
+          "meaningId": "pause-contact:brief-check-in"
+        },
+        {
+          "id": "daily-contact",
+          "label": "維持平常的日常聯絡，但先不談原本的議題",
+          "kind": "choice",
+          "meaningId": "pause-contact:daily-contact"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "這段期間什麼聯絡讓你自在，什麼聯絡會讓你覺得仍在討論？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011"
+        ],
+        "note": "討論後恢復的情境延伸；未驗證這些聯絡安排，不將少聯絡當作懲罰或缺乏關心。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-restart-do",
+      "number": 19,
+      "sectionId": "repairing",
+      "title": "重新開啟討論｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，一次討論暫停後，當你重新開啟還沒談完的事時，通常先做什麼？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "check-capacity",
+          "label": "先問對方現在是否能繼續談",
+          "kind": "choice",
+          "meaningId": "restart:check-capacity"
+        },
+        {
+          "id": "recap",
+          "label": "先確認上次談到哪裡",
+          "kind": "choice",
+          "meaningId": "restart:recap"
+        },
+        {
+          "id": "current-feeling",
+          "label": "先說自己現在的感受",
+          "kind": "choice",
+          "meaningId": "restart:current-feeling"
+        },
+        {
+          "id": "next-step",
+          "label": "先提出這次想處理的一個重點",
+          "kind": "choice",
+          "meaningId": "restart:next-step"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "這種開頭會幫你接回哪一部分？有沒有什麼事還想先確認？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011",
+          "cpq-crenshaw-2017"
+        ],
+        "note": "討論後歷程與恢復；重啟方式為本站原創，不能由回答推定真正和好。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-restart-want",
+      "number": 20,
+      "sectionId": "repairing",
+      "title": "重新開啟討論｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "一次討論暫停後，如果對方重新開啟還沒談完的事，你目前希望對方先做什麼？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "check-capacity",
+          "label": "先問我現在是否能繼續談",
+          "kind": "choice",
+          "meaningId": "restart:check-capacity"
+        },
+        {
+          "id": "recap",
+          "label": "先確認上次談到哪裡",
+          "kind": "choice",
+          "meaningId": "restart:recap"
+        },
+        {
+          "id": "current-feeling",
+          "label": "先說對方現在的感受",
+          "kind": "choice",
+          "meaningId": "restart:current-feeling"
+        },
+        {
+          "id": "next-step",
+          "label": "先提出這次想處理的一個重點",
+          "kind": "choice",
+          "meaningId": "restart:next-step"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "這種開頭會幫你接回哪一部分？有沒有什麼事還想先確認？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "salvatore-2011",
+          "cpq-crenshaw-2017"
+        ],
+        "note": "討論後歷程與恢復；重啟方式為本站原創，不能由回答推定真正和好。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-hurt-response-do",
+      "number": 21,
+      "sectionId": "repairing",
+      "title": "說話讓對方不舒服之後｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，當你知道自己的說法讓對方不舒服時，你通常先做什麼？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "acknowledge-impact",
+          "label": "先承認自己的說法對對方造成的影響",
+          "kind": "choice",
+          "meaningId": "hurt-response:acknowledge-impact"
+        },
+        {
+          "id": "explain-intent",
+          "label": "先說明自己原本想表達的意思",
+          "kind": "choice",
+          "meaningId": "hurt-response:explain-intent"
+        },
+        {
+          "id": "ask-impact",
+          "label": "先問對方是哪一部分感到不舒服",
+          "kind": "choice",
+          "meaningId": "hurt-response:ask-impact"
+        },
+        {
+          "id": "change-wording",
+          "label": "先提出自己想怎麼換一種說法",
+          "kind": "choice",
+          "meaningId": "hurt-response:change-wording"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "原本的意思與你受到的影響，哪部分希望先被知道？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "討論後理解概念的本站修復情境；本題未直接評估道歉研究，不作最佳道歉排名。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-hurt-response-want",
+      "number": 22,
+      "sectionId": "repairing",
+      "title": "說話讓對方不舒服之後｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "如果對方知道自己的說法讓你不舒服，你目前希望對方先做什麼？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "acknowledge-impact",
+          "label": "先承認對方的說法對我造成的影響",
+          "kind": "choice",
+          "meaningId": "hurt-response:acknowledge-impact"
+        },
+        {
+          "id": "explain-intent",
+          "label": "先說明對方原本想表達的意思",
+          "kind": "choice",
+          "meaningId": "hurt-response:explain-intent"
+        },
+        {
+          "id": "ask-impact",
+          "label": "先問我是在哪一部分感到不舒服",
+          "kind": "choice",
+          "meaningId": "hurt-response:ask-impact"
+        },
+        {
+          "id": "change-wording",
+          "label": "先提出對方想怎麼換一種說法",
+          "kind": "choice",
+          "meaningId": "hurt-response:change-wording"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "原本的意思與你受到的影響，哪部分希望先被知道？",
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "cpq-crenshaw-2017"
+        ],
+        "note": "討論後理解概念的本站修復情境；本題未直接評估道歉研究，不作最佳道歉排名。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-follow-up-do",
+      "number": 23,
+      "sectionId": "repairing",
+      "title": "後續安排怎麼確認｜我的做法",
+      "perspective": "self-behavior",
+      "timeframe": "past-month-with-current-partner",
+      "prompt": "最近一個月，一次討論中如果你和對方有約好調整某個做法，你通常怎麼確認後續情況？",
+      "help": "「對方」是這輪一起回答的人。選最近一個月最接近你通常第一步的一項；沒做出明確回應可選其他，做法常變可選依情況改變，沒遇過可選沒有經歷。",
+      "options": [
+        {
+          "id": "set-review",
+          "label": "先約一個時間，再一起看看調整後的情況",
+          "kind": "choice",
+          "meaningId": "follow-up:set-review"
+        },
+        {
+          "id": "after-trying",
+          "label": "等實際試過一次，再一起談感受",
+          "kind": "choice",
+          "meaningId": "follow-up:after-trying"
+        },
+        {
+          "id": "when-needed",
+          "label": "遇到不合適或需要調整時，再提出來談",
+          "kind": "choice",
+          "meaningId": "follow-up:when-needed"
+        },
+        {
+          "id": "next-step-first",
+          "label": "先確認下一個具體行動；暫時不另約回看",
+          "kind": "choice",
+          "meaningId": "follow-up:next-step-first"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "discussion": "怎麼確認會讓你覺得是在一起調整，而不是被檢查？",
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "後續確認為本站操作設計；沒有本題或安排頻率的直接效果研究，不提供承諾分數。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    },
+    {
+      "id": "comm-follow-up-want",
+      "number": 24,
+      "sectionId": "repairing",
+      "title": "後續安排怎麼確認｜我的期待",
+      "perspective": "partner-expectation",
+      "timeframe": "current-expectation",
+      "prompt": "一次討論中如果你和對方有約好調整某個做法，你目前希望對方怎麼確認後續情況？",
+      "help": "回答你目前的期待，不代表對方已做到或答應。若多項都重要，先選這個情境最優先的一項；其他方式、依情況改變與暫不分享也能回答。",
+      "options": [
+        {
+          "id": "set-review",
+          "label": "先約一個時間，再一起看看調整後的情況",
+          "kind": "choice",
+          "meaningId": "follow-up:set-review"
+        },
+        {
+          "id": "after-trying",
+          "label": "等實際試過一次，再一起談感受",
+          "kind": "choice",
+          "meaningId": "follow-up:after-trying"
+        },
+        {
+          "id": "when-needed",
+          "label": "遇到不合適或需要調整時，再提出來談",
+          "kind": "choice",
+          "meaningId": "follow-up:when-needed"
+        },
+        {
+          "id": "next-step-first",
+          "label": "先確認下一個具體行動；暫時不另約回看",
+          "kind": "choice",
+          "meaningId": "follow-up:next-step-first"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "沒有固定方式，會依情況改變",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "discussion": "怎麼確認會讓你覺得是在一起調整，而不是被檢查？",
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "後續確認為本站操作設計；沒有本題或安排頻率的直接效果研究，不提供承諾分數。 題幹、單選選項、配對與提案均為本站原創，理解、測量與效果未驗證。"
+      }
+    }
+  ],
+  "resultPlan": {
+    "status": "proposal-not-implemented",
+    "version": "candidate-0.1.0",
+    "kind": "communication-cross-partner",
+    "directions": [
+      "A-want-vs-B-do",
+      "B-want-vs-A-do"
+    ],
+    "comparison": "兩邊均為choice且同一pair時，以meaningId精確相等判定same-selected-category，否則different-selected-category。每方向獨立；不跨pair、不同題的文字或索引比較。",
+    "exclusions": "任一方是contextOnlyKinds就顯示context-only；advice為null，不計共同點／差異。其他不是所有其他方式同一類，varies也不是彈性人格。未答表示回合未完成，不能解鎖。",
+    "sectionsOrder": [
+      "整體閱讀提示",
+      "每段最多一個值得確認的配對",
+      "雙向完整配對與特殊狀態",
+      "全部24題選項",
+      "研究與規則"
+    ],
+    "summaryPolicy": "每段依題序選第一個有可比較差異的配對作為可選聊天入口；無差異時選第一個可比較相同的配對；全為特殊狀態則明示沒有可比較配對、不硬湊。題序是導航優先順序，不代表差異大小、重要性或衝突嚴重程度。若同一配對雙向都有資料，均顯示，不能只留下其中一個方向。最多四個入口，完整資料不刪除。",
+    "labels": {
+      "same": "這個方向選到同一類方式",
+      "different": "這個方向選到不同方式",
+      "context": "保留情境，先不配對解讀"
+    },
+    "generalReading": "這份整理比較目前期待與另一方最近一個月的自述做法。相同選項不表示期待已被滿足；不同選項不表示衝突。可以先確認這個選擇在什麼情境成立，再決定是否想試一個小安排。",
+    "conversationSteps": [
+      "確認摘要說的是哪個方向與實際選項",
+      "各自說這個選擇的意思與適用情境，不必分享私人事件",
+      "確認先前不知道的需要或限制",
+      "自願選一個小安排，確認做不到時怎麼調整；也可以不安排"
+    ],
+    "advicePolicy": "只有兩邊均choice才依期待方選項讀取providerSuggestion，明示給提供回應者的可選原創提案。不能把提案寫成已履行、已驗證有效或必須折衷；暫停與界線尊重當下意願。",
+    "excludedClaims": [
+      "契合百分比",
+      "總分或分量表分數",
+      "誰比較會溝通",
+      "固定要求／退縮角色",
+      "依附類型",
+      "愛的程度",
+      "衝突程度",
+      "關係成敗預測",
+      "最佳暫停時長",
+      "已滿足期待或已原諒"
+    ],
+    "pairs": [
+      {
+        "id": "timing",
+        "sectionId": "opening",
+        "title": "什麼時候開始談",
+        "wantedQuestionId": "comm-timing-want",
+        "providedQuestionId": "comm-timing-do",
+        "commonAdvice": "這個方向的開始談話方式選到同一類；可再確認什麼情況適合如此開始。",
+        "differentAdvice": "一方希望的談話時機與另一方自述不同；可以先確認現在談與另約時間各需要什麼條件。",
+        "providerSuggestions": {
+          "right-away": "可以先確認眼前是否有空，再決定現在開始，或留一個接著談的入口。",
+          "check-now": "可以用一句「現在方便聊這件事嗎？」確認；不方便時再一起選時間。",
+          "set-time": "可以先說要談哪件事，再一起確認一個雙方做得到的時間。",
+          "wait-unplanned": "可以確認等待期間是否需要讓對方知道有事想聊；不把沒有先約時間解讀為不願談。"
+        },
+        "discussion": "什麼情況你方便現在談，什麼情況希望另約？"
+      },
+      {
+        "id": "opening",
+        "sectionId": "opening",
+        "title": "怎麼開口",
+        "wantedQuestionId": "comm-opening-want",
+        "providedQuestionId": "comm-opening-do",
+        "commonAdvice": "這個方向的開頭選到同一類；可以確認相同開頭對兩人是否有相同意思。",
+        "differentAdvice": "兩人選到不同的開頭；可以談先說事件、感受或調整想法，各會讓你如何理解這次談話。",
+        "providerSuggestions": {
+          "event": "可以用一件具體安排開頭，先確認兩人說的是同一件事。",
+          "feeling": "可以先用自己的感受開頭，再確認對方願不願意聽後面的原因。",
+          "request": "可以把希望調整的部分說具體，再確認另一方是否想先談原因或限制。",
+          "ask-view": "可以先留一段時間聽另一方怎麼看，再說自己的想法。"
+        },
+        "discussion": "聽到這種開頭時，你最容易理解到什麼？還想知道什麼？"
+      },
+      {
+        "id": "channel",
+        "sectionId": "opening",
+        "title": "用什麼方式談",
+        "wantedQuestionId": "comm-channel-want",
+        "providedQuestionId": "comm-channel-do",
+        "commonAdvice": "這個方向的談話媒介選到同一類；仍可確認實際可用時間與環境。",
+        "differentAdvice": "兩人選到不同媒介；可先確認各自需要表達或理解什麼，再找一次雙方可用的方式。",
+        "providerSuggestions": {
+          "in-person": "可以確認是否能見面，以及眼前場所是否適合談；無法見面再另選方式。",
+          "voice": "可以先確認能否通話及可用時間，不用接通與否推論重視程度。",
+          "video": "可以確認彼此的環境是否方便視訊，再開始這段談話。",
+          "text": "可以先確認文字中不清楚的地方要怎麼問，以及是否需要轉成通話。"
+        },
+        "discussion": "哪些內容你喜歡用這種方式說，哪些內容會想換一種方式？"
+      },
+      {
+        "id": "first-response",
+        "sectionId": "responding",
+        "title": "先回應什麼",
+        "wantedQuestionId": "comm-first-response-want",
+        "providedQuestionId": "comm-first-response-do",
+        "commonAdvice": "這個方向的第一個回應選到同一類；可以確認接著希望如何輪流說。",
+        "differentAdvice": "一方希望的第一個回應與另一方自述不同；可以談先聽、先問與先表達看法各有什麼用意。",
+        "providerSuggestions": {
+          "listen-through": "可以確認說到哪裡算告一段落，再留時間輪到另一方說。",
+          "ask-detail": "可以先問一個澄清問題，讓提出想法的人補充意思。",
+          "reflect-feeling": "可以用暫定語氣說「我聽起來你好像……」，讓另一方修正，不替人決定感受。",
+          "state-view": "可以先表明自己的看法，再確認另一方是否還有想補充的部分。"
+        },
+        "discussion": "你期待的第一個回應，會讓你知道什麼？"
+      },
+      {
+        "id": "clarifying",
+        "sectionId": "responding",
+        "title": "覺得被誤解時",
+        "wantedQuestionId": "comm-clarifying-want",
+        "providedQuestionId": "comm-clarifying-do",
+        "commonAdvice": "這個方向的澄清方式選到同一類；可以確認一個不用談私人事件的例子。",
+        "differentAdvice": "兩人對澄清方式的選擇不同；可以確認先重說、先舉例或先問理解，哪一步有助於這次對話。",
+        "providerSuggestions": {
+          "rephrase": "可以換一句更短的說法，再問另一方這次聽到什麼。",
+          "example": "可以選一個不用揭露私人細節的例子，確認它是否說明了這次意思。",
+          "ask-understanding": "可以先聽另一方理解到哪裡，再補充差的那一段。",
+          "name-difference": "可以只指出一個不同之處，再說自己原本要表達的內容。"
+        },
+        "discussion": "哪種澄清讓你容易跟上？什麼說法反而需要再問一次？"
+      },
+      {
+        "id": "disagreeing",
+        "sectionId": "responding",
+        "title": "表達不同意見",
+        "wantedQuestionId": "comm-disagreeing-want",
+        "providedQuestionId": "comm-disagreeing-do",
+        "commonAdvice": "這個方向的不同意表達選到同一類；可以確認理解與答應是否分得清楚。",
+        "differentAdvice": "兩人對不同意的開頭選擇不同；可先確認理由、擔心或替代做法，哪個最想先知道。",
+        "providerSuggestions": {
+          "reason": "可以先說一個具體原因，再讓另一方問不清楚的地方。",
+          "concern": "可以把擔心的事情說具體，再確認那是可能情境或已知限制。",
+          "alternative": "可以先提出替代做法，再一起確認它有哪些實際限制。",
+          "acknowledge-part": "可以分開「我理解你重視什麼」與「我是否答應」，避免理解被當成同意。"
+        },
+        "discussion": "怎麼說會讓你知道對方不同意的是做法，而不是否定你整個人？"
+      },
+      {
+        "id": "pause-notice",
+        "sectionId": "pausing",
+        "title": "怎麼告知需要暫停",
+        "wantedQuestionId": "comm-pause-notice-want",
+        "providedQuestionId": "comm-pause-notice-do",
+        "commonAdvice": "這個方向最先想知道的暫停訊息與另一方自述選到同一類；可以確認是否還有其他需要。",
+        "differentAdvice": "一方最先想知道的訊息與另一方自述不同；可確認整理自己的需要與仍願意再談，是否都想表達。",
+        "providerSuggestions": {
+          "need-space": "可以直接說眼前需要時間；另一方可確認這句話的意思，不要求立即說完原因。",
+          "will-return": "若確實願意，可以把這個意思說清楚；不把它當成現在就要繼續談的承諾。",
+          "current-limit": "可以只說願意分享的當下限制，不要求揭露所有情緒或私人經歷。",
+          "next-contact": "可以先提出下一次聯絡方式，再確認雙方能否接受；聯絡不等於必須完成討論。"
+        },
+        "discussion": "聽到這句暫停說明，你會怎麼理解？還需要知道什麼？"
+      },
+      {
+        "id": "resume-plan",
+        "sectionId": "pausing",
+        "title": "怎麼安排再談",
+        "wantedQuestionId": "comm-resume-plan-want",
+        "providedQuestionId": "comm-resume-plan-do",
+        "commonAdvice": "這個方向的再談安排選到同一類；可以補談臨時仍沒準備好時怎麼聯絡。",
+        "differentAdvice": "一方希望的再談安排與另一方自述不同；可先分清「確認是否準備好」與「正式繼續談」。",
+        "providerSuggestions": {
+          "specific-time": "可以確認一個雙方做得到的時間；有變動再聯絡，不把約定當成不能調整。",
+          "check-ready": "可以先約確認狀態的時間，到時再決定繼續談或另作安排。",
+          "ready-contact": "可以確認等待期間是否需要其他訊息，以及由誰在準備好時聯絡。",
+          "ask-schedule": "可以各提能談的時段，確認雙方的體力與安排，再選一個時間。"
+        },
+        "discussion": "如果到約定時間仍沒準備好，你希望怎麼重新安排？"
+      },
+      {
+        "id": "pause-contact",
+        "sectionId": "pausing",
+        "title": "暫停期間怎麼聯絡",
+        "wantedQuestionId": "comm-pause-contact-want",
+        "providedQuestionId": "comm-pause-contact-do",
+        "commonAdvice": "這個方向的暫停期間聯絡選到同一類；仍可確認必要事項與日常問候的界線。",
+        "differentAdvice": "兩人對暫停期間的聯絡選擇不同；可以確認哪些聯絡可接受，不要求單方放棄需要的空間。",
+        "providerSuggestions": {
+          "no-contact": "可以確認暫停聯絡的範圍及必要事項的處理方式，不把安靜直接解讀成冷淡。",
+          "logistics-only": "可以確認哪些是眼前必要事項，讓雙方知道這段期間如何聯絡。",
+          "brief-check-in": "可以確認彼此是否接受簡短問候，以及什麼內容會讓人感到又被拉回討論。",
+          "daily-contact": "可以確認哪些日常聯絡仍舒服，以及是否需要比平常少一點。"
+        },
+        "discussion": "這段期間什麼聯絡讓你自在，什麼聯絡會讓你覺得仍在討論？"
+      },
+      {
+        "id": "restart",
+        "sectionId": "repairing",
+        "title": "重新開啟討論",
+        "wantedQuestionId": "comm-restart-want",
+        "providedQuestionId": "comm-restart-do",
+        "commonAdvice": "這個方向的重啟方式選到同一類；可以確認再次談的範圍與當下意願。",
+        "differentAdvice": "一方希望的重啟方式與另一方自述不同；可先確認眼前需要的是狀態確認、回顧還是處理下一步。",
+        "providerSuggestions": {
+          "check-capacity": "可以先確認當下能不能繼續談；不方便時再安排，不把拒絕當成不願處理。",
+          "recap": "可以各說一句記得談到的地方，再選這次先談的一件事。",
+          "current-feeling": "可以分享願意說的當下感受，讓另一方有機會補充或詢問。",
+          "next-step": "可以先提一個重點，再確認另一方是否也願意從這裡開始。"
+        },
+        "discussion": "這種開頭會幫你接回哪一部分？有沒有什麼事還想先確認？"
+      },
+      {
+        "id": "hurt-response",
+        "sectionId": "repairing",
+        "title": "說話讓對方不舒服之後",
+        "wantedQuestionId": "comm-hurt-response-want",
+        "providedQuestionId": "comm-hurt-response-do",
+        "commonAdvice": "這個方向希望收到的第一步與另一方自述選到同一類；這不代表已原諒或影響已處理。",
+        "differentAdvice": "兩人對說話造成不舒服後的第一步選擇不同；可以分開原意、影響與改說法，不要求立即原諒。",
+        "providerSuggestions": {
+          "acknowledge-impact": "可以先回應已被說出的影響，不要求受影響的一方立刻原諒或安慰自己。",
+          "explain-intent": "可以說明原意，也確認另一方是否想先談影響；原意與造成的感受可能不同。",
+          "ask-impact": "可以只問另一方願意分享的部分，不要求用私人細節證明感受。",
+          "change-wording": "可以試說一個新的表達方式，再讓另一方決定是否願意回應；不用換字取代處理影響。"
+        },
+        "discussion": "原本的意思與你受到的影響，哪部分希望先被知道？"
+      },
+      {
+        "id": "follow-up",
+        "sectionId": "repairing",
+        "title": "後續安排怎麼確認",
+        "wantedQuestionId": "comm-follow-up-want",
+        "providedQuestionId": "comm-follow-up-do",
+        "commonAdvice": "這個方向的後續確認選到同一類；可以確認一個願意試的安排與調整出口。",
+        "differentAdvice": "兩人對後續確認的選擇不同；可以談固定回看、試過再談與有需要才談，各自需要什麼。",
+        "providerSuggestions": {
+          "set-review": "可以約一個回看時間，確認做得到的部分與需要調整的部分，不把回看當成考核。",
+          "after-trying": "可以先確認一次小範圍嘗試，做完再各說感受；沒有發生機會時另作安排。",
+          "when-needed": "可以確認需要重談時如何提出，不把沒有再次提出當作已滿意。",
+          "next-step-first": "可以先各確認一個願意做的行動，之後若有困難再聯絡，不把選答當成已答應執行。"
+        },
+        "discussion": "怎麼確認會讓你覺得是在一起調整，而不是被檢查？"
+      }
+    ],
+    "scenarios": [
+      {
+        "name": "雙向同類",
+        "input": "A timing-want=check-now、B timing-do=check-now；B timing-want=set-time、A timing-do=set-time",
+        "expected": "兩個方向各為同類，但不稱已滿足或完美溝通。"
+      },
+      {
+        "name": "一方向不同、另一方向同類",
+        "input": "A timing-want=set-time、B timing-do=right-away；B timing-want=check-now、A timing-do=check-now",
+        "expected": "A期待←B做法為不同；B期待←A做法為同類，兩方向分開顯示。"
+      },
+      {
+        "name": "雙方都其他",
+        "input": "A timing-want=other、B timing-do=other",
+        "expected": "context-only、advice:null，不判同類。"
+      },
+      {
+        "name": "沒有本輪經歷",
+        "input": "A timing-want=set-time、B timing-do=not-experienced",
+        "expected": "context-only、advice:null，不推定B不願談；另一方向獨立判斷。"
+      },
+      {
+        "name": "未分享",
+        "input": "A timing-want=not-shared、B timing-do=right-away",
+        "expected": "只顯示未分享狀態，不產生給A或B的本方向提案，不回推A原偏好。"
+      },
+      {
+        "name": "未答",
+        "input": "A任一題未選",
+        "expected": "本輪未完成，不解鎖結果；不填零或替答。"
+      },
+      {
+        "name": "同索引不同議題",
+        "input": "timing第一選項與opening第一選項",
+        "expected": "不同pair不可比較；不因索引相同而視為同類。"
+      }
+    ]
+  },
+  "review": {
+    "status": "editorial-draft-only",
+    "humanTryoutCount": 0,
+    "checks": [
+      "主詞直接為你／對方",
+      "每題一個焦點，做法與期待分開",
+      "12組語意配對，ID不當分數",
+      "不預設性別、婚姻、同居或生育",
+      "特殊狀態不生成個別提案",
+      "全部研究與自編範圍分開"
+    ],
+    "pending": [
+      "使用者逐題理解與選項涵蓋回饋",
+      "通常第一步／最優先是否容易單選",
+      "一個月時間窗及填答負擔",
+      "配對解釋與提案是否合適",
+      "正式接入契約與Node／D1解鎖測試",
+      "測量與產品效果驗證"
+    ]
+  }
+}
