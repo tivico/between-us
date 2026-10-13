@@ -23,7 +23,17 @@
 
 必要檢查與發布可依序執行 `npm run check`、`npm run build`、`npm run cloudflare:deploy`。發布後用 `node scripts/check-daily-values.mjs https://between-us.forest-between-us.workers.dev/` 檢查完整／整組未分享兩輪工程QA與保護；此腳本會建立標記回合，不讀既有使用者資料、不輸出憑證、不刪資料。健康檢查可用 `Invoke-RestMethod https://between-us.forest-between-us.workers.dev/api/health`。
 
-本輪一般／雲端部署與公開驗證紀錄會在發布完成後補在本節。沿用原Worker／D1，不需schema migration，不搬動本機答案。需要回復時使用Wrangler deployments rollback回到前版Worker，保留D1；若已有新版本回合，舊Worker不支援的結果可能暫時無法開啟，應優先修復前進而不回改答案。
+### 0.12 正式發布與驗證（2026-10-13）
+
+日常功能提交 `1b6aea7`，整合提交 `77f3c7a`；0.12.0 保留原 `v0.11.0` 溝通發布 `4f22fed`，不覆寫標記。兩個主題在同一份 `quizzes`／Node／D1／畫面並存，既有工具與分析版本不因網站升版改變。2026-10-12 的日常工作副本曾部署為 `41c9e5fd-68e0-4fea-952c-8d7a0c2e34ee`；續作核對既有溝通發布後，合併並升0.12，最後Worker版本為 **`42dbb12d-e964-4f78-8d5c-045fdf2257fc`**，不再以日常副本覆蓋溝通入口。
+
+驗證：18檔／98項測試通過，一般／Cloudflare建置通過。公開五套腳本 `check-daily-values`、`check-communication`、`check-cloudflare`、`check-long-distance`、`check-questionnaires` 全部成功，涵蓋新日常完整／整組未分享、方向比較、明示交集、401／423／409與缺答保護，以及既有57題、24題溝通／遠距和八組四題。只新增標記工程QA，不讀既有使用者資料、不輸出憑證、不刪D1。98項工程測試不表示人類理解、測量或交流成效驗證。
+
+畫面：日常獨立A／B、32步、複選、整組未分享／恢復保存、提交等待／解鎖、共同接受／重要差異、四步交流與無Console錯誤已在本機記憶體工程QA驗證，390px手機作答與結果無橫向溢出。整合後公開主題館確認六個主題、日常／溝通均已開放，介紹／32步與24題入口正確；公開日常介紹圖 `.local/daily-values-0.12-live.png` 已保存於忽略目錄，不含私人回合。沒有開啟既有私人結果或實體雙手機驗證。
+
+建置仍有單一JS資產超過500KB的提示（雲端gzip約164KB）；建置成功，但尚未做慢速網路效能量測，若未來載入負擔升高再評估分包，不以提高警告門檻當優化。
+
+沿用原Worker／D1，不需schema migration，不搬動本機答案。需要回復時使用Wrangler deployments rollback回到前一完整已驗證的Worker，保留D1；若已有新版本回合，舊Worker不支援的結果可能暫時無法開啟，應優先修復前進而不回改答案。GitHub同步與CI紀錄在下方補充，GitHub push不觸發Cloudflare正式部署。
 
 ## 0.11 溝通探索
 
