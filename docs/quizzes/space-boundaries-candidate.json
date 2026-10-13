@@ -1,0 +1,1026 @@
+{
+  "id": "space-boundaries-candidate",
+  "targetQuizId": "space-boundaries",
+  "version": "0.1.0",
+  "status": "candidate",
+  "language": "zh-Hant",
+  "reviewedAt": "2026-10-13",
+  "title": "靠近，也保留自己",
+  "purpose": "認識相處、獨處、分享與各自人際安排的需要和界線，不要求用讓步證明信任。",
+  "scope": "第一輪12題可審閱候選，不是已核定正式題數、量表或上線功能；適用交往前與交往中，不限性向／性別認同，不預設婚姻、同居、排他關係或關係已公開。",
+  "instructions": "直接回答目前想法。「你」是本人，「對方」是這輪一起回答的人。行為題只回想最近一個月與這輪對方的經歷，沒遇過可明示沒有經歷。主要選項為單選最接近／最優先的一項；其他、依情況改變、未確定、不適用與暫不分享均可回答。界線題是現在願意的範圍，不是對方可直接採取行動的許可；有需要時仍確認當次同意。候選接入提案為雙方完成後看到願意分享的選項及特殊狀態；暫不分享取代原選項，不要求補寫私人細節。",
+  "scoring": null,
+  "sections": [
+    {
+      "id": "time-space",
+      "title": "陪伴與獨處",
+      "purpose": "分清想怎麼一起相處、獨處時想保留什麼，以及如何回應獨處需要。"
+    },
+    {
+      "id": "privacy",
+      "title": "資訊分享",
+      "purpose": "由資訊與影像的本人表達願意分享的範圍；做法自述不等於取得許可。"
+    },
+    {
+      "id": "social-boundaries",
+      "title": "人際與安排",
+      "purpose": "保留各自朋友與原有安排，了解聯絡期待及界線如何更新。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "patrick-2007",
+      "authors": "Heather Patrick, C. Raymond Knee, Amy Canevello & Cynthia Lonsbary",
+      "year": 2007,
+      "title": "The role of need fulfillment in relationship functioning and well-being: a self-determination theory perspective",
+      "journal": "Journal of Personality and Social Psychology, 92(3), 434–457",
+      "doi": "10.1037/0022-3514.92.3.434",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/17352602/",
+      "readScope": "PubMed摘要與中繼資料，未完成全文樣本／方法審查。",
+      "supports": "三項研究含日記，自主、能力與連結需求滿足和關係運作相關。",
+      "limitations": "不提供最佳陪伴／獨處比例、朋友報備規則、因果或本題庫驗證。"
+    },
+    {
+      "id": "nguyen-2018",
+      "authors": "Thuy-vy T. Nguyen, Richard M. Ryan & Edward L. Deci",
+      "year": 2018,
+      "title": "Solitude as an Approach to Affective Self-Regulation",
+      "journal": "Personality and Social Psychology Bulletin, 44(1), 92–106",
+      "doi": "10.1177/0146167217733073",
+      "url": "https://doi.org/10.1177/0146167217733073",
+      "readUrl": "https://selfdeterminationtheory.org/wp-content/uploads/2018/05/2018_NguyenRyanDeci_PSPB.pdf",
+      "readScope": "公開PDF摘要、Study 1／2／3／4 Method的Participants／Procedures可讀文字，以及作者機構出版資料；未逐頁審查所有結果。",
+      "supports": "實驗與日記分開觀察獨處、自主動機與情緒；Study4最終157名大學生、兩週日記。",
+      "limitations": "不是伴侶界線工具；研究中的15分鐘不是日常最佳時長，不推定獨處者孤單、病理或不愛對方。"
+    },
+    {
+      "id": "dragiewicz-2026",
+      "authors": "Molly Dragiewicz, Jeffrey Ackerman & Marianne Haaland",
+      "year": 2026,
+      "title": "Smartphone sharing with intimate partners in Australia: Characteristics and implications for cybersecurity",
+      "journal": "New Media & Society, OnlineFirst",
+      "doi": "10.1177/14614448251414006",
+      "url": "https://journals.sagepub.com/doi/10.1177/14614448251414006",
+      "readScope": "出版社摘要、Introduction、樣本／參與者特徵與sharing三種形式的段落；未逐一核對全部模型／表格。",
+      "supports": "967名澳洲成年人的問卷，區分共用裝置、知道憑證與允許存取等情境。",
+      "limitations": "多數樣本為女性、同居者；不能將普遍做法當成應有標準，也不代表台灣全性向等同性或交出密碼證明信任。"
+    },
+    {
+      "id": "doerfler-2024",
+      "authors": "Periwinkle Doerfler, Kieron Ivy Turk, Chris Geeng, Damon McCoy, Jeffrey Ackerman & Molly Dragiewicz",
+      "year": 2024,
+      "title": "Privacy or Transparency? Negotiated Smartphone Access as a Signifier of Trust in Romantic Relationships",
+      "journal": "arXiv:2407.04906v1；本輪僅核對預印本入口",
+      "doi": "10.48550/arXiv.2407.04906",
+      "url": "https://arxiv.org/abs/2407.04906",
+      "readScope": "作者預印本摘要與版本／作者資料，未讀全文、未核對後續出版狀態。",
+      "supports": "兩份調查區分裝置存取及明示／隱含使用界線，存取範圍沒有單一共識。",
+      "limitations": "不與2026研究當兩份完全獨立樣本累加證據；無最佳透明程度或本站題目的效度。"
+    },
+    {
+      "id": "thomas-2019",
+      "authors": "Virginia Thomas & Margarita Azmitia",
+      "year": 2019,
+      "title": "Motivation matters: Development and validation of the Motivation for Solitude Scale – Short Form (MSS-SF)",
+      "journal": "Journal of Adolescence, 70, 33–42；2018先行公開",
+      "doi": "10.1016/j.adolescence.2018.11.004",
+      "url": "https://onlinelibrary.wiley.com/doi/abs/10.1016/j.adolescence.2018.11.004",
+      "readScope": "出版社完整摘要與中繼資料，未取得完整題本／手冊。",
+      "supports": "美國四個樣本、803名成年初期及176名青少年，區分自主與非自主獨處動機。",
+      "limitations": "僅作工具比較，不從本稿一題判定動機類型、情緒健康或人格。繁體版本與公開使用條件未核對。"
+    }
+  ],
+  "questions": [
+    {
+      "id": "space-together",
+      "sectionId": "time-space",
+      "perspective": "preference",
+      "prompt": "如果兩人都願意一起待一段時間，你目前最想怎麼相處？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "talk",
+          "label": "留一段時間專心聊彼此的近況",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-activity",
+          "label": "一起做一件雙方想做的事",
+          "kind": "choice"
+        },
+        {
+          "id": "parallel",
+          "label": "待在同一個地方，各做自己的事",
+          "kind": "choice"
+        },
+        {
+          "id": "quiet-company",
+          "label": "安靜待在一起，不一定聊天或做事",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007"
+        ],
+        "note": "連結需求的概念延伸，不把一起做同一件事當作唯一陪伴，也不測需求滿足。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "哪種相處讓你感到有人陪著？哪些場合會不同？",
+      "number": 1
+    },
+    {
+      "id": "space-alone-focus",
+      "sectionId": "time-space",
+      "perspective": "preference",
+      "prompt": "如果你想留一段時間自己待著，你目前最想先保留什麼？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "rest",
+          "label": "不被打擾地休息",
+          "kind": "choice"
+        },
+        {
+          "id": "interest",
+          "label": "投入自己的興趣或想做的事",
+          "kind": "choice"
+        },
+        {
+          "id": "reflect",
+          "label": "整理自己的想法或感受",
+          "kind": "choice"
+        },
+        {
+          "id": "unplanned",
+          "label": "暫時不用回應或安排任何事",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "nguyen-2018"
+        ],
+        "note": "研究區分獨處情境與動機；本題只問目前用途偏好，不能推定孤單、情緒問題或最佳時長。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "這段時間對你有什麼作用？你願意讓對方知道哪一部分？",
+      "number": 2
+    },
+    {
+      "id": "space-alone-want",
+      "sectionId": "time-space",
+      "perspective": "partner-expectation",
+      "prompt": "當你向對方說想自己待一下時，你目前希望對方先怎麼回應？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "acknowledge",
+          "label": "簡短表示知道了，再留空間給我",
+          "kind": "choice"
+        },
+        {
+          "id": "ask-contact",
+          "label": "先問我是否希望之後再聯絡",
+          "kind": "choice"
+        },
+        {
+          "id": "necessary-matters",
+          "label": "先和我確認眼前必要事項怎麼處理",
+          "kind": "choice"
+        },
+        {
+          "id": "no-immediate-reply",
+          "label": "暫時不用回覆，先讓我安靜一下",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007",
+          "nguyen-2018"
+        ],
+        "note": "自主與獨處概念的回應情境延伸，不要求報備理由或承諾固定恢復聯絡期限。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "你希望的這個回應，是讓你知道什麼？",
+      "number": 3
+    },
+    {
+      "id": "space-alone-do",
+      "sectionId": "time-space",
+      "perspective": "self-behavior",
+      "prompt": "最近一個月，當對方明確說想自己待一下時，你通常先怎麼回應？",
+      "help": "只回想最近一個月與這輪對方的經歷，選最接近通常第一步的一項。沒遇過可選沒有經歷，不用過去關係代答。",
+      "options": [
+        {
+          "id": "acknowledge",
+          "label": "簡短表示知道了，再留空間給對方",
+          "kind": "choice"
+        },
+        {
+          "id": "ask-contact",
+          "label": "先問對方是否希望之後再聯絡",
+          "kind": "choice"
+        },
+        {
+          "id": "necessary-matters",
+          "label": "先和對方確認眼前必要事項怎麼處理",
+          "kind": "choice"
+        },
+        {
+          "id": "no-immediate-reply",
+          "label": "暫時不回覆，先讓對方安靜一下",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007",
+          "nguyen-2018"
+        ],
+        "note": "與上一題比較回應類別，不測是否真的尊重界線或是否感到被照顧。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "什麼情況下你會用這個回應？對方當時可能需要什麼，仍要由對方說明。",
+      "number": 4
+    },
+    {
+      "id": "space-phone-boundary",
+      "sectionId": "privacy",
+      "perspective": "owner-boundary",
+      "prompt": "如果對方想用你的手機做一件事，你目前願意怎麼安排？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "ask-each",
+          "label": "每次先說用途，問我當次是否願意",
+          "kind": "choice"
+        },
+        {
+          "id": "owner-operates",
+          "label": "先告訴我想做什麼，由我自己操作",
+          "kind": "choice"
+        },
+        {
+          "id": "agreed-purpose",
+          "label": "只在我已明確答應的用途與期限內使用；變更再問",
+          "kind": "choice"
+        },
+        {
+          "id": "no-access",
+          "label": "目前不願讓對方操作我的手機",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "dragiewicz-2026",
+          "doerfler-2024"
+        ],
+        "note": "裝置存取與使用範圍分開。此題表達本人目前界線，不授予產品或對方實際存取權。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "如果願意借用，哪些用途可以、哪些內容仍不想被看見？也可以保留不借用。",
+      "boundary": {
+        "owner": "respondent",
+        "refusalOptionIds": [
+          "no-access"
+        ],
+        "exceptionPolicy": "未明示的用途不是許可，當次同意可比本輪範圍更窄；不要求分享密碼或降低安全設定。"
+      },
+      "number": 5
+    },
+    {
+      "id": "space-phone-do",
+      "sectionId": "privacy",
+      "perspective": "self-behavior",
+      "prompt": "最近一個月，當你想用對方的手機做一件事時，你通常先怎麼處理？",
+      "help": "只回想最近一個月與這輪對方的經歷，選最接近通常第一步的一項。沒遇過可選沒有經歷，不用過去關係代答。",
+      "options": [
+        {
+          "id": "ask-purpose",
+          "label": "先說用途，問對方當次是否願意",
+          "kind": "choice"
+        },
+        {
+          "id": "prior-agreement",
+          "label": "按先前已明確答應的用途與期限使用",
+          "kind": "choice"
+        },
+        {
+          "id": "owner-operates",
+          "label": "請對方自己操作，讓我知道需要的資訊",
+          "kind": "choice"
+        },
+        {
+          "id": "without-checking",
+          "label": "不另外確認就使用",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "dragiewicz-2026",
+          "doerfler-2024"
+        ],
+        "note": "做法自述只保留情境，不與對方界線用相同ID／順序比契合；不先確認不是產品建議。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "這個做法依據的是哪個明確約定？如果沒有約定，先保留不用對方手機的方式。",
+      "number": 6
+    },
+    {
+      "id": "space-private-story",
+      "sectionId": "privacy",
+      "perspective": "owner-boundary",
+      "prompt": "兩人私下聊到與你有關的私人內容，對方對外提起前，你目前希望怎麼處理？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "ask-each",
+          "label": "每次先問我是否願意、可以說到哪裡",
+          "kind": "choice"
+        },
+        {
+          "id": "agreed-audience",
+          "label": "只依已明確約定的內容與對象分享；變更再問",
+          "kind": "choice"
+        },
+        {
+          "id": "self-share",
+          "label": "先讓我自己決定是否對外說",
+          "kind": "choice"
+        },
+        {
+          "id": "no-forward",
+          "label": "目前不願讓對方把這些內容對外提起",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "從裝置隱私延伸到日常內容需另有證據，這題明示自編；不把一般隱私安排延伸為限制本人求助。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "哪種內容你願意自己說，哪種希望保留？不需要提供私人故事。",
+      "boundary": {
+        "owner": "respondent",
+        "refusalOptionIds": [
+          "no-forward"
+        ],
+        "exceptionPolicy": "題目針對一般對外轉述私人內容；尋求支持不需取得對方批准，提案不限制求助或要求交出他人可識別細節。"
+      },
+      "number": 7
+    },
+    {
+      "id": "space-photo-boundary",
+      "sectionId": "privacy",
+      "perspective": "owner-boundary",
+      "prompt": "如果對方想公開一張包含你的兩人合照，你目前願意怎麼安排？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "ask-each-photo",
+          "label": "每張照片公開前都先讓我看，再問我是否願意",
+          "kind": "choice"
+        },
+        {
+          "id": "agreed-scope",
+          "label": "只在我已明確答應的照片、對象與平台範圍公開",
+          "kind": "choice"
+        },
+        {
+          "id": "share-to-me",
+          "label": "先只私下傳給我，這輪先不談公開",
+          "kind": "choice"
+        },
+        {
+          "id": "no-public-photo",
+          "label": "目前不願公開包含我的兩人合照",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "照片／身分可見性為本站界線情境，不借裝置研究驗證本題，也不預設關係已公開。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "如果願意公開，照片、標記和看得到的人是否都符合你目前願意的範圍？",
+      "boundary": {
+        "owner": "respondent",
+        "refusalOptionIds": [
+          "no-public-photo",
+          "share-to-me"
+        ],
+        "exceptionPolicy": "沒有明確同意先不公開；不能用先前貼過照片推定新照片、標記或其他平台已獲同意。"
+      },
+      "number": 8
+    },
+    {
+      "id": "space-friends-want",
+      "sectionId": "social-boundaries",
+      "perspective": "partner-expectation",
+      "prompt": "如果對方和朋友另有安排，而且不影響原本共同約定，你目前最希望收到哪種聯絡？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "no-fixed-update",
+          "label": "不需要固定告知",
+          "kind": "choice"
+        },
+        {
+          "id": "availability",
+          "label": "讓我知道什麼時候不方便聯絡就好",
+          "kind": "choice"
+        },
+        {
+          "id": "general-plan",
+          "label": "自願分享大致活動就好",
+          "kind": "choice"
+        },
+        {
+          "id": "next-contact",
+          "label": "一起確認下次方便聯絡的時機",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007"
+        ],
+        "note": "自主概念的聯絡期待延伸，不證明最佳報備規則，不按朋友性別／性向判斷；期待不是控制他人行程的授權。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "這個聯絡對你有什麼作用？你能接受哪些資訊保留給對方自己？",
+      "number": 9
+    },
+    {
+      "id": "space-friends-do",
+      "sectionId": "social-boundaries",
+      "perspective": "self-behavior",
+      "prompt": "最近一個月，你和朋友另有安排、而且不影響原本共同約定時，通常怎麼和對方聯絡？",
+      "help": "只回想最近一個月與這輪對方的經歷，選最接近通常第一步的一項。沒遇過可選沒有經歷，不用過去關係代答。",
+      "options": [
+        {
+          "id": "no-fixed-update",
+          "label": "不固定告知",
+          "kind": "choice"
+        },
+        {
+          "id": "availability",
+          "label": "讓對方知道什麼時候不方便聯絡",
+          "kind": "choice"
+        },
+        {
+          "id": "general-plan",
+          "label": "自願分享大致活動",
+          "kind": "choice"
+        },
+        {
+          "id": "next-contact",
+          "label": "一起確認下次方便聯絡的時機",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007"
+        ],
+        "note": "與上一題只比本情境自述做法／期待，差異不代表不信任；不要求交出姓名、位置或聊天內容。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "這個做法通常適用哪些活動？是否有情況需要另外確認？",
+      "number": 10
+    },
+    {
+      "id": "space-existing-plan",
+      "sectionId": "social-boundaries",
+      "perspective": "owner-boundary",
+      "prompt": "你已經有自己的安排，又收到對方臨時的相處邀請時，你目前希望對方先怎麼回應你的安排？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "keep-plan",
+          "label": "接受我保留原安排",
+          "kind": "choice"
+        },
+        {
+          "id": "ask-adjustment",
+          "label": "問我是否願意調整，讓我自己決定",
+          "kind": "choice"
+        },
+        {
+          "id": "another-time",
+          "label": "一起找不需要更動原安排的其他時間",
+          "kind": "choice"
+        },
+        {
+          "id": "time-to-think",
+          "label": "先讓我想一想，之後由我答覆",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "patrick-2007"
+        ],
+        "note": "自主選擇的情境延伸；不把拒絕臨時邀請算低投入，不預设必須調整或證明重視。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "什麼安排你想保留？如果不改，是否有雙方都願意的另一次相處？",
+      "boundary": {
+        "owner": "respondent",
+        "refusalOptionIds": [
+          "keep-plan",
+          "time-to-think"
+        ],
+        "exceptionPolicy": "邀請可以被拒絕，暫不答覆不是同意；另約時間須雙方願意，不要求立即給替代安排。"
+      },
+      "number": 11
+    },
+    {
+      "id": "space-update-boundary",
+      "sectionId": "social-boundaries",
+      "perspective": "process-preference",
+      "prompt": "當你想調整以前說好的相處或分享界線，你目前最希望先確認什麼？",
+      "help": "回答目前想法。若多項符合，先選在這個情境最優先的一項；選答不等於承諾，也不能代替當次同意。",
+      "options": [
+        {
+          "id": "new-scope",
+          "label": "現在願意的範圍是什麼",
+          "kind": "choice"
+        },
+        {
+          "id": "stop-old-part",
+          "label": "哪些舊安排需要先停止",
+          "kind": "choice"
+        },
+        {
+          "id": "keep-some",
+          "label": "哪些部分仍願意保留",
+          "kind": "choice"
+        },
+        {
+          "id": "notice-change",
+          "label": "之後有變更時，怎麼讓對方知道",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "界線更新流程為本站提案，不用新一輪答案改寫舊回合，也不把過去同意當成永久同意。 題幹、分類與提案為本站原創，不是原工具翻譯，理解／測量／效果未驗證。"
+      },
+      "discussion": "你願意現在說清楚的是哪一部分？未決定的部分能否先保留？",
+      "number": 12
+    }
+  ],
+  "responsePolicy": {
+    "optionIdsAreScores": false,
+    "specialKinds": [
+      "other",
+      "varies",
+      "uncertain",
+      "not-applicable",
+      "not-experienced",
+      "not-shared"
+    ],
+    "noExperienceFor": "self-behavior-only",
+    "notShared": "取代原選項，不只前端遮住；只顯示未分享。",
+    "unanswered": "未答，不補值，不用來解鎖。"
+  },
+  "resultPlan": {
+    "status": "proposal-not-implemented",
+    "version": "candidate-0.1.0",
+    "order": [
+      "先讀本人目前界線",
+      "相處與獨處偏好",
+      "兩組回應／聯絡的雙向配對",
+      "願意聊的情境與提案",
+      "完整12題與來源"
+    ],
+    "boundaryPolicy": "owner-boundary單獨忠實顯示，沒有同類／差異／相似度或建議折衷；本人拒絕、不願現在答覆、未分享或未決定不因另一方要求而改成允許。其他選項也不能把本輪回答當成當次授權；第三方資訊及求助出口分開。",
+    "contextualQuestionIds": [
+      "space-phone-do",
+      "space-update-boundary"
+    ],
+    "preferenceQuestionIds": [
+      "space-together",
+      "space-alone-focus"
+    ],
+    "preferencePolicy": "只在雙方主要選項時說同題選擇相同或不同；不給大小、優劣、最佳獨處時長或推測孤單動機。特殊狀態只保留情境。",
+    "crossPairs": [
+      {
+        "id": "alone-response",
+        "wantedQuestionId": "space-alone-want",
+        "providedQuestionId": "space-alone-do",
+        "sectionId": "time-space",
+        "title": "說想獨處時，希望與自述回應",
+        "adviceByWanted": {
+          "acknowledge": "可以簡短回應已聽到這個需要，再確認是否有必須處理的事；不要求說完原因才給空間。",
+          "ask-contact": "可以先問是否希望之後再聯絡；不想現在決定，也能保留。",
+          "necessary-matters": "可以只確認眼前共同責任怎麼處理，不要求用說明全部行程換取獨處。",
+          "no-immediate-reply": "可以確認雙方如何辨認這段不立即回覆的需要，不把安靜直接解讀成不在乎。"
+        },
+        "discussion": "期待方先說這個回應對自己的意思；提供方再說實際條件，確認是否願意採用。"
+      },
+      {
+        "id": "friends-contact",
+        "wantedQuestionId": "space-friends-want",
+        "providedQuestionId": "space-friends-do",
+        "sectionId": "social-boundaries",
+        "title": "各自與朋友相處時的聯絡",
+        "adviceByWanted": {
+          "no-fixed-update": "可以確認原本共同約定是否仍有效；各自安排不需要額外提供朋友或位置資料。",
+          "availability": "若雙方願意，可只說不方便聯絡的時段，不要求固定秒回或提供定位。",
+          "general-plan": "可以分享自己願意說的大致活動，明示哪些細節想保留；不追問他人的私人資訊。",
+          "next-contact": "若雙方願意，可確認下一次方便聯絡的時機；臨時不能聯絡時保留調整空間。"
+        },
+        "discussion": "先說你想得到的是什麼，再確認另一方願意與做得到的範圍；不把期待當規定。"
+      }
+    ],
+    "crossPairPolicy": "A期待對B做法、B期待對A做法，各方向獨立。僅兩邊都是主要選項才比同組語意ID；相同不證明已尊重界線或期待已被滿足，不同不代表衝突。任一特殊狀態advice:null。給提供回應者的提案由期待選項選取，須自願且不得越過本人界線。",
+    "requiredReviewCases": [
+      {
+        "name": "手機界線單方不借",
+        "input": "A phone-boundary=no-access，B phone-do=prior-agreement",
+        "expected": "A目前不願借用，保留此界線；B的過去約定不覆蓋它。沒有折衷、信任或契合判定。"
+      },
+      {
+        "name": "有解鎖能力但未說用途",
+        "input": "A phone-boundary=ask-each，B phone-do=without-checking",
+        "expected": "分開呈現目前界線與自述，不用相同選項序號判一致，不從一題診斷控制或人格。"
+      },
+      {
+        "name": "不公開照片",
+        "input": "A photo-boundary=no-public-photo；未收集另一方的公開期待",
+        "expected": "本稿未詢問B希望公開，不捏造答案；A不願公開的選項不被多數或相處提案覆蓋。"
+      },
+      {
+        "name": "兩人都其他",
+        "input": "A alone-want=other，B alone-do=other",
+        "expected": "保留情境，advice:null，不把所有其他做法視為同一語意。"
+      },
+      {
+        "name": "聯絡兩方向不同",
+        "input": "A friends-want=availability、B friends-do=general-plan；B friends-want=no-fixed-update、A friends-do=no-fixed-update",
+        "expected": "A期待←B做法為不同；B期待←A做法同類，各方向分開，不要求交出位置或朋友資料。"
+      },
+      {
+        "name": "沒有本輪經歷",
+        "input": "B alone-do=not-experienced",
+        "expected": "相關方向只保留沒有經歷，不以想像補答；另一方向獨立。"
+      },
+      {
+        "name": "暫不分享與求助",
+        "input": "A private-story=not-shared",
+        "expected": "顯示未分享，不回推原選項或追問秘密；不加必須獲對方批准才能求助的提案。"
+      },
+      {
+        "name": "過去與現在不同",
+        "input": "新的界線與上次回合選項不同",
+        "expected": "新一輪只描述目前回答，舊快照不被覆寫；過去同意不是永久同意，也不自動延用為當次同意。"
+      }
+    ],
+    "excludedClaims": [
+      "契合數字",
+      "信任分數",
+      "心理診斷",
+      "依附類型",
+      "誰比較獨立",
+      "最佳陪伴或獨處時長",
+      "已取得手機／照片授權",
+      "必須折衷界線",
+      "關係成功率"
+    ]
+  },
+  "permissionNote": "題幹、選項與提案皆為本站原創，不轉錄／翻譯BPNSFS、Basic Need Satisfaction in Relationships或MSS-SF，不使用其分數或效度。本輪未接受下載協議、未聯絡作者或取得工具公開使用許可。",
+  "review": {
+    "humanTryoutCount": 0,
+    "status": "editorial-draft",
+    "priorityQuestions": [
+      "獨處的用途與最優先需要是否容易區分",
+      "手机借用的用途／期限是否足夠白話",
+      "照片公開與私下傳送是否混為同一同意",
+      "已定安排題的選項是否重疊",
+      "12題是否涵蓋日常界線；身體接觸、定位、居住空間、物品使用為後續另定範圍，不默默加入"
+    ],
+    "implemented": false
+  }
+}
