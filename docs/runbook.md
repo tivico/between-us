@@ -53,7 +53,7 @@ GitHub同步完成：main／新 `v0.12.0` 已推送，發布標記指向 `12c13f
 
 部署後驗證指令：node scripts/check-communication.mjs https://between-us.forest-between-us.workers.dev/；另執行check-cloudflare.mjs、check-long-distance.mjs、check-questionnaires.mjs續驗既有功能。只建立虛構QA回合，不讀現存使用者答案，不印憑證；每次驗證會留下測試回合，不能直接刪實際資料。
 
-本次原工作區同時有日常三觀功能開發，因此使用 .worktrees/communication-deploy 與 codex/communication-deploy。公開部署由此工作目錄執行；整合時保留新communication分支與另一主題，網站版本若後續另有新功能須再升版，不用舊main覆蓋已發布溝通入口。
+0.11歷史：當時日常三觀同時開發，因此在 .worktrees/communication-deploy 與 codex/communication-deploy 獨立交付。2026-10-13已在0.12整合進main，這個舊工作目錄保留歷史與本機QA資料，不再作部署入口；目前維護／發布從最新main開始。現行發布標記、Worker與CI見上方0.12節。檢查來源可用 `git status -sb`、`git log -1 --oneline`、`git merge-base --is-ancestor 4f22fed main`；最後一個成功表示main已包含溝通功能，不會讀寫回合資料。
 
 ## 0.10 核心價值結論與交流
 
