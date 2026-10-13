@@ -5,6 +5,14 @@
   "status": "candidate",
   "language": "zh-Hant",
   "reviewedAt": "2026-10-13",
+  "contentApproval": {
+    "status": "question-content-approved",
+    "date": "2026-10-13",
+    "sourceVersion": "0.1.0",
+    "questionCount": 12,
+    "statement": "可以，題目我贊成",
+    "scope": "持有人同意本次12題題稿；結果規則、程式接入與發布另行處理。不是人類理解訪談、專業審查或測量驗證。"
+  },
   "title": "一起生活的選擇",
   "subtitle": "聊聊金錢，也聊聊理想生活。",
   "purpose": "理解共同花費、保留餘裕與生活安排的想法及現實條件，先把話說清楚，不替兩人作財務決定。",
