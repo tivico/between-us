@@ -2,6 +2,7 @@ import { coreValuesQuiz } from './core-values.ts';
 import { dailyValuesQuiz } from './daily-values.ts';
 import { questionnaires } from './questionnaires.ts';
 import { longDistanceQuiz } from './long-distance.ts';
+import { communicationQuiz } from './communication.ts';
 import { validateQuiz, type QuizDefinition, type ResearchSource } from '../domain/quiz.ts';
 
 const valuesSource: ResearchSource = {
@@ -99,6 +100,7 @@ export const coreValuesExample: QuizDefinition = { ...quizzes[0], id: 'core-valu
 quizzes[0] = coreValuesQuiz;
 quizzes[1] = longDistanceQuiz;
 quizzes.push(dailyValuesQuiz);
+quizzes[2] = communicationQuiz;
 export const roundQuizzes = [...quizzes, coreValuesExample, ...questionnaires];
 
 const ids = new Set<string>();

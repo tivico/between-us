@@ -3,6 +3,12 @@ export type EvidenceStatus = 'self-authored' | 'research-informed' | 'validated'
 export type ResponseKind = 'choice' | 'other' | 'varies' | 'uncertain' | 'not-applicable' | 'not-experienced' | 'not-shared';
 export type Theme = 'sage' | 'clay' | 'sand' | 'lavender' | 'blue';
 
+export interface CommunicationConfig {
+  kind: 'communication-cross-partner'; version: '1.0.0';
+  sections: { id: string; title: string }[];
+  pairs: { id: string; sectionId: string; title: string; wantedQuestionId: string; providedQuestionId: string; commonAdvice: string; differentAdvice: string; providerSuggestions: Record<string, string>; discussion: string }[];
+}
+
 export interface ValueFeedbackConfig {
   kind: 'core-values-conversation';
   version: '1.0.0';
@@ -26,7 +32,7 @@ export interface Question {
   dimension: string;
   prompt: string;
   help: string;
-  options: { id: string; label: string; kind?: ResponseKind; guidance?: string; selection?: string[] }[];
+  options: { id: string; label: string; kind?: ResponseKind; guidance?: string; selection?: string[]; meaningId?: string }[];
   discussion?: string;
   together?: string;
   evidence: {
@@ -51,6 +57,7 @@ export interface QuizDefinition {
   sources: ResearchSource[];
   evidenceSummary: string;
   instructions?: string;
+  communication?: CommunicationConfig;
   feedback?: ValueFeedbackConfig;
   dailyValues?: { kind: 'daily-values'; version: '1.0.0'; scenes: { id: string; title: string; context: string; mode: 'joint' | 'personal'; questionIds: string[]; discussion: string }[] };
   questionnaire?: { kind: 'four-question-conversation'; version: '1.0.0'; groupId: string; depth: '輕鬆' | '深入' | '較私密' };
@@ -103,7 +110,7 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
   if (quiz.dailyValues) {
     const config = quiz.dailyValues;
     const ids = config.scenes.flatMap((s)=>s.questionIds);
-    if (config.kind !== 'daily-values' || config.version !== '1.0.0' || config.scenes.length !== 8 || quiz.questions.length !== 32 || quiz.scoring || quiz.analysis || quiz.questionnaire || quiz.feedback || new Set(ids).size !== 32 || ids.some((id)=>!questionIds.has(id))) errors.push('日常三觀契約不完整');
+    if (config.kind !== 'daily-values' || config.version !== '1.0.0' || config.scenes.length !== 8 || quiz.questions.length !== 32 || quiz.scoring || quiz.analysis || quiz.questionnaire || quiz.feedback || quiz.communication || new Set(ids).size !== 32 || ids.some((id)=>!questionIds.has(id))) errors.push('日常三觀契約不完整');
     for (const scene of config.scenes) {
       if (!['joint','personal'].includes(scene.mode) || scene.questionIds.length !== 4 || !scene.context.trim() || !scene.discussion.trim() || scene.questionIds.some((id,index)=>id!==`${scene.id}-${['choice','reason','importance','accept'][index]}`)) errors.push('日常情境欄位不完整');
       for (const id of scene.questionIds) if (!quiz.questions.find((q)=>q.id===id)?.options.some((o)=>o.id==='not-shared')) errors.push('日常情境缺少未分享狀態');
@@ -123,8 +130,28 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     }
   }
   for (const question of quiz.questions) {
-    if (!quiz.questionnaire && question.options.some((option) => option.kind)) errors.push(`特殊問答狀態不能加入既有測驗：${question.id}`);
+    if (!quiz.questionnaire && !quiz.communication && question.options.some((option) => option.kind)) errors.push(`特殊問答狀態不能加入既有測驗：${question.id}`);
     if (question.options.some((option) => option.kind && !['choice', 'other', 'varies', 'uncertain', 'not-applicable', 'not-experienced', 'not-shared'].includes(option.kind))) errors.push(`未知答案狀態：${question.id}`);
+  }
+  if (quiz.communication) {
+    const rule = quiz.communication;
+    const covered = rule.pairs.flatMap((pair) => [pair.wantedQuestionId, pair.providedQuestionId]);
+    const sections = new Set(rule.sections.map((section) => section.id));
+    if (rule.kind !== 'communication-cross-partner' || rule.version !== '1.0.0' || quiz.scoring || quiz.analysis || quiz.questionnaire || quiz.dailyValues || quiz.questions.length !== 24 || rule.pairs.length !== 12 || rule.sections.length !== 4 || sections.size !== 4 || new Set(rule.pairs.map((pair) => pair.id)).size !== 12 || covered.length !== 24 || new Set(covered).size !== 24 || covered.some((id) => !questionIds.has(id))) errors.push('溝通分析快照不完整或版本不支援');
+    const meanings = new Set<string>();
+    for (const pair of rule.pairs) {
+      const wanted = quiz.questions.find((q) => q.id === pair.wantedQuestionId);
+      const provided = quiz.questions.find((q) => q.id === pair.providedQuestionId);
+      if (!sections.has(pair.sectionId) || !wanted || !provided || wanted.dimension !== provided.dimension || wanted.dimension !== rule.sections.find((s) => s.id === pair.sectionId)?.title || [pair.title, pair.commonAdvice, pair.differentAdvice, pair.discussion].some((text) => !text?.trim())) errors.push('溝通配對題目或提案不完整');
+      const choices = wanted?.options.filter((o) => o.kind === 'choice') ?? [];
+      const providedChoices = provided?.options.filter((o) => o.kind === 'choice') ?? [];
+      if (choices.length !== 4 || providedChoices.length !== 4 || Object.keys(pair.providerSuggestions).length !== 4 || choices.some((o) => !o.meaningId || meanings.has(o.meaningId) || !providedChoices.some((p) => p.id === o.id && p.meaningId === o.meaningId) || !pair.providerSuggestions[o.id]?.trim())) errors.push('溝通配對選項語意不完整');
+      choices.forEach((o) => { if (o.meaningId) meanings.add(o.meaningId); });
+      for (const q of [wanted, provided].filter((q): q is Question => Boolean(q))) {
+        if (q.options.filter((o) => o.kind === 'not-shared').length !== 1 || !q.discussion?.trim() || q.options.some((o) => !o.kind || (o.kind !== 'choice' && o.meaningId)) || ['other', 'varies', 'uncertain', 'not-applicable'].some((kind) => q.options.filter((o) => o.kind === kind).length !== 1) || q.options.filter((o) => o.kind === 'not-experienced').length !== (q === provided ? 1 : 0)) errors.push('溝通特殊狀態不完整');
+      }
+    }
+    if (rule.sections.some((section) => !section.title?.trim() || rule.pairs.filter((pair) => pair.sectionId === section.id).length !== 3)) errors.push('溝通段落需各三組配對');
   }
   if (quiz.scoring) {
     const scoring = quiz.scoring;

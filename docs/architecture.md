@@ -6,6 +6,14 @@
 
 Node／D1 save均呼叫 `normalizeDailyAnswers`，任一欄未分享／不適用即取代整組四欄。results在本人授權及雙方提交後共用 `analyzeDailyValues`，依snapshot整理交集與工作題雙向接受；status及邀請不生成分析。畫面由 `DailyOptions`／`DailyReview`／`DailyResults` 經既有 `RoundFlow` 串接。交流state只在本頁，不發聊天API。V1與新規則須分支保留，不能從最新registry追改舊回合。欄位、除錯與發布見runbook的0.12節。
 
+## 0.11 溝通探索
+
+題庫來源 docs/quizzes/communication-candidate.json（原創內容候選0.2.0）→ src/content/communication.ts 轉成回合工具0.3.0，保留主要選項的 meaningId（語意分類，沒有分數大小）、特殊狀態與 communication 分析設定 → quizzes.ts 主題登錄。每輪建立時序列化完整 snapshot，內容／提案固定在該輪。
+
+RoundFlow 建立／填答／提交，未分享直接取代本題選项 → server/store.mjs 或 cloudflare/store.mjs 驗證本人授權、雙方提交 → src/domain/communication.ts 的 analyzeCommunicationV1 執行12組 A期待←B做法、B期待←A做法 → results.communicationAnalysis → CommunicationResults.tsx 顯示每段摘要、兩方向、完整配對與24題答案。status／邀請只有本人進度或主題旗標，不傳對方答案／分析；不調用外部生成服務，不新增schema。
+
+只有兩邊都是choice才按同組meaningId比較；特殊狀態保留context、advice:null、discussion:null。摘要每段依題序先選一組可比較差異，否則一組同類，否則明示不足，保留該組兩方向；題序不是重要性或嚴重程度。演算法1.0.0保留，未來改規則另加分支，不追套舊回合。
+
 ## 0.10 核心價值回饋層
 
 新 core-values 工具 0.4.0 在 rounds.snapshot 保存 feedback V1（概念／題號／情境／問題）。Node / D1 完成原授權與雙方提交檢查後，共用 buildValueFeedback，依原 comparison 選共同相對優先、差異與各自方向。原 scoring 1.0.0 不變。舊已發布 0.3.0 符合固定映射時加明示 legacy-reading-layer V1，三題不套用；無 migration，不改舊 snapshot 或原分數。

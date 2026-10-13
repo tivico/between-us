@@ -25,6 +25,24 @@
 
 本輪一般／雲端部署與公開驗證紀錄會在發布完成後補在本節。沿用原Worker／D1，不需schema migration，不搬動本機答案。需要回復時使用Wrangler deployments rollback回到前版Worker，保留D1；若已有新版本回合，舊Worker不支援的結果可能暫時無法開啟，應優先修復前進而不回改答案。
 
+## 0.11 溝通探索
+
+2026-10-12 使用者要求直接發布部署24題候選。網站0.11.0、內容候選0.2.0、回合工具0.3.0、描述性分析1.0.0。原創探索開放不表示測量或提案效果驗證；全性向適用，不新增身分欄位。沿用原Worker／D1，不需remote migration，不重建資料庫。
+
+重要位置：docs/quizzes/communication-candidate.json 管題幹／選項／提案；src/content/communication.ts 轉換並設定工具版本；src/domain/quiz.ts 驗證12組完整映射；src/domain/communication.ts 只依snapshot分析；CommunicationResults.tsx呈現四段入口、雙向依據與完整答案。Node／D1 stores同步在results解鎖後呼叫，invitation只提供hasCommunicationAnalysis主題旗標。未分享直接存not-shared，沒有暗藏原答案。
+
+流程：選communication → 同意分享／建立快照 → A獨立保存與提交 → B接受邀請／獨立保存與提交 → 後端驗證兩人的授權與完整提交 → 雙向配對 → 結果摘要／完整配對／24題選項。任一特殊狀態不比較、不給本方向提案；另一方向獨立處理。不計分。
+
+除錯順序：先核對 #/start/communication 與部署版本；無法建立看Network的POST /api/rounds及GET /api/health；401確認本人返回連結，423確認雙方提交，409是提交鎖定或過時修訂，400 INCOMPLETE回到漏答題。結果不對先查 wantedSlot/providedSlot 和題號，再查snapshot的meaningId、選項kind與providerSuggestions；特殊狀態應為context且advice:null。不要用刪除D1或覆寫舊快照解決內容問題，Console/log不列私人答案或憑證。
+
+修改範例：改「再談前先確認準備好」的check-ready，JSON的comm-resume-plan-do／want兩題要維持同一meaningId，配對providerSuggestions也核對；同步可讀題稿、升來源內容與回合工具版，再跑npm run check、npm run build，驗收作答與結果後cloudflare:deploy。改分析判斷另增版本並保留V1；舊回合不套新registry。故障時從前一已驗證提交重建／發布，資料庫保留。
+
+本機驗證：17檔／90項測試通過（含實際分析窮舉1,080組主要／特殊選項，Node及D1授權、缺答、未分享替換及快照不追套）；一般／Cloudflare建置通過。正常執行環境重跑check解決沙盒子程序暫存ENOENT，未修改測試來跳過失敗。本機Worker4191的scripts/check-communication.mjs通過混合與全未分享兩輪HTTP驗證；A／B各24題畫面填答、提交等待／解鎖、手機390px與Console驗收通過。工程驗證不是人類理解或測量證據，實體雙手機與長期效果未驗證。
+
+部署後驗證指令：node scripts/check-communication.mjs https://between-us.forest-between-us.workers.dev/；另執行check-cloudflare.mjs、check-long-distance.mjs、check-questionnaires.mjs續驗既有功能。只建立虛構QA回合，不讀現存使用者答案，不印憑證；每次驗證會留下測試回合，不能直接刪實際資料。
+
+本次原工作區同時有日常三觀功能開發，因此使用 .worktrees/communication-deploy 與 codex/communication-deploy。公開部署由此工作目錄執行；整合時保留新communication分支與另一主題，網站版本若後續另有新功能須再升版，不用舊main覆蓋已發布溝通入口。
+
 ## 0.10 核心價值結論與交流
 
 2026-10-12：改善「完成 57 題後只有分數／圖表、缺少收穫」的問題。先顯示各自相對優先、最多三個共同方向與差異；每卡有具體情境／聊法及可展開的三題依據。再提供四步口頭交流：發現、情境、輪流分享、重新確認。19 類、相近度、公式與 57 題改成可展開區域，沒有刪除。聊天步驟只是本頁引導，不保存或同步，不代表兩人已完成交流；原相近度算法仍是 1.0.0。

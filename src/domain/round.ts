@@ -4,6 +4,7 @@ import type { ConversationComparison } from './conversation';
 import type { DistanceAnalysis } from './long-distance';
 import type { ValueFeedback } from './value-feedback';
 import type { DailyComparison } from './daily-values';
+import type { CommunicationAnalysis } from './communication';
 
 export interface RoundStatus {
   id: string;
@@ -23,5 +24,6 @@ export interface RoundResults {
   conversation?: ConversationComparison;
   pairAnalysis?: DistanceAnalysis;
   dailyComparison?: DailyComparison;
+  communicationAnalysis?: CommunicationAnalysis;
 }
-export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean }
+export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean; hasCommunicationAnalysis?: boolean }
