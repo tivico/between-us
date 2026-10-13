@@ -93,6 +93,7 @@ npm run preview
 - [好好說，也好好聽：研究與內容藍圖](docs/quizzes/communication.md)：直接問本人的做法與期待；含工具比較與[24題內容稿](docs/quizzes/communication-candidate.md)、12組雙向配對及原創提案。0.11已接入；理解／測量／提案效果未驗證。
 - [架構與資料流程](docs/architecture.md)：現在的程式路徑、未來回合與後端契約。
 - [靠近，也保留自己：研究與內容藍圖](docs/quizzes/space-boundaries.md)：2026-10-13選定的下一個主題；第一輪[12題候選](docs/quizzes/space-boundaries-candidate.md)，分開相處偏好、本人界線與期待／做法。正式題數未選，不計分、未接入。
+- [一起生活的選擇：研究與內容藍圖](docs/quizzes/money-life.md)：金錢與生活安排的[第一輪12題候選](docs/quizzes/money-life-candidate.md)，分開期待、自述、現實條件與本人願意範圍；不要求財務資料，不計分、未接入。
 - [題目與研究依據](docs/research.md)：如何區分理論支持、改寫、自編與驗證。
 - [維護與除錯](docs/runbook.md)：新增主題範例、診斷順序與驗證清單。
 - [版本紀錄](CHANGELOG.md)：每個交付版本的變更與限制。

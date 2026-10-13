@@ -1,0 +1,1033 @@
+{
+  "id": "money-life-candidate",
+  "targetQuizId": "money-life",
+  "version": "0.1.0",
+  "status": "candidate",
+  "language": "zh-Hant",
+  "reviewedAt": "2026-10-13",
+  "title": "一起生活的選擇",
+  "subtitle": "聊聊金錢，也聊聊理想生活。",
+  "purpose": "理解共同花費、保留餘裕與生活安排的想法及現實條件，先把話說清楚，不替兩人作財務決定。",
+  "scope": "第一輪12題可審閱候選；正式題數／工具及規則待選，不限性向與性別認同，不預設已婚、同居、共同帳戶或固定共同支出，生育不在範圍。",
+  "instructions": "直接回答你目前的想法。「對方」是這輪一起回答的人。最近做法只回想一個月內與本輪對方的經歷，沒有共同花費／沒遇過就明示沒有經歷，不用過去關係代答。單選最接近／最先／最優先的一項，可選其他、依情況改變、未確定、不適用或暫不分享。不填收入、資產、負債、帳戶、金額或私人財務文件。選答不是付款承諾、轉帳授權或同意集中資金；想要的安排也不表示現在做得到。候選接入提案為雙方完成後看可分享選項；暫不分享取代原選項，只顯示未分享，不要求理由。",
+  "scoring": null,
+  "sections": [
+    {
+      "id": "spend-save",
+      "title": "消費與儲蓄",
+      "purpose": "了解提出非必要活動時先談什麼、超出本人負擔時怎麼處理，以及共同預留的討論起點。"
+    },
+    {
+      "id": "shared-expenses",
+      "title": "共同支出",
+      "purpose": "分開分攤原則、本人願意集中處理的範圍與確認費用的做法。"
+    },
+    {
+      "id": "life-priorities",
+      "title": "生活優先順序",
+      "purpose": "把想保留的生活、現實條件、安排變動與準備／追蹤分工分開。"
+    }
+  ],
+  "sources": [
+    {
+      "id": "peetz-2023",
+      "authors": "Johanna Peetz, Zoe Meloff & Courtney Royle",
+      "year": 2023,
+      "title": "When couples fight about money, what do they fight about?",
+      "journal": "Journal of Social and Personal Relationships, 40(11)",
+      "doi": "10.1177/02654075231187897",
+      "url": "https://journals.sagepub.com/doi/10.1177/02654075231187897",
+      "readScope": "出版社The Current Research、Study1／2方法及Discussion可讀段落；未逐一核對全部編碼與統計。",
+      "support": "論壇內容與已婚者回憶的主題分析，把不同花費、分攤與安排放在公平／責任等議題脈絡。Study2最終481人、樣本以異性及同居／已婚者居多。",
+      "limitations": "不是本題庫或最佳分攤驗證，不從本站一題推定不負責任、衝突程度或離婚風險。"
+    },
+    {
+      "id": "olson-2023",
+      "authors": "Jenny G. Olson, Scott I. Rick, Deborah A. Small & Eli J. Finkel",
+      "year": 2023,
+      "title": "Common Cents: Bank Account Structure and Couples’ Relationship Dynamics",
+      "journal": "Journal of Consumer Research, 50(4), 704–721",
+      "doi": "10.1093/jcr/ucad020",
+      "url": "https://doi.org/10.1093/jcr/ucad020",
+      "readUrl": "https://www.jennyginolson.com/uploads/2/1/1/0/21101404/olson_rick_small_and_finkel__2023__jcr.pdf",
+      "readScope": "作者公開PDF摘要、Empirical Overview及Study2 Participants／Procedure；未完整審查Study1樣本／全部結果與補充。",
+      "support": "訂婚／新婚伴侶的六波兩年實驗，另有507名美國已婚者調查，研究合併／分開帳戶與關係歷程。",
+      "limitations": "研究情境與本產品交往前、全性向及台灣使用者不同；不建議所有人合併財務、不從不願集中推不信任，也不使用其財務和諧指標。"
+    },
+    {
+      "id": "peetz-2024",
+      "authors": "Johanna Peetz, Odin Fisher-Skau & Samantha Joel",
+      "year": 2024,
+      "title": "How individuals perceive their partner’s relationship behaviors when worrying about finances",
+      "journal": "Journal of Social and Personal Relationships, 41(6), 1577–1599",
+      "doi": "10.1177/02654075241227454",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11136612/",
+      "readScope": "公開全文摘要、Study1／2 Method的Participants／Procedure；未核對所有模型與結果。",
+      "support": "97及99對伴侶的回憶／自述研究，區分財務擔憂與如何看待伴侶的行為；含不同性向，但樣本以英國、異性、已婚／同居者居多。",
+      "limitations": "只用提醒現實條件與解讀分開，不作本題直接效度、因果、焦慮診斷或認定某人的看法有偏誤。"
+    },
+    {
+      "id": "daminger-2019",
+      "authors": "Allison Daminger",
+      "year": 2019,
+      "title": "The Cognitive Dimension of Household Labor",
+      "journal": "American Sociological Review, 84(4), 609–633",
+      "doi": "10.1177/0003122419859007",
+      "url": "https://journals.sagepub.com/doi/abs/10.1177/0003122419859007",
+      "readScope": "出版社摘要與作者研究頁；沒有把作者170+訪談的整個研究計畫當2019單篇樣本。",
+      "support": "2019原文以35對伴侶70次訪談區分預想需求、找選項、決定及追蹤的認知工作。",
+      "limitations": "延伸到非同居兩人的共同支出為本站設計，不指定性別角色，也不驗證四種分工或公平分數。"
+    },
+    {
+      "id": "dew-xiao-2011",
+      "authors": "Jeffrey Dew & Jing Jian Xiao",
+      "year": 2011,
+      "title": "The Financial Management Behavior Scale: Development and Validation",
+      "journal": "Journal of Financial Counseling and Planning, 22(1), 43–59",
+      "url": "https://www.afcpe.org/wp-content/uploads/2018/10/vol_22_issue_1_dew_xiao.pdf",
+      "readScope": "出版者公開PDF摘要、Scale Construction、Sample and Data、Measures及修訂說明；未逐一審查完整題本、最新計分／譯本條件。",
+      "support": "美國全國成人資料，用於個人財務管理行為工具的發展／比較；文內有初始題與修訂題區別。",
+      "limitations": "不是兩人期待或負擔契合工具；不複製原題、不套分數，不從本稿選項推儲蓄能力、信用或金融素養。繁體版與網站使用條件未完成核對。"
+    },
+    {
+      "id": "cfpb-scale",
+      "authors": "Consumer Financial Protection Bureau（美國消費者金融保護局）",
+      "year": 2017,
+      "title": "CFPB Financial Well-Being Scale: Scale development technical report",
+      "url": "https://files.consumerfinance.gov/f/documents/201705_cfpb_financial-well-being-scale-technical-report.pdf",
+      "readUrl": "https://www.consumerfinance.gov/data-research/research-reports/financial-well-being-scale/",
+      "readScope": "官方量表介紹及標準／短版入口；2017技術報告封面、Introduction與定義段落，未審查完整驗證、計分或繁體版本。",
+      "support": "用於工具比較：財務情況所帶來的安全感與選擇自由，標準及短版不同，官方報告標明免費公開工具。",
+      "limitations": "個人財務福祉不是伴侶契合或能力排名，2015概念報告與2017技術報告分開；不使用美國分數／常模，本輪未採原題、分數或核定繁體改寫。"
+    }
+  ],
+  "questions": [
+    {
+      "id": "money-proposal-want",
+      "sectionId": "spend-save",
+      "perspective": "partner-expectation",
+      "prompt": "如果對方想安排一項需要兩人出錢的非必要活動，你目前最希望先知道什麼？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "meaning",
+          "label": "對方為什麼想做這個活動",
+          "kind": "choice"
+        },
+        {
+          "id": "cost-scope",
+          "label": "這個活動大概包含哪些費用",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-impact",
+          "label": "它對原本共同支出可能有什麼影響",
+          "kind": "choice"
+        },
+        {
+          "id": "alternatives",
+          "label": "有哪些不同規模或負擔的安排可以選",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "從花費優先順序、共同決策與責任的議題延伸，不把選擇某種資訊當節儉或浪費人格。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "你最想先知道這件事，是因為什麼？哪些資訊不必立刻決定？",
+      "number": 1
+    },
+    {
+      "id": "money-proposal-do",
+      "sectionId": "spend-save",
+      "perspective": "self-behavior",
+      "prompt": "最近一個月，你提出一項需要兩人出錢的非必要活動時，通常先向對方說什麼？",
+      "help": "只回想最近一個月與這輪對方的經歷，選通常最先做的一項；沒有共同花費或沒遇過可明示沒有經歷，不以想像或過去關係代答。",
+      "options": [
+        {
+          "id": "meaning",
+          "label": "我為什麼想做這個活動",
+          "kind": "choice"
+        },
+        {
+          "id": "cost-scope",
+          "label": "這個活動大概包含哪些費用",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-impact",
+          "label": "它對原本共同支出可能有什麼影響",
+          "kind": "choice"
+        },
+        {
+          "id": "alternatives",
+          "label": "有哪些不同規模或負擔的安排可以選",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "與上一題只比較本情境期待與自述第一步，不推論已協商、能負擔或真的決定參加。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "你通常先說這件事，是想讓對方了解什麼？",
+      "number": 2
+    },
+    {
+      "id": "money-over-capacity",
+      "sectionId": "spend-save",
+      "perspective": "constraint",
+      "prompt": "如果一項共同活動超出你目前願意且能負擔的範圍，你目前比較希望怎麼處理？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "smaller-plan",
+          "label": "改成較小規模的活動，再確認我是否能參加",
+          "kind": "choice"
+        },
+        {
+          "id": "later",
+          "label": "先延後，之後有合適條件再重新討論",
+          "kind": "choice"
+        },
+        {
+          "id": "separate-options",
+          "label": "各自選能負擔的安排，不要求參加同一項",
+          "kind": "choice"
+        },
+        {
+          "id": "not-participating",
+          "label": "這次先不參加，也先不安排替代活動",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "本人負擔與參與條件為本站情境，不問多少錢或推定經濟地位；條件單獨讀，不列共同點／差異。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "你願意說明的限制是什麼？哪些部分可以先保留，不必提出替代安排？",
+      "constraint": {
+        "owner": "respondent",
+        "noCommitment": true,
+        "refusalOptionIds": [
+          "not-participating"
+        ],
+        "policy": "本人不參加的選擇不能被對方偏好覆蓋，不要求更多出錢、借款或提供財務證明來證明投入。"
+      },
+      "number": 3
+    },
+    {
+      "id": "money-future-reserve",
+      "sectionId": "spend-save",
+      "perspective": "process-preference",
+      "prompt": "如果兩人想為一個共同未來計畫預留錢，你目前最希望先確認什麼？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "purpose",
+          "label": "這個計畫想達成什麼、彼此是否都願意參與",
+          "kind": "choice"
+        },
+        {
+          "id": "timing",
+          "label": "大概什麼時候可能需要用到",
+          "kind": "choice"
+        },
+        {
+          "id": "affordable-scope",
+          "label": "各自目前願意且能負擔的範圍",
+          "kind": "choice"
+        },
+        {
+          "id": "adjustment",
+          "label": "情況改變時，預留安排可以怎麼調整",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "從預算、未來安排及共同決策的議題延伸，只問討論起點，不測儲蓄能力、不定提撥比例或最佳金額。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "先確認這件事，會幫你決定哪一部分？還有哪些事現在不知道？",
+      "number": 4
+    },
+    {
+      "id": "money-split-principle",
+      "sectionId": "shared-expenses",
+      "perspective": "preference",
+      "prompt": "如果兩人已同意一起支付某項共同花費，你目前比較希望用哪個原則分配？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "equal-amount",
+          "label": "各自支付相同金額",
+          "kind": "choice"
+        },
+        {
+          "id": "capacity-ranges",
+          "label": "先各說願意且能負擔的範圍，再定這一次分配",
+          "kind": "choice"
+        },
+        {
+          "id": "use-share",
+          "label": "依各自實際使用或受益的部分分配",
+          "kind": "choice"
+        },
+        {
+          "id": "agreed-items",
+          "label": "先把費用拆成不同項目，再各自選願意負擔的部分",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "從相對貢獻、公平與誰付哪些費用的議題延伸；不是最佳分攤公式，相同原則也不等於負擔可行或覺得公平。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "這個原則對你代表什麼？哪些費用或投入要一起考慮？",
+      "number": 5
+    },
+    {
+      "id": "money-pooling-boundary",
+      "sectionId": "shared-expenses",
+      "perspective": "owner-boundary",
+      "prompt": "一起支付共同花費時，你目前願意讓哪些金錢集中處理？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "none-separate",
+          "label": "目前都不集中，想先各自處理",
+          "kind": "choice"
+        },
+        {
+          "id": "this-plan-only",
+          "label": "只為這一次已答應的共同安排留一筆，其他各自處理",
+          "kind": "choice"
+        },
+        {
+          "id": "listed-recurring",
+          "label": "只把明確列出的固定共同支出集中處理，其他各自處理",
+          "kind": "choice"
+        },
+        {
+          "id": "discuss-first",
+          "label": "目前還不願選範圍，想先把用途與方式談清楚",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "olson-2023"
+        ],
+        "note": "研究中的合併／分開帳戶與本題願意範圍不同，不建議一律合併、不測信任，也不取得帳戶操作或轉帳權限。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "如果願意集中，用途、可見範圍與停止／調整方式是否都說清楚？也可以保留各自處理。",
+      "boundary": {
+        "owner": "respondent",
+        "refusalOptionIds": [
+          "none-separate",
+          "discuss-first"
+        ],
+        "policy": "本人目前不願集中或未決定時，沒有可執行的合併許可。不要求帳戶、密碼、登入、轉帳、財務文件或全額透明；過去安排不自動延用為當次同意。"
+      },
+      "number": 6
+    },
+    {
+      "id": "money-confirm-do",
+      "sectionId": "shared-expenses",
+      "perspective": "self-behavior",
+      "prompt": "最近一個月，準備一起支付一項共同費用時，你通常怎麼確認彼此要負擔的部分？",
+      "help": "只回想最近一個月與這輪對方的經歷，選通常最先做的一項；沒有共同花費或沒遇過可明示沒有經歷，不以想像或過去關係代答。",
+      "options": [
+        {
+          "id": "written-scope",
+          "label": "把用途與各自負擔的部分寫清楚，再彼此確認",
+          "kind": "choice"
+        },
+        {
+          "id": "verbal-items",
+          "label": "口頭逐項確認，讓雙方補充或修正",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-list",
+          "label": "先看共同清單，再確認這次有沒有改動",
+          "kind": "choice"
+        },
+        {
+          "id": "wait-information",
+          "label": "等主要資訊更清楚，再決定這次是否參加",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        },
+        {
+          "id": "not-experienced",
+          "label": "最近一個月，和對方沒有遇過這個情況",
+          "kind": "not-experienced"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "共同支出確認流程的本站延伸，只記自述做法，不推定已付款、法律承諾或本人已授權。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "哪些資訊你通常會先確認？什麼還沒清楚時會先保留？",
+      "number": 7
+    },
+    {
+      "id": "money-confirm-want",
+      "sectionId": "shared-expenses",
+      "perspective": "partner-expectation",
+      "prompt": "準備一起支付一項共同費用時，你目前希望對方怎麼和你確認彼此要負擔的部分？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "written-scope",
+          "label": "把用途與各自負擔的部分寫清楚，再彼此確認",
+          "kind": "choice"
+        },
+        {
+          "id": "verbal-items",
+          "label": "口頭逐項確認，讓雙方補充或修正",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-list",
+          "label": "先看共同清單，再確認這次有沒有改動",
+          "kind": "choice"
+        },
+        {
+          "id": "wait-information",
+          "label": "等主要資訊更清楚，再決定這次是否參加",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "peetz-2023"
+        ],
+        "note": "與上一題作雙向流程配對，不把相同選項當已同意付款或兩人沒有資訊落差。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "這種確認方式會讓你知道什麼？另一方願意且做得到哪些部分？",
+      "number": 8
+    },
+    {
+      "id": "money-life-priority",
+      "sectionId": "life-priorities",
+      "perspective": "preference",
+      "prompt": "當一個共同安排需要更多時間或金錢時，你目前最想優先保留什麼？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "basic-routine",
+          "label": "日常基本支出與休息",
+          "kind": "choice"
+        },
+        {
+          "id": "individual-goals",
+          "label": "各自重要的學習、工作或興趣",
+          "kind": "choice"
+        },
+        {
+          "id": "shared-experience",
+          "label": "兩人都願意一起做的事",
+          "kind": "choice"
+        },
+        {
+          "id": "flexibility",
+          "label": "行程與預算的彈性",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "生活取捨為本站編輯分類，不測正式價值分數或把其他選項當不重要；不併入PVQ-RR與人生方向總分。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "你想保留這件事，是因為它目前對生活有什麼作用？",
+      "number": 9
+    },
+    {
+      "id": "money-current-condition",
+      "sectionId": "life-priorities",
+      "perspective": "constraint",
+      "prompt": "以你目前的情況看，一項兩人想一起做的安排最需要先考量哪個條件？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "time",
+          "label": "我目前可投入的時間",
+          "kind": "choice"
+        },
+        {
+          "id": "cost",
+          "label": "我目前願意且能負擔的費用",
+          "kind": "choice"
+        },
+        {
+          "id": "location",
+          "label": "我可配合的地點或交通",
+          "kind": "choice"
+        },
+        {
+          "id": "rest",
+          "label": "我需要保留的休息與體力",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "只記本人先考量的條件，不表示其他條件沒有影響，也不從單選推定貧窮、工作壓力、健康或投入程度。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "這個條件會影響哪些安排？你願意讓對方知道到哪裡就好？",
+      "constraint": {
+        "owner": "respondent",
+        "noCommitment": true,
+        "refusalOptionIds": [],
+        "policy": "條件個別呈現，不比較能力高低；選費用不表示已知金額或經濟困難，選休息不表示已知健康狀態。"
+      },
+      "number": 10
+    },
+    {
+      "id": "money-plan-change",
+      "sectionId": "life-priorities",
+      "perspective": "process-preference",
+      "prompt": "如果一方的時間或收入情況改變，原本的共同安排需要再談，你目前最希望先確認什麼？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "current-scope",
+          "label": "現在各自願意且做得到的範圍",
+          "kind": "choice"
+        },
+        {
+          "id": "pause-parts",
+          "label": "哪些舊安排需要先停止或縮小",
+          "kind": "choice"
+        },
+        {
+          "id": "keep-parts",
+          "label": "哪些重要部分還想保留",
+          "kind": "choice"
+        },
+        {
+          "id": "revisit",
+          "label": "哪些資訊還不確定，以及何時再確認",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "self-authored",
+        "sourceIds": [],
+        "note": "條件變動的協商流程為本站原創，不測財務焦慮、不猜改變原因，也不把舊分攤視為永久義務。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "哪些部分現在能決定，哪些應先保留？如何讓新的安排不超出本人意願與條件？",
+      "number": 11
+    },
+    {
+      "id": "money-plan-work",
+      "sectionId": "life-priorities",
+      "perspective": "preference",
+      "prompt": "如果兩人決定推進一個共同支出計畫，你目前比較希望怎麼分配準備與後續追蹤？",
+      "help": "回答目前想法。若多項符合，先選這個情境最優先的一項；不用提供金額、收入、資產或帳戶。選答不等於答應出錢，也不是付款或使用帳戶的許可。",
+      "options": [
+        {
+          "id": "whole-task",
+          "label": "各自負責一個完整事項，包含後續追蹤",
+          "kind": "choice"
+        },
+        {
+          "id": "rotate",
+          "label": "輪流負責這次的準備與追蹤",
+          "kind": "choice"
+        },
+        {
+          "id": "review-then-split",
+          "label": "一起看要做什麼，再決定各自負責的部分",
+          "kind": "choice"
+        },
+        {
+          "id": "volunteer-then-confirm",
+          "label": "先由願意且有餘裕的人準備，再一起確認後續分工",
+          "kind": "choice"
+        },
+        {
+          "id": "other",
+          "label": "其他方式比較接近我",
+          "kind": "other"
+        },
+        {
+          "id": "varies",
+          "label": "會依情況改變，目前沒有固定方式",
+          "kind": "varies"
+        },
+        {
+          "id": "uncertain",
+          "label": "目前還沒想清楚",
+          "kind": "uncertain"
+        },
+        {
+          "id": "not-applicable",
+          "label": "這題目前不適用",
+          "kind": "not-applicable"
+        },
+        {
+          "id": "not-shared",
+          "label": "這題我暫不分享",
+          "kind": "not-shared"
+        }
+      ],
+      "evidence": {
+        "status": "research-informed",
+        "sourceIds": [
+          "daminger-2019"
+        ],
+        "note": "把預先想需求、查選項、決定與追蹤也視為工作，延伸到共同支出是本站設計；不按性別或出錢多少指定角色。 題幹、選項分類及提案皆為本站原創，不是原量表翻譯；理解、測量與效果未驗證。"
+      },
+      "discussion": "這次的查資訊、提醒和回看要由誰承擔？怎麼知道安排超出某一方的餘裕？",
+      "number": 12
+    }
+  ],
+  "responsePolicy": {
+    "optionIdsAreScores": false,
+    "specialKinds": [
+      "other",
+      "varies",
+      "uncertain",
+      "not-applicable",
+      "not-experienced",
+      "not-shared"
+    ],
+    "noExperienceFor": "self-behavior-only",
+    "unanswered": "未答不補值，不用來解鎖。",
+    "notShared": "以獨立狀態取代原選項，不只是前端遮住。",
+    "requestedPrivateFields": []
+  },
+  "resultPlan": {
+    "status": "proposal-not-implemented",
+    "version": "candidate-0.1.0",
+    "order": [
+      "本人願意範圍與條件",
+      "偏好與討論起點",
+      "兩組期待／做法的雙向配對",
+      "願意聊的情境／提案",
+      "完整12題與來源"
+    ],
+    "preferenceQuestionIds": [
+      "money-split-principle",
+      "money-life-priority",
+      "money-plan-work"
+    ],
+    "processQuestionIds": [
+      "money-future-reserve",
+      "money-plan-change"
+    ],
+    "constraintQuestionIds": [
+      "money-over-capacity",
+      "money-current-condition"
+    ],
+    "boundaryQuestionIds": [
+      "money-pooling-boundary"
+    ],
+    "preferencePolicy": "主要選項可描述同題選擇相同或不同，不給大小、優劣、契合或公平分數；相同不表示理由相同／已能負擔。特殊狀態只保留情境。",
+    "conditionPolicy": "constraint與owner-boundary單獨忠實呈現，不判共同／不同或能力高低，不讓偏好覆蓋本人不參加／不願集中。條件不是價值優劣，界線不是帳戶／付款許可。",
+    "processPolicy": "只讀想先確認什麼，不推定已同意、已預留款項或已出現衝突；不知道／沒經歷／不適用不視為零投入。",
+    "crossPairs": [
+      {
+        "id": "proposal-information",
+        "sectionId": "spend-save",
+        "title": "提出非必要活動時，先說什麼",
+        "wantedQuestionId": "money-proposal-want",
+        "providedQuestionId": "money-proposal-do",
+        "adviceByWanted": {
+          "meaning": "可以先說為什麼想做這件事，再由另一方確認是否也有興趣；提出理由不是要求參加。",
+          "cost-scope": "可以先列有哪些費用需要確認，不必現在提供收入或資產；不清楚的部分先保留。",
+          "shared-impact": "可以先確認是否會影響已說好的共同支出，區分已知條件與尚未知道的費用。",
+          "alternatives": "若雙方願意，可各提一種不同規模的安排；任何人仍可選擇這次不參加。"
+        },
+        "discussion": "期待方先說最想得到的資訊，提出方再說目前知道多少；先確認參與意願，再決定下一步。"
+      },
+      {
+        "id": "expense-confirmation",
+        "sectionId": "shared-expenses",
+        "title": "共同費用怎麼確認",
+        "wantedQuestionId": "money-confirm-want",
+        "providedQuestionId": "money-confirm-do",
+        "adviceByWanted": {
+          "written-scope": "若雙方願意，可以只記這次用途與各自願意負擔的部分；不要求公開完整個人帳務。",
+          "verbal-items": "可以逐項輪流確認理解，任何未答應的部分先保留，不把沉默當同意。",
+          "shared-list": "可以先看雙方已願意使用的共同清單，確認這次變動；原清單不是永久付款許可。",
+          "wait-information": "可以先列還不知道的事項，再確認是否想另約時間；暫緩決定不等於不願投入。"
+        },
+        "discussion": "這個流程對你有什麼作用？哪些部分仍需要當次確認，不能用選答代替？"
+      }
+    ],
+    "crossPairPolicy": "A期待對B自述、B期待對A自述，兩方向獨立。僅雙邊為主要選項才按同組語意ID比同類／不同；相同不等於已確認費用、付款或參加，不同不推定衝突。任一特殊狀態advice:null，不能把兩人都其他判同類。條件與本人界線不得放進crossPairs。",
+    "requiredReviewCases": [
+      {
+        "name": "偏好相同但本人不能負擔",
+        "input": "A及B split-principle=equal-amount；A over-capacity=not-participating",
+        "expected": "分攤偏好相同與A這次不參加分開呈現，不推定可執行、不要求A出錢或證明投入。"
+      },
+      {
+        "name": "不願集中資金",
+        "input": "A pooling-boundary=none-separate；未收集B希望全面合併的資料",
+        "expected": "忠實顯示A目前願意範圍，不捏造B答案，不給合併更有愛／不透明的評語。"
+      },
+      {
+        "name": "兩方向不同",
+        "input": "A proposal-want=cost-scope、B proposal-do=meaning；B proposal-want=meaning、A proposal-do=meaning",
+        "expected": "A期待←B自述為不同；B期待←A自述為同類，不能合成兩人已一致。"
+      },
+      {
+        "name": "沒有共同費用經歷",
+        "input": "B confirm-do=not-experienced",
+        "expected": "相關方向只保留沒有經歷、advice:null；不猜未來，不填零，另一方向獨立。"
+      },
+      {
+        "name": "兩人都其他",
+        "input": "A proposal-want=other、B proposal-do=other",
+        "expected": "情境，不判同類、不給該方向提案。"
+      },
+      {
+        "name": "收入／時間改變",
+        "input": "A plan-change=current-scope，沒有具體金額或變動原因",
+        "expected": "只說A希望先確認現在範圍，不推定失業、貧窮、焦慮或分手風險。"
+      },
+      {
+        "name": "新安排不是付款許可",
+        "input": "兩人 pooling-boundary=this-plan-only或confirm-want=written-scope",
+        "expected": "只是本輪回答；沒有轉帳、開戶、合約或提供憑證的操作與授權。"
+      },
+      {
+        "name": "拒絕與未分享",
+        "input": "A pooling-boundary=not-shared或discuss-first",
+        "expected": "只顯示目前狀態，不追問資產／秘密，未知範圍不能當已允許集中。"
+      },
+      {
+        "name": "舊回合與新條件",
+        "input": "新一輪本人條件或意願不同於上次",
+        "expected": "新輪只讀當前回答，舊snapshot與分數不追改；過去安排不等於永久授權。"
+      }
+    ],
+    "excludedClaims": [
+      "契合數字",
+      "誰較會理財",
+      "金融素養／信用／財務健康分數",
+      "節儉或浪費人格",
+      "研究證實應全面合併帳戶",
+      "最佳儲蓄率或分攤比例",
+      "離婚或關係成功率",
+      "付款、帳戶或集中資金授權"
+    ]
+  },
+  "permissionNote": "題幹、選項及提案皆為本站原創，不轉錄／翻譯FMBS、CFPB或財務和諧指標，不使用其分數、常模或效度。FMBS及研究指標的繁體版／公開使用條件仍待核對；CFPB官方標為免費公開工具，本輪也未採原題／分數或核定繁體改寫。未聯絡作者或接受下載協議，不以原工具證據驗證本站題目。",
+  "review": {
+    "status": "editorial-draft",
+    "humanTryoutCount": 0,
+    "implemented": false,
+    "priorityQuestions": [
+      "非必要活動是否人人能理解；沒有經歷是否有出口",
+      "願意與能負擔是否混為單一程度",
+      "相同金額／範圍／受益／費用項目是否容易分清",
+      "只為一次集中與固定共同支出是否白話",
+      "選準備分工是否被誤解成已同意擔任",
+      "12題是否太窄或與日常三觀重複；正式題數仍待選"
+    ]
+  }
+}
