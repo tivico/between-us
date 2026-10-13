@@ -35,6 +35,8 @@
 
 沿用原Worker／D1，不需schema migration，不搬動本機答案。需要回復時使用Wrangler deployments rollback回到前一完整已驗證的Worker，保留D1；若已有新版本回合，舊Worker不支援的結果可能暫時無法開啟，應優先修復前進而不回改答案。GitHub同步與CI紀錄在下方補充，GitHub push不觸發Cloudflare正式部署。
 
+GitHub同步完成：main／新 `v0.12.0` 已推送，發布標記指向 `12c13f47c31ec38fb895af5f15b7e1fe22875bc4`；[CI 38328397476](https://github.com/tivico/between-us/actions/runs/38328397476) 對應同一提交，2026-10-13確認 completed/success。原 `v0.11.0` 仍指向溝通提交 `4f22fed`，沒有覆寫。此CI結果針對發布標記；後續補充發布紀錄為純文件提交，不重部署或重標記版本。
+
 ## 0.11 溝通探索
 
 2026-10-12 使用者要求直接發布部署24題候選。網站0.11.0、內容候選0.2.0、回合工具0.3.0、描述性分析1.0.0。原創探索開放不表示測量或提案效果驗證；全性向適用，不新增身分欄位。沿用原Worker／D1，不需remote migration，不重建資料庫。
