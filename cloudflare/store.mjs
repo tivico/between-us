@@ -2,6 +2,7 @@ import { createHash, createHmac, randomUUID } from 'node:crypto';
 import { roundQuizzes } from '../src/content/quizzes.ts';
 import { compareValues } from '../src/domain/compatibility.ts';
 import { compareConversation } from '../src/domain/conversation.ts';
+import { analyzeDailyValues, normalizeDailyAnswers } from '../src/domain/daily-values.ts';
 import { analyzeDistance } from '../src/domain/long-distance.ts';
 import { buildValueFeedback } from '../src/domain/value-feedback.ts';
 
@@ -81,7 +82,7 @@ export class D1RoundStore {
       const q = quiz.questions.find((item) => item.id === key);
       if (!q || !q.options.some((item) => item.id === answers[key])) fail('INVALID_ANSWERS', '答案包含不屬於本輪的題目或選項。');
     }
-    const encoded = JSON.stringify(Object.fromEntries(quiz.questions.filter((q) => Object.hasOwn(answers, q.id)).map((q) => [q.id, answers[q.id]])));
+    const encoded = JSON.stringify(normalizeDailyAnswers(quiz, Object.fromEntries(quiz.questions.filter((q) => Object.hasOwn(answers, q.id)).map((q) => [q.id, answers[q.id]]))));
     const result = await this.statement('UPDATE participants SET answers=?,revision=revision+1 WHERE round_id=? AND slot=? AND revision=? AND submitted_at IS NULL', encoded, id, own.slot, revision).run();
     if (result.meta.changes === 1) return { revision: revision + 1 };
     const fresh = await this.authenticate(id, token);
@@ -113,7 +114,7 @@ export class D1RoundStore {
     const a = await this.one("SELECT nickname FROM participants WHERE round_id=? AND slot='A'", round.id);
     const b = await this.one("SELECT 1 FROM participants WHERE round_id=? AND slot='B'", round.id);
     const quiz = JSON.parse(round.snapshot);
-    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), hasPairAnalysis: Boolean(quiz.analysis), claimed: Boolean(b) };
+    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), hasPairAnalysis: Boolean(quiz.analysis), hasDailyValues: Boolean(quiz.dailyValues), claimed: Boolean(b) };
   }
   async claim({ invitationToken, nickname, consent, privateToken }) {
     requireToken(privateToken); const name = nicknameFor(nickname);
@@ -136,6 +137,7 @@ export class D1RoundStore {
     const valueFeedback = buildValueFeedback(quiz, comparison);
     const pairAnalysis = analyzeDistance(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
     const conversation = compareConversation(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
-    return { quiz, ...(comparison ? { comparison } : {}), ...(valueFeedback ? { valueFeedback } : {}), ...(conversation ? { conversation } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
+    const dailyComparison = analyzeDailyValues(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
+    return { quiz, ...(dailyComparison ? { dailyComparison } : {}), ...(comparison ? { comparison } : {}), ...(valueFeedback ? { valueFeedback } : {}), ...(conversation ? { conversation } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((p) => ({ slot: p.slot, nickname: p.nickname, answers: JSON.parse(p.answers), submittedAt: p.submitted_at })) };
   }
 }

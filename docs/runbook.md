@@ -1,5 +1,30 @@
 # 維護與除錯
 
+## 0.12 日常三觀探索
+
+2026-10-12 依使用者「直接發佈部署」要求接入八個情境，各有做法／理由／重要程度／接受範圍，共32步。網站0.12.0，日常內容與整理規則1.0.0；入口 `#/topics/daily-values`、`#/start/daily-values`。目前仍為自編探索，研究支持概念而不驗證題目或提案效果，沒有契合數字。
+
+### 檔案與資料流
+
+1. `docs/quizzes/daily-values.json` 是運行內容來源：八情境、四個首選與四個理由、情境條件、聊法、研究來源；MD 留作設計、來源閱讀界線與延伸題紀錄。`src/content/daily-values.ts` 轉成32題與15種非空接受集合。集合ID例如 set-AC只識別勾選組合，沒有分數。
+2. 建立／邀請沿用 `/api/rounds` 與 `/api/invitations/claim`，回合保存完整 snapshot。`RoundFlow` 使用 `DailyOptions` 顯示四步、`DailyReview` 按情境確認；私人返回連結沿用既有授權，答案暫存及重試仍有revision競爭保護。
+3. `PUT /api/rounds/:id/answers` 在Node／D1驗證選項屬於snapshot後，呼叫 `normalizeDailyAnswers`。任一欄暫不分享／不適用會取代同情境四欄；不是只在前端遮住。重新分享時先清空四欄，四步重新填；未答仍不能提交。
+4. `GET /api/rounds/:id/results` 先驗本人與雙方提交，再由snapshot呼叫 `analyzeDailyValues` 回傳 dailyComparison。status／邀請不含對方答案或比較結果。共同安排取明示交集，未知不當空集合；工作題比較A.choice對B.accept、B.choice對A.accept，不把單向接受說成雙向。
+5. `DailyResults` 顯示結論、各自明示非常重要的安排與逐題依據，選一項進入四步口頭交流。交流進度只在React state，不存／不同步，不宣稱兩人真的完成對話。未分享不推定理由，完整原選項與研究界線仍能展開。
+
+### 排查與修改
+
+- 主題未出現：先確認頁尾網站版號、重新載入，核對 `quizzes` 包含 daily-values。新主題另加入，不替換57題或遠距；Cloudflare部署不是GitHub push。
+- 接受範圍保存失敗：確認是選項白名單中的 set-A／set-AC 等ID，不是任意陣列或選項分數。最後一個勾選取消會保持未答；「沒有能直接接受」要明示選none。
+- 四欄突然都變未分享／不適用：這是整組規則。要恢復選擇，重新回答四步；不能從後端找回已取代的舊私人選項。
+- 結果反向／說得太多：先核對snapshot.dailyValues與32題ID、本人choice、另一方接受集合、特殊狀態、importance本人歸屬。接受未知不能顯示沒有交集，工作方向不能讀自己的集合。未支援規則版本應拒絕，不能追套最新registry。
+- 401先核對私人返回連結，423表示尚未雙方提交，409先重新載入最新revision；不要繞過授權或刪D1資料修測試。
+- 修改例：要在旅行題加「一人請客」，先改JSON並核對理由與複選集合生成，新增內容／規則版本與分支；目前V1固定四選項與15集合，不能直接改舊V1而重算舊結果。純CSS修正只升網站修正版。
+
+必要檢查與發布可依序執行 `npm run check`、`npm run build`、`npm run cloudflare:deploy`。發布後用 `node scripts/check-daily-values.mjs https://between-us.forest-between-us.workers.dev/` 檢查完整／整組未分享兩輪工程QA與保護；此腳本會建立標記回合，不讀既有使用者資料、不輸出憑證、不刪資料。健康檢查可用 `Invoke-RestMethod https://between-us.forest-between-us.workers.dev/api/health`。
+
+本輪一般／雲端部署與公開驗證紀錄會在發布完成後補在本節。沿用原Worker／D1，不需schema migration，不搬動本機答案。需要回復時使用Wrangler deployments rollback回到前版Worker，保留D1；若已有新版本回合，舊Worker不支援的結果可能暫時無法開啟，應優先修復前進而不回改答案。
+
 ## 0.10 核心價值結論與交流
 
 2026-10-12：改善「完成 57 題後只有分數／圖表、缺少收穫」的問題。先顯示各自相對優先、最多三個共同方向與差異；每卡有具體情境／聊法及可展開的三題依據。再提供四步口頭交流：發現、情境、輪流分享、重新確認。19 類、相近度、公式與 57 題改成可展開區域，沒有刪除。聊天步驟只是本頁引導，不保存或同步，不代表兩人已完成交流；原相近度算法仍是 1.0.0。

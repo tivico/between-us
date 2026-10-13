@@ -1,5 +1,11 @@
 # 架構與資料流程
 
+## 0.12 日常三觀探索
+
+`daily-values.json` → `daily-values.ts` → `quizzes`／`roundQuizzes` 共用八情境與32欄位。`dailyValues` 保存情境、四步題號、共同安排／個人選擇方向與規則1.0.0，建立回合完整固定到snapshot。接受範圍在UI用複選、在答案契約用明確集合ID，沿用 `Record<string,string>`，不需改Node／D1表結構；ID沒有分數。
+
+Node／D1 save均呼叫 `normalizeDailyAnswers`，任一欄未分享／不適用即取代整組四欄。results在本人授權及雙方提交後共用 `analyzeDailyValues`，依snapshot整理交集與工作題雙向接受；status及邀請不生成分析。畫面由 `DailyOptions`／`DailyReview`／`DailyResults` 經既有 `RoundFlow` 串接。交流state只在本頁，不發聊天API。V1與新規則須分支保留，不能從最新registry追改舊回合。欄位、除錯與發布見runbook的0.12節。
+
 ## 0.10 核心價值回饋層
 
 新 core-values 工具 0.4.0 在 rounds.snapshot 保存 feedback V1（概念／題號／情境／問題）。Node / D1 完成原授權與雙方提交檢查後，共用 buildValueFeedback，依原 comparison 選共同相對優先、差異與各自方向。原 scoring 1.0.0 不變。舊已發布 0.3.0 符合固定映射時加明示 legacy-reading-layer V1，三題不套用；無 migration，不改舊 snapshot 或原分數。

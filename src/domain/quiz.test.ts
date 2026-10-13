@@ -11,7 +11,7 @@ describe('測驗內容的完整性', () => {
       expect(validateQuiz(quiz), quiz.id).toEqual([]);
       if (quiz.scoring) expect(quiz.questions.length).toBe(57);
       if (quiz.status === 'ready') expect(quiz.questions.length).toBeGreaterThan(0);
-      expect(quiz.questions.every((question) => question.evidence.status === 'research-informed')).toBe(true);
+      expect(quiz.questions.every((question) => question.evidence.status === (quiz.dailyValues ? 'self-authored' : 'research-informed'))).toBe(true);
     }
     expect(new Set(quizzes.map((quiz) => quiz.id)).size).toBe(quizzes.length);
   });

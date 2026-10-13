@@ -5,6 +5,7 @@ import { dirname } from 'node:path';
 import { roundQuizzes } from '../src/content/quizzes.ts';
 import { compareValues } from '../src/domain/compatibility.ts';
 import { compareConversation } from '../src/domain/conversation.ts';
+import { analyzeDailyValues, normalizeDailyAnswers } from '../src/domain/daily-values.ts';
 import { analyzeDistance } from '../src/domain/long-distance.ts';
 import { buildValueFeedback } from '../src/domain/value-feedback.ts';
 
@@ -105,7 +106,7 @@ export class RoundStore {
         if (!question || !question.options.some((item) => item.id === answers[key])) fail('INVALID_ANSWERS', '答案包含不屬於本輪的題目或選項。');
       }
       for (const question of quiz.questions) if (Object.hasOwn(answers, question.id)) normalized[question.id] = answers[question.id];
-      const encoded = JSON.stringify(normalized);
+      const encoded = JSON.stringify(normalizeDailyAnswers(quiz, normalized));
       if (revision !== own.revision) {
         // 回應遺失後重試同一份答案可安全成功；其他分頁的不同更新需明確處理。
         if (encoded === own.answers) return { revision: own.revision };
@@ -138,7 +139,7 @@ export class RoundStore {
     const a = this.db.prepare("SELECT nickname FROM participants WHERE round_id = ? AND slot = 'A'").get(round.id);
     const b = this.db.prepare("SELECT 1 FROM participants WHERE round_id = ? AND slot = 'B'").get(round.id);
     const quiz = JSON.parse(round.snapshot);
-    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), hasPairAnalysis: Boolean(quiz.analysis), claimed: Boolean(b) };
+    return { id: round.id, hostName: a.nickname, title: quiz.title, questionCount: quiz.questions.length, hasValueScore: Boolean(quiz.scoring), isQuestionnaire: Boolean(quiz.questionnaire), hasPairAnalysis: Boolean(quiz.analysis), hasDailyValues: Boolean(quiz.dailyValues), claimed: Boolean(b) };
   }
   claim({ invitationToken, nickname, consent, privateToken }) {
     requireToken(privateToken);
@@ -166,6 +167,7 @@ export class RoundStore {
     const valueFeedback = buildValueFeedback(quiz, comparison);
     const pairAnalysis = analyzeDistance(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
     const conversation = compareConversation(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
-    return { quiz, ...(comparison ? { comparison } : {}), ...(valueFeedback ? { valueFeedback } : {}), ...(conversation ? { conversation } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((person) => ({ slot: person.slot, nickname: person.nickname, answers: JSON.parse(person.answers), submittedAt: person.submitted_at })) };
+    const dailyComparison = analyzeDailyValues(quiz, JSON.parse(participants[0].answers), JSON.parse(participants[1].answers));
+    return { quiz, ...(dailyComparison ? { dailyComparison } : {}), ...(comparison ? { comparison } : {}), ...(valueFeedback ? { valueFeedback } : {}), ...(conversation ? { conversation } : {}), ...(pairAnalysis ? { pairAnalysis } : {}), createdAt: round.created_at, participants: participants.map((person) => ({ slot: person.slot, nickname: person.nickname, answers: JSON.parse(person.answers), submittedAt: person.submitted_at })) };
   }
 }

@@ -1,0 +1,11 @@
+.daily-context { margin: 1rem 0; }
+.daily-context p { line-height: 1.8; }
+.daily-results .comparison-card { margin: 1.5rem 0; }
+.daily-results p { overflow-wrap: anywhere; }
+.daily-priorities { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.daily-priorities ul { padding-left: 1.2rem; }
+.daily-facts { margin-top: 1rem; padding: 1rem; background: #f4efe5; border-radius: 1rem; }
+.daily-chat { margin: 2rem 0; }
+.daily-round .question-panel h1 { font-size: clamp(1.6rem, 3vw, 2.3rem); }
+.daily-scenario { font-size: 1.05rem; line-height: 1.9; margin: 1.2rem 0; }
+@media (max-width: 640px) { .daily-priorities { grid-template-columns: 1fr; } }

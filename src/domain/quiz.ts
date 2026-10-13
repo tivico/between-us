@@ -26,7 +26,7 @@ export interface Question {
   dimension: string;
   prompt: string;
   help: string;
-  options: { id: string; label: string; kind?: ResponseKind; guidance?: string }[];
+  options: { id: string; label: string; kind?: ResponseKind; guidance?: string; selection?: string[] }[];
   discussion?: string;
   together?: string;
   evidence: {
@@ -52,6 +52,7 @@ export interface QuizDefinition {
   evidenceSummary: string;
   instructions?: string;
   feedback?: ValueFeedbackConfig;
+  dailyValues?: { kind: 'daily-values'; version: '1.0.0'; scenes: { id: string; title: string; context: string; mode: 'joint' | 'personal'; questionIds: string[]; discussion: string }[] };
   questionnaire?: { kind: 'four-question-conversation'; version: '1.0.0'; groupId: string; depth: '輕鬆' | '深入' | '較私密' };
   analysis?: {
     kind: 'long-distance-paired';
@@ -99,6 +100,19 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     if (!question.evidence.note.trim()) errors.push(`缺少依據說明：${question.id}`);
   }
   if (quiz.status === 'ready' && !quiz.questions.length) errors.push('正式測驗不能沒有題目');
+  if (quiz.dailyValues) {
+    const config = quiz.dailyValues;
+    const ids = config.scenes.flatMap((s)=>s.questionIds);
+    if (config.kind !== 'daily-values' || config.version !== '1.0.0' || config.scenes.length !== 8 || quiz.questions.length !== 32 || quiz.scoring || quiz.analysis || quiz.questionnaire || quiz.feedback || new Set(ids).size !== 32 || ids.some((id)=>!questionIds.has(id))) errors.push('日常三觀契約不完整');
+    for (const scene of config.scenes) {
+      if (!['joint','personal'].includes(scene.mode) || scene.questionIds.length !== 4 || !scene.context.trim() || !scene.discussion.trim() || scene.questionIds.some((id,index)=>id!==`${scene.id}-${['choice','reason','importance','accept'][index]}`)) errors.push('日常情境欄位不完整');
+      for (const id of scene.questionIds) if (!quiz.questions.find((q)=>q.id===id)?.options.some((o)=>o.id==='not-shared')) errors.push('日常情境缺少未分享狀態');
+      const accept=quiz.questions.find((q)=>q.id===scene.questionIds[3]);
+      const sets=accept?.options.filter((o)=>o.selection) ?? [];
+      const choices=quiz.questions.find((q)=>q.id===scene.questionIds[0])?.options.slice(0,4).map((o)=>o.id) ?? [];
+      if (sets.length!==15 || sets.some((o)=>!o.selection?.length || new Set(o.selection).size!==o.selection.length || o.selection.some((id)=>!choices.includes(id)) || o.id!==`set-${o.selection.join('')}`) || new Set(sets.map((o)=>o.id)).size!==15) errors.push('日常接受範圍契約不完整');
+    }
+  }
   if (quiz.questionnaire) {
     if (quiz.questionnaire.kind !== 'four-question-conversation' || quiz.questionnaire.version !== '1.0.0' || !quiz.questionnaire.groupId.trim()) errors.push('不支援的問答規則');
     if (quiz.questions.length !== 4 || quiz.scoring) errors.push('雙人問答每輪需四題且不能附量表計分');
