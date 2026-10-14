@@ -1027,12 +1027,13 @@
   "permissionNote": "題幹、選項及提案皆為本站原創，不轉錄／翻譯FMBS、CFPB或財務和諧指標，不使用其分數、常模或效度。FMBS及研究指標的繁體版／公開使用條件仍待核對；CFPB官方標為免費公開工具，本輪也未採原題／分數或核定繁體改寫。未聯絡作者或接受下載協議，不以原工具證據驗證本站題目。",
   "implementation": {
     "date": "2026-10-14",
-    "status": "local-implemented-not-deployed",
+    "status": "deployed",
     "sourceVersion": "0.1.0",
     "toolVersion": "0.2.0",
     "ruleVersion": "1.0.0",
     "questionCount": 12,
-    "scope": "持有人要求進行下一步；接入本機雙人保存、邀請與結果頁，D1同步支援。未推送或部署；不是人類理解、測量或效果驗證。"
+    "scope": "持有人要求進行下一步並於2026-10-14要求push與發布；雙人保存、邀請與結果頁已公開，沿用原D1。不是人類理解、測量或效果驗證。",
+    "publication": { "date": "2026-10-14", "siteVersion": "0.13.0", "sourceCommit": "95ffdbfbf29caf2ef8b880f7e2cb820faa58f4e0", "workerVersion": "20105ec6-0911-4af0-ab90-01402b5ca4c3" }
   },
   "review": {
     "status": "editorial-draft",

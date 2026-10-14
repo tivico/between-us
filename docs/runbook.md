@@ -832,7 +832,7 @@ npm run cloudflare:deploy
 執行 `npm run dev`，開啟 `http://127.0.0.1:5173/#/start/money-life`。各自12題，A提交後邀請B，雙方提交後解鎖；本機連結限此電腦。單人 `#/demo/money-life` 不保存或分享。
 
 - `docs/quizzes/money-life-candidate.json`：題幹、選項、來源及閱讀設計；contentApproval保留原同意範圍，implementation記錄本次接入。候選Markdown同步可讀題稿，humanTryoutCount仍0。
-- `src/content/money-life.ts`／`moneyLifeQuiz`：轉換來源為工具0.2.0；`quizzes.ts`註冊money-life。ready只代表本機功能可用，不是量表驗證或公開發布。
+- `src/content/money-life.ts`／`moneyLifeQuiz`：轉換來源為工具0.2.0；`quizzes.ts`註冊money-life。ready只代表功能開放，不是量表驗證；公開發布依下方發布查核。
 - `src/domain/quiz.ts`／`validateQuiz`：檢查12題分類、特殊狀態、配對方向、8則提案與版本，禁止條件／本人範圍混入偏好或配對。
 - `src/domain/money-life.ts`／`analyzeMoneyLife`：V1分析。本人條件、範圍及討論起點都不判同／不同；只有三題偏好與兩組雙向配對可比較主要選項。
 - `server/store.mjs`／`cloudflare/store.mjs`：Node SQLite與D1保存、授權及解鎖，僅results呼叫分析；`MoneyLifeResults.tsx`顯示摘要、各類閱讀、提案、來源與完整答案。
@@ -850,7 +850,7 @@ npm run cloudflare:deploy
 
 ### 症狀與排查順序
 
-- **入口仍寫準備中**：先確認本機服務是本工作目錄0.13，重啟`npm run dev`；公開網站仍0.12，不是路由故障。安全查核：`rg -n 'moneyLifeQuiz|money-life' src/content/quizzes.ts src/content/money-life.ts`。
+- **入口仍寫準備中**：先確認本機服務是本工作目錄0.13，重啟`npm run dev`；公開網站應有12題入口；若仍舊版，先重新整理再核對下方Worker與資產版本。安全查核：`rg -n 'moneyLifeQuiz|money-life' src/content/quizzes.ts src/content/money-life.ts`。
 - **無法提交／保存失敗**：先重現未答或修改後保存，檢查畫面「已儲存」及API回應。`INCOMPLETE`代表仍有缺題；`INVALID_ANSWERS`查題ID／選項ID；修訂衝突重新載入本人返回頁再修改；不要刪實際回合資料讓驗證通過。
 - **結果鎖住／讀不到**：401先確認使用自己的私人返回連結；423先確認雙方已提交，這是正常保密；分析快照錯誤再查moneyLife.version、12題分類、配對選項與提案完整性。不要把私人連結、token或實際答案貼到log／issue。
 - **配對方向反了／拒絕被解讀為不合**：先展開結果原答案，核對01←02、08←07的參與者角色，再查crossPairs與moneyPerspective；constraints／boundaries必須state:null。兩種store結果都須用snapshot，不可用getQuiz抓新題庫。
@@ -869,4 +869,26 @@ npm run cloudflare:deploy
 
 本機工程A／B回合已實際操作12題、提交、邀請、沒有經歷、未分享取代與結果重載，完整答案展開12卡。桌面結果已視覺檢查，截圖位於忽略的`.local/qa/money-life/desktop.png`，不含私人連結。手機約390px的DOM布局（網頁元素及尺寸）查核無橫向溢出，卡片落在視窗內；瀏覽器在尺寸覆寫時無法擷取截圖，手機視覺截圖未驗證。工程驗收回合明示測試用途，未冒充使用者／伴侶答案，未刪既有資料。`npm run build`與`npm run build:cloudflare`通過；一般建置仍提示主JS超過500kB，此提示不阻擋建置，本次未做拆包。
 
-尚未驗證公開0.13、真人理解、測量或交流改善效果。本次完成標準為本機實作、必要工程驗證與維護交接；部署另成後續範圍。
+初次本機交付時尚未驗證公開0.13；後續發布查核見下節。真人理解、測量或交流改善效果仍未驗證。
+
+### 0.13 GitHub與公開發布查核（2026-10-14）
+
+持有人直接要求「push+發佈」，本節上方的未發布狀態為初次本機交付歷史。功能commit為60a87c1；補上部署檢查後，發布來源為 **95ffdbfbf29caf2ef8b880f7e2cb820faa58f4e0**，main與新v0.13.0已普通推送，未改remote或force push。[GitHub CI 38496413381](https://github.com/tivico/between-us/actions/runs/38496413381)對應此來源，completed/success，包含110項測試、一般／Cloudflare建置與Worker dry-run。後續發布紀錄為文件／來源狀態metadata，不改題幹、選項、工具／規則或V1，不需重部署或移動tag。
+
+已執行`npm run cloudflare:deploy`（check → Cloudflare建置 → Wrangler deploy），發布至原between-us Worker，版本 **20105ec6-0911-4af0-ab90-01402b5ca4c3**，DB仍為between-us／c7694cfa-1d1b-47e9-9379-6cd08812947a。未執行migration、重建D1或上傳本機SQLite。[公開12題入口](https://between-us.forest-between-us.workers.dev/#/start/money-life)與[主題介紹](https://between-us.forest-between-us.workers.dev/#/topics/money-life)可讀；公開HTML與JS `/assets/index-BkBBnVKb.js`、CSS `/assets/index-hjLu5Xw7.css`逐檔SHA-256與此次dist相符。健康API回200／ok:true。
+
+公開驗證：check-money-life.mjs的混合／全未分享兩輪通過，含12題完整保存、缺答拒絕、未分享取代、兩組各雙向配對、本人不參加與不集中單獨保留、沒經歷方向advice:null、完整結果一致、401／423／409及no-store。公開結果頁與全未分享頁已讀取，後者沒有個別提案；瀏覽器Console未見error／warn，截圖位於忽略的`.local/qa/money-life/public-results.png`。手機視覺截圖限制仍同上方本機驗收記錄，不聲稱已補驗。
+
+續驗check-communication、check-daily-values、check-cloudflare（57題核心價值）、check-long-distance及check-questionnaires全部通過，八組問答各有GROUP_OK。共新增17輪明示部署QA（生活2／溝通2／日常2／核心價值1／遠距2／問答8），只操作本次自建回合，不讀取／刪除既有使用者答案；這些工程回合不計humanTryoutCount。返回憑證不打印，不提交到Git，--qa-proof只存忽略的.local。研究／測量／提案效果未驗證的界線不變。
+
+重新發布的實際流程：先確認git status與版本 → check／build／build:cloudflare → Worker dry-run → 普通push main與新版本tag → 核對該commit的GitHub CI → cloudflare:deploy → 健康／公開資產／新主題與既有流程驗證 → 補發布紀錄commit並push。GitHub push只做CI，不會自動更新Cloudflare網站。
+
+自行重跑新主題驗證（會新增兩輪明示工程QA，不讀既有回合）：
+
+```powershell
+node scripts/check-money-life.mjs https://between-us.forest-between-us.workers.dev/
+```
+
+看到MONEY_LIFE_FLOW_FAILED先查`/api/health`、部署Worker版本、資產與CI來源，再依上方授權／缺答／revision排查；不要用真實返回連結做部署測試。一般建置仍提示主JS超過500kB，但已通過，不是500 API錯誤。
+
+發布前版本為42dbb12d-e964-4f78-8d5c-045fdf2257fc（0.12）。若需止血，優先在保留0.13快照解析／分析的程式中暫停新輪入口並重新發布；直接退回0.12會缺少已產生的money-life結果支援，因此不能當無損回復。保留原D1，不刪新舊回合；後續新規則另加版本與分支。
