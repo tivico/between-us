@@ -6,6 +6,9 @@
   "compatibility_date": "2026-10-08",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
+  "vars": { "API_MAINTENANCE": "false" },
+  "ratelimits": [{ "name": "CREATE_RATE_LIMITER", "namespace_id": "150015", "simple": { "limit": 30, "period": 60 } }],
+  "observability": { "enabled": true, "logs": { "enabled": true, "invocation_logs": false, "head_sampling_rate": 1 } },
   "triggers": { "crons": ["0 19 * * *"] },
   "assets": {
     "directory": "./dist",

@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, expect, it } from 'vitest';
+import { afterAll, afterEach, beforeAll, beforeEach, expect, it, vi } from 'vitest';
 import { Miniflare, convertV4MiniflareOptions } from 'miniflare';
 import { readFile } from 'node:fs/promises';
 import { randomBytes } from 'node:crypto';
@@ -6,6 +6,8 @@ import worker from './worker.mjs';
 import { D1RoundStore } from './store.mjs';
 
 let runtime; let db;
+beforeEach(() => vi.spyOn(console, 'log').mockImplementation(() => {}));
+afterEach(() => vi.restoreAllMocks());
 const token = () => randomBytes(32).toString('hex');
 beforeAll(async () => {
   runtime = new Miniflare(convertV4MiniflareOptions({ modules: true, script: 'export default {fetch(){return new Response("test")}}', compatibilityDate: '2026-10-08', d1Databases: ['DB'] }));
@@ -20,7 +22,7 @@ async function call(path, { method = 'GET', credential, body, origin, contentTyp
   if (credential) headers.Authorization = `Bearer ${credential}`;
   if (origin) headers.Origin = origin;
   if (body !== undefined) headers['Content-Type'] = contentType;
-  const response = await worker.fetch(new Request(`https://between-us.example${path}`, { method, headers, body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body) }), { DB: db });
+  const response = await worker.fetch(new Request(`https://between-us.example${path}`, { method, headers, body: body === undefined ? undefined : typeof body === 'string' ? body : JSON.stringify(body) }), { DB: db, CREATE_RATE_LIMITER: { limit: async () => ({ success: true }) } });
   return { status: response.status, body: await response.json(), headers: response.headers };
 }
 async function create() {
@@ -46,7 +48,7 @@ async function submitA(id, a) {
 
 it('健康檢查實際連資料庫；API 不快取，拒絕跨來源', async () => {
   const healthy = await call('/api/health');
-  expect(healthy.body).toEqual({ ok: true, mode: 'cloudflare-test' });
+  expect(healthy.body).toMatchObject({ ok: true, mode: 'cloudflare-test', schema: 2 });
   expect(healthy.headers.get('Cache-Control')).toBe('no-store');
   expect((await call('/api/health', { origin: 'https://other.example' })).status).toBe(403);
 });

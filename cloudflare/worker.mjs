@@ -1,7 +1,7 @@
 import { D1RoundStore, RoundError } from './store.mjs';
+import { releaseVersion, requestId, operationOf, observeApi, creationKey } from '../server/operations.mjs';
 
 const headers = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer', 'X-Content-Type-Options': 'nosniff' };
-const send = (status, value) => new Response(JSON.stringify(value), { status, headers });
 async function bodyOf(request) {
   if (!request.headers.get('Content-Type')?.startsWith('application/json')) throw new RoundError('JSON_REQUIRED', '請使用 JSON 傳送資料。', 415);
   const reader = request.body?.getReader(); const chunks = []; let size = 0;
@@ -23,22 +23,35 @@ async function bodyOf(request) {
 }
 export default {
   async scheduled(_event, env) {
-    await new D1RoundStore(env.DB).cleanupExpired();
+    try { const removed = await new D1RoundStore(env.DB).cleanupExpired(); console.log(JSON.stringify({ event: 'retention_cleanup', outcome: 'ok', removed })); }
+    catch { console.log(JSON.stringify({ event: 'retention_cleanup', outcome: 'failed' })); throw new Error('RETENTION_CLEANUP_FAILED'); }
   },
   async fetch(request, env) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
+    const id = requestId(), started = Date.now(), operation = operationOf(url.pathname);
+    const send = (status, value) => {
+      observeApi({ id, started, operation, status, code: value.code || 'OK' });
+      return new Response(JSON.stringify(value), { status, headers: { ...headers, 'X-Request-ID': id, ...(status === 429 ? { 'Retry-After': '60' } : {}) } });
+    };
     try {
+      if (env.API_MAINTENANCE === 'true') return send(503, { code: 'MAINTENANCE', message: '保存服務正在維護，請稍後再試。' });
       const origin = request.headers.get('Origin');
       if (origin && origin !== url.origin) throw new RoundError('ORIGIN_DENIED', '這個來源不能存取保存服務。', 403);
       const store = new D1RoundStore(env.DB);
       const token = /^Bearer ([a-f0-9]{64})$/.exec(request.headers.get('Authorization') ?? '')?.[1];
       const path = url.pathname; const method = request.method;
       if (method === 'GET' && path === '/api/health') {
-        await store.one('SELECT 1 FROM rounds LIMIT 1');
-        return send(200, { ok: true, mode: 'cloudflare-test' });
+        try { await store.one('SELECT expires_at FROM rounds LIMIT 0'); await store.one('SELECT withdrawn_at,previous_token_hash FROM participants LIMIT 0'); if (!env.CREATE_RATE_LIMITER) throw new Error(); }
+        catch { return send(503, { ok: false, code: 'READINESS_FAILED', message: '保存服務尚未就緒。' }); }
+        return send(200, { ok: true, mode: 'cloudflare-test', version: releaseVersion, schema: 2 });
       }
-      if (method === 'POST' && path === '/api/rounds') return send(201, await store.create(await bodyOf(request)));
+      if (method === 'POST' && path === '/api/rounds') {
+        if (!env.CREATE_RATE_LIMITER) return send(503, { code: 'READINESS_FAILED', message: '保存服務尚未就緒。' });
+        const { success } = await env.CREATE_RATE_LIMITER.limit({ key: creationKey(request.headers.get('CF-Connecting-IP')) });
+        if (!success) return send(429, { code: 'RATE_LIMITED', message: '建立回合較頻繁，請稍候一分鐘再試。' });
+        return send(201, await store.create(await bodyOf(request)));
+      }
       if (method === 'GET' && path === '/api/invitations/preview') return send(200, await store.invitationPreview(token));
       if (method === 'POST' && path === '/api/invitations/claim') return send(200, await store.claim(await bodyOf(request)));
       const match = /^\/api\/rounds\/([a-f0-9-]{36})\/(status|answers|submit|results|withdraw|rotate)$/.exec(path);
@@ -54,7 +67,6 @@ export default {
       return send(404, { code: 'NOT_FOUND', message: '找不到這個操作。' });
     } catch (error) {
       if (error instanceof RoundError) return send(error.status, { code: error.code, message: error.message });
-      console.error('API_INTERNAL_ERROR');
       return send(500, { code: 'INTERNAL_ERROR', message: '暫時無法保存，請稍後重試。' });
     }
   },

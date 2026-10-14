@@ -10,6 +10,7 @@ coverage/
 *.sqlite
 *.sqlite-wal
 *.sqlite-shm
+*.bubak
 .DS_Store
 Thumbs.db
 .wrangler/

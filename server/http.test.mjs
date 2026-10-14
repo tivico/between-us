@@ -17,7 +17,7 @@ it('管理 API 必須本人授權與明確確認；更換後舊連結失效，�
   expect(removed.status).toBe(410); expect(removed.headers.get('cache-control')).toBe('no-store');
 });
 beforeEach(async () => {
-  store = new RoundStore(); server = createApi(store);
+  store = new RoundStore(); server = createApi(store, { observe: () => {} });
   await new Promise((done) => server.listen(0, '127.0.0.1', done));
   base = `http://127.0.0.1:${server.address().port}`;
 });

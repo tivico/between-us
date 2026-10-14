@@ -1,5 +1,103 @@
 # 維護與除錯
 
+## 0.15 來源核對、維運與首頁載入
+
+2026-10-14：持有人同意改善6–7。本節補充0.14的生命週期，舊版本段落保留發布證據，產品現況以README、product、architecture及本節／0.14為準。本機0.15.0，尚未push／deploy；公開最後確認0.13.0，0002 remote migration未套用。健康監測workflow、Worker限流、日誌與維修開關都是待發布設定，不能把本機驗證當成公開已啟用。
+
+### 已核對與保留疑點
+
+已重新核對本機保留的PVQ-RR繁中／英文原件SHA256，與候選來源紀錄相符；q49繁中「永不被別人指出錯誤」與英文「never to be humiliated」確有措辭差異。作者庫實際列有Taiwan附件，但本次依頁面實際連結讀取得到403，未取得附件，也未完成翻譯專家或真實使用者理解核對。詳見`docs/quizzes/core-values-pvqrr.md`的2026-10-14稽核。本次只更新來源說明，題幹、候選JSON、工具版、計分及face敘事排除均保留；不以工程核對宣稱量表效度或改寫許可。
+
+### API健康、錯誤代碼與限流
+
+`server/operations.mjs`共用網站版本、固定操作分類、requestId與日誌欄位。`server/http.mjs`及`cloudflare/worker.mjs`每個API回應帶`X-Request-ID`；前端`src/lib/api.ts`只在伺服器異常時把它顯示為服務代碼，方便不用提供私人返回連結就能對照log。
+
+```text
+API入口 → 維修開關 → health 或原路由
+POST /api/rounds → 來源網路短期雜湊 → 建立限流 → 原store建立snapshot與期限
+其餘路由 → 原授權／到期／退出檢查 → 原store → 回應＋X-Request-ID
+回應完成 → api log {requestId,operation,status,code,elapsedMs}
+每日到期清理 → retention_cleanup log {outcome,removed}
+```
+
+日誌不收body、URL、Authorization、token、回合ID、IP、暱稱、答案或SQL錯誤物件。這是本程式的日誌政策，不保證Cloudflare／網路服務商沒有自己的流量紀錄。`wrangler.jsonc`關閉自動invocation logs，保留自訂白名單log；設定依[Workers Logs](https://developers.cloudflare.com/workers/observability/logs/workers-logs/)。不要為了除錯加入`console.log(request)`或`console.error(error)`。
+
+`GET /api/health`以`SELECT … LIMIT 0`確認生命週期欄位，成功回`{ok:true,mode,version,schema:2}`；只核對結構，不取私人資料。schema:2表示本程式的欄位契約，D1仍由migration紀錄管理，不等於D1的PRAGMA user_version。缺欄位／DB錯誤回503 `READINESS_FAILED`，Worker缺限流binding亦503；維修時全部API回503 `MAINTENANCE`。本機Node環境`API_MAINTENANCE=true`需重啟；Worker vars同名需發布才能生效。它不能遠端關閉仍在跑的舊Worker。
+
+建立保護預設每來源網路60秒30次，429附`Retry-After:60`。Node只用socket來源IP，忽略使用者可偽造的X-Forwarded-For；反向代理部署可能把多人算同來源，先調整代理／部署設計，不能直接信任任意header。Worker用Cloudflare提供的CF-Connecting-IP作雜湊key。SHA256不是匿名保證，只是短期計數key，既不寫入資料庫也不打印。共享網路可能一起碰到限制。只限制建立，既有回合的存答、提交、結果、退出與更換入口仍可用；這是突發防護，不是完整防濫用系統。Cloudflare原生計數在各地機房各自運作、非精確全球配額，限制見[Rate limiting binding](https://developers.cloudflare.com/workers/runtime-apis/bindings/rate-limit/)。
+
+### 公開健康監測
+
+`scripts/check-site-health.mjs`只GET健康、首頁HTML及同來源build資產，檢查HTTP／Content-Type；不建立回合、不讀私人連結、不帶憑證。失敗最多重試三次，log只有固定訊息；不能把私人返回網址當檢查參數。
+
+```powershell
+npm run health:check -- https://between-us.forest-between-us.workers.dev/
+```
+
+本次公開唯讀檢查成功，舊公開health無version，輸出`version=not-reported`。`.github/workflows/health.yml`推到default branch後每小時UTC第23分執行，也可手動觸發。通知由GitHub帳號／repository通知設定決定，本次沒有代為設定通知。schedule可能延遲或被平台停用，不能當即時SLA；見[GitHub schedule](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。它驗證可用性，沒有驗證真實使用者的雙人資料或每日刪除是否完成。
+
+### 本機加密備份與隔離還原
+
+`server/backup.mjs`用Node SQLite一致性backup，包含已提交WAL，再用scrypt衍生密鑰及AES-256-GCM加密／驗證完整性；CLI在`scripts/backup-sqlite.mjs`。技術依[Node SQLite backup](https://nodejs.org/api/sqlite.html)與[Node crypto](https://nodejs.org/docs/latest-v24.x/api/crypto.html)。只接受schema1／2；執行integrity及外鍵檢查。`.bubak`是加密JSON封套，包含密文，不能當成一般SQLite直接開。
+
+密語至少16字元，由密碼管理器保存，**不要寫進命令參數、.env、Git、issue或VITE_**。下例PowerShell 7隱藏輸入，只暫放process環境。路徑用自己可信任的實體目錄，勿用指向public/dist的junction／symlink；Windows檔案權限須靠Windows ACL與磁碟加密，Node mode不是Windows存取保證。
+
+```powershell
+$taskBackupSecret = Read-Host '備份密語' -AsSecureString
+$env:BACKUP_PASSPHRASE = ConvertFrom-SecureString $taskBackupSecret -AsPlainText
+try {
+  node scripts/backup-sqlite.mjs backup --source .local/data/between-us.sqlite --output .local/backups/before-release.bubak
+} finally {
+  Remove-Item Env:BACKUP_PASSPHRASE -ErrorAction SilentlyContinue
+  Remove-Variable taskBackupSecret -ErrorAction SilentlyContinue
+}
+```
+
+備份不覆寫已存在輸出；先在`.local/backup-stage`短暫建立一致性明文副本，正常完成或失敗清除。程序／電腦非正常中斷可能留副本，應確認沒有備份程序後，以檔案管理員核對該專用目錄再清除；不可批次刪整個`.local`。把加密`.bubak`另存受控的異地位置，與密語分開保存；本版沒有自動異地備份或保管密語。Vite禁止供應.local／SQLite及.bubak，Git忽略備份；不要把復原副本搬進public或dist。
+
+還原只能建立新的`.local`隔離檔，不會替換現用資料庫、不會啟動API。先停止Node API寫入，取得**可信任的最新停寫DB**，密語輸入方式同上，再執行：
+
+```powershell
+node scripts/backup-sqlite.mjs restore --source .local/backups/before-release.bubak --output .local/restore/review.sqlite --current-state .local/data/between-us.sqlite --confirm-offline
+```
+
+`--confirm-offline`是維護者明確承諾來源已停寫，程式不能替你保證。流程：解密驗證→讀最新安全狀態→隔離還原→依最新snapshot／expires_at／邀請與token雜湊／withdrawn_at校正→清除已退出答案與已到期／已刪回合→檢查完整性。它不讀最新答案來補洞。備份後的新回合不能憑空復原；新加入者只保留最新身份狀態、答案為空；備份後填答可能遺失。原舊返回憑證保持撤銷。測試已驗證更換入口、退出、到期／刪除、WAL、錯密語、竄改與拒絕覆寫，**未對真實答案執行備份／還原**。
+
+如果最新可信任狀態一併遺失，本工具拒絕直接恢復舊私人回合，避免復活已刪答案與撤銷連結。密語遺失也無法解密。這是安全與災難回復之間的取捨；本版尚未有獨立撤銷台帳。不要繞過current-state檢查，也不要把檢查通過直接視為可換庫；先對隔離庫以QA資料確認API、狀態與撤銷，再安排維修切換並保留原庫。
+
+### D1還原點與發布順序
+
+公開D1使用平台Time Travel；本次僅執行唯讀`npx wrangler d1 time-travel info between-us --json`確認有還原點，沒有export／restore／migration。bookmark不要貼公開issue。保留窗口依方案，官方free7天／paid30天，本次未核定帳號方案；見[D1 Time Travel](https://developers.cloudflare.com/d1/reference/time-travel/)。Time Travel是平台復原，不等於另有異地加密備份。
+
+**不能直接把舊D1 bookmark還原成公開庫**：它可能復活已退出答案及原憑證。事故先關閉公開API寫入／讀取，保存最新可信任撤銷與期限狀態，在隔離環境演練及校正後才切換。Node的backup CLI不是D1還原工具，不可套到D1匯出檔並假設相容。沒有最新安全狀態時維持關閉，不能聲稱已安全復原。
+
+未來有發布指令時：檢查原D1身份及可用還原點→確認0002待migration→套用0002→部署0.15 Worker及assets→health readiness→明示QA雙人流程與退出／更換續驗→確認logs／監測排程。維修模式會503而不是放寬權限；修復後再發布false。0.14以下的回復限制仍適用：首次使用退出後不可回退到0.13；遇問題先維修，再發布同樣理解生命週期的修正版。
+
+### 首頁分包與效能驗證
+
+`scripts/generate-catalog.mjs`從原registry／articles生成`src/content/quiz-catalog.json`，只留公開選題摘要；`catalog.ts`讀取。`App.tsx`先載入選題／privacy，主題與雙人流程在`ExplorationPage.tsx`，科普在`LearningPage.tsx`，依route延後下載。React Suspense顯示載入，`PageBoundary.tsx`提供失敗重試；重載可能清除單人暫存，後端已保存答案仍在。題目與研究來源仍來自完整registry，摘要不是第二份正式題庫。
+
+修改題名、題數、topic-guide或文章後執行`npm run catalog:generate`；`catalog:check`會比對產生結果，CI拒絕過期摘要；predev／prebuild也生成。正常修改流程：內容原件→generator→摘要→check→兩種build→畫面驗證；不要直接手改生成JSON。
+
+工程模擬`scripts/serve-performance.mjs`：只供應公開dist資產、不接DB，HTTP gzip、no-store，共享1.6Mbps頻寬及每次150ms延遲，在首頁render到#start-guide後兩幀取readyMs。各版本三次，中位數0.14=1.55秒／0.15=0.89秒（約42%改善），首頁JS傳輸180,377→77,626 bytes（約57%下降）。raw build main248.83KB、探索360.57KB；主題首開仍需額外下載探索分包。記錄在ignored `.local/performance-015.json`。
+
+這是同環境的工程比較，不是實體手機、公開網站、CPU受限或人類可用性測試；外部字型沒有套頻寬模擬。此瀏覽器沒提供FCP／LCP數據，不能據此宣稱Core Web Vitals通過。可重現指令：
+
+```powershell
+npm run build:cloudflare
+node scripts/serve-performance.mjs dist 5406
+```
+
+### 最常見症狀與維護範例
+
+本輪驗證：158項測試、一般／Cloudflare建置、Worker dry-run均通過；主題單人預覽、科普全文、雙人結果及分包下載503後的重試提示已實際檢查。畫面實際寬717／1265px；390px設定未生效，不計入手機尺寸驗收。沒有做真實使用者試答或正式災難還原。
+
+1. 首頁可見、API503：先跑health:check，再看MAINTENANCE／READINESS_FAILED、0002欄位、DB與CREATE_RATE_LIMITER binding；不要先讀answers。讀requestId、固定operation與status定位，`npx wrangler tail --format json`的輸出亦勿貼含私人內容的完整平台log。
+2. 新建429：等60秒，確認是否共享網路或Node代理把全部人合併；存答／提交應照常。如果要調整為45次，**同改**`server/operations.mjs.creationLimit`與`wrangler.jsonc.ratelimits.simple.limit`，更新此節／測試，再check及build／部署，不改答題API限制。
+3. 首頁資產失敗／載入畫面後出現重試：先看health script是哪一層失敗、資產Content-Type、部署是否同一版HTML與chunks。確認不是離線後按重試；不要要求使用者提供私人連結。發布資產不可只替換index，hash分包必須一起上線。
+4. BACKUP_DECRYPT_FAILED：核對密語與檔案來源，錯密語／竄改均同樣拒絕；無法靠修改封套或跳過tag補救。DESTINATION_EXISTS改用新的隔離檔名；UNSAFE_BACKUP_DESTINATION移到.local，勿停用Vite保護。
+5. 來源措辭疑問：看q49稽核原件與指紋，取得作者庫正式Taiwan附件或適當專家核對後，另擬新版本與證據限制；不能改V1敘事或舊snapshot假裝一直正確。
+
 ## 0.14 選題、結果閱讀與資料生命週期
 
 2026-10-14：持有人同意改善1–3，並選擇「新回合180天、既有回合先保留」。本機網站0.14.0；公開仍0.13.0，未推送或部署、未套用remote migration。題幹、題庫工具版、相近度及既有分析V1均不變。以下是現在的操作規則；舊版本段落中的「保存／退出待定」保留為歷史，現況以本節為準。
