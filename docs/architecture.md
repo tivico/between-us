@@ -1,6 +1,6 @@
 # 架構與資料流程
 
-更新：2026-10-14。本機0.15.0，公開最後確認為0.13.0；0.14／0.15未推送或部署。這份文件描述現在的架構；各版本操作／發布證據留在[Runbook](runbook.md)與CHANGELOG。
+更新：2026-10-14。本機與公開0.15.1，原D1已套0002；0.14／0.15功能及時間基準修正已合併公開。這份文件描述現在的架構；各版本操作／發布證據留在[Runbook](runbook.md)與CHANGELOG。
 
 ## 單一專案、兩個儲存實作
 
@@ -58,6 +58,6 @@ result-opening.ts的buildResultOpeningV1只摘已生成分析，標version1.0.0�
 
 operations.mjs共用安全事件欄位、服務版本、來源網路短期雜湊與Node限流。Worker用原生Rate Limiting binding，按節點、非精確全域配額；Node不信任X-Forwarded-For。只限制建立，30次／60秒為突發門檻。觀測只留操作種類、狀態、固定錯誤碼、耗時和服務代碼，不記URL／IP／headers／payload。Worker關閉invocation_logs，避免自動寫入完整請求網址；API_MAINTENANCE=true可停止API存取，資產仍能提供。
 
-health.yml每小時只讀公開健康／首頁／資產，三次短重試失敗才使job失敗，無憑證、不建立回合。尚未push，所以排程未啟用；GitHub schedule不是即時SLA，可能延遲或停用，通知由帳號設定決定。
+health.yml每小時只讀公開健康／首頁／資產，三次短重試失敗才使job失敗，無憑證、不建立回合。已push且workflow為active，本次尚無首次schedule紀錄；GitHub schedule不是即時SLA，可能延遲或停用，通知由帳號設定決定。
 
 D1 Time Travel可讀備份書籤已確認；實際保留窗口依方案，這輪不做remote restore。Node一致性備份用sqlite.backup，AES-256-GCM＋scrypt加密，密語不放參數／Git；還原只寫新隔離檔，要求最新停寫狀態，套回退出、token更換、邀請和期限，移除最新狀態已不存在／已到期的回合。沒有最新可信撤銷狀態時不放行，不拿舊備份重新開API；復原與回復程式是不同操作。詳見[維護與演練](runbook.md)。

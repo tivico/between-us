@@ -1,5 +1,20 @@
 # 維護與除錯
 
+## 0.15.1 公開發布與續驗（2026-10-14）
+
+依持有人「push+部署」，已推送main／v0.15.1並公開部署，包含0.14的選題／摘要／180天保存、退出／更換，以及0.15的維運與分包、0.15.1時間修正。發布來源`220b3f8a44ad0bb22f1a20f1a456e0434e058939`，功能來源cf95598／d3b8696；標記固定，不因後續文件提交移動。以下0.15／0.14初次交付的未發布敘述保留為歷史，現況以本節和README為準。
+
+- 原D1 `between-us`沿用，0002_lifecycle.sql已remote apply，既有expires_at=NULL，沒有重建／還原D1；再次list確認沒有待套migration。發布前最新Time Travel bookmark保存在ignored `.local/releases/0.15/pre-migration-151-bookmark.json`，不公開bookmark，也沒有匯出既有答案。
+- Worker版本`06e4d4e9-b416-4692-82fd-cd395c08f105`；網站[公開入口](https://between-us.forest-between-us.workers.dev/)。部署確認原DB、ASSETS、CREATE_RATE_LIMITER30／60s、API_MAINTENANCE=false與每日UTC19:00（台灣翌日03:00）清理。白名單log設定已部署；未透過tail讀使用者紀錄或主動觸發遠端清理。
+- 160項測試、一般及Cloudflare build通過；發布來源[GitHub CI38526846630](https://github.com/tivico/between-us/actions/runs/38526846630)成功。公開health:check回version=0.15.1／schema2及資產通過。
+- 公開`check-lifecycle.mjs`通過新回合精確180天、A/B更換及同請求重試、舊token／邀請撤銷、雙方提交保密與摘要作答依據、退出後共同結果410／對方本人答案保留，QA雙方已退出。其餘check-money-life／cloudflare／daily-values／communication／long-distance／questionnaires全通過，八組問答完整續驗；全部只新建明示QA，不讀既有回合，不打印答案或憑證。保留的功能QA回合隨180天期限管理，不批次刪D1。
+- 公開首頁情境導引、QA生活結果摘要、四步交流與管理到期日已實際畫面檢查，截圖在ignored `.local/public-release-0151.jpg`，不是人類試答或效果證據。新期限以一次保存created_at作基準，既有快照／題幹／分析V1保留。
+- GitHub健康workflow384040008已active，UTC每小時第23分；發布核對時runs為空，未宣稱首次排程已成功。通知沿用GitHub帳號／repo設定，本次未修改。手動只讀健康腳本已成功；每日刪除排程第一次雲端執行與真實手機速度也尚未觀察。
+
+發布順序：推送已驗證來源與固定tag→最新D1還原點→remote apply0002→deploy同一Worker／assets→公開health→各主題及生命週期QA→更新文件。此次認證10000後先whoami確認原帳號與D1權限，再成功取得最新還原點，沒有擴張OAuth權限或重登入其他帳號。
+
+維運排查：先`npm run health:check -- https://between-us.forest-between-us.workers.dev/`，再核對version／schema、固定錯誤碼與服務代碼；不要求私人返回連結。建立429等60秒，其他存答／退出仍可用；503查維修開關、DB／限流binding及migration。啟用退出後**不可回復0.13**；先進維修，修復並發布仍理解生命週期的版本，避免復活答案／邀請。若改保存天數，只改retention.ts的新回合規則，保留既有expires_at並跑兩種store及公開明示QA；不要重算舊資料。
+
 ## 0.15.1 發布前時間修正
 
 2026-10-14持有人要求「push+部署」。發布QA檢出created_at與expires_at分別讀時鐘可能差幾毫秒；Node／D1建立時改用已保存的建立時間作180天基準。只有新回合受此修正，既有期限、原題庫、分析與快照不改，無新增migration；首次生命週期發布仍必須先套0002。160項測試與本機check-lifecycle通過，公開發布結果另記下方；此段不是已部署證明。
