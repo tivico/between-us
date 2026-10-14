@@ -1,5 +1,11 @@
 # 維護與除錯
 
+## 0.15.1 發布前時間修正
+
+2026-10-14持有人要求「push+部署」。發布QA檢出created_at與expires_at分別讀時鐘可能差幾毫秒；Node／D1建立時改用已保存的建立時間作180天基準。只有新回合受此修正，既有期限、原題庫、分析與快照不改，無新增migration；首次生命週期發布仍必須先套0002。160項測試與本機check-lifecycle通過，公開發布結果另記下方；此段不是已部署證明。
+
+資料流：`create`一次讀時鐘→保存`created_at`→`expiryFrom(Date.parse(created_at))`→固定`expires_at`。若日後調整天數，改`src/domain/retention.ts`，兩種store仍以同一建立時間計算，不在status或續答重新延長。檢查用自建QA的status相減，不能改既有使用者的expires_at來做測試。
+
 ## 0.15 來源核對、維運與首頁載入
 
 2026-10-14：持有人同意改善6–7。本節補充0.14的生命週期，舊版本段落保留發布證據，產品現況以README、product、architecture及本節／0.14為準。本機0.15.0，尚未push／deploy；公開最後確認0.13.0，0002 remote migration未套用。健康監測workflow、Worker限流、日誌與維修開關都是待發布設定，不能把本機驗證當成公開已啟用。
@@ -89,6 +95,8 @@ node scripts/serve-performance.mjs dist 5406
 ```
 
 ### 最常見症狀與維護範例
+
+發布生命週期續驗使用`node scripts/check-lifecycle.mjs https://between-us.forest-between-us.workers.dev/`。腳本只新建明示QA，核對網站版／schema／180天、A/B更換、舊邀請及返回失效、重試、摘要實際作答依據與退出後只留對方本人資料；最後QA雙方退出。失敗只報固定phase，不打印token／答案／回合ID，不直接讀寫D1或刪使用者回合。退出已關閉後不能回退0.13。此腳本不是180天排程或舊回合NULL保留的遠端驗證。
 
 本輪驗證：158項測試、一般／Cloudflare建置、Worker dry-run均通過；主題單人預覽、科普全文、雙人結果及分包下載503後的重試提示已實際檢查。畫面實際寬717／1265px；390px設定未生效，不計入手機尺寸驗收。沒有做真實使用者試答或正式災難還原。
 

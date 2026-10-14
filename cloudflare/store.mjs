@@ -128,7 +128,7 @@ export class D1RoundStore {
     try {
       // batch 全部成功才提交；憑證撞到時 round 與 participant 一起回滾。
       await this.db.batch([
-        this.statement('INSERT INTO rounds(id,quiz_id,snapshot,created_at,expires_at) VALUES(?,?,?,?,?)', id, quiz.id, JSON.stringify(quiz), stamp, expiryFrom(this.now())),
+        this.statement('INSERT INTO rounds(id,quiz_id,snapshot,created_at,expires_at) VALUES(?,?,?,?,?)', id, quiz.id, JSON.stringify(quiz), stamp, expiryFrom(Date.parse(stamp))),
         this.statement('INSERT INTO participants(round_id,slot,token_hash,nickname,consent_at) VALUES(?,?,?,?,?)', id, 'A', hash, name, stamp),
       ]);
     } catch (error) {

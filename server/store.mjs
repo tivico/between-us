@@ -132,7 +132,7 @@ export class RoundStore {
       }
       const id = randomUUID();
       const createdAt = this.stamp();
-      this.db.prepare('INSERT INTO rounds(id,quiz_id,snapshot,created_at,expires_at) VALUES(?,?,?,?,?)').run(id, quiz.id, JSON.stringify(quiz), createdAt, expiryFrom(this.now()));
+      this.db.prepare('INSERT INTO rounds(id,quiz_id,snapshot,created_at,expires_at) VALUES(?,?,?,?,?)').run(id, quiz.id, JSON.stringify(quiz), createdAt, expiryFrom(Date.parse(createdAt)));
       this.db.prepare('INSERT INTO participants(round_id,slot,token_hash,nickname,consent_at) VALUES(?,?,?,?,?)').run(id, 'A', digest(privateToken), name, createdAt);
       return { id };
     });

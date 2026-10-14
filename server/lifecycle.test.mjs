@@ -23,6 +23,17 @@ beforeAll(async () => {
 afterAll(async () => { await runtime?.dispose(); });
 
 for (const mode of ['Node', 'D1']) describe(`${mode} 資料生命週期`, () => {
+  it('建立期間時鐘前進仍以已保存建立時間固定180天，不另取到期基準', async () => {
+    let time = Date.parse('2026-10-14T00:00:00Z');
+    const store = mode === 'Node' ? new RoundStore(':memory:', { now: () => time++ }) : new D1RoundStore(db, { now: () => time++ });
+    try {
+      const a = token();
+      const { id } = await store.create({ quizId: 'money-life', nickname: '明示時間QA', consent: true, privateToken: a });
+      const status = await store.status(id, a);
+      expect(Date.parse(status.expiresAt) - Date.parse(status.createdAt)).toBe(retentionMilliseconds);
+    } finally { store.close?.(); }
+  });
+
   async function fixture() {
     let time = Date.parse('2026-10-14T00:00:00Z');
     const store = mode === 'Node' ? new RoundStore(':memory:', { now: () => time }) : new D1RoundStore(db, { now: () => time });
