@@ -29,10 +29,10 @@ export function ConversationResults({ results }: { results: RoundResults }) {
   const [filter, setFilter] = useState<'all' | 'common' | 'different' | 'context'>('all');
   const [a, b] = results.participants;
   const comparison = results.conversation;
-  if (!comparison) return <section role="alert"><h1 id="page-heading" tabIndex={-1}>問答整理暫時無法讀取。</h1><p>請重新整理；你的已提交答案仍保存於這一輪。</p></section>;
+  if (!comparison) return <section role="alert"><h2>問答整理暫時無法讀取。</h2><p>請重新整理；你的已提交答案仍保存於這一輪。</p></section>;
   const items = comparison.items.filter((item) => filter === 'all' || item.status === filter);
   const labels = { common: '共同選擇', different: '不同想法', context: '先保留更多情境' };
-  return <section className="shared-results"><p className="eyebrow">FOUR ANSWERS, A SHARED MOMENT</p><h1 id="page-heading" tabIndex={-1}>四題之間，更認識你。</h1><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
+  return <section className="shared-results"><p className="eyebrow">FOUR ANSWERS, A SHARED MOMENT</p><h2>四題之間，更認識你。</h2><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     <p className="qa-library-note">這裡只整理本組四題。相同也可能有不同理由；差異是多了解一句的起點，相處提案可以一起決定是否嘗試。</p>
     <div className="filters qa-result-filters" role="group" aria-label="篩選問答整理">{(['all', 'common', 'different', 'context'] as const).map((value) => <button key={value} className={`filter ${filter === value ? 'active' : ''}`} aria-pressed={filter === value} onClick={() => setFilter(value)}>{value === 'all' ? '全部四題' : labels[value]}</button>)}</div>
     {!items.length && <p className="empty-state" role="status">這一輪沒有這類整理，可以切換看看其他選擇。</p>}

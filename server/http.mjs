@@ -47,13 +47,15 @@ export function createApi(store, { allowedOrigins = localOrigins, mode = 'local-
       if (req.method === 'POST' && path === '/api/rounds') return send(201, store.create(await bodyOf(req)));
       if (req.method === 'GET' && path === '/api/invitations/preview') return send(200, store.invitationPreview(token));
       if (req.method === 'POST' && path === '/api/invitations/claim') return send(200, store.claim(await bodyOf(req)));
-      const match = /^\/api\/rounds\/([a-f0-9-]{36})\/(status|answers|submit|results)$/.exec(path);
+      const match = /^\/api\/rounds\/([a-f0-9-]{36})\/(status|answers|submit|results|withdraw|rotate)$/.exec(path);
       if (match) {
         const [, id, operation] = match;
         if (req.method === 'GET' && operation === 'status') return send(200, store.status(id, token));
         if (req.method === 'GET' && operation === 'results') return send(200, store.results(id, token));
         if (req.method === 'PUT' && operation === 'answers') return send(200, store.save(id, token, await bodyOf(req)));
         if (req.method === 'POST' && operation === 'submit') { await bodyOf(req); return send(200, store.submit(id, token)); }
+        if (req.method === 'POST' && operation === 'withdraw') return send(200, store.withdraw(id, token, await bodyOf(req)));
+        if (req.method === 'POST' && operation === 'rotate') return send(200, store.rotate(id, token, await bodyOf(req)));
       }
       send(404, { code: 'NOT_FOUND', message: '找不到這個操作。' });
     } catch (error) {

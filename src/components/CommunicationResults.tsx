@@ -24,7 +24,7 @@ export function CommunicationResults({ results }: { results: RoundResults }) {
   </article>;
   return <section className="shared-results communication-results">
     <p className="eyebrow">HOW WE TALK, HOW WE UNDERSTAND</p>
-    <h1 id="page-heading" tabIndex={-1}>一起找到，好好說話的入口。</h1>
+    <h2>一起找到，好好說話的入口。</h2>
     <p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     <div className="preview-notice"><h2>做法與期待，先一起確認。</h2><p>相同選項不代表期待已被滿足；不同選項不代表衝突。這份整理分開看「你的期待與對方的做法」及反向配對，沒有契合分數或誰比較會溝通的判定。</p></div>
     <h2>四個可以開始聊的方向</h2><p>每段先挑一組可比較的差異；沒有差異時看一組同類選擇。依題序選入口，不是重要性或衝突排名；同一組的兩個方向都保留。</p>

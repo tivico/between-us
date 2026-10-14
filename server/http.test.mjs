@@ -4,6 +4,18 @@ import { createApi } from './http.mjs';
 import { RoundStore } from './store.mjs';
 
 let store; let server; let base;
+it('管理 API 必須本人授權與明確確認；更換後舊連結失效，退出後不可讀', async () => {
+  const a = randomBytes(32).toString('hex'), next = randomBytes(32).toString('hex');
+  const { id } = store.create({ quizId: 'money-life', nickname: '管理 HTTP QA', consent: true, privateToken: a });
+  const call = (operation, token, body) => fetch(`${base}/api/rounds/${id}/${operation}`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }, body: JSON.stringify(body) });
+  expect((await call('withdraw', next, { confirm: 'withdraw' })).status).toBe(401);
+  expect((await call('withdraw', a, {})).status).toBe(400);
+  expect((await call('rotate', a, { privateToken: next })).status).toBe(200);
+  expect((await fetch(`${base}/api/rounds/${id}/status`, { headers: { Authorization: `Bearer ${a}` } })).status).toBe(401);
+  expect((await call('withdraw', next, { confirm: 'withdraw' })).status).toBe(200);
+  const removed = await fetch(`${base}/api/rounds/${id}/status`, { headers: { Authorization: `Bearer ${next}` } });
+  expect(removed.status).toBe(410); expect(removed.headers.get('cache-control')).toBe('no-store');
+});
 beforeEach(async () => {
   store = new RoundStore(); server = createApi(store);
   await new Promise((done) => server.listen(0, '127.0.0.1', done));

@@ -1,10 +1,11 @@
 export type Route = { page: 'catalog' } | { page: 'topic' | 'demo' | 'start' | 'trial'; id: string }
-  | { page: 'history' } | { page: 'round'; id: string; token: string } | { page: 'invite'; token: string }
+  | { page: 'history' } | { page: 'privacy' } | { page: 'round'; id: string; token: string } | { page: 'invite'; token: string }
   | { page: 'learn' } | { page: 'questions' } | { page: 'article' | 'question-topic'; id: string } | { page: 'not-found' };
 
 export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#/, '') || '/';
   if (path === '/') return { page: 'catalog' };
+  if (path === '/privacy') return { page: 'privacy' };
   if (path === '/history') return { page: 'history' };
   if (path === '/learn') return { page: 'learn' };
   if (path === '/questions') return { page: 'questions' };

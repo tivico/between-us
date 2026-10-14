@@ -1,5 +1,27 @@
 # 架構與資料流程
 
+
+## 0.14 目前資料生命週期與結果入口
+
+本機0.14、公開仍0.13；未套用remote migration。歷史章節的保存／刪除待定與未上線描述不作現況。Node與D1仍是獨立資料庫，共用題庫、各主題分析和固定摘要閱讀層，沒有外部AI或新服務。
+
+`rounds`新增`expires_at`（可為NULL）；`participants`新增`withdrawn_at`和`previous_token_hash`。新回合寫180天到期，舊列保持NULL；Node schema2啟動migration，D1需0002_lifecycle.sql。`token_hash`才可授權，previous_token_hash只讓連結更換請求安全重試。退出清空本人答案／暱稱與提交時間，留下席位與最少的撤銷標記，防止重新加入或已關閉共同結果重開。
+
+```text
+首頁 topic-guide → 原主題介紹／RoundFlow → api.ts → Node HTTP／Worker
+  → RoundStore／D1RoundStore：憑證、expiry、withdrawal及revision → 原DB
+  → 雙方提交後原分析 → buildResultOpeningV1（只摘本輪）
+  → ResultOpening：整體理解／作答依據／自選交流 → DetailedResults原報告
+
+POST withdraw → 本人清除＋邀請失效 → 對方status.closed（只讀本人）
+POST rotate → 原子更換token_hash＋A邀請 → 前端新返回入口
+到期 → 所有存取立即拒絕；排程 → 原子刪participants後刪rounds
+```
+
+Node生命週期更新在交易內；D1寫入SQL再次核對token／退出／expiry，`readView`以batch讀同一交易內的授權與資料，阻擋跨await競爭。Worker scheduled每日UTC19:00清理，Node啟動和每24小時清理。前端定期檢查狀態，資料退出／期限失效會移除共同結果，並以載入序號阻止過時請求覆蓋新狀態；先前已讀或截圖無法收回。
+
+摘要結果另標`version:1.0.0, origin:reading-layer`，每段結論回查snapshot中的題號／選項；所有既有分析V1、相近度與快照不變。新閱讀規則另加版本及分流、保留V1，不拿最新版registry重解舊答案。詳見[0.14維護與回復限制](runbook.md#014-選題結果閱讀與資料生命週期)，啟用退出後不可直接回復缺少退出檢查的0.13服務。
+
 ## 0.12 日常三觀探索
 
 `daily-values.json` → `daily-values.ts` → `quizzes`／`roundQuizzes` 共用八情境與32欄位。`dailyValues` 保存情境、四步題號、共同安排／個人選擇方向與規則1.0.0，建立回合完整固定到snapshot。接受範圍在UI用複選、在答案契約用明確集合ID，沿用 `Record<string,string>`，不需改Node／D1表結構；ID沒有分數。

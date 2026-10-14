@@ -11,21 +11,23 @@ import { coreValuesTrial } from './content/core-values-trial';
 import type { QuizDefinition, TopicStatus } from './domain/quiz';
 import { parseRoute, type Route } from './lib/routes';
 import { invitationNote, storageNote } from './lib/deployment';
+import { DataPrivacy, retentionNote } from './components/DataPrivacy';
+import { topicGuide, topicDepth, topicOutcome } from './content/topic-guide';
 
 const statusLabels: Record<TopicStatus, string> = { draft: '可預覽', planned: '籌備中', ready: '已開放' };
 
 function Arrow() { return <span aria-hidden="true">↗</span>; }
 
 function Catalog() {
-  const [filter, setFilter] = useState<'all' | 'preview' | 'planned'>('all');
-  const visible = quizzes.filter((quiz) => filter === 'all' || (filter === 'preview' ? quiz.questions.length > 0 : quiz.status === 'planned'));
+  const [filter, setFilter] = useState<'all' | 'ready' | 'planned'>('all');
+  const visible = quizzes.filter((quiz) => filter === 'all' || quiz.status === filter);
   return <>
     <section className="hero" aria-labelledby="page-heading">
       <div className="hero-copy">
         <p className="eyebrow"><span className="tiny-line" /> TWO PEOPLE, A LITTLE CLOSER</p>
         <h1 id="page-heading" tabIndex={-1}>有些話，<br />從一個<span className="emphasis">問題</span>開始。</h1>
         <p className="hero-description">從生活裡的小選擇，到心裡重要的事。<br />各自回答，再一起發現彼此的不同與相同。</p>
-        <button className="button primary" onClick={() => document.getElementById('collection')?.scrollIntoView({ behavior: 'smooth' })}>找一個想聊的主題 <span aria-hidden="true">↓</span></button>
+        <button className="button primary" onClick={() => document.getElementById('start-guide')?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })}>找一個想聊的主題 <span aria-hidden="true">↓</span></button>
         <p className="hero-footnote">兩個人，一人一份答案，一段新的對話。</p>
       </div>
       <div className="hero-art theme-sage">
@@ -36,7 +38,7 @@ function Catalog() {
       </div>
     </section>
 
-    <section className="qa-entry"><div><p className="eyebrow">A LIGHTER WAY TO START</p><h2>今天，只想輕鬆聊聊？</h2><p>八個獨立題組，每次四題。各自回答，再一起看共同點與不同想法。</p></div><a className="button primary" href="#/questions">選一組雙人問答 →</a></section>
+    <section id="start-guide" className="start-guide" aria-labelledby="start-guide-heading"><p className="eyebrow">FIND YOUR STARTING POINT</p><h2 id="start-guide-heading">第一次來，從今天想聊的事開始。</h2><p>不用一次完成全部。先選一件想了解的事，看看題數與完成後的收穫。</p><div className="guide-grid">{topicGuide.map((item) => <a className="guide-card" href={item.href} key={item.href}><h3>{item.title}</h3><p>{item.note}</p><span>{item.action} →</span></a>)}</div><p className="local-note">雙人回合會自動保存，可以稍後續答；單人探索／介面預覽不保存。完成時間尚未實測，請依自己的步調回答。</p></section>
 
     <section id="collection" className="collection" aria-labelledby="collection-heading">
       <div className="section-top">
@@ -45,7 +47,7 @@ function Catalog() {
       </div>
       <div className="collection-toolbar">
         <div className="filters" role="group" aria-label="篩選測驗主題">
-          {([{ value: 'all', label: '所有主題' }, { value: 'preview', label: '可預覽' }, { value: 'planned', label: '籌備中' }] as const).map((item) => <button key={item.value} className={filter === item.value ? 'filter active' : 'filter'} aria-pressed={filter === item.value} onClick={() => setFilter(item.value)}>{item.label}</button>)}
+          {([{ value: 'all', label: '所有主題' }, { value: 'ready', label: '已開放' }, { value: 'planned', label: '籌備中' }] as const).map((item) => <button key={item.value} className={filter === item.value ? 'filter active' : 'filter'} aria-pressed={filter === item.value} onClick={() => setFilter(item.value)}>{item.label}</button>)}
         </div>
         <span className="topic-count" aria-live="polite">{visible.length} 個主題</span>
       </div>
@@ -69,9 +71,9 @@ function Catalog() {
     <section className="approach" aria-labelledby="approach-heading">
       <div><p className="eyebrow">OUR APPROACH</p><h2 id="approach-heading">理解，比一個分數更重要。</h2><p>差異是認識彼此的起點。<br />我們希望把答案變成對話，讓重要的想法有機會被聽見。</p></div>
       <div className="faq">
-        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。核心價值有依 PVQ-RR 改寫的 57 題，遠距有依研究方向自編的 24 題；兩者都使用不限定性別的稱呼。遠距共同點、差異與討論建議依本輪實際答案產生，題庫與建議效果尚未驗證。日常三觀另提供八個生活情境，每個四步，依做法、理由與接受範圍整理，不提供契合分數。原三題示例另外保留，其他主題仍在籌備。</p></details>
+        <details><summary>題目有什麼依據？<span aria-hidden="true">＋</span></summary><p>每個主題都會列出研究來源與驗證狀態。核心價值有依 PVQ-RR 改寫的 57 題，遠距有依研究方向自編的 24 題；兩者都使用不限定性別的稱呼。遠距共同點、差異與討論建議依本輪實際答案產生，題庫與建議效果尚未驗證。日常三觀另提供八個生活情境，每個四步，依做法、理由與接受範圍整理，不提供契合分數。溝通與生活探索也已開放，提供做法／期待、本人範圍與條件的整理；空間界線仍在籌備。</p></details>
         <details><summary>可以看到對方選了什麼嗎？<span aria-hidden="true">＋</span></summary><p>雙人回合會先取得分享同意，各自填答，完成後才解鎖彼此選項。單人探索只有你自己的選擇。{invitationNote}</p></details>
-        <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>{storageNote}，私人返回連結可找回。單人探索不保存。保存期限與刪除規則尚未定案，請保留私人返回連結。</p></details>
+        <details><summary>現在填的答案會保存嗎？<span aria-hidden="true">＋</span></summary><p>{storageNote}，私人返回連結可找回。單人探索不保存。{retentionNote}可以在回合頁刪除本人答案並退出，或更換私人返回連結；<a href="#/privacy">查看資料說明</a>。</p></details>
       </div>
     </section>
   </>;
@@ -95,6 +97,7 @@ function Topic({ quiz }: { quiz: QuizDefinition }) {
     <div className="detail-columns"><section><p className="eyebrow">WHAT WE WILL EXPLORE</p><h2>{quiz.scoring ? '19 個價值方向' : '我們會聊到'}</h2><ul className="dimension-list">{quiz.dimensions.map((dimension, index) => <li key={dimension}><span>{String(index + 1).padStart(2, '0')}</span>{dimension}</li>)}</ul></section>
       <aside className="preview-notice"><h2>{quiz.questions.length ? '給自己，也給彼此' : '為重要的話題，好好準備'}</h2><p>{quiz.dailyValues ? '八情境各四步，答案會自動保存。雙方提交後看選擇理由、共同接受的安排與值得先聊的期待。工作題另看對方能接受哪些個人選擇；暫不分享會取代整個情境，不提供契合分數。' : quiz.id === 'core-values' ? '57 題雙人探索會自動保存；你完成後邀請對方，兩人完整提交才解鎖彼此選項、19 類價值比較與核心價值相近度。相近度是探索性指標，不是關係成功率。' : quiz.moneyLife ? '12 題會自動保存，雙方提交後分開看本人願意的範圍、現實條件、偏好與兩組期待／做法配對。暫不分享取代原選項；選答不是付款或帳戶許可，不提供契合分數。自編題庫與提案效果尚未驗證。' : quiz.communication ? '24 題會自動保存，直接問自己的做法與希望收到的方式；雙方完成後看雙向配對與可選提案。可選暫不分享，未分享取代原選項。自編題庫與提案尚未驗證，不提供契合分數。' : quiz.analysis ? '24 題會自動保存，雙方完整提交後查看彼此選項、共同點、差異與討論建議。可以選暫不分享；三段是內容分類，題庫與建議尚未驗證，不提供契合分數。' : quiz.questions.length ? '三題自編示例尚未驗證，不提供正式分數。雙人測試會保存答案，完成後彼此可看；單人介面預覽則不保存或分享。' : '題目與結果規則仍在設計。研究與內容確認後，才會開放完整的雙人體驗。'}</p></aside>
     </div>
+    {quiz.questions.length > 0 && <section className="preview-notice topic-expectation"><h2>開始前，先知道會得到什麼。</h2><p><strong>{topicDepth(quiz)}</strong> · {quiz.dailyValues ? "8 情境、32 步" : `${quiz.questions.length} 題`}</p><p>雙方完成後：{topicOutcome(quiz)}。</p><p>雙人回合自動保存，可稍後續答；提交後鎖定，重答需另開一輪。單人預覽不保存。完成時間尚未實測，依自己的步調回答。</p><p><a href="#/privacy">資料保存、分享與退出說明 →</a></p></section>}
     <Sources quiz={quiz} />
   </div>;
 }
@@ -145,6 +148,7 @@ function Page({ route }: { route: Route }) {
   }
   if (route.page === 'not-found') return <NotFound />;
   if (route.page === 'history') return <HistoryPage />;
+  if (route.page === 'privacy') return <DataPrivacy />;
   if (route.page === 'invite') return <JoinRound key={route.token} token={route.token} />;
   if (route.page === 'round') return <RoundPage key={`${route.id}:${route.token}`} id={route.id} token={route.token} />;
   if (route.page === 'trial') return route.id === 'core-values' ? <ContentTrial key={coreValuesTrial.version} trial={coreValuesTrial} /> : <NotFound />;
@@ -165,7 +169,7 @@ export function App() {
   useEffect(() => {
     const quiz = 'id' in route ? getQuiz(route.id) : undefined;
     const article = route.page === 'article' ? getRelationshipArticle(route.id) : undefined;
-    document.title = route.page === 'questions' ? '雙人問答｜之間 Between Us' : route.page === 'learn' ? '了解關係｜之間 Between Us' : article ? `${article.title}｜之間 Between Us` : route.page === 'trial' ? '核心價值探索｜之間 Between Us' : quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
+    document.title = route.page === 'privacy' ? '資料保存與退出｜之間 Between Us' : route.page === 'questions' ? '雙人問答｜之間 Between Us' : route.page === 'learn' ? '了解關係｜之間 Between Us' : article ? `${article.title}｜之間 Between Us` : route.page === 'trial' ? '核心價值探索｜之間 Between Us' : quiz ? `${quiz.title}｜之間 Between Us` : '之間 Between Us｜慢慢認識彼此';
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     document.getElementById('page-heading')?.focus({ preventScroll: true });
   }, [route]);
@@ -174,6 +178,6 @@ export function App() {
     <div className="preview-banner">慢慢認識彼此 <span aria-hidden="true">·</span> 留一點時間，給重要的人</div>
     <header className="site-header"><a className="brand" href="#/" aria-label="之間 Between Us，回到首頁"><span className="brand-symbol" aria-hidden="true">∩</span><span>之間<span className="brand-english">BETWEEN US</span></span></a><nav aria-label="主要導覽"><a href="#/" aria-current={route.page === 'catalog' ? 'page' : undefined}>主題測驗</a><a href="#/questions" aria-current={route.page === 'questions' || route.page === 'question-topic' ? 'page' : undefined}>雙人問答</a><a href="#/learn" aria-current={route.page === 'learn' || route.page === 'article' ? 'page' : undefined}>了解關係</a><a href="#/history" aria-current={route.page === 'history' ? 'page' : undefined}>最近紀錄</a><span className="nav-note">慢慢認識，好好相處。</span></nav></header>
     <main id="main-content" tabIndex={-1}><Page route={route} /></main>
-    <footer className="site-footer"><a className="footer-brand" href="#/">之間 <span>BETWEEN US</span></a><p>留一點好奇，給最靠近的人。</p><span className="footer-note">理解彼此的對話起點</span></footer>
+    <footer className="site-footer"><a className="footer-brand" href="#/">之間 <span>BETWEEN US</span></a><p>留一點好奇，給最靠近的人。</p><a className="footer-note" href="#/privacy">資料保存與退出</a></footer>
   </>;
 }

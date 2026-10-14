@@ -22,6 +22,9 @@ async function bodyOf(request) {
   } catch { throw new RoundError('INVALID_JSON', '資料格式不正確。'); }
 }
 export default {
+  async scheduled(_event, env) {
+    await new D1RoundStore(env.DB).cleanupExpired();
+  },
   async fetch(request, env) {
     const url = new URL(request.url);
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
@@ -38,13 +41,15 @@ export default {
       if (method === 'POST' && path === '/api/rounds') return send(201, await store.create(await bodyOf(request)));
       if (method === 'GET' && path === '/api/invitations/preview') return send(200, await store.invitationPreview(token));
       if (method === 'POST' && path === '/api/invitations/claim') return send(200, await store.claim(await bodyOf(request)));
-      const match = /^\/api\/rounds\/([a-f0-9-]{36})\/(status|answers|submit|results)$/.exec(path);
+      const match = /^\/api\/rounds\/([a-f0-9-]{36})\/(status|answers|submit|results|withdraw|rotate)$/.exec(path);
       if (match) {
         const [, id, operation] = match;
         if (method === 'GET' && operation === 'status') return send(200, await store.status(id, token));
         if (method === 'GET' && operation === 'results') return send(200, await store.results(id, token));
         if (method === 'PUT' && operation === 'answers') return send(200, await store.save(id, token, await bodyOf(request)));
         if (method === 'POST' && operation === 'submit') { await bodyOf(request); return send(200, await store.submit(id, token)); }
+        if (method === 'POST' && operation === 'withdraw') return send(200, await store.withdraw(id, token, await bodyOf(request)));
+        if (method === 'POST' && operation === 'rotate') return send(200, await store.rotate(id, token, await bodyOf(request)));
       }
       return send(404, { code: 'NOT_FOUND', message: '找不到這個操作。' });
     } catch (error) {

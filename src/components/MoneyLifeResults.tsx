@@ -17,7 +17,7 @@ export function MoneyLifeResults({ results }: { results: RoundResults }) {
   })}</div>;
   const comparable = analysis.pairs.filter((p) => p.state !== 'context');
   return <section className="shared-results money-life-results">
-    <p className="eyebrow">CHOICES FOR OUR LIFE</p><h1 id="page-heading" tabIndex={-1}>先看願意與條件，再聊生活安排。</h1>
+    <p className="eyebrow">CHOICES FOR OUR LIFE</p><h2>先看願意與條件，再聊生活安排。</h2>
     <p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     <div className="preview-notice"><h2>這一輪，可以從哪裡開始理解彼此？</h2><p>先看兩人目前願意的範圍與條件，再確認想保留的生活及需要的資訊。{comparable.length ? `兩組資訊／確認方式的四個方向中，有 ${comparable.length} 個方向可按選項比較；每個方向的期待與做法分開呈現。` : '兩組資訊／確認方式目前沒有可配對的方向，先保留情境，不需要補充原因。'}</p><p>這份整理不提供契合或理財能力分數。相同不代表已能負擔、覺得公平或同意付款；不同不代表衝突。選答、沉默與過去安排都不能代替當次參與、付款或使用帳戶的許可。</p></div>
     <section className="preview-notice"><h2>從這輪回答看到的生活起點</h2>{analysis.preferences.filter((item) => ['money-life-priority', 'money-split-principle'].includes(item.questionId)).map((item) => <div key={item.questionId}><h3>{item.questionId === 'money-life-priority' ? '目前最想保留的生活' : '共同花費的分攤起點'}</h3>{item.state === 'same' ? <p>雙方在這題都選「{item.evidence[0].label}」。這是共同的討論起點，還需要輪流說明各自的理由，並核對下面的本人條件與願意範圍。</p> : item.state === 'different' ? <p>{names.A} 選「{item.evidence[0].label}」，{names.B} 選「{item.evidence[1].label}」。可以從同一個雙方願意聊的生活安排，確認兩個選擇各想保留什麼；目前不據此判定衝突或要求折衷。</p> : <p>這題先保留各自情境，沒有足夠的主要選項形成共同或不同的起點。不需要補充原因，仍可先看各自願意分享的範圍。</p>}</div>)}</section>

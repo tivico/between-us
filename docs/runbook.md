@@ -1,5 +1,65 @@
 # 維護與除錯
 
+## 0.14 選題、結果閱讀與資料生命週期
+
+2026-10-14：持有人同意改善1–3，並選擇「新回合180天、既有回合先保留」。本機網站0.14.0；公開仍0.13.0，未推送或部署、未套用remote migration。題幹、題庫工具版、相近度及既有分析V1均不變。以下是現在的操作規則；舊版本段落中的「保存／退出待定」保留為歷史，現況以本節為準。
+
+### 行為與重要檔案
+
+- `src/domain/retention.ts`：建立時固定180×24小時，寫入`rounds.expires_at`。加入、續答、改連結均不延長；既有回合`NULL`先保留，不回溯刪除。到期即拒絕存取，不等清理排程。
+- `server/store.mjs`／`cloudflare/store.mjs`：Node／D1均提供`withdraw`與`rotate`。退出清空本人`answers`、暱稱改為「已退出」、清除提交時間並寫`withdrawn_at`，撤銷邀請，阻止共同結果和後續填答。另一方`status.state=closed`只回本人答案，可再退出。保留最少的席位、時間與憑證雜湊以防止重新加入／支持安全重試；不聲稱平台備份或既有截圖立刻清除。
+- `rotate`用新憑證雜湊取代本人`token_hash`，原雜湊記在`previous_token_hash`只作同一請求重試證據，不能授權讀取。A更換同時重建邀請雜湊，舊邀請失效；B已加入時其憑證不變。原始新／舊token皆不存資料庫，不打印。
+- `src/components/RoundManagement.tsx`：回合下方管理區，先說明影響、勾選確認才送出；連結更換的網路重試使用同一新token，送出前在最近入口先保留「連結更換待確認」的新入口，成功後替換為正常標題並移除舊入口。若瀏覽器索引不可寫，畫面仍顯示預留新連結；離開前自行保留。刪除不受存檔錯誤阻擋；更換前需保存成功。結果輪詢在退出後清除共同畫面，但不能收回使用者已讀或另存的內容。
+- `src/components/DataPrivacy.tsx`：`#/privacy`說明保存、分享、退出、備份限制、連結持有者權限、沒有帳號找回，以及最近入口與後端答案的差別。
+- `src/content/topic-guide.ts`：首頁六種情境導引、題數、探索深度與預期收穫；沒有實測時間就不估分鐘。新增導引只改這份內容，主題定義仍在原registry。
+- `src/domain/result-opening.ts`：Node／D1在解鎖後呼叫固定`buildResultOpeningV1`，只摘取本輪既有分析。`resultOpening.version=1.0.0, origin=reading-layer`，最多三張卡、每張及整體理解有`questionId/slot/prompt/label`證據。本人界線不作一致判定，未分享／特殊狀態不產生聊天卡，未分化不排序。`ResultOpening.tsx`呈現「看見什麼→自行挑一件→四步口頭交流」；完整原報告、分數及答案放在可展開區。聊天選擇只在React記憶體，不保存／同步、不送外部AI。舊報告明示加閱讀層，原快照與算法不改。未來新閱讀規則另加V2與分流，保留V1。
+
+### 實際請求與清理流程
+
+```text
+首頁情境導引 → 主題介紹（題數／深度／收穫） → 分享同意 → POST /api/rounds
+  → 固定題庫snapshot＋expires_at → 保存／提交／邀請／另一方提交
+  → GET /results先授權、期限及退出檢查 → 原主題分析 → buildResultOpeningV1
+  → 共用摘要與自選交流 → 展開原完整報告
+
+管理區 → 等待現有存檔佇列 → POST /api/rounds/:id/withdraw {confirm:"withdraw"}
+  → 本人答案清除＋withdrawn_at＋invite_hash=NULL → 對方只可讀自己的資料
+管理區 → POST /api/rounds/:id/rotate {privateToken:新憑證}
+  → 雜湊替換＋A邀請更新 → 保存新入口 → 本人跳到新返回連結
+
+Node啟動及每24小時／Worker每日UTC19:00（台灣翌日03:00）
+  → cleanupExpired → 同一交易先刪到期participants，再刪到期rounds
+```
+
+D1所有寫入在SQL再次核對token、退出與期限，避免跨await的舊授權覆蓋新狀態；讀取`readView`以batch把授權、回合與兩人資料放同一交易，結果不混讀退出前後。Node用`BEGIN IMMEDIATE`。D1 batch交易依[官方文件](https://developers.cloudflare.com/d1/worker-api/d1-database/#batch)，排程設定依[Workers Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/)。定期清理失敗也不能讓已到期資料重新可讀。
+
+### Migration 與發布／回復
+
+Node使用schema2，從schema0／1在本機啟動時依新增欄位升級，不覆寫更高`user_version`。不要開啟舊程式讓它寫schema2。D1必須先套用新增的`cloudflare/migrations/0002_lifecycle.sql`再部署；不能改已套用0001或重建原D1。0002只新增欄位／索引，既有expires_at保持NULL，原snapshot／answers保留。
+
+這次未對公開庫操作。日後授權發布時，先完成備份／還原點，核對0002待套用，再依序：
+
+```powershell
+npx wrangler d1 migrations list between-us --remote
+npx wrangler d1 migrations apply between-us --remote
+npm run cloudflare:deploy
+```
+
+發布前必須保留舊資料與清除／撤銷狀態的相容性。**首次啟用退出或憑證更換後，不能直接回復0.13**：舊程式沒有檢查withdrawn_at，可能再次提供已關閉回合或接受舊邀請。可回復到同樣支援生命週期的已驗證版本；沒有此版本時先停止API存取，修復後再開放，不能靠還原備份恢復已退出的答案。平台復原副本的保留仍由平台管理，這版不提供即時備份清除承諾。
+
+### 症狀、除錯與自行修改
+
+1. 新頁面仍顯示期限待定：核對正在看的來源／版本；本機前端會熱更新，但Node後端要重啟才讀新程式。只push不會更新公開網站。
+2. 管理操作401：舊連結已更換或憑證錯誤；使用新返回連結。回應遺失時用同一新token重試，不能每次生成不同token。不要把私人URL貼到公開issue或log。
+3. 410：`ROUND_EXPIRED`是到期、`PARTICIPANT_WITHDRAWN`是本人退出、`ROUND_CLOSED`是另一方退出；清理後找不到權限可能回401。不是要繞過的限制。另一方應從status的closed頁讀本人答案，results不得再開。
+4. 操作500或`no such column`：檢查migration是否0002、Node是否schema2；看`/api/health`、DB binding及固定錯誤碼。不要讀／打印私人answers來做健康診斷。
+5. 到期還留在運行庫：檢查Cron、scheduled handler與`RETENTION_CLEANUP_FAILED`（Node）；以安全的彙總查詢縮小範圍：`SELECT COUNT(*) FROM rounds WHERE expires_at IS NOT NULL AND expires_at <= strftime('%Y-%m-%dT%H:%M:%fZ','now');`。不要輸出任何snapshot／answers／token_hash。測試與cron清理覆蓋的是運行庫，不等於平台備份已消失。
+6. 摘要與選項不符：先核對卡片evidence的slot、questionId與本輪snapshot，接著核對原分析及閱讀層分支；不要拿最新registry替換舊回合。內容不足時應無卡片，不補假的共同點。
+
+修改例：若日後核定新回合改365天，修改`retentionDays`與說明、測試的精確邊界；只影響之後建立的expires_at，**不要重算既有日期**。調整選題文案改topic-guide；調整閱讀算法另加版本並保留V1。驗證至少涵蓋陌生人、角色互換、退出後雙方、舊／新連結、到期前後、無期限舊回合、並行保存／退出、特殊答案與快照不追套，再check、兩種build及手機畫面。
+
+工程QA使用獨立記憶體SQLite與Miniflare模擬D1，不讀或刪既有實際答案。交付已通過150項測試、一般／Cloudflare兩種建置、Worker dry-run；測試涵蓋有既有資料的Node／D1 migration、到期精確邊界、退出／連結重試、陌生授權及並行保存／提交／加入。瀏覽器確認六種活動摘要、完整報告展開、自選交流、退出確認及資料頁，390px生活結果無橫向溢出；截圖為明示工程示範。Windows沙箱Vitest暫存讀取ENOENT時在一般本機權限驗證；Wrangler log改寫至忽略的.local後dry-run無錯誤。建置保留JS超過500KB提示（雲端gzip約182KB），尚未量測慢速網路。真人理解／測量／交流效果、實體雙手機、公開migration與Cron執行仍未驗證。
+
 ## 0.12 日常三觀探索
 
 2026-10-12 依使用者「直接發佈部署」要求接入八個情境，各有做法／理由／重要程度／接受範圍，共32步。網站0.12.0，日常內容與整理規則1.0.0；入口 `#/topics/daily-values`、`#/start/daily-values`。目前仍為自編探索，研究支持概念而不驗證題目或提案效果，沒有契合數字。

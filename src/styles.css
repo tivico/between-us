@@ -594,6 +594,32 @@ progress::-moz-progress-bar { background: #6e8869; }
 .value-method summary { cursor: pointer; }
 .value-method p { margin: 16px 0; color: var(--muted); }
 .round-review-links { display: flex; justify-content: space-between; gap: 24px; }
+.start-guide { margin: 35px 0 65px; padding: 30px; background: #f3f1e9; border-radius: 18px; }
+.start-guide > h2 { font-size: 28px; }
+.guide-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; margin: 24px 0; }
+.guide-card { display: block; padding: 22px; border: 1px solid var(--line); background: #fffdf7; border-radius: 12px; text-decoration: none; }
+.guide-card h3 { font-size: 19px; margin: 0 0 12px; }
+.guide-card p { font-size: 13px; line-height: 1.9; }
+.guide-card span { font-size: 13px; color: #43614c; }
+.guide-card:hover { border-color: #789479; }
+.opening-discovery { padding: 25px; background: #edf0e6; border-radius: 14px; }
+.opening-discovery h2 { font-size: 25px; }
+.opening-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap: 16px; margin: 22px 0; }
+.opening-card { padding: 22px; border: 1px solid var(--line); border-radius: 12px; background: #fffdf7; min-width: 0; }
+.opening-card h3 { font-size: 21px; line-height: 1.6; }
+.opening-card p, .opening-chat p { line-height: 1.9; }
+.opening-card dl { font-size: 13px; line-height: 1.8; }
+.opening-card dt { margin-top: 14px; font-weight: 600; }
+.opening-card dd { margin: 6px 0 14px; }
+.opening-card > button { margin-top: 18px; }
+.full-result-details, .round-management { margin: 28px 0; padding: 24px; border: 1px solid var(--line); border-radius: 12px; }
+.full-result-details > summary, .round-management > summary { cursor: pointer; line-height: 1.8; font-weight: 600; }
+.full-result-details > .shared-results { margin-top: 28px; }
+.management-confirm { margin-top: 24px; padding: 22px; background: #f6eee7; border-radius: 10px; }
+.round-management p, .management-confirm p { line-height: 1.9; }
+.topic-expectation { margin-bottom: 35px; }
+@media(max-width:760px) { .guide-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media(max-width:480px) { .guide-grid, .opening-grid { grid-template-columns: 1fr; } .start-guide, .full-result-details, .round-management { padding: 20px; } .start-guide > h2 { font-size: 24px; } }
 @media(max-width:640px) {
  .value-overview { padding: 25px 17px; }
  .value-score strong { font-size: 66px; }

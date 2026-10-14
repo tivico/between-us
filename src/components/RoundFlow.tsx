@@ -1,3 +1,6 @@
+import { ResultOpening } from './ResultOpening';
+import { RoundManagement } from './RoundManagement';
+import { retentionNote } from './DataPrivacy';
 import { DailyOptions, DailyReview, DailyResults, editDailyAnswer } from './DailyValues';
 import { MoneyLifeResults } from './MoneyLifeResults';
 import { CommunicationResults } from './CommunicationResults';
@@ -52,7 +55,8 @@ function EntryForm({ title, invitation, invitationToken, quiz }: { title: string
     } catch (failure) { setError(messageOf(failure)); setBusy(false); }
   }
   return <div className="flow-page"><a className="back-link" href={questionnaire ? "#/questions" : "#/"}>← {questionnaire ? "回到雙人問答" : "回到主題館"}</a><p className="eyebrow">A CONVERSATION FOR TWO</p><h1 id="page-heading" tabIndex={-1}>{invitation ? `${invitation.hostName} 想更認識你。` : '先從你自己開始。'}</h1><p className="flow-intro">{title} · {dailyQuiz ? '8 個情境・32 個作答步驟' : `${invitation?.questionCount ?? quiz?.questions.length} 題`}{!dailyQuiz && !valueQuiz && !questionnaire && !distanceQuiz && !communication && !moneyLife && '示例'}</p>
-    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>{dailyQuiz ? '你們各自回答八個情境的做法、理由、重要程度與接受範圍。雙方完成後查看願意分享的答案；暫不分享會取代整個情境的四步，不保留原選項。' : moneyLife ? '你們各自回答12題，雙方完成後看可分享的選項與生活安排整理；未分享取代該題原選項。' : communication ? '你們各自回答24題，雙方完成後看可分享的選項；未分享取代該題原選項。' : questionnaire ? '你們各自回答這組四題，雙方完成後才看見可分享的選項與未分享狀態。暫不分享會取代該題原選項，不要求理由。' : '你們各自填答，彼此完成後，才會公開本輪所有選項。'}提交後答案鎖定；想重新回答時，另開一輪。</p><p>{dailyQuiz ? '本站原創日常探索，八情境共32個作答步驟，接受範圍可複選。結果依本輪選擇整理，不提供契合分數；題庫與提案尚未完成測量或效果驗證。' : valueQuiz ? '完整 57 題，請回答你自己。雙方完成後可查看彼此選項與核心價值相近度；它是探索性比較，不是關係成功率。' : questionnaire ? '這組為本站自編問答，提供共同點、不同想法與給各自／兩人的相處提案，不提供契合分數。' : moneyLife ? '12 題原創生活探索，先分開看本人願意的範圍與現實條件，再看偏好和期待／做法配對；選答不是付款或帳戶許可，不提供契合分數。' : communication ? '24 題原創溝通探索，分開回答自己的做法與期待，解鎖後看雙向配對與可選提案。題庫與提案效果未驗證，不提供契合分數。' : distanceQuiz ? '24 題遠距探索，雙方完成後查看共同點、差異與討論建議。每題可選暫不分享；未答仍需完成才可提交。自編題庫與建議尚未驗證，不提供契合分數。' : '目前使用三題自編示例，不提供契合分數。'}{storageNote}，請保留私人返回連結；資料刪除與保存期限仍待定案。</p></div>
+    <div className="preview-notice"><h2>這一輪，我們會分享什麼？</h2><p>{dailyQuiz ? '你們各自回答八個情境的做法、理由、重要程度與接受範圍。雙方完成後查看願意分享的答案；暫不分享會取代整個情境的四步，不保留原選項。' : moneyLife ? '你們各自回答12題，雙方完成後看可分享的選項與生活安排整理；未分享取代該題原選項。' : communication ? '你們各自回答24題，雙方完成後看可分享的選項；未分享取代該題原選項。' : questionnaire ? '你們各自回答這組四題，雙方完成後才看見可分享的選項與未分享狀態。暫不分享會取代該題原選項，不要求理由。' : '你們各自填答，彼此完成後，才會公開本輪所有選項。'}提交後答案鎖定；想重新回答時，另開一輪。</p><p>{dailyQuiz ? '本站原創日常探索，八情境共32個作答步驟，接受範圍可複選。結果依本輪選擇整理，不提供契合分數；題庫與提案尚未完成測量或效果驗證。' : valueQuiz ? '完整 57 題，請回答你自己。雙方完成後可查看彼此選項與核心價值相近度；它是探索性比較，不是關係成功率。' : questionnaire ? '這組為本站自編問答，提供共同點、不同想法與給各自／兩人的相處提案，不提供契合分數。' : moneyLife ? '12 題原創生活探索，先分開看本人願意的範圍與現實條件，再看偏好和期待／做法配對；選答不是付款或帳戶許可，不提供契合分數。' : communication ? '24 題原創溝通探索，分開回答自己的做法與期待，解鎖後看雙向配對與可選提案。題庫與提案效果未驗證，不提供契合分數。' : distanceQuiz ? '24 題遠距探索，雙方完成後查看共同點、差異與討論建議。每題可選暫不分享；未答仍需完成才可提交。自編題庫與建議尚未驗證，不提供契合分數。' : '目前使用三題自編示例，不提供契合分數。'}{storageNote}，請保留私人返回連結；{retentionNote}<a href="#/privacy">資料保存與退出說明</a>。</p></div>
+    {invitation && <p className="local-note">{invitation.expiresAt ? `這一輪保存到 ${new Intl.DateTimeFormat('zh-TW', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Taipei' }).format(new Date(invitation.expiresAt))}；加入不延長期限。` : '這是既有未設定期限的回合，目前先保留。'}</p>}
     {invitation?.claimed ? <ErrorNotice message="這個邀請已有人加入。請使用自己的私人返回連結，或從最近紀錄返回。" /> : <form className="entry-form" onSubmit={enter}>
       <label className="field-label" htmlFor="nickname">你希望對方怎麼稱呼你？</label><input className="name-input" id="nickname" value={nickname} maxLength={24} required autoComplete="off" placeholder="你的暱稱" onChange={(event) => setNickname(event.target.value)} disabled={busy} />
       <label className="consent"><input type="checkbox" checked={consent} onChange={(event) => setConsent(event.target.checked)} disabled={busy} /><span>我同意雙方完成後，彼此查看{dailyQuiz ? '本輪可分享的四步答案、整組未分享狀態與日常探索整理' : moneyLife ? '本輪可分享選項、未分享狀態與生活安排整理' : communication ? '本輪可分享選項與未分享狀態，以及溝通配對提案' : questionnaire ? '本組可分享的選項與未分享狀態，以及問答整理' : '本輪所有答案'}{valueQuiz && '與價值比較結果'}{distanceQuiz && '與遠距分析及討論建議'}。</span></label>
@@ -85,18 +89,18 @@ export function HistoryPage() {
       try { forgetRound(record.id, record.token); setRecords(recentRounds()); }
       catch { setError('此瀏覽器不允許變更最近紀錄。'); }
     }}>移除此裝置入口</button></li>)}</ul>}
-    <p className="local-note">移除入口不會刪除後端答案。再次開啟私人連結會重新加入最近紀錄；資料刪除與保存期限仍待定案，請保留自己的私人返回連結。</p>
+    <p className="local-note">移除入口不會刪除後端答案。再次開啟私人連結會重新加入最近紀錄；請保留自己的私人返回連結；要刪除本人答案，請返回回合使用「管理這一輪」。</p>
   </div>;
 }
 
-function SharedResults({ results }: { results: RoundResults }) {
+function DetailedResults({ results }: { results: RoundResults }) {
   if (results.quiz.moneyLife) return <MoneyLifeResults results={results} />;
   if (results.quiz.communication) return <CommunicationResults results={results} />;
   if (results.quiz.dailyValues) return <DailyResults results={results} />;
   if (results.quiz.questionnaire) return <ConversationResults results={results} />;
   const [a, b] = results.participants;
   const same = results.quiz.questions.filter((question) => a.answers[question.id] === b.answers[question.id]).length;
-  return <section className="shared-results"><p className="eyebrow">TWO ANSWERS, ONE CONVERSATION</p><h1 id="page-heading" tabIndex={-1}>{results.quiz.scoring ? '你們的核心價值探索報告。' : '一起看見，你們的選擇。'}</h1><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
+  return <section className="shared-results"><p className="eyebrow">TWO ANSWERS, ONE CONVERSATION</p><h2>{results.quiz.scoring ? '你們的核心價值探索報告。' : '一起看見，你們的選擇。'}</h2><p className="flow-intro">{a.nickname} 與 {b.nickname} · {results.quiz.title}</p>
     {results.quiz.scoring && (results.comparison ? <ValueResults comparison={results.comparison} names={[a.nickname, b.nickname]} report={results.valueFeedback} quiz={results.quiz} people={results.participants} /> : <ErrorNotice message="價值比較暫時無法讀取，請重新整理。" />)}
     {results.quiz.analysis ? (results.pairAnalysis ? <LongDistanceResults analysis={results.pairAnalysis} quiz={results.quiz} names={{ A: a.nickname, B: b.nickname }} /> : <ErrorNotice message="遠距分析暫時無法讀取，請重新整理。" />) : !results.quiz.scoring && <div className="result-overview"><div><strong>{same}</strong><span>題選項相同</span></div><div><strong>{results.quiz.questions.length - same}</strong><span>題選項不同</span></div><p>這裡比較逐題選項；相同選項也可能有不同理由，差異則是再問一句的起點。</p></div>}
     {!results.quiz.scoring && <ResultLearningCards />}
@@ -107,6 +111,10 @@ function SharedResults({ results }: { results: RoundResults }) {
     <div className="preview-notice"><h2>理解，從再問一句開始。</h2><p>{results.quiz.scoring ? '選一題你們相同或不同的答案，說說背後的經驗。此結果涵蓋核心價值，人生方向與其他主題會另外探索。' : results.quiz.analysis ? '選一個雙方都願意試的安排，之後再確認是否適合。暫不分享、不適用與尚未確定的選項可以保留。' : '本輪為三題示例，只比較實際選項，不提供契合分數。'}</p></div>
     <div className="demo-actions"><a className="button secondary" href="#/history">查看最近紀錄</a><a className="button primary" href={`#/start/${results.quiz.id}`}>另開一輪 →</a></div>
   </section>;
+}
+
+function SharedResults({ results }: { results: RoundResults }) {
+  return <section className="shared-results"><p className="eyebrow">TWO ANSWERS, ONE CONVERSATION</p><h1 id="page-heading" tabIndex={-1}>{results.quiz.title}，這輪的發現。</h1><p className="flow-intro">{results.participants.map((p) => p.nickname).join(' 與 ')}</p><ResultOpening results={results} /><details className="full-result-details" open={!results.resultOpening || undefined}><summary>閱讀完整主題整理、彼此答案與研究來源</summary><DetailedResults results={results} /></details></section>;
 }
 
 export function RoundPage({ id, token }: { id: string; token: string }) {
@@ -121,16 +129,19 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
   const [pending, setPending] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [historySaved, setHistorySaved] = useState(true);
+  const [managing, setManaging] = useState(false);
   const revision = useRef(0);
+  const loadSequence = useRef(0);
   const queue = useRef(Promise.resolve());
   const failed = useRef('');
   const latestAnswers = useRef<Record<string, string>>({});
   const mounted = useRef(true);
 
   async function load(initial = false) {
+    const sequence = ++loadSequence.current;
     try {
       const current = await api<RoundStatus>(`/rounds/${id}/status`, { token });
-      if (!mounted.current) return;
+      if (!mounted.current || sequence !== loadSequence.current) return;
       setRound(current); setError('');
       if (initial) {
         failed.current = ''; setSaveError(''); setReloadRequired(false);
@@ -140,23 +151,24 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
         setIndex(Math.max(0, next)); setReview(next === -1);
       }
       setHistorySaved(rememberRound({ id, token, title: current.quiz.title, nickname: current.own.nickname, createdAt: current.createdAt }));
+      if (current.state !== 'unlocked') setResults(null);
       if (current.state === 'unlocked') {
         const shared = await api<RoundResults>(`/rounds/${id}/results`, { token });
-        if (mounted.current) setResults(shared);
+        if (mounted.current && sequence === loadSequence.current) setResults(shared);
       }
-    } catch (failure) { if (mounted.current) setError(messageOf(failure)); }
+    } catch (failure) { if (mounted.current && sequence === loadSequence.current) { setError(messageOf(failure)); if (failure instanceof ApiError && ['PARTICIPANT_WITHDRAWN','ROUND_EXPIRED','UNAUTHORIZED'].includes(failure.code)) { setResults(null); setRound(null); } } }
   }
   useEffect(() => {
     mounted.current = true; void load(true);
     return () => { mounted.current = false; };
   }, [id, token]);
   useEffect(() => {
-    if (!round || round.state !== 'waiting') return;
+    if (!round || round.state === 'closed' || managing) return;
     const timer = window.setInterval(() => { if (document.visibilityState === 'visible') void load(); }, 10000);
     const onFocus = () => void load();
     window.addEventListener('focus', onFocus);
     return () => { window.clearInterval(timer); window.removeEventListener('focus', onFocus); };
-  }, [round?.state]);
+  }, [round?.state, managing]);
   useEffect(() => { document.getElementById('page-heading')?.focus(); }, [index, review, Boolean(results), round?.state]);
 
   function save(snapshot: Record<string, string>) {
@@ -176,11 +188,12 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
     }).finally(() => { if (mounted.current) setPending((count) => count - 1); });
   }
   function choose(questionId: string, optionId: string) {
+    if (managing || round?.state === 'closed') return;
     const next = round?.quiz.dailyValues ? editDailyAnswer(round.quiz, latestAnswers.current, questionId, optionId) : { ...latestAnswers.current, [questionId]: optionId };
     latestAnswers.current = next; setAnswers(next); save(next);
   }
   async function submit() {
-    if (submitting) return;
+    if (submitting || managing) return;
     setSubmitting(true); setError('');
     try {
       await queue.current;
@@ -200,7 +213,7 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
     <p className="demo-disclaimer">{round.quiz.dailyValues ? '日常三觀探索・8個情境，各四步・不提供契合分數' : round.quiz.moneyLife ? '一起生活的選擇・各自回答，完成後一起看' : round.quiz.communication ? '溝通探索・各自回答，完成後一起看' : round.quiz.scoring ? '核心價值探索・各自回答，完成後一起看' : round.quiz.questionnaire ? '雙人問答・這組四題，想繼續再玩一組' : round.quiz.analysis ? '遠距探索・各自回答，完成後一起看' : '三題自編示例・不提供契合分數'}</p>
     {!historySaved && <ErrorNotice message="此瀏覽器未能保存最近紀錄入口，請另外保留私人返回連結。" />}
     {error && <ErrorNotice message={error} retry={() => void load(!round.own.submittedAt)} />}
-    {results ? <SharedResults results={results} /> : round.own.submittedAt ? <section className="waiting-panel"><p className="eyebrow">A LITTLE PATIENCE, A SHARED MOMENT</p><h1 id="page-heading" tabIndex={-1}>你的答案，先好好保留。</h1><p className="flow-intro">{round.peer ? `${round.peer.nickname} 已加入，等待對方完成。` : '分享邀請，讓另一個人在自己的時間裡回答。'}</p><div className="participant-progress"><div><span className="done-dot">✓</span><strong>{round.own.nickname}</strong><span>已完成</span></div><div><span className="waiting-dot">○</span><strong>{round.peer?.nickname ?? '另一個人'}</strong><span>{round.peer ? '填答中' : '尚未加入'}</span></div></div><p className="waiting-note">雙方完成後才會解鎖答案。這個頁面會定期更新，也可以手動確認。</p><button className="button secondary" onClick={() => void load()}>更新完成狀態</button>{round.invitationToken && <LinkCard title="給另一個人的邀請連結" note="只邀請一人加入。這個連結不包含你的私人返回憑證。" path={`#/invite/${round.invitationToken}`} />}</section> : <>
+    {round.state === 'closed' ? <section className="preview-notice"><h1 id="page-heading" tabIndex={-1}>這一輪的共同結果已關閉。</h1><p>另一方已退出。你仍可查看自己的答案或在下方刪除並退出；本輪不能繼續填答或重新邀請。</p><details><summary>查看本人保留的答案</summary><ol className="answer-list">{round.quiz.questions.map((q) => <li key={q.id}><h2>{q.prompt}</h2><p>{q.options.find((o) => o.id === round.own.answers[q.id])?.label ?? '尚未回答'}</p></li>)}</ol></details></section> : results ? <SharedResults results={results} /> : round.own.submittedAt ? <section className="waiting-panel"><p className="eyebrow">A LITTLE PATIENCE, A SHARED MOMENT</p><h1 id="page-heading" tabIndex={-1}>你的答案，先好好保留。</h1><p className="flow-intro">{round.peer ? `${round.peer.nickname} 已加入，等待對方完成。` : '分享邀請，讓另一個人在自己的時間裡回答。'}</p><div className="participant-progress"><div><span className="done-dot">✓</span><strong>{round.own.nickname}</strong><span>已完成</span></div><div><span className="waiting-dot">○</span><strong>{round.peer?.nickname ?? '另一個人'}</strong><span>{round.peer ? '填答中' : '尚未加入'}</span></div></div><p className="waiting-note">雙方完成後才會解鎖答案。這個頁面會定期更新，也可以手動確認。</p><button className="button secondary" onClick={() => void load()}>更新完成狀態</button>{round.invitationToken && <LinkCard title="給另一個人的邀請連結" note="只邀請一人加入。這個連結不包含你的私人返回憑證。" path={`#/invite/${round.invitationToken}`} />}</section> : <>
       <div className="save-status" role="status">{saveError ? '尚有答案未保存' : pending ? '正在儲存…' : '已儲存'}</div>
       {saveError && <ErrorNotice message={saveError} retryLabel={reloadRequired ? '重新載入最新紀錄，取代未保存選擇' : '重試儲存'} retry={() => {
         if (reloadRequired) void load(true);
@@ -212,5 +225,6 @@ export function RoundPage({ id, token }: { id: string; token: string }) {
       </>}
     </>}
     {privateLink}
+    <RoundManagement id={id} token={token} round={round} disabled={pending > 0 || submitting} saveFailed={Boolean(saveError)} onBusy={setManaging} settle={async (action) => { await queue.current; if (action === 'rotate' && failed.current) throw new Error('請先完成答案保存再管理回合。'); }} />
   </div>;
 }

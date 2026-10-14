@@ -11,7 +11,7 @@ const token = () => randomBytes(32).toString('hex');
 beforeAll(async () => {
   runtime = new Miniflare(convertV4MiniflareOptions({ modules: true, script: 'export default {fetch(){return new Response("test")}}', compatibilityDate: '2026-10-08', d1Databases: ['DB'] }));
   db = await runtime.getD1Database('DB');
-  const sql = await readFile(new URL('../cloudflare/migrations/0001_rounds.sql', import.meta.url), 'utf8');
+  const sql = await readFile(new URL('../cloudflare/migrations/0001_rounds.sql', import.meta.url), 'utf8') + '\n' + await readFile(new URL('../cloudflare/migrations/0002_lifecycle.sql', import.meta.url), 'utf8');
   await db.batch(sql.split(';').map((part) => part.trim()).filter(Boolean).map((part) => db.prepare(part)));
 }, 30000);
 afterAll(async () => { await runtime?.dispose(); });

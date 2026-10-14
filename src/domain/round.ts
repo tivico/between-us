@@ -6,12 +6,14 @@ import type { ValueFeedback } from './value-feedback';
 import type { DailyComparison } from './daily-values';
 import type { CommunicationAnalysis } from './communication';
 import type { MoneyLifeAnalysis } from './money-life';
+import type { ResultOpening } from './result-opening';
 
 export interface RoundStatus {
   id: string;
   quiz: QuizDefinition;
   createdAt: string;
-  state: 'answering' | 'waiting' | 'unlocked';
+  expiresAt: string | null;
+  state: 'answering' | 'waiting' | 'unlocked' | 'closed';
   own: { nickname: string; slot: 'A' | 'B'; answers: Record<string, string>; revision: number; submittedAt: string | null };
   peer: { nickname: string; submitted: boolean } | null;
   invitationToken: string | null;
@@ -27,5 +29,6 @@ export interface RoundResults {
   dailyComparison?: DailyComparison;
   communicationAnalysis?: CommunicationAnalysis;
   moneyLifeAnalysis?: MoneyLifeAnalysis;
+  resultOpening?: ResultOpening;
 }
-export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean; hasCommunicationAnalysis?: boolean; hasMoneyLifeAnalysis?: boolean }
+export interface InvitationPreview { expiresAt?: string | null; id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean; hasCommunicationAnalysis?: boolean; hasMoneyLifeAnalysis?: boolean }

@@ -10,7 +10,7 @@ const token = () => randomBytes(32).toString('hex');
 beforeAll(async () => {
   runtime = new Miniflare(convertV4MiniflareOptions({ modules: true, script: 'export default {fetch(){return new Response("test")}}', compatibilityDate: '2026-10-08', d1Databases: ['DB'] }));
   db = await runtime.getD1Database('DB');
-  const sql = await readFile(new URL('./migrations/0001_rounds.sql', import.meta.url), 'utf8');
+  const sql = await readFile(new URL('./migrations/0001_rounds.sql', import.meta.url), 'utf8') + '\n' + await readFile(new URL('./migrations/0002_lifecycle.sql', import.meta.url), 'utf8');
   await db.batch(sql.split(';').map((part) => part.trim()).filter(Boolean).map((part) => db.prepare(part)));
 }, 30000);
 afterAll(async () => { await runtime?.dispose(); });
@@ -27,6 +27,16 @@ async function create() {
   const a = token(); const input = { quizId: 'core-values-example', nickname: '測試 A', consent: true, privateToken: a };
   const { id } = await store().create(input); return { id, a, input };
 }
+it('Worker 管理路由拒絕陌生人與未確認刪除，支援更換憑證及退出', async () => {
+  const { id, a } = await create(); const replacement = token();
+  const path = `/api/rounds/${id}`;
+  expect((await call(`${path}/withdraw`, { method: 'POST', credential: token(), body: { confirm: 'withdraw' } })).status).toBe(401);
+  expect((await call(`${path}/withdraw`, { method: 'POST', credential: a, body: {} })).status).toBe(400);
+  expect((await call(`${path}/rotate`, { method: 'POST', credential: a, body: { privateToken: replacement } })).status).toBe(200);
+  expect((await call(`${path}/status`, { credential: a })).status).toBe(401);
+  expect((await call(`${path}/withdraw`, { method: 'POST', credential: replacement, body: { confirm: 'withdraw' } })).status).toBe(200);
+  expect((await call(`${path}/status`, { credential: replacement })).status).toBe(410);
+});
 async function submitA(id, a) {
   const quiz = (await store().status(id, a)).quiz;
   const answers = Object.fromEntries(quiz.questions.map((q) => [q.id, q.options[0].id]));
