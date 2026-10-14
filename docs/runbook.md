@@ -823,3 +823,50 @@ npm run cloudflare:deploy
 功能 commit `702cd196bb46d401f940d31f78b74b5f4f9f19a8` 與 v0.6.0 已推送。[GitHub CI run 37759825630](https://github.com/tivico/between-us/actions/runs/37759825630) 回 completed/success，包含 58 項測試、兩種建置與 Worker dry-run。後續 test/docs commit 補強線上 smoke check：先保存 56 題，實際檢查 INCOMPLETE 與恢復草稿，再補完第 57 題、完整雙人流程與結果；公開檢查再次通過。這只加強 QA 腳本／發布交接，不改已發布網頁／API，因此網站與標籤仍為 0.6.0。
 
 本機原生 Node 的 store／JSON／TS 計分匯入已直接執行確認，回 questions:57、values:19；獨立 4180 模擬器完成後已停止，4173 一般建置已恢復。只有忽略的本機虛構 QA 資料，沒有搬移使用者本機答案到雲端。
+## 0.13 一起生活的選擇：本機接入
+
+2026-10-14：持有人要求接續下一步，本機接入12題。網站0.13.0、來源候選0.1.0、回合工具0.2.0、描述性規則1.0.0；未推送／部署，公開網站仍0.12.0。題幹／選項保持已同意版本，結果規則採候選閱讀設計落實為V1；內容同意、工程驗證與人類理解／測量／提案效果驗證分開。
+
+### 使用與檔案分工
+
+執行 `npm run dev`，開啟 `http://127.0.0.1:5173/#/start/money-life`。各自12題，A提交後邀請B，雙方提交後解鎖；本機連結限此電腦。單人 `#/demo/money-life` 不保存或分享。
+
+- `docs/quizzes/money-life-candidate.json`：題幹、選項、來源及閱讀設計；contentApproval保留原同意範圍，implementation記錄本次接入。候選Markdown同步可讀題稿，humanTryoutCount仍0。
+- `src/content/money-life.ts`／`moneyLifeQuiz`：轉換來源為工具0.2.0；`quizzes.ts`註冊money-life。ready只代表本機功能可用，不是量表驗證或公開發布。
+- `src/domain/quiz.ts`／`validateQuiz`：檢查12題分類、特殊狀態、配對方向、8則提案與版本，禁止條件／本人範圍混入偏好或配對。
+- `src/domain/money-life.ts`／`analyzeMoneyLife`：V1分析。本人條件、範圍及討論起點都不判同／不同；只有三題偏好與兩組雙向配對可比較主要選項。
+- `server/store.mjs`／`cloudflare/store.mjs`：Node SQLite與D1保存、授權及解鎖，僅results呼叫分析；`MoneyLifeResults.tsx`顯示摘要、各類閱讀、提案、來源與完整答案。
+
+### 實際資料流
+
+1. `#/start/money-life`同意分享 → `POST /api/rounds`：store讀registry並將題目、規則和提案固定在`rounds.snapshot`（回合快照，指建立當下的內容副本）。
+2. `RoundFlow`使用`ConversationOptions`選答 → `PUT /api/rounds/:id/answers`保存`participants.answers`與revision（修訂號，用來拒絕過時覆寫）。未分享是直接用`not-shared`取代該題原ID，沒有另一份隱藏答案。
+3. `POST /submit`檢查完整合法12題並鎖定 → A得到邀請 → B經`POST /api/invitations/claim`獨立加入／作答／提交。
+4. `GET /api/rounds/:id/results`先驗證私人憑證與雙方`submitted_at` → `analyzeMoneyLife(snapshot,A,B)` → `moneyLifeAnalysis` → `MoneyLifeResults`。status只傳自己的答案與對方提交狀態；邀請只帶公開`hasMoneyLifeAnalysis`旗標，不帶對方答案或分析。
+
+分類輸出：`boundaries`一題、`constraints`兩題、`processes`兩題的state均null；`preferences`三題主要選項才same／different；`pairs`為01期待對另一方02自述、08期待對另一方07自述，各有A←B、B←A。特殊狀態context、advice／discussion:null；兩人都other也不能判同類。ID是選項名稱，不是數值；本人不參加／不集中不被相同偏好覆蓋。摘要只引用本輪生活優先／分攤選項，情境與提案另標本站設計，不猜人格或財務狀況。
+
+沿用既有表，不需migration，不搬移或重建D1；既有主題與舊快照不變。沒有外部AI、金融操作、金額欄位或付款／帳戶授權。
+
+### 症狀與排查順序
+
+- **入口仍寫準備中**：先確認本機服務是本工作目錄0.13，重啟`npm run dev`；公開網站仍0.12，不是路由故障。安全查核：`rg -n 'moneyLifeQuiz|money-life' src/content/quizzes.ts src/content/money-life.ts`。
+- **無法提交／保存失敗**：先重現未答或修改後保存，檢查畫面「已儲存」及API回應。`INCOMPLETE`代表仍有缺題；`INVALID_ANSWERS`查題ID／選項ID；修訂衝突重新載入本人返回頁再修改；不要刪實際回合資料讓驗證通過。
+- **結果鎖住／讀不到**：401先確認使用自己的私人返回連結；423先確認雙方已提交，這是正常保密；分析快照錯誤再查moneyLife.version、12題分類、配對選項與提案完整性。不要把私人連結、token或實際答案貼到log／issue。
+- **配對方向反了／拒絕被解讀為不合**：先展開結果原答案，核對01←02、08←07的參與者角色，再查crossPairs與moneyPerspective；constraints／boundaries必須state:null。兩種store結果都須用snapshot，不可用getQuiz抓新題庫。
+- **未分享仍露出舊選項**：確認該題目前保存值是not-shared，重新整理檢查本人頁及解鎖原答案。未分享取代目前答案，不是完整歷史／備份永久刪除功能。
+- **畫面顯示不了生活整理**：檢查`moneyLifeAnalysis`與`RoundFlow`結果分派；改完程式先check／build，再看長暱稱、手機卡片、完整12題展開。
+
+### 自行修改與回復
+
+例：想把「把用途與各自負擔的部分寫清楚」改得更白話，在JSON的money-confirm-do／money-confirm-want同改written-scope標籤，核對expense-confirmation.adviceByWanted.written-scope與Markdown，保留兩題同一語意ID。題幹／選項變更另記新內容同意範圍與來源版，並升moneyLifeQuiz工具版；只改提案也升工具版，讓新回合取得新版。網站交付修正升最後碼、新功能升中間碼，同步package／lock／CHANGELOG。
+
+改比較算法另新增分析版本及分支，保留analyzeMoneyLifeV1與舊資料，不直接覆寫V1。新規則要重新驗證特殊狀態、方向、本人條件與舊快照；不能把不能負擔改成分數低、把未知當同意。若功能異常，可在保留既有結果分支下暫停新輪入口；不重建／刪除資料庫。需要回復版本時先保存工作，再用既有commit的程式版本重新建置；公開回復另依發布流程。
+
+### 驗證紀錄與限制
+
+`npm run check`的110項測試通過：含180組主要／特殊配對、分類邊界、缺答／非法版本拒絕、Node與D1保存／取代未分享、授權／提交保密及快照不追套。沙箱測試初次遇TEMP快取缺檔／localhost EACCES，將TEMP／TMP設在忽略的`.local/tmp`並於允許本機連線的環境執行後通過；這不是修改題庫解決測試。
+
+本機工程A／B回合已實際操作12題、提交、邀請、沒有經歷、未分享取代與結果重載，完整答案展開12卡。桌面結果已視覺檢查，截圖位於忽略的`.local/qa/money-life/desktop.png`，不含私人連結。手機約390px的DOM布局（網頁元素及尺寸）查核無橫向溢出，卡片落在視窗內；瀏覽器在尺寸覆寫時無法擷取截圖，手機視覺截圖未驗證。工程驗收回合明示測試用途，未冒充使用者／伴侶答案，未刪既有資料。`npm run build`與`npm run build:cloudflare`通過；一般建置仍提示主JS超過500kB，此提示不阻擋建置，本次未做拆包。
+
+尚未驗證公開0.13、真人理解、測量或交流改善效果。本次完成標準為本機實作、必要工程驗證與維護交接；部署另成後續範圍。

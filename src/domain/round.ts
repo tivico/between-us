@@ -5,6 +5,7 @@ import type { DistanceAnalysis } from './long-distance';
 import type { ValueFeedback } from './value-feedback';
 import type { DailyComparison } from './daily-values';
 import type { CommunicationAnalysis } from './communication';
+import type { MoneyLifeAnalysis } from './money-life';
 
 export interface RoundStatus {
   id: string;
@@ -25,5 +26,6 @@ export interface RoundResults {
   pairAnalysis?: DistanceAnalysis;
   dailyComparison?: DailyComparison;
   communicationAnalysis?: CommunicationAnalysis;
+  moneyLifeAnalysis?: MoneyLifeAnalysis;
 }
-export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean; hasCommunicationAnalysis?: boolean }
+export interface InvitationPreview { id: string; hostName: string; title: string; questionCount: number; claimed: boolean; hasValueScore?: boolean; isQuestionnaire?: boolean; hasPairAnalysis?: boolean; hasDailyValues?: boolean; hasCommunicationAnalysis?: boolean; hasMoneyLifeAnalysis?: boolean }

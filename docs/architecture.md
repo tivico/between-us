@@ -310,3 +310,12 @@ JSON → questionnaires.ts → quizzes.ts 的 roundQuizzes
 `scoring` 快照含 kind、規則 version、optionValues 與 19 類 questionIds；因此新題庫不追改舊回合。compareValues 對沒有 scoring 的三題舊快照回 undefined，維持舊答案比較；有不支援版本或破損映射會失敗，不能靜默用最新規則。新版 schema 沒有變更，既有 snapshot/answers TEXT 可保存新增契約，雲端 D1 不重建。
 
 結果規則與數學、例外與除錯詳見 Runbook「0.6 完整雙人探索與計分」。新增規則版本時需保留原 1.0.0 分支，因已保存的結果仍需可重現；單改原函式會改掉舊結果，即使資料庫中的 version 沒變。
+
+
+## 0.13 生活金錢描述性探索
+
+`docs/quizzes/money-life-candidate.json`原創0.1.0作為來源，`src/content/money-life.ts`轉為工具0.2.0；`quizzes.ts`以moneyLifeQuiz取代planned佔位。題目以moneyPerspective標記偏好、流程、條件、本人範圍、期待或自述；`validateQuiz`確認12題各自只進一種閱讀分類、條件／範圍不混入配對、兩組配對選項與8則提案完整。moneyLife配置、題目與提案一起保存於rounds.snapshot，既有表結構足夠，不需migration。
+
+`#/start/money-life` → RoundFlow分享同意 → POST /api/rounds → 固定snapshot → ConversationOptions選答 → PUT /api/rounds/:id/answers（participants.answers與revision）→ A submit／邀請B claim → B獨立submit → GET /results先授權與檢查雙方submitted_at → Node／D1呼叫analyzeMoneyLife(snapshot,A,B) → moneyLifeAnalysis → MoneyLifeResults。status只回自己的答案和對方提交狀態；邀請僅新增hasMoneyLifeAnalysis公開旗標，不傳答案／分析。
+
+描述性規則V1將constraints／boundaries／processes設為state:null，僅preferences主要選項判same／different；crossPairs逐方向配對期待與另一方自述。任一特殊狀態為context、advice:null、discussion:null；未知不當零或允許。選項ID是分類名稱，不是數值。新演算法另加版本分支、保留V1；新題目／提案升工具版，不追套舊快照。除錯與修改見[Runbook](runbook.md#013-一起生活的選擇本機接入)。

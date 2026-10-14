@@ -2,6 +2,13 @@ export type TopicStatus = 'draft' | 'planned' | 'ready';
 export type EvidenceStatus = 'self-authored' | 'research-informed' | 'validated';
 export type ResponseKind = 'choice' | 'other' | 'varies' | 'uncertain' | 'not-applicable' | 'not-experienced' | 'not-shared';
 export type Theme = 'sage' | 'clay' | 'sand' | 'lavender' | 'blue';
+export type MoneyPerspective = 'preference' | 'process-preference' | 'constraint' | 'owner-boundary' | 'partner-expectation' | 'self-behavior';
+export interface MoneyLifeConfig {
+  kind: 'money-life-descriptive'; version: '1.0.0';
+  preferenceQuestionIds: string[]; processQuestionIds: string[]; constraintQuestionIds: string[]; boundaryQuestionIds: string[];
+  preferencePolicy: string; processPolicy: string; conditionPolicy: string; crossPairPolicy: string;
+  crossPairs: { id: string; sectionId: string; title: string; wantedQuestionId: string; providedQuestionId: string; adviceByWanted: Record<string, string>; discussion: string }[];
+}
 
 export interface CommunicationConfig {
   kind: 'communication-cross-partner'; version: '1.0.0';
@@ -28,6 +35,7 @@ export interface ResearchSource {
 
 // 選項 ID 只用於識別，不代表 1、2、3、4 分或優劣。
 export interface Question {
+  moneyPerspective?: MoneyPerspective;
   id: string;
   dimension: string;
   prompt: string;
@@ -58,6 +66,7 @@ export interface QuizDefinition {
   evidenceSummary: string;
   instructions?: string;
   communication?: CommunicationConfig;
+  moneyLife?: MoneyLifeConfig;
   feedback?: ValueFeedbackConfig;
   dailyValues?: { kind: 'daily-values'; version: '1.0.0'; scenes: { id: string; title: string; context: string; mode: 'joint' | 'personal'; questionIds: string[]; discussion: string }[] };
   questionnaire?: { kind: 'four-question-conversation'; version: '1.0.0'; groupId: string; depth: '輕鬆' | '深入' | '較私密' };
@@ -130,7 +139,7 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
     }
   }
   for (const question of quiz.questions) {
-    if (!quiz.questionnaire && !quiz.communication && question.options.some((option) => option.kind)) errors.push(`特殊問答狀態不能加入既有測驗：${question.id}`);
+    if (!quiz.questionnaire && !quiz.communication && !quiz.moneyLife && question.options.some((option) => option.kind)) errors.push(`特殊問答狀態不能加入既有測驗：${question.id}`);
     if (question.options.some((option) => option.kind && !['choice', 'other', 'varies', 'uncertain', 'not-applicable', 'not-experienced', 'not-shared'].includes(option.kind))) errors.push(`未知答案狀態：${question.id}`);
   }
   if (quiz.communication) {
@@ -152,6 +161,25 @@ export function validateQuiz(quiz: QuizDefinition): string[] {
       }
     }
     if (rule.sections.some((section) => !section.title?.trim() || rule.pairs.filter((pair) => pair.sectionId === section.id).length !== 3)) errors.push('溝通段落需各三組配對');
+  }
+  if (quiz.moneyLife) {
+    const rule = quiz.moneyLife;
+    const groups: [string[], MoneyPerspective, number][] = [[rule.preferenceQuestionIds, 'preference', 3], [rule.processQuestionIds, 'process-preference', 2], [rule.constraintQuestionIds, 'constraint', 2], [rule.boundaryQuestionIds, 'owner-boundary', 1]];
+    const ids = [...groups.flatMap(([ids]) => ids), ...rule.crossPairs.flatMap((p) => [p.wantedQuestionId, p.providedQuestionId])];
+    if (rule.kind !== 'money-life-descriptive' || rule.version !== '1.0.0' || quiz.scoring || quiz.analysis || quiz.communication || quiz.questionnaire || quiz.dailyValues || quiz.feedback || quiz.questions.length !== 12 || rule.crossPairs.length !== 2 || new Set(rule.crossPairs.map((p) => p.id)).size !== 2 || ids.length !== 12 || new Set(ids).size !== 12 || ids.some((id) => !questionIds.has(id)) || [rule.preferencePolicy, rule.processPolicy, rule.conditionPolicy, rule.crossPairPolicy].some((text) => !text?.trim())) errors.push('生活金錢分析契約不完整或版本不支援');
+    for (const [ids, perspective, count] of groups) {
+      if (ids.length !== count || ids.some((id) => quiz.questions.find((q) => q.id === id)?.moneyPerspective !== perspective)) errors.push('生活金錢條件、範圍與偏好不能混用');
+    }
+    for (const pair of rule.crossPairs) {
+      const wanted = quiz.questions.find((q) => q.id === pair.wantedQuestionId);
+      const provided = quiz.questions.find((q) => q.id === pair.providedQuestionId);
+      const choices = wanted?.options.filter((o) => o.kind === 'choice') ?? [];
+      const providedChoices = provided?.options.filter((o) => o.kind === 'choice') ?? [];
+      if (wanted?.moneyPerspective !== 'partner-expectation' || provided?.moneyPerspective !== 'self-behavior' || wanted?.dimension !== provided?.dimension || !pair.sectionId?.trim() || !pair.title?.trim() || !pair.discussion?.trim() || Object.keys(pair.adviceByWanted).length !== 4 || choices.length !== 4 || providedChoices.length !== 4 || choices.some((o) => !providedChoices.some((p) => p.id === o.id) || !pair.adviceByWanted[o.id]?.trim())) errors.push('生活金錢雙向配對不完整');
+    }
+    for (const q of quiz.questions) {
+      if (q.options.filter((o) => o.kind === 'choice').length !== 4 || !q.discussion?.trim() || q.options.some((o) => !o.kind) || ['other', 'varies', 'uncertain', 'not-applicable', 'not-shared'].some((kind) => q.options.filter((o) => o.kind === kind).length !== 1) || q.options.filter((o) => o.kind === 'not-experienced').length !== (q.moneyPerspective === 'self-behavior' ? 1 : 0)) errors.push('生活金錢特殊狀態不完整');
+    }
   }
   if (quiz.scoring) {
     const scoring = quiz.scoring;

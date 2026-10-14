@@ -907,7 +907,7 @@
     "requestedPrivateFields": []
   },
   "resultPlan": {
-    "status": "proposal-not-implemented",
+    "status": "candidate-source-implemented-as-v1",
     "version": "candidate-0.1.0",
     "order": [
       "本人願意範圍與條件",
@@ -1025,10 +1025,19 @@
     ]
   },
   "permissionNote": "題幹、選項及提案皆為本站原創，不轉錄／翻譯FMBS、CFPB或財務和諧指標，不使用其分數、常模或效度。FMBS及研究指標的繁體版／公開使用條件仍待核對；CFPB官方標為免費公開工具，本輪也未採原題／分數或核定繁體改寫。未聯絡作者或接受下載協議，不以原工具證據驗證本站題目。",
+  "implementation": {
+    "date": "2026-10-14",
+    "status": "local-implemented-not-deployed",
+    "sourceVersion": "0.1.0",
+    "toolVersion": "0.2.0",
+    "ruleVersion": "1.0.0",
+    "questionCount": 12,
+    "scope": "持有人要求進行下一步；接入本機雙人保存、邀請與結果頁，D1同步支援。未推送或部署；不是人類理解、測量或效果驗證。"
+  },
   "review": {
     "status": "editorial-draft",
     "humanTryoutCount": 0,
-    "implemented": false,
+    "implemented": true,
     "priorityQuestions": [
       "非必要活動是否人人能理解；沒有經歷是否有出口",
       "願意與能負擔是否混為單一程度",
